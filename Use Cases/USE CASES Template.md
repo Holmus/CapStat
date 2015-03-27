@@ -12,9 +12,11 @@
 ###Includes
 -
 
-###Participators
+###Participants
+
 
 
 ###Normal flow of events
-| Actor | System
+|| Actor | System |
 |----------------
+|1| | |
