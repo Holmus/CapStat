@@ -1,22 +1,21 @@
 # USE CASE NAME
 
-###Summary
+### Summary
 
 
-###Priority
+### Priority
 
 
-###Extends
+### Extends
 -
 
-###Includes
+### Includes
 -
 
-###Participants
+### Participants
 
 
-
-###Normal flow of events
-|| Actor | System |
-|----------------
-|1| | |
+### Normal flow of events
+| # | Actor | System |
+|---|-------|--------|
+| 1 |       |        |

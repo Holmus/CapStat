@@ -1,7 +1,7 @@
 # NewMatch
 
 ### Summary
-This is the behaviour of the application when a User wants to record results for a new Match. This UC is probably not preceded by any other UC, as this UC more or less is the entry point in the application.
+This UC describes the behaviour of the application when a User wants to record results for a new Match. This UC is probably not preceded by any other UC, as this UC more or less is the entry point in the application.
 
 The application focuses on letting the user quickly start recording results, and therefore uses default settings unless the user changes them.
 
