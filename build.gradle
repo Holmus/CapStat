@@ -1,9 +1,12 @@
-apply plugin: 'java'
-apply plugin: 'application'
+apply plugin: "java"
+apply plugin: "application"
 
-mainClassName = 'capstat.HelloWorld'
+mainClassName = "capstat.HelloWorld"
 
 jar {
-    baseName = 'capstat'
-    version = '0.0.1'
+    baseName = "capstat"
+    version = "0.0.1"
+    manifest {
+        attributes "Main-Class": "$mainClassName"
+    }
 }
