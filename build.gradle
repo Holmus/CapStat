@@ -1,1 +1,9 @@
 apply plugin: 'java'
+apply plugin: 'application'
+
+mainClassName = 'capstat.HelloWorld'
+
+jar {
+    baseName = 'capstat'
+    version = '0.0.1'
+}
