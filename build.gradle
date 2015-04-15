@@ -3,6 +3,14 @@ apply plugin: "application"
 
 mainClassName = "capstat.HelloWorld"
 
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+
+}
+
 jar {
     baseName = "capstat"
     version = "0.0.1"
