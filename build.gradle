@@ -25,3 +25,9 @@ jar {
         attributes "Main-Class": "$mainClassName"
     }
 }
+
+test {
+    testLogging {
+        exceptionFormat = "full"
+    }
+}
