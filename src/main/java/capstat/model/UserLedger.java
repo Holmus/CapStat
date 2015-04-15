@@ -16,6 +16,6 @@ public class UserLedger {
     }
 
     public boolean isNicknameValid(String nickname) {
-        return nickname.matches("^[A-Za-zÅÄÖåäöü0-9 \\(\\)\\.]+$");
+        return nickname.matches("^[A-Za-zÅÄÖåäöü0-9 \\(\\)\\._\\-]+$");
     }
 }
