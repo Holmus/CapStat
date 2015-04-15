@@ -8,7 +8,14 @@ repositories {
 }
 
 dependencies {
+    // Normal dependencies
+    // (empty so far)
 
+    // Test dependencies
+    // NOTE: these dependencies are _additional_ dependencies used for compiling
+    // and running the tests. All normal dependencies are also available while
+    // running the tests, so they do not need to be specified here as well.
+    testCompile group: "junit", name: "junit", version: "4.11"
 }
 
 jar {
