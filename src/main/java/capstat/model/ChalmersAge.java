@@ -10,6 +10,11 @@ public class ChalmersAge implements Comparable<ChalmersAge> {
         this.admittance = admittance;
     }
 
+    public ChalmersAge(ChalmersAge age) {
+        this.birthday = age.getBirthday();
+        this.admittance = age.getAdmittance();
+    }
+
     public Birthday getBirthday() {
         return new Birthday(this.birthday);
     }
