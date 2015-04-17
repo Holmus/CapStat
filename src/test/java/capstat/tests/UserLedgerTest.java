@@ -1,10 +1,9 @@
 package capstat.tests;
 
-import capstat.model.CapStat;
-
 import static org.junit.Assert.assertEquals;
-
 import org.junit.Test;
+
+import capstat.model.CapStat;
 
 public class UserLedgerTest {
 

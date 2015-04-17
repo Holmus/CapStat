@@ -1,9 +1,9 @@
 package capstat.utils;
 
+import org.apache.commons.codec.digest.DigestUtils;
+
 import java.io.UnsupportedEncodingException;
 import java.security.*;
-
-import org.apache.commons.codec.digest.DigestUtils;
 
 public abstract class Security {
 
