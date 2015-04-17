@@ -1,5 +1,6 @@
 package capstat.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import capstat.utils.Security;
@@ -10,7 +11,7 @@ public class UserLedger {
     private List<User> users;
 
     private UserLedger() {
-
+        this.users = new ArrayList<>();
     }
 
     public static UserLedger getInstance() {
