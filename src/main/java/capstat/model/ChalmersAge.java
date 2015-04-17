@@ -23,6 +23,7 @@ public class ChalmersAge implements Comparable<ChalmersAge> {
         return new Admittance(this.admittance);
     }
 
+    @Override
     public int compareTo(ChalmersAge other) {
         Birthday otherBirthday = other.getBirthday();
         int birthdayCompare = this.birthday.compareTo(otherBirthday);

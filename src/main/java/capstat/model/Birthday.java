@@ -28,6 +28,7 @@ public class Birthday implements Comparable<Birthday> {
         return this.day;
     }
 
+    @Override
     public int compareTo(Birthday other) {
         int otherYear = other.getYear();
         if (this.year > otherYear) return 1;

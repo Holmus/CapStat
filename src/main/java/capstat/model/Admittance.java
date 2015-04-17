@@ -22,6 +22,7 @@ public class Admittance implements Comparable<Admittance> {
         return this.readingPeriod;
     }
 
+    @Override
     public int compareTo(Admittance other) {
         int otherYear = other.getYear();
         if (this.year > otherYear) return 1;
