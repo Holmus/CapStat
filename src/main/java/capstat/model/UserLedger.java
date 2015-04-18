@@ -36,7 +36,7 @@ public class UserLedger {
         this.createUserInDatabase(nickname, name, hashedPassword, age, ranking);
     }
 
-    public void createUserInDatabase(String nickname, String name, String hashedPassword, ChalmersAge age, ELORanking ranking) {
+    private void createUserInDatabase(String nickname, String name, String hashedPassword, ChalmersAge age, ELORanking ranking) {
         User user = new User(nickname, name, hashedPassword, age, ranking);
         users.add(user);
     }
