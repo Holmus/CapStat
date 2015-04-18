@@ -1,23 +1,43 @@
 package capstat.model;
 
+/**
+ * @author Christian Persson
+ */
 public class Admittance implements Comparable<Admittance> {
 
     private int year, readingPeriod;
 
+    /**
+     * Creates a new Admittance instance.
+     * @param year the admittance year
+     * @param readingPeriod a number from 1 to 4, denoting which reading period the person was admitted to/started studying at Chalmers
+     */
     public Admittance(int year, int readingPeriod) {
         this.year = year;
         this.readingPeriod = readingPeriod;
     }
 
+    /**
+     * Creates a new Admittance instance, as a copy of the given Admittance instance.
+     * @param admittance the Admittance instance to create a copy of
+     */
     public Admittance(Admittance admittance) {
         this.year = admittance.getYear();
         this.readingPeriod = admittance.getReadingPeriod();
     }
 
+    /**
+     * Returns the admittance year.
+     * @return the admittance year
+     */
     public int getYear() {
         return this.year;
     }
 
+    /**
+     * Returns the admittance reading period.
+     * @return the admittance reading period
+     */
     public int getReadingPeriod() {
         return this.readingPeriod;
     }
