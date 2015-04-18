@@ -37,6 +37,8 @@ public class CapStat {
      * @param password the plaintext password of the new User
      * @param birthday the Birthday instance of the new User
      * @param admittance the Admittance instance of the new User
+     *
+     * @pre this.isNicknameValid(nickname) == true
      */
     public void registerUser(String nickname, String name, String password, Birthday birthday, Admittance admittance) {
         this.userLedger.registerUser(nickname, name, password, birthday, admittance);

@@ -40,6 +40,8 @@ public class UserLedger {
      * @param password the plaintext password of the new User
      * @param birthday the Birthday instance of the new User
      * @param admittance the Admittance instance of the new User
+     *
+     * @pre this.isNicknameValid(nickname) == true
      */
     public void registerUser(String nickname, String name, String password, Birthday birthday, Admittance admittance) {
         ChalmersAge chalmersAge = new ChalmersAge(birthday, admittance);
@@ -55,6 +57,8 @@ public class UserLedger {
      * @param hashedPassword the hashed password of the new User
      * @param chalmersAge the ChalmersAge instance of the new User
      * @param ranking the ELORanking instance of the new User
+     *
+     * @pre this.isNicknameValid(nickname) == true
      */
     private void createUserInDatabase(String nickname, String name, String hashedPassword, ChalmersAge chalmersAge, ELORanking ranking) {
         User user = new User(nickname, name, hashedPassword, chalmersAge, ranking);
