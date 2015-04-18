@@ -9,7 +9,7 @@ repositories {
 
 dependencies {
     // Normal dependencies
-    // (empty so far)
+    compile group: "commons-codec", name: "commons-codec", version: "1.10"
 
     // Test dependencies
     // NOTE: these dependencies are _additional_ dependencies used for compiling
