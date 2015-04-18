@@ -68,4 +68,15 @@ public class UserLedger {
         User user = new User(nickname, name, hashedPassword, chalmersAge, ranking);
         users.add(user);
     }
+
+    public void printUsers() {
+        for (User user : this.users) {
+            System.out.println("Nickname: " + user.getNickname());
+            System.out.println("Name: " + user.getName());
+            System.out.println("Password (hashed): " + user.getHashedPassword());
+            System.out.println("Age: " + user.getAge());
+            System.out.println("Ranking: " + user.getRanking());
+            System.out.println();
+        }
+    }
 }

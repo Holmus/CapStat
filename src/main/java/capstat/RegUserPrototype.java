@@ -49,7 +49,7 @@ public class RegUserPrototype {
                     cs.registerUser(nickname, name, password, birthday, admittance);
                     break;
                 case "list":
-                    System.out.println("not yet implemented");
+                    cs.printUsers();
                     break;
                 case "quit":
                     System.exit(0);
