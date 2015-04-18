@@ -30,14 +30,14 @@ public class UserLedger {
     }
 
     public void registerUser(String nickname, String name, String password, Birthday birthday, Admittance admittance) {
-        ChalmersAge age = new ChalmersAge(birthday, admittance);
+        ChalmersAge chalmersAge = new ChalmersAge(birthday, admittance);
         String hashedPassword = Security.hashPassword(password);
         ELORanking ranking = ELORanking.defaultRanking();
-        this.createUserInDatabase(nickname, name, hashedPassword, age, ranking);
+        this.createUserInDatabase(nickname, name, hashedPassword, chalmersAge, ranking);
     }
 
-    private void createUserInDatabase(String nickname, String name, String hashedPassword, ChalmersAge age, ELORanking ranking) {
-        User user = new User(nickname, name, hashedPassword, age, ranking);
+    private void createUserInDatabase(String nickname, String name, String hashedPassword, ChalmersAge chalmersAge, ELORanking ranking) {
+        User user = new User(nickname, name, hashedPassword, chalmersAge, ranking);
         users.add(user);
     }
 }

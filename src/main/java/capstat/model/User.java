@@ -5,14 +5,14 @@ public class User {
     private String name;
     private String nickname;
     private String hashedPassword;
-    private ChalmersAge age;
+    private ChalmersAge chalmersAge;
     private ELORanking ranking;
 
-    public User(String nickname, String name, String hashedPassword, ChalmersAge age, ELORanking ranking) {
+    public User(String nickname, String name, String hashedPassword, ChalmersAge chalmersAge, ELORanking ranking) {
         this.nickname = nickname;
         this.name = name;
         this.hashedPassword = hashedPassword;
-        this.age = new ChalmersAge(age);
+        this.chalmersAge = new ChalmersAge(chalmersAge);
         this.ranking = new ELORanking(ranking);
     }
 
@@ -20,7 +20,7 @@ public class User {
         this.name = user.getName();
         this.nickname = user.getNickname();
         this.hashedPassword = user.getHashedPassword();
-        this.age = user.getAge();
+        this.chalmersAge = user.getChalmersAge();
         this.ranking = user.getRanking();
     }
 
@@ -36,8 +36,8 @@ public class User {
         return this.hashedPassword;
     }
 
-    public ChalmersAge getAge() {
-        return new ChalmersAge(this.age);
+    public ChalmersAge getChalmersAge() {
+        return new ChalmersAge(this.chalmerAge);
     }
 
     public ELORanking getRanking() {

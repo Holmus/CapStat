@@ -10,9 +10,9 @@ public class ChalmersAge implements Comparable<ChalmersAge> {
         this.admittance = admittance;
     }
 
-    public ChalmersAge(ChalmersAge age) {
-        this.birthday = age.getBirthday();
-        this.admittance = age.getAdmittance();
+    public ChalmersAge(ChalmersAge chalmersAge) {
+        this.birthday = chalmersAge.getBirthday();
+        this.admittance = chalmersAge.getAdmittance();
     }
 
     public Birthday getBirthday() {
