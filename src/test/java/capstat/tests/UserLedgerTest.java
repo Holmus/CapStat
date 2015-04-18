@@ -27,7 +27,7 @@ public class UserLedgerTest {
                          cs.isNicknameValid(validNickname));
         }
 
-        String[] invalidNicknames = new String[] { "Saser\nSasybooi", "\n", "\\asdf", "''" };
+        String[] invalidNicknames = new String[] { "", "Saser\nSasybooi", "\n", "\\asdf", "''" };
         for (String invalidNickname : invalidNicknames) {
             assertEquals("Testing invalid nickname: " + invalidNickname, false, cs.isNicknameValid(invalidNickname));
         }
