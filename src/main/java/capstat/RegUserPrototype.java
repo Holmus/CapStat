@@ -17,8 +17,13 @@ public class RegUserPrototype {
             cmd = sc.nextLine();
             switch (cmd) {
                 case "register":
-                    System.out.print("Nickname: ");
-                    String nickname = sc.nextLine();
+                    String nickname = "";
+                    boolean validNickname = false;
+                    while (!validNickname) {
+                        System.out.print("Nickname: ");
+                        nickname = sc.nextLine();
+                        validNickname = cs.isNicknameValid(nickname);
+                    }
 
                     System.out.print("Name: ");
                     String name = sc.nextLine();
