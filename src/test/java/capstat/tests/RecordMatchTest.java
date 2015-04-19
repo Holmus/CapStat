@@ -65,7 +65,29 @@ public class RecordMatchTest {
 
     @Test
     public void scoreTest() {
+        match.recordHit();
+        match.recordMiss();
 
+        assertEquals("Player 1 score is 1: ", 1, match.getPlayer1Score());
+        assertEquals("Player 2 score is 0: ", 0, match.getPlayer2Score());
+        assertEquals("Player 2's turn: ", match.getPlayer2(), match.getPlayerNextUp());
+
+        /*
+        Player 2 turn.
+        Make 10 throws, all hits. After these 10 throws, it's player 2:s turn
+         again.
+         */
+        for (int i = 0; i < 10; i++) {
+            match.recordHit();
+        }
+
+        assertEquals("Player 1 score is 1: ", 1, match.getPlayer1Score());
+        assertEquals("Player 2 score is 0: ", 0, match.getPlayer2Score());
+
+        match.recordMiss();
+
+        assertEquals("Player 1 score is 2: ", 2, match.getPlayer1Score());
+        assertEquals("Player 2 score is 0: ", 0, match.getPlayer2Score());
     }
 
 }
