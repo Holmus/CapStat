@@ -1,13 +1,29 @@
 package capstat.model;
 
+import capstat.utils.Throw;
+
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  * @author hjorthjort
  */
 public class Match {
-    public void startMatch() {}
+
+    private boolean isOngoing;
+    private List throwSequence;
+
+    public Match() {
+        this.isOngoing = false;
+        this.throwSequence = new LinkedList<Throw>;
+    }
+
+    public void startMatch() {
+        this.isOngoing = true;
+    }
 
     public boolean isOngoing() {
-        //TODO
+        return this.isOngoing;
     }
 
     public void recordHit() {
