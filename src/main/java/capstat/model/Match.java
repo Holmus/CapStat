@@ -10,11 +10,12 @@ import java.util.List;
  */
 public class Match {
 
-    private boolean isOngoing;
+    private boolean isOngoing, isDuelling;
     private List throwSequence;
 
     public Match() {
         this.isOngoing = false;
+        this.isDuelling = false;
         this.throwSequence = new LinkedList<Throw>;
     }
 
@@ -26,12 +27,26 @@ public class Match {
         return this.isOngoing;
     }
 
+    /**
+     * Updates the game with a new Throw, which is a hit.
+     */
     public void recordHit() {
-        //TODO
+        this.throwSequence.add(Throw.createHit());
+        if (!this.isDuelling) {
+            this.isDuelling = true;
+            this.notifyDuelObservers();
+        }
     }
 
+    /**
+     * Updates the game with a new throw, which is a miss.
+     */
     public void recordMiss() {
-        //TODO
+        this.throwSequence.add(Throw.createMiss());
+        if (!this.isDuelling) {
+            this.isDuelling = false;
+            this.notifyDuelObservers();
+        }
     }
 
     public boolean isDuelling() {
@@ -58,6 +73,11 @@ public class Match {
     public void addGameOverObserver(final MatchOverObserver recordMatchTest) {
         //TODO
     }
+
+    private void notifyDuelObservers() {
+        //TODO
+    }
+
 
     /**
      *
