@@ -44,7 +44,7 @@ public class RecordMatchTest implements MatchOverObserver {
     public void duelsStartTest() {
         match.recordHit();
 
-        assertEquals(match.isDuelling());
+        assertEquals("Make sure duel started: ", true, match.isDuelling());
 
         match.recordMiss();
         assertEquals("Miss results in no duel: ", false, match.isDuelling());
