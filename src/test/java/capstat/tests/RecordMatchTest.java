@@ -9,6 +9,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 /**
  * @author hjorthjort
@@ -16,13 +17,8 @@ import static org.junit.Assert.assertEquals;
 public class RecordMatchTest implements MatchOverObserver {
 
     private Match match;
-    private GameFactory gf;
+    private GameFactory gf = new GameFactory();
     private boolean gameIsOver;
-
-    @BeforeClass
-    public void createGameFactory() {
-        gf = new GameFactory();
-    }
 
     @Before
     public void newMatch( ) {
@@ -102,12 +98,12 @@ public class RecordMatchTest implements MatchOverObserver {
         /*
         Make player 2 win as fast as possible;
          */
-        while (match.isOngoing()) {
+        for (int i = 0; i < 1000 && match.isOngoing(); i++) {
             match.recordMiss();
             match.recordHit();
         }
-        assertEquals("Game has ended: ", false, match.isOngoing());
-
+        assertFalse("Match is over after 1 thousand duels: ", match.isOngoing
+                ());
         try {
             assertEquals("Player 2 is winner: ", match.getPlayer2(), match.getWinner
                     ());
