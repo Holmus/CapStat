@@ -71,11 +71,11 @@ public class Match {
     }
 
     public User getPlayer1() {
-
+        return null;//TODO
     }
 
     public User getPlayer2() {
-        return -1;//TODO
+        return null;//TODO
     }
 
     public User getPlayerUpNext() {
