@@ -63,19 +63,23 @@ public class Match {
 
 
     public int getPlayer1Score() {
-        return player1Score;
+        return -1; //TODO
     }
 
     public int getPlayer2Score() {
-        //TODO
+        return -1; //TODO
     }
 
-    public long getPlayer2() {
-        //TODO
+    public User getPlayer1() {
+
     }
 
-    public long getPlayerNextUp() {
-        //TODO
+    public User getPlayer2() {
+        return -1;//TODO
+    }
+
+    public User getPlayerUpNext() {
+        return null;//TODO
     }
 
     public void addGameOverObserver(final MatchOverObserver recordMatchTest) {
@@ -97,8 +101,8 @@ public class Match {
      * @throws MatchNotOverException if and only if match is ongoing, which
      * can be checked by call to isOngoing.
      */
-    public long getWinner() throws MatchNotOverException {
-        return winner;
+    public User getWinner() throws MatchNotOverException {
+        return null; //TODO
     }
 
     public class MatchNotOverException extends Exception {
