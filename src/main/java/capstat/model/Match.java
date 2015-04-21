@@ -14,9 +14,18 @@ public class Match {
     private List throwSequence;
 
     public Match() {
+        this(7);
+    }
+
+    public Match(int numberOfGlasses) {
+        if (numberOfGlasses % 2 == 0)
+            throw new IllegalArgumentException("Glasses must be an odd number");
         this.isOngoing = false;
-        this.isDuelling = false;
-        this.throwSequence = new LinkedList<Throw>;
+        this.throwSequence = new LinkedList<Throw>();
+        this.glasses = new Glass[numberOfGlasses];
+        for (int i = 0; i < numberOfGlasses; i++) {
+            this.glasses[i] = new Match.Glass();
+        }
     }
 
     public void startMatch() {
