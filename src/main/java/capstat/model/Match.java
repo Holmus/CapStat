@@ -12,6 +12,7 @@ public class Match {
 
     private boolean isOngoing, isDuelling;
     private List throwSequence;
+    private Match.Glass[] glasses;
 
     public Match() {
         this(7);
@@ -87,6 +88,10 @@ public class Match {
         //TODO
     }
 
+    public Match.Glass[] getGlasses() {
+        return null; //TODO
+    }
+
 
     /**
      *
@@ -99,5 +104,13 @@ public class Match {
     }
 
     public class MatchNotOverException extends Exception {
+    }
+
+    private class Glass {
+        private boolean isActive = true;
+
+        public boolean isActive() {
+            return isActive;
+        }
     }
 }
