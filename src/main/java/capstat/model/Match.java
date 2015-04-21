@@ -3,7 +3,6 @@ package capstat.model;
 import capstat.utils.Throw;
 
 import java.util.LinkedList;
-import java.util.List;
 
 /**
  * @author hjorthjort
@@ -11,8 +10,9 @@ import java.util.List;
 public class Match {
 
     private boolean isOngoing;
-    private List throwSequence;
+    private LinkedList<Throw> throwSequence;
     private Match.Glass[] glasses;
+
 
     public Match() {
         this(7);
