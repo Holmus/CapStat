@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class Match {
 
-    private boolean isOngoing, isDuelling;
+    private boolean isOngoing;
     private List throwSequence;
     private Match.Glass[] glasses;
 
@@ -42,8 +42,7 @@ public class Match {
      */
     public void recordHit() {
         this.throwSequence.add(Throw.createHit());
-        if (!this.isDuelling) {
-            this.isDuelling = true;
+        if (!this.isDuelling()) {
             this.notifyDuelObservers();
         }
     }
@@ -53,14 +52,13 @@ public class Match {
      */
     public void recordMiss() {
         this.throwSequence.add(Throw.createMiss());
-        if (!this.isDuelling) {
-            this.isDuelling = false;
+        if (!this.isDuelling()) {
             this.notifyDuelObservers();
         }
     }
 
     public boolean isDuelling() {
-        //TODO
+        return throwSequence.getLast().hit();
     }
 
 
