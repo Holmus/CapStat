@@ -15,7 +15,7 @@ public class Match {
     private boolean isOngoing;
     private LinkedList<Throw> throwSequence;
     private Match.Glass[] glasses;
-    private User player1, player2, playerWhoseTurnItIs;
+    private User player1, player2, playerWhoseTurnItIs, winner;;
     private Set<MatchOverObserver> matchOverObservers;
 
 
@@ -70,6 +70,7 @@ public class Match {
         if (this.isDuelling()) {
             this.notifyDuelObservers();
             this.removeGlass();
+            this.endMatchIfNecessary();
         } else {
             //Only switch turns if the throw did not end a duel.
             this.switchPlayerUpNext();
@@ -77,7 +78,19 @@ public class Match {
     }
 
     /**
+     * Checks if middle glass is unactive and ends game if it is.
      */
+    private void endMatchIfNecessary() {
+        if(!this.glasses[this.glasses.length/2].isActive) this.endMatch();
+    }
+
+    private void endMatch() {
+        this.isOngoing = false;
+        this.winner = this.getPlayer1Score() > this.getPlayer2Score() ? this
+                .player1 : this.player2;
+        this.notifyMatchOverObservers();
+    }
+
 
     private void removeGlass() {
         if (this.playerWhoseTurnItIs == player1) {
