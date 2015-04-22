@@ -114,7 +114,7 @@ public class RecordMatchTest implements MatchOverObserver {
         assertEquals("Game over method was called: ", true, gameIsOver);
     }
 
-    public void gameOver() {
+    public void matchOver() {
         gameIsOver = true;
     }
 

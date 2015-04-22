@@ -117,6 +117,17 @@ public class Match {
         this.matchOverObservers.add(observer);
     }
 
+    /**
+     * Call the matchOver method on all observers that have been added to this
+     * match.
+     */
+    private void notifyMatchOverObservers() {
+        Iterator<MatchOverObserver> iterator = this.matchOverObservers.iterator();
+        while (iterator.hasNext()) {
+            iterator.next().matchOver();
+        }
+    }
+
     private void notifyDuelObservers() {
         //TODO
     }
