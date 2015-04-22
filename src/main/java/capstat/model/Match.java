@@ -16,7 +16,6 @@ public class Match {
     private LinkedList<Throw> throwSequence;
     private Match.Glass[] glasses;
     private User player1, player2, playerWhoseTurnItIs;
-    private int player1Score, player2Score;
     private Set<MatchOverObserver> matchOverObservers;
 
 
@@ -70,24 +69,14 @@ public class Match {
         this.throwSequence.add(Throw.createMiss());
         if (this.isDuelling()) {
             this.notifyDuelObservers();
-            this.incrementScore();
         } else {
             //Only switch turns if the throw did not end a duel.
             this.switchPlayerUpNext();
         }
     }
 
-
     /**
-     * Increments the score of whichever player is not on turn
      */
-    private void incrementScore() {
-        if (this.playerWhoseTurnItIs == this.player1) {
-            this.player2Score++;
-        } else {
-            this.player1Score++;
-        }
-    }
 
     /**
      *
@@ -99,11 +88,21 @@ public class Match {
 
 
     public int getPlayer1Score() {
-        return this.player1Score;
+        int score = 0;
+        for (int i = this.glasses.length-1; i >= this.glasses.length/2; i++) {
+            if (this.glasses[i].isActive()) break;
+            else score++;
+        }
+        return score;
     }
 
     public int getPlayer2Score() {
-        return this.player2Score;
+        int score = 0;
+        for (int i = 0; i <= this.glasses.length/2; i++) {
+            if (this.glasses[i].isActive()) break;
+            else score++;
+        }
+        return score;
     }
 
     public User getPlayer1() {
