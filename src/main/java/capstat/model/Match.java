@@ -69,6 +69,7 @@ public class Match {
         this.throwSequence.add(Throw.createMiss());
         if (this.isDuelling()) {
             this.notifyDuelObservers();
+            this.removeGlass();
         } else {
             //Only switch turns if the throw did not end a duel.
             this.switchPlayerUpNext();
@@ -77,6 +78,48 @@ public class Match {
 
     /**
      */
+
+    private void removeGlass() {
+        if (this.playerWhoseTurnItIs == player1) {
+            this.removeNextGlassPlayer1();
+        } else {
+            this.removeNextGlassPlayer2();
+        }
+    }
+
+    /**
+     * Finds next active glass on player 1's side and removes it. Middle
+     * glass can be removed.
+     */
+    private void removeNextGlassPlayer1() {
+        for (int i = 0; i <= (this.glasses.length/2); i++) {
+            if (this.removeSpecificGlass(i)) break;
+        }
+    }
+
+    /**
+     * Finds next active glass on player 2's side and removes it. Middle
+     * glass can be removed.
+     */
+    private void removeNextGlassPlayer2() {
+        for (int i = this.glasses.length-1; i >= this.glasses.length/2; i--) {
+            if (this.removeSpecificGlass(i)) break;
+        }
+    }
+
+    /**
+     * Sets specified glass to unactive if it was active, otherwise does
+     * nothing.
+     * @param i
+     * @return true if glass was removed, false otherwise.
+     */
+    private boolean removeSpecificGlass(final int i) {
+        if (glasses[i].isActive()) {
+            glasses[i].isActive = false;
+            return true;
+        }
+        return false;
+    }
 
     /**
      *
