@@ -31,10 +31,18 @@ public class Match {
         }
     }
 
+    /**
+     * Makes the match start.
+     */
     public void startMatch() {
         this.isOngoing = true;
     }
 
+    /**
+     *
+     * @return true if the match has started but not yet finished. Returns
+     * true also if the match is paused. Returns false otherwise.
+     */
     public boolean isOngoing() {
         return this.isOngoing;
     }
@@ -59,10 +67,15 @@ public class Match {
             this.notifyDuelObservers();
             this.incrementScore();
         } else {
+            //Only switch turns if the throw did not end a duel.
             this.switchPlayerUpNext();
         }
     }
 
+
+    /**
+     * Increments the score of whichever player is not on turn
+     */
     private void incrementScore() {
         if (this.playerWhoseTurnItIs == this.player1) {
             this.player2Score++;
@@ -71,6 +84,10 @@ public class Match {
         }
     }
 
+    /**
+     *
+     * @return Whether game is currently in a duel or not.
+     */
     public boolean isDuelling() {
         return throwSequence.getLast().hit();
     }
