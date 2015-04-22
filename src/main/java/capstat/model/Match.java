@@ -196,8 +196,13 @@ public class Match {
         //TODO
     }
 
+    /**
+     * @return An array representing the glasses in the match, starting with
+     * the glasses of Player 1, then the middle glass, and then the glasses
+     * of Player 2.
+     */
     public Match.Glass[] getGlasses() {
-        return null; //TODO
+        return this.glasses.clone();
     }
 
 
@@ -219,7 +224,7 @@ public class Match {
     public class MatchNotOverException extends Exception {
     }
 
-    private class Glass {
+    public class Glass {
         private boolean isActive = true;
 
         public boolean isActive() {
