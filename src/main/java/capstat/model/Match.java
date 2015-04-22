@@ -92,7 +92,7 @@ public class Match {
         return null;//TODO
     }
 
-    public User getPlayerUpNext() {
+    public User getPlayerWhoseTurnItIs() {
         return null;//TODO
     }
 

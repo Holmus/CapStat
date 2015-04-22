@@ -72,7 +72,7 @@ public class RecordMatchTest implements MatchOverObserver {
         assertEquals("Player 1 score is 1: ", 1, match.getPlayer1Score());
         assertEquals("Player 2 score is 0: ", 0, match.getPlayer2Score());
         assertEquals("Player 2's turn: ", match.getPlayer2(), match
-                .getPlayerUpNext());
+                .getPlayerWhoseTurnItIs());
 
         /*
         Player 2 turn.
