@@ -113,8 +113,8 @@ public class Match {
         return this.playerWhoseTurnItIs;
     }
 
-    public void addGameOverObserver(final MatchOverObserver recordMatchTest) {
-        //TODO
+    public void addMatchOverObserver(final MatchOverObserver observer) {
+        this.matchOverObservers.add(observer);
     }
 
     private void notifyDuelObservers() {

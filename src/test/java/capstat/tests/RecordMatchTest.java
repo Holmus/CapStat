@@ -93,7 +93,7 @@ public class RecordMatchTest implements MatchOverObserver {
 
     @Test
     public void winGameTest() {
-        match.addGameOverObserver(this);
+        match.addMatchOverObserver(this);
         /*
         Make player 2 win as fast as possible;
          */
