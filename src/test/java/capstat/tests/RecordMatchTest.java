@@ -5,7 +5,6 @@ import capstat.model.Match;
 import capstat.model.RankedMatch;
 import capstat.utils.GameFactory;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
