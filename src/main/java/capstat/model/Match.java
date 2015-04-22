@@ -94,23 +94,23 @@ public class Match {
 
 
     public int getPlayer1Score() {
-        return -1; //TODO
+        return this.player1Score;
     }
 
     public int getPlayer2Score() {
-        return -1; //TODO
+        return this.player2Score;
     }
 
     public User getPlayer1() {
-        return null;//TODO
+        return this.player1;
     }
 
     public User getPlayer2() {
-        return null;//TODO
+        return this.player2;
     }
 
     public User getPlayerWhoseTurnItIs() {
-        return null;//TODO
+        return this.playerWhoseTurnItIs;
     }
 
     public void addGameOverObserver(final MatchOverObserver recordMatchTest) {
