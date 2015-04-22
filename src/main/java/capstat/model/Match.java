@@ -2,7 +2,10 @@ package capstat.model;
 
 import capstat.utils.Throw;
 
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.Set;
 
 /**
  * @author hjorthjort
@@ -14,6 +17,7 @@ public class Match {
     private Match.Glass[] glasses;
     private User player1, player2, playerWhoseTurnItIs;
     private int player1Score, player2Score;
+    private Set<MatchOverObserver> matchOverObservers;
 
 
     public Match() {
@@ -26,6 +30,7 @@ public class Match {
         this.isOngoing = false;
         this.throwSequence = new LinkedList<Throw>();
         this.glasses = new Glass[numberOfGlasses];
+        this.matchOverObservers = new HashSet<>();
         for (int i = 0; i < numberOfGlasses; i++) {
             this.glasses[i] = new Match.Glass();
         }
@@ -113,6 +118,10 @@ public class Match {
         return this.playerWhoseTurnItIs;
     }
 
+    /**
+     * Add an observer that will be notified when the game is over.
+     * @param observer
+     */
     public void addMatchOverObserver(final MatchOverObserver observer) {
         this.matchOverObservers.add(observer);
     }
