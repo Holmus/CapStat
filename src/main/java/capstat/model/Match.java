@@ -12,6 +12,8 @@ public class Match {
     private boolean isOngoing;
     private LinkedList<Throw> throwSequence;
     private Match.Glass[] glasses;
+    private User player1, player2, playerWhoseTurnItIs;
+    private int player1Score, player2Score;
 
 
     public Match() {
@@ -44,6 +46,7 @@ public class Match {
         this.throwSequence.add(Throw.createHit());
         if (!this.isDuelling()) {
             this.notifyDuelObservers();
+            this.switchPlayerUpNext();
         }
     }
 
@@ -52,8 +55,19 @@ public class Match {
      */
     public void recordMiss() {
         this.throwSequence.add(Throw.createMiss());
-        if (!this.isDuelling()) {
+        if (this.isDuelling()) {
             this.notifyDuelObservers();
+            this.incrementScore();
+        } else {
+            this.switchPlayerUpNext();
+        }
+    }
+
+    private void incrementScore() {
+        if (this.playerWhoseTurnItIs == this.player1) {
+            this.player2Score++;
+        } else {
+            this.player1Score++;
         }
     }
 
@@ -103,6 +117,11 @@ public class Match {
      */
     public User getWinner() throws MatchNotOverException {
         return null; //TODO
+    }
+
+    private void switchPlayerUpNext() {
+        this.playerWhoseTurnItIs = this.playerWhoseTurnItIs == this.player1 ? player2 :
+                player1;
     }
 
     public class MatchNotOverException extends Exception {
