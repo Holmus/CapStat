@@ -208,12 +208,16 @@ public class Match {
 
     /**
      *
-     * @return
+     * @return the User who is the winner of the game. If the players have
+     * not been set, null will be returned.
      * @throws MatchNotOverException if and only if match is ongoing, which
      * can be checked by call to isOngoing.
      */
     public User getWinner() throws MatchNotOverException {
-        return null; //TODO
+        if (this.isOngoing) {
+            throw new MatchNotOverException();
+        }
+        return winner;
     }
 
     private void switchPlayerUpNext() {
