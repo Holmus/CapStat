@@ -35,6 +35,14 @@ public class Match {
         }
     }
 
+    public void setPlayer1(User player1) {
+        this.player1 = player1;
+    }
+
+    public void setPlayer2(User player2) {
+        this.player2 = player2;
+    }
+
     /**
      * Makes the match start.
      */
