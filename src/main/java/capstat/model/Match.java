@@ -65,18 +65,17 @@ public class Match {
      * Updates the game with a new Throw, which is a hit.
      */
     public void recordHit() {
-        this.throwSequence.add(Throw.createHit());
         if (!this.isDuelling()) {
             this.notifyDuelObservers();
             this.switchPlayerUpNext();
         }
+        this.throwSequence.add(Throw.createHit());
     }
 
     /**
      * Updates the game with a new throw, which is a miss.
      */
     public void recordMiss() {
-        this.throwSequence.add(Throw.createMiss());
         if (this.isDuelling()) {
             this.notifyDuelObservers();
             this.removeGlass();
@@ -85,6 +84,7 @@ public class Match {
             //Only switch turns if the throw did not end a duel.
             this.switchPlayerUpNext();
         }
+        this.throwSequence.add(Throw.createMiss());
     }
 
     /**
@@ -149,7 +149,8 @@ public class Match {
      * @return Whether game is currently in a duel or not.
      */
     public boolean isDuelling() {
-        return throwSequence.getLast().hit();
+        return !this.throwSequence.isEmpty() && this.throwSequence
+                .getLast().hit();
     }
 
 
