@@ -67,8 +67,8 @@ public class Match {
     public void recordHit() {
         if (!this.isDuelling()) {
             this.notifyDuelObservers();
-            this.switchPlayerUpNext();
         }
+        this.switchPlayerUpNext();
         this.throwSequence.add(Throw.createHit());
     }
 
