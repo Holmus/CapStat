@@ -15,7 +15,8 @@ public class Match {
     private boolean isOngoing;
     private LinkedList<Throw> throwSequence;
     private Match.Glass[] glasses;
-    private User player1, player2, playerWhoseTurnItIs, winner;;
+    private User player1, player2, winner;
+    private int playerWhoseTurnItIs;
     private Set<MatchOverObserver> matchOverObservers;
 
 
@@ -30,6 +31,7 @@ public class Match {
         this.throwSequence = new LinkedList<Throw>();
         this.glasses = new Glass[numberOfGlasses];
         this.matchOverObservers = new HashSet<>();
+        this.playerWhoseTurnItIs = 1;
         for (int i = 0; i < numberOfGlasses; i++) {
             this.glasses[i] = new Match.Glass();
         }
@@ -101,7 +103,7 @@ public class Match {
 
 
     private void removeGlass() {
-        if (this.playerWhoseTurnItIs == player1) {
+        if (this.playerWhoseTurnItIs == 1) {
             this.removeNextGlassPlayer1();
         } else {
             this.removeNextGlassPlayer2();
@@ -178,7 +180,10 @@ public class Match {
     }
 
     public User getPlayerWhoseTurnItIs() {
-        return this.playerWhoseTurnItIs;
+        if (playerWhoseTurnItIs == 1) {
+            return player1;
+        }
+        return player2;
     }
 
     /**
@@ -229,8 +234,8 @@ public class Match {
     }
 
     private void switchPlayerUpNext() {
-        this.playerWhoseTurnItIs = this.playerWhoseTurnItIs == this.player1 ? player2 :
-                player1;
+        this.playerWhoseTurnItIs = this.playerWhoseTurnItIs == 1 ? 2 :
+                1;
     }
 
     public class MatchNotOverException extends Exception {
