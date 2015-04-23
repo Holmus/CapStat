@@ -248,4 +248,23 @@ public class Match {
             return isActive;
         }
     }
+
+    public String toString() {
+        String p1 = player1 == null ? "Not set" : player1.getNickname();
+        String p2 = player2 == null ? "Not set" : player2.getNickname();
+        String gl = "  ";
+        for (int i = 0; i < this.glasses.length; i++) {
+            if (this.glasses[i].isActive) gl = gl + "O    ";
+            else gl = gl + "X     ";
+        }
+        int spaces = gl.length() - (p1.length() + p2.length()) - 1;
+        String sp = "";
+        for (int i = 0; i < spaces; i++) {
+            sp = sp + " ";
+        }
+        if (this.playerWhoseTurnItIs == 1) p1 = p1 + "*";
+        else p2 = "*" + p2;
+
+        return p1 + sp + p2 + "\n" + gl;
+    }
 }
