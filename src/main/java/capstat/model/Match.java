@@ -18,6 +18,7 @@ public class Match {
     private User player1, player2, winner;
     private int playerWhoseTurnItIs;
     private Set<MatchOverObserver> matchOverObservers;
+    private Set<DuelObserver> duelObservers;
 
 
     public Match() {
@@ -31,6 +32,7 @@ public class Match {
         this.throwSequence = new LinkedList<Throw>();
         this.glasses = new Glass[numberOfGlasses];
         this.matchOverObservers = new HashSet<>();
+        this.duelObservers = new HashSet<>();
         this.playerWhoseTurnItIs = 1;
         for (int i = 0; i < numberOfGlasses; i++) {
             this.glasses[i] = new Match.Glass();
@@ -66,7 +68,7 @@ public class Match {
      */
     public void recordHit() {
         if (!this.isDuelling()) {
-            this.notifyDuelObservers();
+            this.notifyDuelObserversDuelStarted();
         }
         this.switchPlayerUpNext();
         this.throwSequence.add(Throw.createHit());
@@ -77,7 +79,7 @@ public class Match {
      */
     public void recordMiss() {
         if (this.isDuelling()) {
-            this.notifyDuelObservers();
+            this.notifyDuelObserversDuelEnded();
             this.removeGlass();
             this.endMatchIfNecessary();
         } else {
@@ -206,8 +208,22 @@ public class Match {
         }
     }
 
-    private void notifyDuelObservers() {
-        //TODO
+    public void addDuelObserver(final DuelObserver observer) {
+        this.duelObservers.add(observer);
+    }
+
+    private void notifyDuelObserversDuelStarted() {
+        Iterator<DuelObserver> iterator = this.duelObservers.iterator();
+        while (iterator.hasNext()) {
+            iterator.next().duelStarted();
+        }
+    }
+
+    private void notifyDuelObserversDuelEnded() {
+        Iterator<DuelObserver> iterator = this.duelObservers.iterator();
+        while (iterator.hasNext()) {
+            iterator.next().duelEnded();
+        }
     }
 
     /**
