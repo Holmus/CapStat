@@ -1,0 +1,37 @@
+apply plugin: "java"
+apply plugin: "application"
+
+mainClassName = "capstat.Main"
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // Normal dependencies
+    compile group: "commons-codec", name: "commons-codec", version: "1.10"
+
+    // Test dependencies
+    // NOTE: these dependencies are _additional_ dependencies used for compiling
+    // and running the tests. All normal dependencies are also available while
+    // running the tests, so they do not need to be specified here as well.
+    testCompile group: "junit", name: "junit", version: "4.11"
+}
+
+jar {
+    baseName = "capstat"
+    version = "0.0.1"
+    manifest {
+        attributes "Main-Class": "$mainClassName"
+    }
+}
+
+run {
+    standardInput = System.in
+}
+
+test {
+    testLogging {
+        exceptionFormat = "full"
+    }
+}
