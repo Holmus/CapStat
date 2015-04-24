@@ -19,6 +19,10 @@ public class ThrowSequence {
                 startingPlayerState);
     }
 
+    public void add(Match.Throw newThrow) {
+        this.currentSequence.add(newThrow);
+    }
+
     private class PartialSequence {
         private Match.Glass[] glasses;
         private int startingPlayer;
@@ -29,6 +33,10 @@ public class ThrowSequence {
             this.glasses = glasses;
             this.startingPlayer = startingPlayer;
             this.sequence = new LinkedList<>();
+        }
+
+        private void add(Match.Throw newThrow) {
+            this.sequence.add(newThrow);
         }
     }
 }
