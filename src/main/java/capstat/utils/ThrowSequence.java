@@ -11,7 +11,7 @@ import java.util.Stack;
  */
 public class ThrowSequence {
 
-    private List<PartialSequence> sequences;
+    private LinkedList<PartialSequence> sequences;
     private PartialSequence currentSequence;
     private Stack<Match.Throw> undoStack;
 
@@ -75,7 +75,18 @@ public class ThrowSequence {
         return !this.undoStack.empty();
     }
 
-    private class PartialSequence {
+    /**
+     * Returns a deep copy of the list representing the partial sequences of
+     * this ThrowSequence.
+     * @return
+     */
+    public List<PartialSequence> getSequences() {
+        LinkedList<PartialSequence> clone = new LinkedList<>(this.sequences);
+        clone.add(this.currentSequence.clone());
+        return clone;
+    }
+
+    public class PartialSequence implements Cloneable {
         private Match.Glass[] glasses;
         private int startingPlayer;
         private LinkedList<Match.Throw> sequence;
@@ -85,6 +96,12 @@ public class ThrowSequence {
             this.glasses = glasses;
             this.startingPlayer = startingPlayer;
             this.sequence = new LinkedList<>();
+        }
+
+        private PartialSequence(final PartialSequence partialSequence) {
+            this.glasses = partialSequence.glasses.clone();
+            this.startingPlayer = partialSequence.startingPlayer;
+            this.sequence = new LinkedList<>(partialSequence.sequence);
         }
 
         private void add(Match.Throw newThrow) {
@@ -100,14 +117,30 @@ public class ThrowSequence {
         }
 
         public Match.Glass[] getGlasses() {
-            return glasses;
+            return glasses.clone();
         }
 
         public int getStartingPlayer() {
             return startingPlayer;
         }
+
+        /**
+         *
+         * @return a deep copy of the throw sequence of this partial sequence
+         */
+        public List<Match.Throw> getSequence() {
+            return new LinkedList<>(this.sequence);
+        }
+
+        /**
+         *
+         * @return a deep copy of this sequence;
+         */
+        public PartialSequence clone() {
+            return new PartialSequence(this);
+        }
     }
 
-    private class EmptySequenceException extends RuntimeException {
+    public class EmptySequenceException extends RuntimeException {
     }
 }
