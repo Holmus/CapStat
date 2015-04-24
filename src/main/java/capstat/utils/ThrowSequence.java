@@ -4,6 +4,7 @@ import capstat.model.Match;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Stack;
 
 /**
  * @author hjorthjort
@@ -12,11 +13,13 @@ public class ThrowSequence {
 
     private List<PartialSequence> sequences;
     private PartialSequence currentSequence;
+    private Stack<Match.Throw> undoStack;
 
     public ThrowSequence(Match.Glass[] glassesState, int startingPlayerState) {
         this.sequences = new LinkedList<>();
         this.currentSequence = new PartialSequence(glassesState,
                 startingPlayerState);
+        this.undoStack = new Stack<>();
     }
 
     public void add(Match.Throw newThrow) {
@@ -39,6 +42,19 @@ public class ThrowSequence {
         this.sequences.add(currentSequence);
         this.currentSequence = new PartialSequence(glassesState,
                 startingPlayerState);
+        this.undoStack.clear();
+    }
+
+    /**
+     *
+     * @throws EmptySequenceException if the current sequence is empty, even
+     * if there are previous sequences.
+     */
+    public void rewind() {
+        if (currentSequence.isEmpty()) throw new EmptySequenceException();
+        //Removes last added element from current sequence and pushes it to
+        // undoStack.
+        this.undoStack.push(this.currentSequence.popLast());
     }
 
     private class PartialSequence {
@@ -56,5 +72,16 @@ public class ThrowSequence {
         private void add(Match.Throw newThrow) {
             this.sequence.add(newThrow);
         }
+
+        private boolean isEmpty() {
+            return sequence.isEmpty();
+        }
+
+        private Match.Throw popLast() {
+            return this.sequence.removeLast();
+        }
+    }
+
+    private class EmptySequenceException extends RuntimeException {
     }
 }
