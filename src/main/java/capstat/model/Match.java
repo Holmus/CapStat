@@ -1,7 +1,5 @@
 package capstat.model;
 
-import capstat.utils.Throw;
-
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -283,5 +281,37 @@ public class Match {
         else p2 = "*" + p2;
 
         return p1 + sp + p2 + "\n" + gl;
+    }
+
+    /**
+     * A class representing a Throw. It in turn has two inner classes: one
+     * representing a hit and one representing a miss. These are not shown to
+     * the user, and there will always be only one objcet of each class,
+     * which can be retrieved by the create-methods in Throw.
+     */
+    public abstract static class Throw {
+
+        private final static Throw HIT = new Hit();
+        private final static Throw MISS = new Miss();
+
+        public abstract boolean hit();
+
+        private static class Hit extends Throw {
+            @Override
+            public boolean hit() {
+                return true;
+            }
+        }
+        private static class Miss extends Throw {
+            @Override
+            public boolean hit() {
+                return false;
+            }
+        }
+
+        public static Throw createHit() { return HIT; }
+        public static Throw createMiss() {
+            return MISS;
+        }
     }
 }
