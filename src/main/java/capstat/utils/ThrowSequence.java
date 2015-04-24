@@ -57,6 +57,24 @@ public class ThrowSequence {
         this.undoStack.push(this.currentSequence.popLast());
     }
 
+    /**
+     *
+     * @throws EmptySequenceException if the current sequence is empty, even
+     * if there are previous sequences.
+     */
+    public void forward() {
+        if(undoStack.empty()) throw new EmptySequenceException();
+        this.currentSequence.add(this.undoStack.pop());
+    }
+
+    public boolean canRewind() {
+        return !this.currentSequence.isEmpty();
+    }
+
+    public boolean canForward() {
+        return !this.undoStack.empty();
+    }
+
     private class PartialSequence {
         private Match.Glass[] glasses;
         private int startingPlayer;
