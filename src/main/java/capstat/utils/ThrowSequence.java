@@ -80,6 +80,14 @@ public class ThrowSequence {
         private Match.Throw popLast() {
             return this.sequence.removeLast();
         }
+
+        public Match.Glass[] getGlasses() {
+            return glasses;
+        }
+
+        public int getStartingPlayer() {
+            return startingPlayer;
+        }
     }
 
     private class EmptySequenceException extends RuntimeException {
