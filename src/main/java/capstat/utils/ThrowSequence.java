@@ -3,11 +3,21 @@ package capstat.utils;
 import capstat.model.Match;
 
 import java.util.LinkedList;
+import java.util.List;
 
 /**
  * @author hjorthjort
  */
 public class ThrowSequence {
+
+    private List<PartialSequence> sequences;
+    private PartialSequence currentSequence;
+
+    public ThrowSequence(Match.Glass[] glassesState, int startingPlayerState) {
+        this.sequences = new LinkedList<>();
+        this.currentSequence = new PartialSequence(glassesState,
+                startingPlayerState);
+    }
 
     private class PartialSequence {
         private Match.Glass[] glasses;
