@@ -15,7 +15,8 @@ public class ThrowSequence {
     private PartialSequence currentSequence;
     private Stack<Match.Throw> undoStack;
 
-    public ThrowSequence(Match.Glass[] glassesState, int startingPlayerState,
+    public ThrowSequence(Match.Glass[] glassesState, Match.Player
+            startingPlayerState,
      boolean throwBeforeWasHit) {
         this.sequences = new LinkedList<>();
         this.currentSequence = new PartialSequence(glassesState,
@@ -36,7 +37,7 @@ public class ThrowSequence {
      * @throws IllegalArgumentException if glassesState does not represent a
      * valid state, or startingPlayerState is not 1 or 2.
      */
-    public void updateRecordState(Match.Glass[] glassesState, int
+    public void updateRecordState(Match.Glass[] glassesState, Match.Player
             startingPlayerState, boolean throwBeforeWasHit) {
         //TODO Implement throwing exceptions, with method for checking if a
         // glasses state is valid.
@@ -90,7 +91,7 @@ public class ThrowSequence {
         //If the sequence is not empty, get the last element of it and check
         // whether it was a hit.
         List<Match.Throw> list = this.currentSequence.getSequence();
-        return list.get(list.size()-1).hit();
+        return list.get(list.size()-1) == Match.Throw.HIT;
     }
 
     /**
@@ -106,11 +107,11 @@ public class ThrowSequence {
 
     public class PartialSequence implements Cloneable {
         private Match.Glass[] glasses;
-        private int startingPlayer;
+        private Match.Player startingPlayer;
         private boolean throwBeforeWasHit;
         private LinkedList<Match.Throw> sequence;
 
-        private PartialSequence(Match.Glass[] glasses, int
+        private PartialSequence(Match.Glass[] glasses, Match.Player
                 startingPlayer, boolean throwBeforeWasHit) {
             this.glasses = glasses;
             this.startingPlayer = startingPlayer;
@@ -141,7 +142,7 @@ public class ThrowSequence {
             return glasses.clone();
         }
 
-        public int getStartingPlayer() {
+        public Match.Player getStartingPlayer() {
             return startingPlayer;
         }
 

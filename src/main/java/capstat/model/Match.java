@@ -1,8 +1,9 @@
 package capstat.model;
 
+import capstat.utils.ThrowSequence;
+
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.Set;
 
 /**
@@ -18,7 +19,7 @@ import java.util.Set;
 public class Match {
 
     private boolean isOngoing;
-    private LinkedList<Throw> throwSequence;
+    private ThrowSequence throwSequence;
     private Match.Glass[] glasses;
     private User player1, player2, winner;
     private Player roundWinner, playerWhoseTurnItIs;
@@ -34,7 +35,6 @@ public class Match {
         }
         this.numberOfGlasses = numberOfGlasses;
         this.isOngoing = false;
-        this.throwSequence = new LinkedList<Throw>();
         this.roundsToWin = roundsToWin;
         this.matchOverObservers = new HashSet<>();
         this.duelObservers = new HashSet<>();
@@ -42,6 +42,8 @@ public class Match {
         p1RoundsWon = 0;
         p2RoundsWon = 0;
         createGlasses();
+        this.throwSequence = new ThrowSequence(this.glasses, this
+                .playerWhoseTurnItIs, false);
     }
 
     public void setPlayer1(User player1) {
@@ -295,6 +297,10 @@ public class Match {
      */
     public Match.Glass[] getGlasses() {
         return this.glasses.clone();
+    }
+    public void manuallyChangeGameState(Match.Glass[] glasses, Player
+            startingPlayer, boolean lastThrowWasHit) {
+        this.throwSequence.updateRecordState(glasses, startingPlayer, lastThrowWasHit);
     }
 
     /**
