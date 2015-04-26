@@ -105,6 +105,11 @@ public class ThrowSequence {
         return clone;
     }
 
+
+    /**
+     * Objects of this class are immutable, except for by instances of
+     * ThrowSequence.
+     */
     public class PartialSequence implements Cloneable {
         private Match.Glass[] glasses;
         private Match.Player startingPlayer;
