@@ -214,8 +214,7 @@ public class Match {
      * @return Whether game is currently in a duel or not.
      */
     public boolean isDuelling() {
-            return !this.throwSequence.isEmpty() && this.throwSequence
-                    .getLast() == Throw.HIT && this.isOngoing;
+        return this.isOngoing && this.throwSequence.lastThrowWasHit();
     }
 
     public int getPlayer1Score() {

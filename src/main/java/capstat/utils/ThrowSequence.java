@@ -15,10 +15,11 @@ public class ThrowSequence {
     private PartialSequence currentSequence;
     private Stack<Match.Throw> undoStack;
 
-    public ThrowSequence(Match.Glass[] glassesState, int startingPlayerState) {
+    public ThrowSequence(Match.Glass[] glassesState, int startingPlayerState,
+     boolean throwBeforeWasHit) {
         this.sequences = new LinkedList<>();
         this.currentSequence = new PartialSequence(glassesState,
-                startingPlayerState);
+                startingPlayerState, throwBeforeWasHit);
         this.undoStack = new Stack<>();
     }
 
@@ -36,12 +37,12 @@ public class ThrowSequence {
      * valid state, or startingPlayerState is not 1 or 2.
      */
     public void updateRecordState(Match.Glass[] glassesState, int
-            startingPlayerState) {
+            startingPlayerState, boolean throwBeforeWasHit) {
         //TODO Implement throwing exceptions, with method for checking if a
         // glasses state is valid.
         this.sequences.add(currentSequence);
         this.currentSequence = new PartialSequence(glassesState,
-                startingPlayerState);
+                startingPlayerState, throwBeforeWasHit);
         this.undoStack.clear();
     }
 
@@ -76,6 +77,23 @@ public class ThrowSequence {
     }
 
     /**
+     * This has great importance for knowing whether the game is in a duel.
+     *
+     * @return whether the last throw in the sequence was a hit or not.
+     */
+    public boolean lastThrowWasHit() {
+        //If the current sequence is empty, check whether last throw was a
+        // hit, which would indicate the game is in a duel.
+        if (this.currentSequence.isEmpty()) {
+            return this.currentSequence.throwBeforeWasHit();
+        }
+        //If the sequence is not empty, get the last element of it and check
+        // whether it was a hit.
+        List<Match.Throw> list = this.currentSequence.getSequence();
+        return list.get(list.size()-1).hit();
+    }
+
+    /**
      * Returns a deep copy of the list representing the partial sequences of
      * this ThrowSequence.
      * @return
@@ -89,18 +107,21 @@ public class ThrowSequence {
     public class PartialSequence implements Cloneable {
         private Match.Glass[] glasses;
         private int startingPlayer;
+        private boolean throwBeforeWasHit;
         private LinkedList<Match.Throw> sequence;
 
         private PartialSequence(Match.Glass[] glasses, int
-                startingPlayer) {
+                startingPlayer, boolean throwBeforeWasHit) {
             this.glasses = glasses;
             this.startingPlayer = startingPlayer;
+            this.throwBeforeWasHit = throwBeforeWasHit;
             this.sequence = new LinkedList<>();
         }
 
         private PartialSequence(final PartialSequence partialSequence) {
             this.glasses = partialSequence.glasses.clone();
             this.startingPlayer = partialSequence.startingPlayer;
+            this.throwBeforeWasHit = partialSequence.throwBeforeWasHit;
             this.sequence = new LinkedList<>(partialSequence.sequence);
         }
 
@@ -122,6 +143,10 @@ public class ThrowSequence {
 
         public int getStartingPlayer() {
             return startingPlayer;
+        }
+
+        public boolean throwBeforeWasHit() {
+            return throwBeforeWasHit;
         }
 
         /**
