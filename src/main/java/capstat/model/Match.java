@@ -30,22 +30,6 @@ public class Match {
     public Match() {
         this(7, 2);
     }
-
-    public Match(int numberOfGlasses) {
-        if (numberOfGlasses % 2 == 0)
-            throw new IllegalArgumentException("Glasses must be an odd number");
-        this.isOngoing = false;
-        this.throwSequence = new LinkedList<Throw>();
-        this.glasses = new Glass[numberOfGlasses];
-        this.roundsToWin = 0;
-        this.matchOverObservers = new HashSet<>();
-        this.duelObservers = new HashSet<>();
-        this.playerWhoseTurnItIs = 1;
-        for (int i = 0; i < numberOfGlasses; i++) {
-            this.glasses[i] = new Match.Glass();
-        }
-    }
-
     public Match(int numberOfGlasses, int roundsToWin) {
         if (numberOfGlasses % 2 == 0)
             throw new IllegalArgumentException("Glasses must be an odd number");
@@ -134,12 +118,14 @@ public class Match {
     }
 
     private void endMatchIfNecessary() {
-        if (this.roundsToWin == 0) endMatch();
         if (p1RoundsWon == this.roundsToWin && p2RoundsWon == this.roundsToWin) endMatch();
     }
 
     private void endMatch() {
         this.isOngoing = false;
+        if(this.getPlayer1Score() == this.getPlayer2Score()){
+            throw new ArithmeticException("We've dun goofed");
+        }
         this.winner = this.getPlayer1Score() > this.getPlayer2Score() ? this
                 .player1 : this.player2;
         this.notifyMatchOverObservers();
