@@ -6,7 +6,13 @@ import java.util.LinkedList;
 import java.util.Set;
 
 /**
- * @author hjorthjort
+ * @author hjorthjort, holmus
+ */
+
+/**
+ * ToDo: Update constructors when Enum for Player1, Player2 is implemented.
+ * ToDo: Set default number of rounds to win (2?)
+ * ToDo: Bad implementation of GameOver, work out better solution
  */
 public class Match {
 
@@ -17,6 +23,7 @@ public class Match {
     private int playerWhoseTurnItIs;
     private Set<MatchOverObserver> matchOverObservers;
     private Set<DuelObserver> duelObservers;
+    private int p1RoundsWon, p2RoundsWon;
 
 
     public Match() {
@@ -32,6 +39,24 @@ public class Match {
         this.matchOverObservers = new HashSet<>();
         this.duelObservers = new HashSet<>();
         this.playerWhoseTurnItIs = 1;
+        for (int i = 0; i < numberOfGlasses; i++) {
+            this.glasses[i] = new Match.Glass();
+        }
+    }
+    public Match(int numberOfGlasses, int roundsToWin){
+        if (numberOfGlasses % 2 == 0)
+            throw new IllegalArgumentException("Glasses must be an odd number");
+        if (roundsToWin < 1){
+            throw new IllegalArgumentException("Rounds to win must be set > 1")
+        }
+        this.isOngoing = false;
+        this.throwSequence = new LinkedList<Throw>();
+        this.glasses = new Glass[numberOfGlasses];
+        this.matchOverObservers = new HashSet<>();
+        this.duelObservers = new HashSet<>();
+        this.playerWhoseTurnItIs = 1;
+        p1RoundsWon = 0;
+        p2RoundsWon = 0;
         for (int i = 0; i < numberOfGlasses; i++) {
             this.glasses[i] = new Match.Glass();
         }
@@ -93,7 +118,6 @@ public class Match {
     private void endMatchIfNecessary() {
         if(!this.glasses[this.glasses.length/2].isActive) this.endMatch();
     }
-
     private void endMatch() {
         this.isOngoing = false;
         this.winner = this.getPlayer1Score() > this.getPlayer2Score() ? this
