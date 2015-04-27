@@ -120,8 +120,8 @@ public class Match {
     private void endRoundIfNecessary() {
         if (!this.glasses[this.glasses.length / 2].isActive) {
             updateRoundWinner();
-            System.out.println("Roundwinner is: " + this.winner.getName());
             endMatchIfNecessary();
+            System.out.println("Roundwinner is: " + this.winner.getNickname());
             createGlasses();
         }
     }
