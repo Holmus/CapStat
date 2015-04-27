@@ -6,7 +6,14 @@ import java.util.LinkedList;
 import java.util.Set;
 
 /**
- * @author hjorthjort
+ * @author hjorthjort, holmus
+ */
+
+/**
+ * ToDo: Update constructors when Enum for Player1, Player2 is implemented.
+ * ToDo: Set default number of rounds to win (2?)
+ * ToDo: Bad implementation of GameOver, work out better solution
+ * ToDo: Reset state of glasses after round is over
  */
 public class Match {
 
@@ -17,24 +24,28 @@ public class Match {
     private int playerWhoseTurnItIs;
     private Set<MatchOverObserver> matchOverObservers;
     private Set<DuelObserver> duelObservers;
+    private int p1RoundsWon, p2RoundsWon, roundsToWin, numberOfGlasses;
 
 
     public Match() {
-        this(7);
+        this(7, 2);
     }
-
-    public Match(int numberOfGlasses) {
+    public Match(int numberOfGlasses, int roundsToWin) {
         if (numberOfGlasses % 2 == 0)
             throw new IllegalArgumentException("Glasses must be an odd number");
+        if (roundsToWin < 1) {
+            throw new IllegalArgumentException("Rounds to win must be set > 1");
+        }
+        this.numberOfGlasses = numberOfGlasses;
         this.isOngoing = false;
         this.throwSequence = new LinkedList<Throw>();
-        this.glasses = new Glass[numberOfGlasses];
+        this.roundsToWin = roundsToWin;
         this.matchOverObservers = new HashSet<>();
         this.duelObservers = new HashSet<>();
         this.playerWhoseTurnItIs = 1;
-        for (int i = 0; i < numberOfGlasses; i++) {
-            this.glasses[i] = new Match.Glass();
-        }
+        p1RoundsWon = 0;
+        p2RoundsWon = 0;
+        createGlasses();
     }
 
     public void setPlayer1(User player1) {
@@ -53,7 +64,6 @@ public class Match {
     }
 
     /**
-     *
      * @return true if the match has started but not yet finished. Returns
      * true also if the match is paused. Returns false otherwise.
      */
@@ -79,7 +89,7 @@ public class Match {
         if (this.isDuelling()) {
             this.notifyDuelObserversDuelEnded();
             this.removeGlass();
-            this.endMatchIfNecessary();
+            this.endRoundIfNecessary();
         } else {
             //Only switch turns if the throw did not end a duel.
             this.switchPlayerUpNext();
@@ -88,14 +98,34 @@ public class Match {
     }
 
     /**
-     * Checks if middle glass is unactive and ends game if it is.
+     * Checks if middle glass is inactive and ends game if it is.
      */
+    //ToDo: Reset state of glasses after round is over
+    private void endRoundIfNecessary() {
+        if (!this.glasses[this.glasses.length / 2].isActive) {
+            updateRoundWinner();
+            endMatchIfNecessary();
+            System.out.println("Roundwinner is: " + this.winner.getNickname());
+            createGlasses();
+        }
+    }
+
+    private void updateRoundWinner() {
+        this.winner = this.getPlayer1Score() > this.getPlayer2Score() ? this
+                .player1 : this.player2;
+        if (this.winner == player1) p1RoundsWon = p1RoundsWon + 1;
+        if (this.winner == player1) p2RoundsWon = p2RoundsWon + 1;
+    }
+
     private void endMatchIfNecessary() {
-        if(!this.glasses[this.glasses.length/2].isActive) this.endMatch();
+        if (p1RoundsWon == this.roundsToWin && p2RoundsWon == this.roundsToWin) endMatch();
     }
 
     private void endMatch() {
         this.isOngoing = false;
+        if(this.getPlayer1Score() == this.getPlayer2Score()){
+            throw new ArithmeticException("We've dun goofed");
+        }
         this.winner = this.getPlayer1Score() > this.getPlayer2Score() ? this
                 .player1 : this.player2;
         this.notifyMatchOverObservers();
@@ -110,12 +140,19 @@ public class Match {
         }
     }
 
+    private void createGlasses() {
+        this.glasses = new Glass[this.numberOfGlasses];
+        for (int i = 0; i < this.numberOfGlasses; i++) {
+            this.glasses[i] = new Match.Glass();
+        }
+    }
+
     /**
      * Finds next active glass on player 1's side and removes it. Middle
      * glass can be removed.
      */
     private void removeNextGlassPlayer1() {
-        for (int i = 0; i <= (this.glasses.length/2); i++) {
+        for (int i = 0; i <= (this.glasses.length / 2); i++) {
             if (this.removeSpecificGlass(i)) break;
         }
     }
@@ -125,7 +162,7 @@ public class Match {
      * glass can be removed.
      */
     private void removeNextGlassPlayer2() {
-        for (int i = this.glasses.length-1; i >= this.glasses.length/2; i--) {
+        for (int i = this.glasses.length - 1; i >= this.glasses.length / 2; i--) {
             if (this.removeSpecificGlass(i)) break;
         }
     }
@@ -133,6 +170,7 @@ public class Match {
     /**
      * Sets specified glass to unactive if it was active, otherwise does
      * nothing.
+     *
      * @param i
      * @return true if glass was removed, false otherwise.
      */
@@ -145,7 +183,6 @@ public class Match {
     }
 
     /**
-     *
      * @return Whether game is currently in a duel or not.
      */
     public boolean isDuelling() {
@@ -156,7 +193,7 @@ public class Match {
 
     public int getPlayer1Score() {
         int score = 0;
-        for (int i = this.glasses.length-1; i >= this.glasses.length/2; i--) {
+        for (int i = this.glasses.length - 1; i >= this.glasses.length / 2; i--) {
             if (this.glasses[i].isActive()) break;
             else score++;
         }
@@ -165,7 +202,7 @@ public class Match {
 
     public int getPlayer2Score() {
         int score = 0;
-        for (int i = 0; i <= this.glasses.length/2; i++) {
+        for (int i = 0; i <= this.glasses.length / 2; i++) {
             if (this.glasses[i].isActive()) break;
             else score++;
         }
@@ -189,6 +226,7 @@ public class Match {
 
     /**
      * Add an observer that will be notified when the game is over.
+     *
      * @param observer
      */
     public void addMatchOverObserver(final MatchOverObserver observer) {
@@ -235,11 +273,10 @@ public class Match {
 
 
     /**
-     *
      * @return the User who is the winner of the game. If the players have
      * not been set, null will be returned.
      * @throws MatchNotOverException if and only if match is ongoing, which
-     * can be checked by call to isOngoing.
+     *                               can be checked by call to isOngoing.
      */
     public User getWinner() throws MatchNotOverException {
         if (this.isOngoing) {
