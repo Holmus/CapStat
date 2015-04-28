@@ -26,7 +26,6 @@ public class Match {
     private Set<DuelObserver> duelObservers;
     private int p1RoundsWon, p2RoundsWon, roundsToWin, numberOfGlasses;
 
-
     public Match() {
         this(7, 2);
     }
@@ -131,7 +130,6 @@ public class Match {
         this.notifyMatchOverObservers();
     }
 
-
     private void removeGlass() {
         if (this.playerWhoseTurnItIs == 1) {
             this.removeNextGlassPlayer1();
@@ -190,7 +188,6 @@ public class Match {
                 .getLast().hit();
     }
 
-
     public int getPlayer1Score() {
         int score = 0;
         for (int i = this.glasses.length - 1; i >= this.glasses.length / 2; i--) {
@@ -210,18 +207,18 @@ public class Match {
     }
 
     public User getPlayer1() {
-        return this.player1;
+        return new User(this.player1);
     }
 
     public User getPlayer2() {
-        return this.player2;
+        return new User(this.player2);
     }
 
     public User getPlayerWhoseTurnItIs() {
         if (playerWhoseTurnItIs == 1) {
-            return player1;
+            return new User(this.player1);
         }
-        return player2;
+        return new User(this.player2);
     }
 
     /**
@@ -270,7 +267,6 @@ public class Match {
     public Match.Glass[] getGlasses() {
         return this.glasses.clone();
     }
-
 
     /**
      * @return the User who is the winner of the game. If the players have
