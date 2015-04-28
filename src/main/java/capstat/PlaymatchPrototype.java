@@ -1,7 +1,7 @@
 package capstat;
 
 import capstat.model.*;
-import capstat.utils.GameFactory;
+import capstat.utils.MatchFactory;
 import java.util.Scanner;
 
 /** ToDo: Add functionality for when game is over
@@ -22,7 +22,7 @@ import java.util.Scanner;
 //Method to start the match, register result and quit
 public class PlaymatchPrototype implements MatchOverObserver, DuelObserver {
 
-    private static Match match = (new GameFactory()).createDefaultMatch();
+    private static Match match = (new MatchFactory()).createDefaultMatch();
 
     public static void main(String[] args) {
         match.addMatchOverObserver(new PlaymatchPrototype());
