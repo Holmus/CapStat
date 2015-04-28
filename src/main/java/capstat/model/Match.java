@@ -26,10 +26,6 @@ public class Match {
     private Set<DuelObserver> duelObservers;
     private int p1RoundsWon, p2RoundsWon, roundsToWin, numberOfGlasses;
 
-
-    public Match() {
-        this(7, 2);
-    }
     public Match(int numberOfGlasses, int roundsToWin) {
         if (numberOfGlasses % 2 == 0)
             throw new IllegalArgumentException("Glasses must be an odd number");
