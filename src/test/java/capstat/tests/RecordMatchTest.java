@@ -3,7 +3,7 @@ package capstat.tests;
 import capstat.model.MatchOverObserver;
 import capstat.model.Match;
 import capstat.model.RankedMatch;
-import capstat.utils.GameFactory;
+import capstat.utils.MatchFactory;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -16,7 +16,7 @@ import static org.junit.Assert.assertFalse;
 public class RecordMatchTest implements MatchOverObserver {
 
     private Match match;
-    private GameFactory gf = new GameFactory();
+    private MatchFactory gf = new MatchFactory();
     private boolean gameIsOver;
 
     @Before

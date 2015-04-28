@@ -6,8 +6,8 @@ import capstat.model.RankedMatch;
 /**
  * @author hjorthjort
  */
-public class GameFactory {
+public class MatchFactory {
     public Match createDefaultMatch() {
-        return new RankedMatch();
+        return new Match(7,2);
     }
 }
