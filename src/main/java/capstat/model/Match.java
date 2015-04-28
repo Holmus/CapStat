@@ -56,6 +56,26 @@ public class Match {
     }
 
     /**
+     * Gives the starting player of a match, according to caps rules. The rules
+     * says that the "youngest" player starts. See ChalmersAge.compareTo for
+     * more details.
+     * @return the starting player of this match
+     */
+    public User getStartingPlayer() {
+        // Set player 1 as default player
+        User user = this.player1;
+        ChalmersAge age1 = this.player1.getChalmersAge();
+        ChalmersAge age2 = this.player2.getChalmersAge();
+        int comparison = age1.compareTo(age2);
+
+        // Only change the starting player if player 1 is "older" than player 2
+        if (comparison > 0)
+            user = this.player2;
+
+        return new User(user);
+    }
+
+    /**
      * Makes the match start.
      */
     public void startMatch() {
