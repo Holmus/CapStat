@@ -79,4 +79,19 @@ public class User {
         return new ELORanking(this.ranking);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || this.getClass() != o.getClass()) return false;
+
+        User user = (User) o;
+
+        if (!this.nickname.equals(user.getNickname())) return false;
+        if (!this.name.equals(user.getName())) return false;
+        if (!this.hashedPassword.equals(user.getHashedPassword())) return false;
+        if (!this.chalmersAge.equals(user.getChalmersAge())) return false;
+        if (!this.ranking.equals(user.getRanking())) return false;
+
+        return true;
+    }
 }

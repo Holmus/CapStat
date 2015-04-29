@@ -61,22 +61,18 @@ public class Match {
      * more details.
      * @return the starting player of this match
      */
-    // public User getStartingPlayer() {
-    public int getStartingPlayer() {
+    public User getStartingPlayer() {
         // Suppose player 1 is younger
-        // User user = this.player1;
-        int u = 1;
+        User user = this.player1;
         ChalmersAge age1 = this.player1.getChalmersAge();
         ChalmersAge age2 = this.player2.getChalmersAge();
         int comparison = age1.compareTo(age2);
 
         // Only change the starting player if player 1 is "older" than player 2
         if (comparison > 0)
-            // user = this.player2;
-            u = 2;
+            user = this.player2;
 
-        // return new User(user);
-        return u;
+        return new User(user);
     }
 
     /**

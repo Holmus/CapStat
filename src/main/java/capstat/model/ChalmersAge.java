@@ -55,4 +55,17 @@ public class ChalmersAge implements Comparable<ChalmersAge> {
 
         return 0;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ChalmersAge age = (ChalmersAge) o;
+
+        if (!this.birthday.equals(age.getBirthday())) return false;
+        if (!this.admittance.equals(age.getAdmittance())) return false;
+
+        return true;
+    }
 }

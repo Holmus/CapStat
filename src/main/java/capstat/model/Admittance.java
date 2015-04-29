@@ -55,4 +55,17 @@ public class Admittance implements Comparable<Admittance> {
         return 0;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return false;
+        if (o == null || this.getClass() != o.getClass()) return false;
+
+        Admittance bd = (Admittance) o;
+
+        if (!(this.year == bd.getYear())) return false;
+        if (!(this.readingPeriod == bd.getReadingPeriod())) return false;
+
+        return true;
+    }
+
 }

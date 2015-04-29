@@ -39,4 +39,17 @@ public class ELORanking {
         return this.points;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || this.getClass() != o.getClass()) return false;
+
+        ELORanking ranking = (ELORanking) o;
+
+        final double EPS = 0.0001;
+        if (!(Math.abs(this.points - ranking.getPoints()) < EPS)) return false;
+
+        return true;
+    }
+
 }

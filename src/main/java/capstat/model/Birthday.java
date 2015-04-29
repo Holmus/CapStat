@@ -69,4 +69,18 @@ public class Birthday implements Comparable<Birthday> {
 
         return 0;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return false;
+        if (o == null || this.getClass() != o.getClass()) return false;
+
+        Birthday bd = (Birthday) o;
+
+        if (!(this.year == bd.getYear())) return false;
+        if (!(this.month == bd.getMonth())) return false;
+        if (!(this.day == bd.getDay())) return false;
+
+        return true;
+    }
 }

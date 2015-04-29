@@ -46,7 +46,7 @@ public class StartingPlayerTest {
         this.match.setPlayer1(this.p1);
         this.match.setPlayer2(this.p2);
         // Player 1 should be the starting player, since he is younger.
-        assertEquals("Same reading period, different birthdays", this.match.getStartingPlayer(), 1);
+        assertEquals("Same reading period, different birthdays", this.match.getStartingPlayer(), this.p1);
     }
 
     @Test
@@ -65,7 +65,7 @@ public class StartingPlayerTest {
         this.match.setPlayer2(this.p2);
         // The players have the same birthday, but player 1 should be the
         // starting player, since he was admitted most recently.
-        assertEquals("Same birthday, different admittances", this.match.getStartingPlayer(), 1);
+        assertEquals("Same birthday, different admittances", this.match.getStartingPlayer(), this.p1);
     }
 
     @Test
@@ -84,7 +84,7 @@ public class StartingPlayerTest {
         this.match.setPlayer2(this.p2);
         // Player 1 is younger and should therefore be the starting player, even
         // though he was admitted to Chalmers earlier.
-        assertEquals("Same birthday, different admittances", this.match.getStartingPlayer(), 1);
+        assertEquals("Same birthday, different admittances", this.match.getStartingPlayer(), this.p1);
     }
 
     @Test
@@ -101,8 +101,29 @@ public class StartingPlayerTest {
 
         this.match.setPlayer1(this.p1);
         this.match.setPlayer2(this.p2);
-        // Player 1 is younger and should therefore be the starting player, even
-        // though he was admitted to Chalmers earlier.
-        assertEquals("Same birthday, different admittances", this.match.getStartingPlayer(), 1);
+        // Player 1 is younger and should therefore be the starting player, and
+        // since he was also admitted more recently, he should definitely be the
+        // starting player.
+        assertEquals("Same birthday, different admittances", this.match.getStartingPlayer(), this.p1);
     }
+
+    @Test
+    public void sameBirthdayAndAdmittance() {
+        this.bd1 = new Birthday(1995, 6, 2);
+        this.adm1 = new Admittance(2014, 1);
+        this.age1 = new ChalmersAge(this.bd1, this.adm1);
+        this.p1 = new User("P1", "Player 1", Security.hashPassword("asdfasdf"), this.age1, this.ranking);
+
+        this.bd2 = new Birthday(1995, 6, 2);
+        this.adm2 = new Admittance(2014, 1);
+        this.age2 = new ChalmersAge(this.bd2, this.adm2);
+        this.p2 = new User("P2", "Player 2", Security.hashPassword("fdsafdsa"), this.age2, this.ranking);
+
+        this.match.setPlayer1(this.p1);
+        this.match.setPlayer2(this.p2);
+        // The players have the same birthday and admittance, and therefore
+        // player 1 should be the starting player, as it's the default.
+        assertEquals("Same birthday, different admittances", this.match.getStartingPlayer(), this.p1);
+    }
+
 }
