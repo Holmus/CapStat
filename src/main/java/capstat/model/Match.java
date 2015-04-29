@@ -62,7 +62,7 @@ public class Match {
      * @return the starting player of this match
      */
     public User getStartingPlayer() {
-        // Set player 1 as default player
+        // Suppose player 1 is younger
         User user = this.player1;
         ChalmersAge age1 = this.player1.getChalmersAge();
         ChalmersAge age2 = this.player2.getChalmersAge();
