@@ -56,16 +56,16 @@ public class Birthday implements Comparable<Birthday> {
     @Override
     public int compareTo(Birthday other) {
         int otherYear = other.getYear();
-        if (this.year > otherYear) return 1;
-        else if (this.year < otherYear) return -1;
+        if (this.year < otherYear) return 1;
+        else if (this.year > otherYear) return -1;
 
         int otherMonth = other.getMonth();
-        if (this.month > otherMonth) return 1;
-        else if (this.month < otherMonth) return -1;
+        if (this.month < otherMonth) return 1;
+        else if (this.month > otherMonth) return -1;
 
         int otherDay = other.getDay();
-        if (this.day > otherDay) return 1;
-        else if (this.day < otherDay) return -1;
+        if (this.day < otherDay) return 1;
+        else if (this.day > otherDay) return -1;
 
         return 0;
     }
