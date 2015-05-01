@@ -45,14 +45,27 @@ public class Admittance implements Comparable<Admittance> {
     @Override
     public int compareTo(Admittance other) {
         int otherYear = other.getYear();
-        if (this.year > otherYear) return 1;
-        else if (this.year < otherYear) return -1;
+        if (this.year < otherYear) return 1;
+        else if (this.year > otherYear) return -1;
 
         int otherReadingPeriod = other.getReadingPeriod();
-        if (this.readingPeriod > otherReadingPeriod) return 1;
-        else if (this.readingPeriod < otherReadingPeriod) return -1;
+        if (this.readingPeriod < otherReadingPeriod) return 1;
+        else if (this.readingPeriod > otherReadingPeriod) return -1;
 
         return 0;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return false;
+        if (o == null || this.getClass() != o.getClass()) return false;
+
+        Admittance bd = (Admittance) o;
+
+        if (!(this.year == bd.getYear())) return false;
+        if (!(this.readingPeriod == bd.getReadingPeriod())) return false;
+
+        return true;
     }
 
 }
