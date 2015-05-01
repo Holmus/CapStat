@@ -56,6 +56,14 @@ public class Match {
     }
 
     /**
+     * Sets the currently active player.
+     * @param p the player (1 or 2)
+     */
+    public setCurrentPlayer(int player) {
+        this.playerWhoseTurnItIs = player;
+    }
+
+    /**
      * Gives the starting player of a match, according to caps rules. The rules
      * says that the "youngest" player starts. See ChalmersAge.compareTo for
      * more details.
