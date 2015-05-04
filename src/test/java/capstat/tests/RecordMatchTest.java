@@ -74,7 +74,7 @@ public class RecordMatchTest implements MatchOverObserver {
 
         assertEquals("Player 1 score is 1: ", 1, match.getPlayer1Score());
         assertEquals("Player 2 score is 0: ", 0, match.getPlayer2Score());
-        assertEquals("Player 2's turn: ", match.getPlayer2(), match
+        assertEquals("Player 2's turn: ", Match.Player.TWO, match
                 .getPlayerWhoseTurnItIs());
 
         /*
@@ -105,11 +105,9 @@ public class RecordMatchTest implements MatchOverObserver {
             match.recordMiss();
             match.recordHit();
         }
-        assertFalse("Match is over after 1 thousand duels: ", match.isOngoing
-                ());
+        assertFalse("Match is over after 1 thousand duels: ", match.isOngoing());
         try {
-            assertEquals("Player 2 is winner: ", match.getPlayer2(), match.getWinner
-                    ());
+            assertEquals("Player 2 is winner:", match.getPlayer(Match.Player.TWO), match.getWinner());
         } catch (Match.MatchNotOverException e) {
             System.out.println("Match should have been over, but " +
                     "MatchNotOverException was thrown when getWinner was " +
