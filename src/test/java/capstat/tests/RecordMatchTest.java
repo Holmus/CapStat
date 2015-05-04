@@ -15,12 +15,11 @@ import static org.junit.Assert.assertFalse;
 public class RecordMatchTest implements MatchOverObserver {
 
     private Match match;
-    private MatchFactory gf = new MatchFactory();
     private boolean gameIsOver;
 
     @Before
     public void newMatch( ) {
-        match = gf.createDefaultMatch();
+        match = MatchFactory.createDefaultMatch();
         match.startMatch();
         gameIsOver = false;
     }
