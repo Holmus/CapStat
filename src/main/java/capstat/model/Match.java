@@ -106,8 +106,10 @@ public class Match {
                 this.notifyDuelObserversDuelStarted();
             }
             this.switchPlayerUpNext();
-            this.throwSequence.add(Throw.createHit());
+            this.throwSequence.add(Throw.HIT);
         }
+        this.switchPlayerUpNext();
+        this.throwSequence.add(Throw.HIT);
     }
 
     /**
@@ -123,8 +125,9 @@ public class Match {
                 //Only switch turns if the throw did not end a duel.
                 this.switchPlayerUpNext();
             }
-            this.throwSequence.add(Throw.createMiss());
+            this.throwSequence.add(Throw.MISS);
         }
+        this.throwSequence.add(Throw.MISS);
     }
 
     /**
@@ -215,7 +218,7 @@ public class Match {
      */
     public boolean isDuelling() {
             return !this.throwSequence.isEmpty() && this.throwSequence
-                    .getLast().hit() && this.isOngoing;
+                    .getLast() == Throw.HIT && this.isOngoing;
     }
 
     public int getPlayer1Score() {
@@ -367,30 +370,9 @@ public class Match {
      * the user, and there will always be only one objcet of each class,
      * which can be retrieved by the create-methods in Throw.
      */
-    public abstract static class Throw {
-
-        private final static Throw HIT = new Hit();
-        private final static Throw MISS = new Miss();
-
-        public abstract boolean hit();
-
-        private static class Hit extends Throw {
-            @Override
-            public boolean hit() {
-                return true;
-            }
-        }
-        private static class Miss extends Throw {
-            @Override
-            public boolean hit() {
-                return false;
-            }
-        }
-
-        public static Throw createHit() { return HIT; }
-        public static Throw createMiss() {
-            return MISS;
-        }
+    public enum Throw {
+        HIT,
+        MISS
     }
 
     public enum Player{
