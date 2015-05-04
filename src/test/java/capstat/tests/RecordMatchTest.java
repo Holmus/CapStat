@@ -1,8 +1,11 @@
 package capstat.tests;
 
-import capstat.model.MatchOverObserver;
 import capstat.model.Match;
+import capstat.model.User;
+import capstat.model.MatchOverObserver;
 import capstat.utils.MatchFactory;
+import capstat.utils.UserFactory;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -20,6 +23,10 @@ public class RecordMatchTest implements MatchOverObserver {
     @Before
     public void newMatch( ) {
         match = MatchFactory.createDefaultMatch();
+        User dummy1 = UserFactory.createDummyUser1();
+        User dummy2 = UserFactory.createDummyUser2();
+        match.setPlayer1(dummy1);
+        match.setPlayer2(dummy2);
         match.startMatch();
         gameIsOver = false;
     }
