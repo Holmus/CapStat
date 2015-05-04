@@ -21,7 +21,7 @@ public class Match {
     private LinkedList<Throw> throwSequence;
     private Match.Glass[] glasses;
     private User player1, player2, winner;
-    private int playerWhoseTurnItIs;
+    private Player roundWinner, playerWhoseTurnItIs;
     private Set<MatchOverObserver> matchOverObservers;
     private Set<DuelObserver> duelObservers;
     private int p1RoundsWon, p2RoundsWon, roundsToWin, numberOfGlasses;
@@ -38,7 +38,7 @@ public class Match {
         this.roundsToWin = roundsToWin;
         this.matchOverObservers = new HashSet<>();
         this.duelObservers = new HashSet<>();
-        this.playerWhoseTurnItIs = 1;
+        this.playerWhoseTurnItIs = Player.ONE;
         p1RoundsWon = 0;
         p2RoundsWon = 0;
         createGlasses();
@@ -54,9 +54,9 @@ public class Match {
 
     /**
      * Sets the currently active player.
-     * @param p the player (1 or 2)
+     * @param player the player (1 or 2)
      */
-    public setCurrentPlayer(int player) {
+    public void setCurrentPlayer(Player player) {
         this.playerWhoseTurnItIs = player;
     }
 
@@ -66,6 +66,8 @@ public class Match {
      * more details.
      * @return the starting player of this match
      */
+
+    //Update to Enum when moving to MatchFactory
     public User getStartingPlayer() {
         // Suppose player 1 is younger
         User user = this.player1;
@@ -99,26 +101,30 @@ public class Match {
      * Updates the game with a new Throw, which is a hit.
      */
     public void recordHit() {
-        if (!this.isDuelling()) {
-            this.notifyDuelObserversDuelStarted();
+        if(isOngoing) {
+            if (!this.isDuelling()) {
+                this.notifyDuelObserversDuelStarted();
+            }
+            this.switchPlayerUpNext();
+            this.throwSequence.add(Throw.createHit());
         }
-        this.switchPlayerUpNext();
-        this.throwSequence.add(Throw.createHit());
     }
 
     /**
      * Updates the game with a new throw, which is a miss.
      */
     public void recordMiss() {
-        if (this.isDuelling()) {
-            this.notifyDuelObserversDuelEnded();
-            this.removeGlass();
-            this.endRoundIfNecessary();
-        } else {
-            //Only switch turns if the throw did not end a duel.
-            this.switchPlayerUpNext();
+        if(isOngoing) {
+            if (this.isDuelling()) {
+                this.notifyDuelObserversDuelEnded();
+                this.removeGlass();
+                this.endRoundIfNecessary();
+            } else {
+                //Only switch turns if the throw did not end a duel.
+                this.switchPlayerUpNext();
+            }
+            this.throwSequence.add(Throw.createMiss());
         }
-        this.throwSequence.add(Throw.createMiss());
     }
 
     /**
@@ -129,34 +135,33 @@ public class Match {
         if (!this.glasses[this.glasses.length / 2].isActive) {
             updateRoundWinner();
             endMatchIfNecessary();
-            System.out.println("Roundwinner is: " + this.winner.getNickname());
+            System.out.println("Roundwinner is: " + getPlayer(roundWinner).getNickname());
             createGlasses();
         }
     }
 
     private void updateRoundWinner() {
-        this.winner = this.getPlayer1Score() > this.getPlayer2Score() ? this
-                .player1 : this.player2;
-        if (this.winner == player1) p1RoundsWon = p1RoundsWon + 1;
-        if (this.winner == player1) p2RoundsWon = p2RoundsWon + 1;
+        roundWinner = this.getPlayer1Score() > this.getPlayer2Score() ? Player.ONE: Player.TWO;
+        if (roundWinner == Player.ONE) p1RoundsWon = p1RoundsWon + 1;
+        if (roundWinner == Player.TWO) p2RoundsWon = p2RoundsWon + 1;
     }
 
     private void endMatchIfNecessary() {
-        if (p1RoundsWon == this.roundsToWin && p2RoundsWon == this.roundsToWin) endMatch();
+        if (p1RoundsWon == this.roundsToWin || p2RoundsWon == this.roundsToWin) endMatch();
     }
 
     private void endMatch() {
         this.isOngoing = false;
-        if(this.getPlayer1Score() == this.getPlayer2Score()){
+        if(p1RoundsWon == p2RoundsWon){
             throw new ArithmeticException("We've dun goofed");
         }
-        this.winner = this.getPlayer1Score() > this.getPlayer2Score() ? this
+        this.winner = p1RoundsWon > p2RoundsWon ? this
                 .player1 : this.player2;
         this.notifyMatchOverObservers();
     }
 
     private void removeGlass() {
-        if (this.playerWhoseTurnItIs == 1) {
+        if (this.playerWhoseTurnItIs == Player.ONE) {
             this.removeNextGlassPlayer1();
         } else {
             this.removeNextGlassPlayer2();
@@ -209,8 +214,8 @@ public class Match {
      * @return Whether game is currently in a duel or not.
      */
     public boolean isDuelling() {
-        return !this.throwSequence.isEmpty() && this.throwSequence
-                .getLast().hit();
+            return !this.throwSequence.isEmpty() && this.throwSequence
+                    .getLast().hit() && this.isOngoing;
     }
 
     public int getPlayer1Score() {
@@ -239,11 +244,11 @@ public class Match {
         return new User(this.player2);
     }
 
-    public User getPlayerWhoseTurnItIs() {
-        if (playerWhoseTurnItIs == 1) {
-            return new User(this.player1);
+    public Player getPlayerWhoseTurnItIs() {
+        if (playerWhoseTurnItIs == Player.ONE) {
+            return Player.ONE;
         }
-        return new User(this.player2);
+        return Player.TWO;
     }
 
     /**
@@ -306,9 +311,24 @@ public class Match {
         return winner;
     }
 
+    /**
+     * @param player
+     * @return the User representation of the Enum player sent as param, could return null if Users are not defined yet.
+     */
+    public User getPlayer(Player player){
+        if(player == null){
+            throw new NullPointerException("Player can't be null");
+        }
+        if(player == Player.ONE){
+            return this.player1;
+        } else{
+            return this.player2;
+        }
+    }
+
     private void switchPlayerUpNext() {
-        this.playerWhoseTurnItIs = this.playerWhoseTurnItIs == 1 ? 2 :
-                1;
+        this.playerWhoseTurnItIs = this.playerWhoseTurnItIs == Player.ONE ? Player.TWO :
+                Player.ONE;
     }
 
     public class MatchNotOverException extends Exception {
@@ -335,7 +355,7 @@ public class Match {
         for (int i = 0; i < spaces; i++) {
             sp = sp + " ";
         }
-        if (this.playerWhoseTurnItIs == 1) p1 = p1 + "*";
+        if (this.playerWhoseTurnItIs == Player.ONE) p1 = p1 + "*";
         else p2 = "*" + p2;
 
         return p1 + sp + p2 + "\n" + gl;
@@ -371,5 +391,9 @@ public class Match {
         public static Throw createMiss() {
             return MISS;
         }
+    }
+
+    public enum Player{
+        ONE, TWO
     }
 }

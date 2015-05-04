@@ -2,7 +2,6 @@ package capstat.tests;
 
 import capstat.model.MatchOverObserver;
 import capstat.model.Match;
-import capstat.model.RankedMatch;
 import capstat.utils.MatchFactory;
 import org.junit.Before;
 import org.junit.Test;
@@ -31,7 +30,6 @@ public class RecordMatchTest implements MatchOverObserver {
         /*
         make sure a ranked match is created by default
          */
-        assertEquals("Is ranked match: ", true, match instanceof RankedMatch);
         assertEquals("Is ranked match: ", true, match.isOngoing());
     }
 
