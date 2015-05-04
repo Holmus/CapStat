@@ -4,12 +4,6 @@ import capstat.model.*;
 import capstat.utils.MatchFactory;
 import java.util.Scanner;
 
-/** ToDo: Add functionality for when game is over
- *  ToDo: Add functionality to determine when a duel is won
- *  ToDo: Test current functionality
- *  ToDo: How to fetch users
-
- */
 
 /**
  * @author Holmus
@@ -33,6 +27,7 @@ public class PlaymatchPrototype implements MatchOverObserver, DuelObserver {
         match.setPlayer2(new User("Saser", "", "", new ChalmersAge(new
                 Birthday(1234, 56, 78), new Admittance(1111, 1)), new
                 ELORanking(1222)));
+        match.startMatch();
         System.out.println(match);
         Scanner sc = new Scanner(System.in);
         while (sc.hasNext()) {
@@ -72,7 +67,7 @@ public class PlaymatchPrototype implements MatchOverObserver, DuelObserver {
 
     @Override
     public void duelEnded() {
-        System.out.println("Duel ended, " + match.getPlayerWhoseTurnItIs()
+        System.out.println("Duel ended, " + match.getPlayer(match.getPlayerWhoseTurnItIs())
                 .getNickname() + " lost :_(");
     }
 }
