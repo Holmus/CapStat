@@ -7,7 +7,7 @@ import capstat.model.ELORanking;
 import capstat.model.Match;
 import capstat.model.User;
 import capstat.utils.Security;
-import capstat.utils.GameFactory;
+import capstat.utils.MatchFactory;
 
 import static org.junit.Assert.assertEquals;
 import org.junit.Before;
@@ -24,11 +24,11 @@ public class StartingPlayerTest {
     private Birthday bd1, bd2;
     private Admittance adm1, adm2;
     private ELORanking ranking = ELORanking.defaultRanking();
-    private GameFactory gf = new GameFactory();
+    private MatchFactory mf = new MatchFactory();
 
     @Before
     public void newMatch() {
-        this.match = gf.createDefaultMatch();
+        this.match = mf.createDefaultMatch();
     }
 
    @Test
