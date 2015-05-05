@@ -16,7 +16,7 @@ import java.util.Scanner;
 //Method to start the match, register result and quit
 public class PlaymatchPrototype implements MatchOverObserver, DuelObserver {
 
-    private static Match match = (new MatchFactory()).createDefaultMatch();
+    private static Match match = MatchFactory.createDefaultMatch();
 
     public static void main(String[] args) {
         match.addMatchOverObserver(new PlaymatchPrototype());

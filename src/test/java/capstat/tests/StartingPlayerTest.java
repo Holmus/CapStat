@@ -24,11 +24,10 @@ public class StartingPlayerTest {
     private Birthday bd1, bd2;
     private Admittance adm1, adm2;
     private ELORanking ranking = ELORanking.defaultRanking();
-    private MatchFactory mf = new MatchFactory();
 
     @Before
     public void newMatch() {
-        this.match = mf.createDefaultMatch();
+        this.match = MatchFactory.createDefaultMatch();
     }
 
    @Test

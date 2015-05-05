@@ -108,8 +108,6 @@ public class Match {
             this.switchPlayerUpNext();
             this.throwSequence.add(Throw.HIT);
         }
-        this.switchPlayerUpNext();
-        this.throwSequence.add(Throw.HIT);
     }
 
     /**
@@ -127,7 +125,6 @@ public class Match {
             }
             this.throwSequence.add(Throw.MISS);
         }
-        this.throwSequence.add(Throw.MISS);
     }
 
     /**
@@ -240,11 +237,11 @@ public class Match {
     }
 
     public User getPlayer1() {
-        return new User(this.player1);
+        return this.player1;
     }
 
     public User getPlayer2() {
-        return new User(this.player2);
+        return this.player2;
     }
 
     public Player getPlayerWhoseTurnItIs() {
@@ -376,6 +373,7 @@ public class Match {
     }
 
     public enum Player{
-        ONE, TWO
+        ONE,
+        TWO
     }
 }
