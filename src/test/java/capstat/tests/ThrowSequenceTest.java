@@ -60,6 +60,27 @@ public class ThrowSequenceTest {
     }
 
     @Test
+    public void canRewind() {
+        assertFalse("New match can't be rewound", match.getThrowSequence()
+                .canRewind());
+        match.recordMiss();
+        assertTrue("Match with one throw can be rewound", match
+                .getThrowSequence().canRewind());
+        match.manuallyChangeGameState(match.getGlasses(), Match.Player.ONE,
+                false);
+        assertFalse("Match with newly updated state can't be rewound", match
+                .getThrowSequence().canRewind());
+        match.recordMiss();
+        sequence = match.getThrowSequence();
+        assertTrue("Match with one throw can be rewound", match
+                .getThrowSequence().canRewind());
+        sequence.rewind();
+        assertFalse("Match rewound to end of current can't be rewound more",
+                sequence.canRewind());
+
+    }
+
+    @Test
     public void canForward() {
         assertFalse("New match can be forwarded", match.getThrowSequence()
                 .canForward());
