@@ -15,6 +15,13 @@ public class ThrowSequence {
     private PartialSequence currentSequence;
     private Stack<Match.Throw> undoStack;
 
+    /**
+     * Standard constructor
+     * @param glassesState initial state of glasses
+     * @param startingPlayerState player who starts
+     * @param throwBeforeWasHit if the last throw was a hit. Use false if it
+     *                          is the first throw of the match.
+     */
     public ThrowSequence(Match.Glass[] glassesState, Match.Player
             startingPlayerState,
      boolean throwBeforeWasHit) {
@@ -24,6 +31,10 @@ public class ThrowSequence {
         this.undoStack = new Stack<>();
     }
 
+    /**
+     * Copy constructor returning deep clone
+     * @param ts
+     */
     public ThrowSequence(ThrowSequence ts) {
         //Get a deep clone of the sequences list
         this.sequences = new LinkedList<>(ts.getSequences());

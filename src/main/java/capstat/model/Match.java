@@ -252,6 +252,10 @@ public class Match {
         return Player.TWO;
     }
 
+    /**
+     *
+     * @return a deep clone of the ThrowSequence of this match.
+     */
     public ThrowSequence getThrowSequence() {
         return new ThrowSequence(this.throwSequence);
     }
