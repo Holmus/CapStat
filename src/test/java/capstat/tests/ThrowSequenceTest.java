@@ -2,8 +2,11 @@ package capstat.tests;
 
 import capstat.model.*;
 import capstat.utils.*;
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.Test;
+
+import java.util.Random;
+
 import static org.junit.Assert.*;
 
 /**
@@ -14,8 +17,45 @@ public class ThrowSequenceTest {
     Match match;
     ThrowSequence sequence;
 
-    @BeforeClass
-    void initiate() {
+    @Before
+    public void initiate() {
+        Random r = new Random();
         match = new Match(9, 3);
+        match.startMatch();
+    }
+
+    @Test
+    public void registerHitRegular() {
+        match.recordHit();
+        sequence = match.getThrowSequence();
+        assertTrue("Last throw was hit after normal recording", sequence
+                .lastThrowWasHit());
+    }
+
+    @Test
+    public void registerHitManualUpdate() {
+        match.recordMiss();
+        sequence = match.getThrowSequence();
+        sequence.updateRecordState(match.getGlasses(), Match
+                .Player.TWO, true);
+        assertTrue("Last throw was hit after manually updating state", sequence
+                .lastThrowWasHit());
+    }
+
+    @Test
+    public void registerMissRegular() {
+        match.recordMiss();
+        sequence = match.getThrowSequence();
+        assertFalse("Last throw was miss after normal recording", sequence
+                .lastThrowWasHit());
+    }
+
+    @Test
+    public void registerMissManualUpdate() {
+        match.recordHit();
+        sequence = match.getThrowSequence();
+        sequence.updateRecordState(match.getGlasses(), Match.Player.TWO, false);
+        assertFalse("Last throw was miss after manually updating state",
+                sequence.lastThrowWasHit());
     }
 }
