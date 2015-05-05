@@ -58,4 +58,20 @@ public class ThrowSequenceTest {
         assertFalse("Last throw was miss after manually updating state",
                 sequence.lastThrowWasHit());
     }
+
+    @Test
+    public void canForward() {
+        assertFalse("New match can be forwarded", match.getThrowSequence()
+                .canForward());
+        match.recordMiss();
+        assertFalse("Match with hits but unrewound can't be forwarded", match
+                .getThrowSequence().canForward());
+        sequence = match.getThrowSequence();
+        sequence.rewind();
+        assertTrue("Match rewound one step can be forwarded", sequence
+                .canForward());
+        sequence.forward();
+        assertFalse("Match forwarded to end of forward possibilities can't be" +
+                " forwarded", sequence.canForward());
+    }
 }
