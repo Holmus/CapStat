@@ -252,6 +252,10 @@ public class Match {
         return Player.TWO;
     }
 
+    public ThrowSequence getThrowSequence() {
+        return new ThrowSequence(this.throwSequence);
+    }
+
     /**
      * Add an observer that will be notified when the game is over.
      *
