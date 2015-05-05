@@ -24,6 +24,13 @@ public class ThrowSequence {
         this.undoStack = new Stack<>();
     }
 
+    public ThrowSequence(ThrowSequence ts) {
+        //Get a deep clone of the sequences list
+        this.sequences = new LinkedList<>(ts.getSequences());
+        this.currentSequence = ts.currentSequence.clone();
+        this.undoStack = (Stack<Match.Throw>)ts.undoStack.clone();
+    }
+
     public void add(Match.Throw newThrow) {
         this.currentSequence.add(newThrow);
     }
@@ -104,7 +111,6 @@ public class ThrowSequence {
         clone.add(this.currentSequence.clone());
         return clone;
     }
-
 
     /**
      * Objects of this class are immutable, except for by instances of
