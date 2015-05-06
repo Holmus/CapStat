@@ -1,5 +1,6 @@
 package capstat.infrastructure;
 
+import java.io.IOException;
 import java.util.NoSuchElementException;
 
 /**
@@ -20,7 +21,7 @@ public interface ITaskQueue {
     /**
      * Adds a new String as the tail of this queue.
      */
-    public void add(String task);
+    public void add(String task) throws IOException;
 
     /**
      * Retrieves, but does not remove, the head of this queue.
@@ -34,12 +35,12 @@ public interface ITaskQueue {
      * @return a String representing the task
      * @throws NoSuchElementException if this queue is empty
      */
-    public String pop() throws NoSuchElementException;
+    public String pop() throws NoSuchElementException, IOException;
 
     /**
      * Clear all elements from this queue.
      */
-    public void clear();
+    public void clear() throws IOException;
 
     /**
      * Check whether this queue contains any elements.
@@ -52,4 +53,5 @@ public interface ITaskQueue {
      * @return true if this contains the given String; false otherwise
      */
     public boolean contains(String task);
+
 }
