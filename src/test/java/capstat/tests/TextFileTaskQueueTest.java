@@ -49,7 +49,7 @@ public class TextFileTaskQueueTest {
         for (String task : tasks) {
             tq.add(task);
             String desc1 = String.format("\"task one\" should be peeked after adding %s", task);
-            assertEquals(desc1, task, tq.peek());
+            assertEquals(desc1, "task one", tq.peek());
         }
 
         assertEquals("Size should be ten", 10, tq.size());
