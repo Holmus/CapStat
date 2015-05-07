@@ -43,6 +43,12 @@ public interface ITaskQueue {
     public void clear() throws IOException;
 
     /**
+     * Gets the number of elements in this queue.
+     * @return the number of elements
+     */
+    public int size();
+
+    /**
      * Check whether this queue contains any elements.
      * @return true if this queue contains at least one element; false otherwise
      */
