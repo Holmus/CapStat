@@ -1,4 +1,4 @@
-package capstat.utils;
+package capstat.model;
 
 import capstat.model.Match;
 
