@@ -19,11 +19,23 @@ public class TextFileTaskQueue implements ITaskQueue {
     private File taskFile;
     private List<String> taskList;
 
+    /**
+     * Create a new instance of this class, using the file specified by
+     * <code>taskFile</code> to write to. The file is created if, and only if,
+     * it does not already exist.
+     *
+     * @throws IOException if any IO error occurs, other than the file not
+     * existing
+     */
     public TextFileTaskQueue(File taskFile) throws IOException {
         this.taskFile = taskFile.getAbsoluteFile();
+        ensureFileExists(this.taskFile);
         this.taskList = new LinkedList<>(readAllLines(this.taskFile));
     }
 
+    private static void ensureFileExists(File file) throws IOException {
+        file.createNewFile();
+    }
     private static List<String> readAllLines(File file) throws IOException {
         List<String> ret = new LinkedList<>();
 
