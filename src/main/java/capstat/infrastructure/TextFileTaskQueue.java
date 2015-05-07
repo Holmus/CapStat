@@ -81,7 +81,7 @@ public class TextFileTaskQueue implements ITaskQueue {
 
     @Override
     public boolean hasElements() {
-        return this.taskList.size() == 0;
+        return this.taskList.size() > 0;
     }
 
     @Override
