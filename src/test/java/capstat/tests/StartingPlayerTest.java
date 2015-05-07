@@ -7,7 +7,7 @@ import capstat.model.ELORanking;
 import capstat.model.Match;
 import capstat.model.User;
 import capstat.utils.Security;
-import capstat.utils.MatchFactory;
+import capstat.model.MatchFactory;
 
 import static org.junit.Assert.assertEquals;
 import org.junit.Before;

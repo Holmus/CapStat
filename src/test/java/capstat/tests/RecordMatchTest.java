@@ -3,8 +3,8 @@ package capstat.tests;
 import capstat.model.Match;
 import capstat.model.User;
 import capstat.model.MatchOverObserver;
-import capstat.utils.MatchFactory;
-import capstat.utils.UserFactory;
+import capstat.model.MatchFactory;
+import capstat.model.UserFactory;
 
 import org.junit.Before;
 import org.junit.Test;

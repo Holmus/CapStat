@@ -1,7 +1,7 @@
 package capstat;
 
 import capstat.model.*;
-import capstat.utils.MatchFactory;
+import capstat.model.MatchFactory;
 import java.util.Scanner;
 
 

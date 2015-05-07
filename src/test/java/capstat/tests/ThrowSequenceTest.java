@@ -1,7 +1,6 @@
 package capstat.tests;
 
 import capstat.model.*;
-import capstat.utils.*;
 import org.junit.Before;
 import org.junit.Test;
 
