@@ -27,4 +27,37 @@ public class UserDatabaseRow {
         this.admittanceReadingPeriod = admittanceReadingPeriod;
         this.ELORanking = ELORanking;
     }
+
+    @Override
+    public int hashCode() {
+        int result;
+        long temp;
+        result = name.hashCode();
+        result = 31 * result + nickname.hashCode();
+        result = 31 * result + hashedPassword.hashCode();
+        result = 31 * result + birthdayYear;
+        result = 31 * result + birthdayMonth;
+        result = 31 * result + birthdayDay;
+        result = 31 * result + admittanceYear;
+        result = 31 * result + admittanceReadingPeriod;
+        temp = Double.doubleToLongBits(ELORanking);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null) return false;
+        if (!(o instanceof UserDatabaseRow)) return false;
+        UserDatabaseRow udbr = (UserDatabaseRow)o;
+        return (udbr.name.equals(this.name)
+                && udbr.nickname.equals(this.nickname))
+                && udbr.hashedPassword.equals(this.hashedPassword)
+                && udbr.birthdayYear == this.birthdayYear
+                && udbr.birthdayMonth == this.birthdayMonth
+                && udbr.birthdayDay == this.birthdayDay
+                && udbr.admittanceYear == this.admittanceYear
+                && udbr.admittanceReadingPeriod == this.admittanceReadingPeriod
+                && udbr.ELORanking == this.ELORanking;
+    }
 }
