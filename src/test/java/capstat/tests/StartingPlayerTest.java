@@ -6,7 +6,7 @@ import capstat.model.ChalmersAge;
 import capstat.model.ELORanking;
 import capstat.model.Match;
 import capstat.model.User;
-import capstat.utils.Security;
+import capstat.model.Security;
 import capstat.model.MatchFactory;
 
 import static org.junit.Assert.assertEquals;

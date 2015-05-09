@@ -5,8 +5,6 @@ import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
-import capstat.utils.Security;
-
 public class UserLedger {
 
     private static UserLedger instance;

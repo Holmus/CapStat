@@ -1,12 +1,5 @@
 package capstat.model;
 
-import capstat.model.Admittance;
-import capstat.model.Birthday;
-import capstat.model.ChalmersAge;
-import capstat.model.ELORanking;
-import capstat.model.User;
-import capstat.utils.Security;
-
 /**
  * @author Christian Persson
  */
