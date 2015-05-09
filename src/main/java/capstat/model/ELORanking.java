@@ -2,10 +2,11 @@ package capstat.model;
 
 /**
  * @author Christian Persson
+ * Immutable value object
  */
 public class ELORanking {
 
-    private double points;
+    private final double points;
 
     /**
      * Creates a new ELORanking instance representing the given points.

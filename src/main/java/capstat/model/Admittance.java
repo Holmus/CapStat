@@ -1,11 +1,13 @@
 package capstat.model;
 
 /**
+ * Immutable value object.
+ *
  * @author Christian Persson
  */
 public class Admittance implements Comparable<Admittance> {
 
-    private int year, readingPeriod;
+    private final int year, readingPeriod;
 
     /**
      * Creates a new Admittance instance.

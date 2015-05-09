@@ -1,12 +1,14 @@
 package capstat.model;
 
 /**
+ * Immutable value object.
+ *
  * @author Christian Persson
  */
 public class ChalmersAge implements Comparable<ChalmersAge> {
 
-    private Birthday birthday;
-    private Admittance admittance;
+    private final Birthday birthday;
+    private final Admittance admittance;
 
     /**
      * Creates a ChalmersAge instance.
