@@ -2,7 +2,7 @@ package capstat.tests;
 
 import capstat.infrastructure.DatabaseQueryFactory;
 import capstat.infrastructure.UserDatabaseRow;
-import capstat.infrastructure.UserQueryHelper;
+import capstat.infrastructure.UserDatabaseHelper;
 import capstat.model.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -13,7 +13,7 @@ import static org.junit.Assert.*;
  */
 public class UserDatabaseFacadeTest {
 
-    private static UserQueryHelper userdb;
+    private static UserDatabaseHelper userdb;
 
     @BeforeClass
     public static void init() {

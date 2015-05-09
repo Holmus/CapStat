@@ -5,7 +5,7 @@ package capstat.infrastructure;
  */
 public class DatabaseQueryFactory {
 
-    public UserQueryHelper createUserQueryHelper() {
+    public UserDatabaseHelper createUserQueryHelper() {
         return null;
     }
 }
