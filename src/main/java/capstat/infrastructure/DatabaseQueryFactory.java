@@ -6,6 +6,6 @@ package capstat.infrastructure;
 public class DatabaseQueryFactory {
 
     public UserDatabaseHelper createUserQueryHelper() {
-        return null;
+        return new DatabaseFacade();
     }
 }
