@@ -1,6 +1,10 @@
-package capstat.utils;
+package capstat.model;
 
 import org.apache.commons.codec.digest.DigestUtils;
+
+/**
+ * A service for getting hashed versions of passwords
+ */
 
 public abstract class Security {
 
