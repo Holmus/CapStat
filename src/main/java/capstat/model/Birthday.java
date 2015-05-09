@@ -1,11 +1,13 @@
 package capstat.model;
 
 /**
+ * Immutable value object.
+ *
  * @author Christian Persson
  */
 public class Birthday implements Comparable<Birthday> {
 
-    private int year, month, day;
+    private final int year, month, day;
 
     /**
      * Creates a new Birthday instance.
