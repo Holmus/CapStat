@@ -1,6 +1,5 @@
 package capstat.infrastructure;
 
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -14,8 +13,7 @@ public interface UserDatabaseHelper {
     void removeUserFromDatabase(UserDatabaseRow user);
     UserDatabaseRow getUserByNickname(String nickname);
     UserDatabaseRow getUserByName(String name);
-    List<UserDatabaseRow> getUsersByAdmittance(int year, int readingPeriod);
-    List<UserDatabaseRow> getUsersByNicknameMatch(String regex);
-    List<UserDatabaseRow> getUsersByNameMatch(String regex);
-    List<UserDatabaseRow> getUsersInELORankRange(int minELO, int maxELO);
+    Set<UserDatabaseRow> getUsersByNicknameMatch(String regex);
+    Set<UserDatabaseRow> getUsersByNameMatch(String regex);
+    Set<UserDatabaseRow> getUsersInELORankRange(int minELO, int maxELO);
 }
