@@ -4,6 +4,8 @@ import capstat.infrastructure.DatabaseQueryFactory;
 import capstat.infrastructure.UserDatabaseRow;
 import capstat.infrastructure.UserDatabaseHelper;
 import capstat.model.*;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -14,6 +16,7 @@ import static org.junit.Assert.*;
 public class UserDatabaseFacadeTest {
 
     private static UserDatabaseHelper userdb;
+    private UserDatabaseRow dummyRow;
 
     @BeforeClass
     public static void init() {
@@ -21,18 +24,25 @@ public class UserDatabaseFacadeTest {
         userdb = factory.createUserQueryHelper();
     }
 
+    @Before
+    public void addNewUser() {
+        UserDatabaseRow dummyRow = getDummyRow(UserFactory.createDummyUser1());
+        userdb.addUserToDatabase(dummyRow);
+    }
+
+    @After
+    public void removeNewUser() {
+        userdb.removeUserFromDatabase(dummyRow);
+    }
+
     @Test
     public void getUserByNicknameTest() {
-        UserDatabaseRow dummyRow = getDummyRow();
-        userdb.addUserToDatabase(dummyRow);
         UserDatabaseRow userDBRow = userdb.getUserByNickname(dummyRow.nickname);
         testUsersAreEqual(dummyRow, userDBRow);
     }
 
     @Test
     public void getUserByNameTest() {
-        UserDatabaseRow dummyRow = getDummyRow();
-        userdb.addUserToDatabase(dummyRow);
         UserDatabaseRow userDBRow = userdb.getUserByName(dummyRow.nickname);
         testUsersAreEqual(dummyRow, userDBRow);
     }
@@ -67,8 +77,7 @@ public class UserDatabaseFacadeTest {
                 userDB.ELORanking);
     }
 
-    public UserDatabaseRow getDummyRow() {
-        User dummyUser = UserFactory.createDummyUser1();
+    public UserDatabaseRow getDummyRow(User dummyUser) {
         Birthday bd = dummyUser.getChalmersAge().getBirthday();
         Admittance ad = dummyUser.getChalmersAge().getAdmittance();
         ELORanking elo = dummyUser.getRanking();
@@ -76,7 +85,6 @@ public class UserDatabaseFacadeTest {
                 dummyUser.getNickname(), dummyUser.getHashedPassword(),
                 bd.getYear(), bd.getMonth(), bd.getDay(), ad.getYear(), ad
                 .getReadingPeriod(), elo.getPoints()
-                ));
-
+                );
     }
 }
