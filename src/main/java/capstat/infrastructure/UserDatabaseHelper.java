@@ -1,7 +1,5 @@
 package capstat.infrastructure;
 
-import capstat.model.User;
-
 import java.util.List;
 import java.util.Set;
 
@@ -11,8 +9,9 @@ import java.util.Set;
  */
 public interface UserDatabaseHelper {
 
-    void addUserToDatabase(User user);
-    void addUserSetToDatabase(Set<User> userSet);
+    void addUserToDatabase(UserDatabaseRow user);
+    void addUserSetToDatabase(Set<UserDatabaseRow> userSet);
+    void removeUserFromDatabase(UserDatabaseRow user);
     UserDatabaseRow getUserByNickname(String nickname);
     UserDatabaseRow getUserByName(String name);
     List<UserDatabaseRow> getUsersByAdmittance(int year, int readingPeriod);
