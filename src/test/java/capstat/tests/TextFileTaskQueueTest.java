@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -19,11 +20,17 @@ import capstat.infrastructure.TextFileTaskQueue;
 public class TextFileTaskQueueTest {
 
     private static ITaskQueue tq;
+    private static File taskFile = new File("taskfile.txt");
+
 
     @BeforeClass
     public static void setup() throws IOException {
-        File taskFile = new File("taskfile.txt");
         tq = new TextFileTaskQueue(taskFile);
+    }
+
+    @AfterClass
+    public static void removeFile() {
+        taskFile.delete();
     }
 
     @Before
