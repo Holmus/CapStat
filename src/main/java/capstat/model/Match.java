@@ -1,5 +1,6 @@
 package capstat.model;
 
+import java.time.Instant;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
@@ -24,6 +25,7 @@ public class Match {
     private Set<MatchOverObserver> matchOverObservers;
     private Set<DuelObserver> duelObservers;
     private int p1RoundsWon, p2RoundsWon, roundsToWin, numberOfGlasses;
+    private Instant startTime, endTime;
 
     public Match(int numberOfGlasses, int roundsToWin) {
         if (numberOfGlasses % 2 == 0)
@@ -86,6 +88,7 @@ public class Match {
      * Makes the match start.
      */
     public void startMatch() {
+        this.startTime = Instant.now();
         this.isOngoing = true;
     }
 
@@ -151,6 +154,7 @@ public class Match {
     }
 
     private void endMatch() {
+        this.endTime = Instant.now();
         this.isOngoing = false;
         if(p1RoundsWon == p2RoundsWon){
             throw new ArithmeticException("We've dun goofed");
@@ -340,6 +344,20 @@ public class Match {
     private void switchPlayerUpNext() {
         this.playerWhoseTurnItIs = this.playerWhoseTurnItIs == Player.ONE ? Player.TWO :
                 Player.ONE;
+    }
+
+    /*
+    Instant class is immutable, which makes this safe.
+     */
+    public Instant getStartTime() {
+        return startTime;
+    }
+
+    /*
+    Instant class is immutable, which makes this safe.
+     */
+    public Instant getEndTime() {
+        return endTime;
     }
 
     public class MatchNotOverException extends Exception {
