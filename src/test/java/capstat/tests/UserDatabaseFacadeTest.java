@@ -8,6 +8,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import java.util.Set;
+
 import static org.junit.Assert.*;
 
 /**
@@ -45,6 +48,34 @@ public class UserDatabaseFacadeTest {
     public void getUserByNameTest() {
         UserDatabaseRow userDBRow = userdb.getUserByName(dummyRow.nickname);
         testUsersAreEqual(dummyRow, userDBRow);
+    }
+
+    @Test
+    public void getUsersByNickRegexTest() {
+        //Create a new dummy row, IN ADDITION to the one already added in
+        // addNewUser method, executed @Before
+        UserDatabaseRow dummyRow2 = getDummyRow(UserFactory.createDummyUser2());
+        userdb.addUserToDatabase(dummyRow2);
+        //Get a set containing only the dummy user above
+        Set<UserDatabaseRow> matches = userdb.getUsersByNicknameMatch(dummyRow2
+                .nickname);
+        //contains-method in Set uses equals, not ==.
+        assertTrue(matches.contains(dummyRow2));
+        assertFalse(matches.contains(dummyRow));
+    }
+
+    @Test
+    public void getUsersByNameRegexTest() {
+        //Create a new dummy row, IN ADDITION to the one already added in
+        // addNewUser method, executed @Before
+        UserDatabaseRow dummyRow2 = getDummyRow(UserFactory.createDummyUser2());
+        userdb.addUserToDatabase(dummyRow2);
+        //Get a set containing only the dummy user above
+        Set<UserDatabaseRow> matches = userdb.getUsersByNameMatch(dummyRow2
+                .name);
+        //contains-method in Set uses equals, not ==.
+        assertTrue(matches.contains(dummyRow2));
+        assertFalse(matches.contains(dummyRow));
     }
 
     private void testUsersAreEqual(final UserDatabaseRow user, final
