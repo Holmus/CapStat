@@ -10,6 +10,7 @@ repositories {
 dependencies {
     // Normal dependencies
     compile group: "commons-codec", name: "commons-codec", version: "1.10"
+    compile group: "mysql", name: "mysql-connector-java", version: "5.1.35"
 
     // Test dependencies
     // NOTE: these dependencies are _additional_ dependencies used for compiling
@@ -35,3 +36,9 @@ test {
         exceptionFormat = "full"
     }
 }
+
+task execute(type:JavaExec) {
+    main = mainClass
+    classpath = sourceSets.main.runtimeClasspath
+}
+
