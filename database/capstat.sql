@@ -31,7 +31,7 @@ GRANT ALL ON capstat.* TO 'capstat_user'@'localhost';
 
 
 /* --- CREATING TABLES --- */
-CREATE TABLE User (
+CREATE TABLE Users (
   nick          VARCHAR(30)   PRIMARY KEY,
   name          VARCHAR(30),
   pass          VARCHAR(30),
@@ -39,7 +39,7 @@ CREATE TABLE User (
   iloRank       VARCHAR(30)
 );
 
-CREATE TABLE Matchn (
+CREATE TABLE Matches (
   id            CHAR(4)       PRIMARY KEY,
   p1            VARCHAR(30),
   p2            VARCHAR(30),
@@ -48,20 +48,20 @@ CREATE TABLE Matchn (
   spectator     VARCHAR(30),
   dateTime      DATETIME,
   elapsedTime   TIME,
-  FOREIGN KEY (p1) REFERENCES User(nick),
-  FOREIGN KEY (p2) REFERENCES User(nick),
-  FOREIGN KEY (spectator) REFERENCES User(nick)
+  FOREIGN KEY (p1) REFERENCES Users(nick),
+  FOREIGN KEY (p2) REFERENCES Users(nick),
+  FOREIGN KEY (spectator) REFERENCES Users(nick)
 );
 
-CREATE TABLE ThrowSequence (
+CREATE TABLE ThrowSequences (
   MatchnId       CHAR(4)     PRIMARY KEY,
   sequence      VARCHAR(1000),
-  FOREIGN KEY (MatchnId) REFERENCES Matchn(id)
+  FOREIGN KEY (MatchnId) REFERENCES Matches(id)
 );
 
 CREATE TABLE Attends(
   userNick      VARCHAR(30),
   MatchnId       CHAR(4),
-  FOREIGN KEY (userNick) REFERENCES User(nick),
-  FOREIGN KEY (MatchnId) REFERENCES Matchn(id)
+  FOREIGN KEY (userNick) REFERENCES Users(nick),
+  FOREIGN KEY (MatchnId) REFERENCES Matches(id)
 );

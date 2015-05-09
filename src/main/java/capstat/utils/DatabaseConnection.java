@@ -27,7 +27,9 @@ public class DatabaseConnection {
 			myStmt = conn.createStatement();
 		    /* Checks and tells if the student got unregistered from a course or was already not registered */
 
-			myStmt.executeUpdate("INSERT INTO Users (nick, name, pass, chalmersAge, iloRank) VALUES ('lol2kpe', 'Johan Andersson', 'lol', 912, 'Master')");
+			//myStmt.executeUpdate("INSERT INTO Users (nick, name, pass, chalmersAge, iloRank) VALUES ('lol2kpe', 'Johan Andersson', 'lol', 912, 'Master')");
+			myStmt.executeUpdate("INSERT INTO Users (nick, name, pass, chalmersAge, iloRank) VALUES ('user1', 'Arne Ranta', 'lol2', 123, 'n00b')");
+			myStmt.executeUpdate("INSERT INTO Users (nick, name, pass, chalmersAge, iloRank) VALUES ('user2', 'Ben Dover', 'lol4', 1212, 'n00b')");
 			ResultSet rs = myStmt.executeQuery("SELECT * FROM Users");
 			while ( rs.next() ) {
 				String nick = rs.getString(1);
