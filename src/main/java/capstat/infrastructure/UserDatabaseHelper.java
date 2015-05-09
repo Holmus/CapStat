@@ -15,5 +15,5 @@ public interface UserDatabaseHelper {
     UserDatabaseRow getUserByName(String name);
     Set<UserDatabaseRow> getUsersByNicknameMatch(String regex);
     Set<UserDatabaseRow> getUsersByNameMatch(String regex);
-    Set<UserDatabaseRow> getUsersInELORankRange(int minELO, int maxELO);
+    Set<UserDatabaseRow> getUsersInELORankRange(double minELO, double maxELO);
 }

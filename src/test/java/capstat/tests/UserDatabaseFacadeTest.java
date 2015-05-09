@@ -73,6 +73,22 @@ public class UserDatabaseFacadeTest {
         assertFalse(matches.contains(dummyRow1));
     }
 
+    @Test
+    public void getUsersInELORankRangeTest() {
+        double lowest = dummyRow1.ELORanking > dummyRow2.ELORanking ?
+                dummyRow2.ELORanking : dummyRow1.ELORanking;
+        double highest = dummyRow1.ELORanking < dummyRow2.ELORanking ?
+                dummyRow2.ELORanking : dummyRow1.ELORanking;
+        Set<UserDatabaseRow> matches = userdb.getUsersInELORankRange(lowest-10,
+                highest+10);
+        assertTrue(matches.contains(dummyRow1));
+        assertTrue(matches.contains(dummyRow2));
+
+        matches = userdb.getUsersInELORankRange(lowest-15, lowest-1);
+        assertFalse(matches.contains(dummyRow1));
+        assertFalse(matches.contains(dummyRow2));
+    }
+
     private void testUsersAreEqual(final UserDatabaseRow user, final
     UserDatabaseRow userDB) {
         String standardMessage = "Make sure the stored users fields and the database " +
