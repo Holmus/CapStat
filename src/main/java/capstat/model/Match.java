@@ -13,19 +13,22 @@ import java.util.Set;
  * ToDo: Update constructors when Enum for Player1, Player2 is implemented.
  * ToDo: Set default number of rounds to win (2?)
  * ToDo: Bad implementation of GameOver, work out better solution
- * ToDo: Reset state of glasses after round is over
  */
 public class Match {
+
+    //Instance fields
 
     private boolean isOngoing;
     private ThrowSequence throwSequence;
     private Match.Glass[] glasses;
-    private User player1, player2, winner;
-    private Player roundWinner, playerWhoseTurnItIs;
+    private User player1, player2;
+    private Player roundWinner, playerWhoseTurnItIs, winner;
     private Set<MatchOverObserver> matchOverObservers;
     private Set<DuelObserver> duelObservers;
     private int p1RoundsWon, p2RoundsWon, roundsToWin, numberOfGlasses;
     private Instant startTime, endTime;
+
+    //Construction
 
     /**
      * Creates a new match.
@@ -56,6 +59,15 @@ public class Match {
                 .playerWhoseTurnItIs, false);
     }
 
+    private void createGlasses() {
+        this.glasses = new Glass[this.numberOfGlasses];
+        for (int i = 0; i < this.numberOfGlasses; i++) {
+            this.glasses[i] = new Match.Glass();
+        }
+    }
+
+    //Setters
+
     /**
      * The player that will be returned by calling getPlayer(Match.Player.ONE)
      * @param player1
@@ -80,13 +92,128 @@ public class Match {
         this.playerWhoseTurnItIs = player;
     }
 
+    //Getters
+
+    /**
+     * @return Whether game is currently in a duel or not.
+     */
+    public boolean isDuelling() {
+        return this.isOngoing && this.throwSequence.lastThrowWasHit();
+    }
+
+    /**
+     * @param player
+     * @return the User representation of the Enum player sent as param, could return null if Users are not defined yet.
+     */
+    public User getPlayer(Player player){
+        if(player == null){
+            throw new NullPointerException("Player can't be null");
+        }
+        if(player == Player.ONE){
+            return this.player1;
+        } else{
+            return this.player2;
+        }
+    }
+
+    public int getPlayer1Score() {
+        int score = 0;
+        for (int i = this.glasses.length - 1; i >= this.glasses.length / 2; i--) {
+            if (this.glasses[i].isActive()) break;
+            else score++;
+        }
+        return score;
+    }
+
+    public int getPlayer2Score() {
+        int score = 0;
+        for (int i = 0; i <= this.glasses.length / 2; i++) {
+            if (this.glasses[i].isActive()) break;
+            else score++;
+        }
+        return score;
+    }
+
+    public int getPlayer1RoundsWon() {
+        return this.p1RoundsWon;
+    }
+
+    public int getPlayer2RoundsWon() {
+        return this.p2RoundsWon;
+    }
+
+    public Player getPlayerWhoseTurnItIs() {
+        if (playerWhoseTurnItIs == Player.ONE) {
+            return Player.ONE;
+        }
+        return Player.TWO;
+    }
+
+    /**
+     *
+     * @return a deep clone of the ThrowSequence of this match.
+     */
+    public ThrowSequence getThrowSequence() {
+        return new ThrowSequence(this.throwSequence);
+    }
+
+    /**
+     * @return the Instant object created at the start of the match. Returns
+     * null if tha match has not been started.
+     */
+    public Instant getStartTime() {
+        return startTime;
+    }
+
+    /**
+     *
+     * @return the Instant object created at the end of the match. Returns
+     * null if the match has not ended.
+     */
+    public Instant getEndTime() {
+        //This is safe since Instants are immutable
+        return endTime;
+    }
+
+    /**
+     * @return An array representing the glasses in the match, starting with
+     * the glasses of Player 1, then the middle glass, and then the glasses
+     * of Player 2.
+     */
+    public Match.Glass[] getGlasses() {
+        return this.glasses.clone();
+    }
+
+    /**
+     *
+     * @return the winner of the last round, or null if no round has ended.
+     */
+    public Player getRoundWinner() {
+        return roundWinner;
+    }
+
+    /**
+     * @return the User who is the winner of the game. If the players have
+     * not been set, null will be returned.
+     * @throws MatchNotOverException if and only if match is ongoing, which
+     *                               can be checked by call to isOngoing.
+     */
+    public Player getWinner() throws MatchNotOverException {
+        if (this.isOngoing) {
+            throw new MatchNotOverException();
+        }
+        return winner;
+    }
+
+    //Gameplay Operations
+
     /**
      * Gives the starting player of a match, according to caps rules. The rules
      * says that the "youngest" player starts. See ChalmersAge.compareTo for
      * more details.
      * @return the starting player of this match
      */
-    public User getStartingPlayer() {
+    public User calculateStartingPlayer() {
         // Suppose player 1 is younger
         User user = this.player1;
         ChalmersAge age1 = this.player1.getChalmersAge();
@@ -108,13 +235,6 @@ public class Match {
         this.isOngoing = true;
     }
 
-    /**
-     * @return true if the match has started but not yet finished. Returns
-     * true also if the match is paused. Returns false otherwise.
-     */
-    public boolean isOngoing() {
-        return this.isOngoing;
-    }
 
     /**
      * Updates the game with a new Throw, which is a hit.
@@ -146,6 +266,20 @@ public class Match {
         }
     }
 
+    public void manuallyChangeGameState(Match.Glass[] glasses, Player
+            startingPlayer, boolean lastThrowWasHit) {
+        this.throwSequence.updateRecordState(glasses, startingPlayer, lastThrowWasHit);
+    }
+
+    /**
+     * If it's player ONE's turn when this is called, turn moves to player
+     * TWO. And vice versa.
+     */
+    private void switchPlayerUpNext() {
+        this.playerWhoseTurnItIs = this.playerWhoseTurnItIs == Player.ONE ? Player.TWO :
+                Player.ONE;
+    }
+
     /**
      * Checks if middle glass is inactive and ends game if it is.
      */
@@ -158,12 +292,12 @@ public class Match {
     }
 
     /**
-     *
+     * Increments the score of whichever player is the round winner
      */
     private void updateRoundWinner() {
         roundWinner = this.getPlayer1Score() > this.getPlayer2Score() ? Player.ONE: Player.TWO;
-        if (roundWinner == Player.ONE) p1RoundsWon = p1RoundsWon + 1;
-        if (roundWinner == Player.TWO) p2RoundsWon = p2RoundsWon + 1;
+        if (roundWinner == Player.ONE) p1RoundsWon++;
+        if (roundWinner == Player.TWO) p2RoundsWon++;
     }
 
     private void endMatchIfNecessary() {
@@ -176,8 +310,7 @@ public class Match {
         if(p1RoundsWon == p2RoundsWon){
             throw new ArithmeticException("We've dun goofed");
         }
-        this.winner = p1RoundsWon > p2RoundsWon ? this
-                .player1 : this.player2;
+        this.winner = p1RoundsWon > p2RoundsWon ? Player.ONE : Player.TWO;
         this.notifyMatchOverObservers();
     }
 
@@ -186,13 +319,6 @@ public class Match {
             this.removeNextGlassPlayer1();
         } else {
             this.removeNextGlassPlayer2();
-        }
-    }
-
-    private void createGlasses() {
-        this.glasses = new Glass[this.numberOfGlasses];
-        for (int i = 0; i < this.numberOfGlasses; i++) {
-            this.glasses[i] = new Match.Glass();
         }
     }
 
@@ -231,53 +357,7 @@ public class Match {
         return false;
     }
 
-    /**
-     * @return Whether game is currently in a duel or not.
-     */
-    public boolean isDuelling() {
-        return this.isOngoing && this.throwSequence.lastThrowWasHit();
-    }
-
-    public int getPlayer1Score() {
-        int score = 0;
-        for (int i = this.glasses.length - 1; i >= this.glasses.length / 2; i--) {
-            if (this.glasses[i].isActive()) break;
-            else score++;
-        }
-        return score;
-    }
-
-    public int getPlayer2Score() {
-        int score = 0;
-        for (int i = 0; i <= this.glasses.length / 2; i++) {
-            if (this.glasses[i].isActive()) break;
-            else score++;
-        }
-        return score;
-    }
-
-    public User getPlayer1() {
-        return this.player1;
-    }
-
-    public User getPlayer2() {
-        return this.player2;
-    }
-
-    public Player getPlayerWhoseTurnItIs() {
-        if (playerWhoseTurnItIs == Player.ONE) {
-            return Player.ONE;
-        }
-        return Player.TWO;
-    }
-
-    /**
-     *
-     * @return a deep clone of the ThrowSequence of this match.
-     */
-    public ThrowSequence getThrowSequence() {
-        return new ThrowSequence(this.throwSequence);
-    }
+    //Subscription
 
     /**
      * Add an observer that will be notified when the game is over.
@@ -322,73 +402,7 @@ public class Match {
         }
     }
 
-    /**
-     * @return An array representing the glasses in the match, starting with
-     * the glasses of Player 1, then the middle glass, and then the glasses
-     * of Player 2.
-     */
-    public Match.Glass[] getGlasses() {
-        return this.glasses.clone();
-    }
-    public void manuallyChangeGameState(Match.Glass[] glasses, Player
-            startingPlayer, boolean lastThrowWasHit) {
-        this.throwSequence.updateRecordState(glasses, startingPlayer, lastThrowWasHit);
-    }
-
-    /**
-     * @return the User who is the winner of the game. If the players have
-     * not been set, null will be returned.
-     * @throws MatchNotOverException if and only if match is ongoing, which
-     *                               can be checked by call to isOngoing.
-     */
-    public User getWinner() throws MatchNotOverException {
-        if (this.isOngoing) {
-            throw new MatchNotOverException();
-        }
-        return winner;
-    }
-
-    /**
-     * @param player
-     * @return the User representation of the Enum player sent as param, could return null if Users are not defined yet.
-     */
-    public User getPlayer(Player player){
-        if(player == null){
-            throw new NullPointerException("Player can't be null");
-        }
-        if(player == Player.ONE){
-            return this.player1;
-        } else{
-            return this.player2;
-        }
-    }
-
-    /**
-     * If it's player ONE's turn when this is called, turn moves to player
-     * TWO. And vice versa.
-     */
-    private void switchPlayerUpNext() {
-        this.playerWhoseTurnItIs = this.playerWhoseTurnItIs == Player.ONE ? Player.TWO :
-                Player.ONE;
-    }
-
-    /**
-     * @return the Instant object created at the start of the match. Returns
-     * null if tha match has not been started.
-     */
-    public Instant getStartTime() {
-        //This is safe since Instants are immutable
-        return startTime;
-    }
-
-    /**
-     *
-     * @return the Instant object created at the end of the match. Returns
-     * null if the match has not ended.
-     */
-    public Instant getEndTime() {
-        return endTime;
-    }
+    //Inner classes
 
     public class MatchNotOverException extends Exception {
     }
@@ -406,11 +420,30 @@ public class Match {
     }
 
     /**
+     * A class representing a Throw. It in turn has two inner classes: one
+     * representing a hit and one representing a miss. These are not shown to
+     * the user, and there will always be only one objcet of each class,
+     * which can be retrieved by the create-methods in Throw.
+     */
+    public enum Throw {
+        HIT,
+        MISS
+    }
+
+    public enum Player{
+        ONE,
+        TWO
+    }
+
+    //Other
+
+    /**
      *
      * @return a String representing match as player names with an asterisk
      * at player who's turn it is and a representation of the glasses, where
      * 'O' marks active glass and 'X' marks inactive glass.
      */
+    @Override
     public String toString() {
         String p1 = player1 == null ? "Not set" : player1.getNickname();
         String p2 = player2 == null ? "Not set" : player2.getNickname();
@@ -428,21 +461,5 @@ public class Match {
         else p2 = "*" + p2;
 
         return p1 + sp + p2 + "\n" + gl;
-    }
-
-    /**
-     * A class representing a Throw. It in turn has two inner classes: one
-     * representing a hit and one representing a miss. These are not shown to
-     * the user, and there will always be only one objcet of each class,
-     * which can be retrieved by the create-methods in Throw.
-     */
-    public enum Throw {
-        HIT,
-        MISS
-    }
-
-    public enum Player{
-        ONE,
-        TWO
     }
 }
