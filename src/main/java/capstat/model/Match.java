@@ -28,6 +28,19 @@ public class Match {
     private int p1RoundsWon, p2RoundsWon, roundsToWin, numberOfGlasses;
     private Instant startTime, endTime;
 
+
+    private boolean checkInvariants() {
+        if (isOngoing && startTime == null) return false;
+        if (glasses.length % 2 == 0) return false;
+        if (p1RoundsWon + p2RoundsWon > 0 && roundWinner == null) return false;
+        if (playerWhoseTurnItIs == null) return false;
+        if (p1RoundsWon < 0 || p2RoundsWon < 0) return false;
+        if (p1RoundsWon > roundsToWin || p2RoundsWon > roundsToWin) return
+                false;
+        if (numberOfGlasses != glasses.length) return false;
+        return true;
+    }
+
     //Construction
 
     /**
