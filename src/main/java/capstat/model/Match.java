@@ -264,6 +264,14 @@ public class Match {
         return this.player2;
     }
 
+    public int getPlayer1RoundsWon() {
+        return this.p1RoundsWon;
+    }
+
+    public int getPlayer2RoundsWon() {
+        return this.p2RoundsWon;
+    }
+
     public Player getPlayerWhoseTurnItIs() {
         if (playerWhoseTurnItIs == Player.ONE) {
             return Player.ONE;
