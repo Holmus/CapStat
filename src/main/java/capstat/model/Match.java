@@ -21,8 +21,8 @@ public class Match {
     private boolean isOngoing;
     private ThrowSequence throwSequence;
     private Match.Glass[] glasses;
-    private User player1, player2, winner;
-    private Player roundWinner, playerWhoseTurnItIs;
+    private User player1, player2;
+    private Player roundWinner, playerWhoseTurnItIs, winner;
     private Set<MatchOverObserver> matchOverObservers;
     private Set<DuelObserver> duelObservers;
     private int p1RoundsWon, p2RoundsWon, roundsToWin, numberOfGlasses;
@@ -198,7 +198,7 @@ public class Match {
      * @throws MatchNotOverException if and only if match is ongoing, which
      *                               can be checked by call to isOngoing.
      */
-    public User getWinner() throws MatchNotOverException {
+    public Player getWinner() throws MatchNotOverException {
         if (this.isOngoing) {
             throw new MatchNotOverException();
         }
@@ -310,8 +310,7 @@ public class Match {
         if(p1RoundsWon == p2RoundsWon){
             throw new ArithmeticException("We've dun goofed");
         }
-        this.winner = p1RoundsWon > p2RoundsWon ? this
-                .player1 : this.player2;
+        this.winner = p1RoundsWon > p2RoundsWon ? Player.ONE : Player.TWO;
         this.notifyMatchOverObservers();
     }
 
