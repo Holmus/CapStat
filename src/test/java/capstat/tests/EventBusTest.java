@@ -54,30 +54,30 @@ public class EventBusTest {
 
     @After
     public void removeListeners() {
-        bus.removeNotifyEventListener(notifyListener, NOTIFICATION_STRING);
-        bus.removeDataEventListener(dataListener, NOTIFICATION_STRING);
+        bus.removeNotifyEventListener(NOTIFICATION_STRING, notifyListener);
+        bus.removeDataEventListener(NOTIFICATION_STRING, dataListener);
     }
 
     //Tests
 
     @Test
     public void notifyListenerTest() {
-        bus.addNotifyEventListener(notifyListener, NOTIFICATION_STRING);
+        bus.addNotifyEventListener(NOTIFICATION_STRING, notifyListener);
         bus.notify(NOTIFICATION_STRING);
         assertTrue(hasBeenNotified);
     }
 
     @Test
     public void removeNotifyListenerTest() {
-        bus.addNotifyEventListener(notifyListener, NOTIFICATION_STRING);
-        bus.removeNotifyEventListener(notifyListener, NOTIFICATION_STRING);
+        bus.addNotifyEventListener(NOTIFICATION_STRING, notifyListener);
+        bus.removeNotifyEventListener(NOTIFICATION_STRING, notifyListener);
         bus.notify(NOTIFICATION_STRING);
         assertFalse(hasBeenNotified);
     }
 
     @Test
     public void dataListenerTest() {
-        bus.addDataEventListener(dataListener, NOTIFICATION_STRING);
+        bus.addDataEventListener(NOTIFICATION_STRING, dataListener);
         bus.dataNotify(NOTIFICATION_STRING, dataSendObject);
         assertTrue(hasBeenNotified);
         assertTrue(dataSendObject == dataReceiveObject);
@@ -85,8 +85,8 @@ public class EventBusTest {
 
     @Test
     public void removeDataListenerTest() {
-        bus.addDataEventListener(dataListener, NOTIFICATION_STRING);
-        bus.removeDataEventListener(dataListener, NOTIFICATION_STRING);
+        bus.addDataEventListener(NOTIFICATION_STRING, dataListener);
+        bus.removeDataEventListener(NOTIFICATION_STRING, dataListener);
         bus.dataNotify(NOTIFICATION_STRING, dataSendObject);
         assertFalse(hasBeenNotified);
         assertFalse(dataSendObject == dataReceiveObject);

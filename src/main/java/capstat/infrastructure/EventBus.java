@@ -26,11 +26,11 @@ public class EventBus {
         return instance;
     }
 
-    public void addNotifyEventListener(final NotifyEventListener listener, final String event) {
+    public void addNotifyEventListener(final String event, final NotifyEventListener listener) {
 
     }
 
-    public void removeNotifyEventListener(final NotifyEventListener listener, final String event) {
+    public void removeNotifyEventListener(final String event, final NotifyEventListener listener) {
 
     }
 
@@ -38,12 +38,12 @@ public class EventBus {
 
     }
 
-    public void addDataEventListener(final DataEventListener listener, final
-    String event) {
+    public void addDataEventListener(final
+                                     String event, final DataEventListener listener) {
 
     }
 
-    public void removeDataEventListener(final DataEventListener listener, final String event) {
+    public void removeDataEventListener(final String event, final DataEventListener listener) {
 
     }
 
