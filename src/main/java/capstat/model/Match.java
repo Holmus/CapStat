@@ -9,7 +9,7 @@ import java.util.Set;
  * @author hjorthjort, holmus
  */
 
-/**
+/*
  * ToDo: Update constructors when Enum for Player1, Player2 is implemented.
  * ToDo: Set default number of rounds to win (2?)
  * ToDo: Bad implementation of GameOver, work out better solution
@@ -27,9 +27,19 @@ public class Match {
     private int p1RoundsWon, p2RoundsWon, roundsToWin, numberOfGlasses;
     private Instant startTime, endTime;
 
+    /**
+     * Creates a new match.
+     * @param numberOfGlasses the total number of glasses that should be in
+     *                        play each round. Must be an odd number larger
+     *                        than 1
+     * @param roundsToWin the number of rounds required for a plyer to win
+     *                    the game.
+     * @throws IllegalArgumentException if
+     */
     public Match(int numberOfGlasses, int roundsToWin) {
-        if (numberOfGlasses % 2 == 0)
-            throw new IllegalArgumentException("Glasses must be an odd number");
+        if (numberOfGlasses < 3 || numberOfGlasses % 2 == 0)
+            throw new IllegalArgumentException("Glasses must be an odd number" +
+                    " larger than 1");
         if (roundsToWin < 1) {
             throw new IllegalArgumentException("Rounds to win must be set > 1");
         }
@@ -46,17 +56,25 @@ public class Match {
                 .playerWhoseTurnItIs, false);
     }
 
+    /**
+     * The player that will be returned by calling getPlayer(Match.Player.ONE)
+     * @param player1
+     */
     public void setPlayer1(User player1) {
         this.player1 = player1;
     }
 
+    /**
+     * The player that will be returned by calling getPlayer(Match.Player.TWO)
+     * @param player2
+     */
     public void setPlayer2(User player2) {
         this.player2 = player2;
     }
 
     /**
      * Sets the currently active player.
-     * @param player the player (1 or 2)
+     * @param player the player, Match.Player.ONE or Match.Player.TWO
      */
     public void setCurrentPlayer(Player player) {
         this.playerWhoseTurnItIs = player;
@@ -68,8 +86,6 @@ public class Match {
      * more details.
      * @return the starting player of this match
      */
-
-    //Update to Enum when moving to MatchFactory
     public User getStartingPlayer() {
         // Suppose player 1 is younger
         User user = this.player1;
@@ -133,16 +149,17 @@ public class Match {
     /**
      * Checks if middle glass is inactive and ends game if it is.
      */
-    //ToDo: Reset state of glasses after round is over
     private void endRoundIfNecessary() {
         if (!this.glasses[this.glasses.length / 2].isActive) {
             updateRoundWinner();
             endMatchIfNecessary();
-            System.out.println("Roundwinner is: " + getPlayer(roundWinner).getNickname());
             createGlasses();
         }
     }
 
+    /**
+     *
+     */
     private void updateRoundWinner() {
         roundWinner = this.getPlayer1Score() > this.getPlayer2Score() ? Player.ONE: Player.TWO;
         if (roundWinner == Player.ONE) p1RoundsWon = p1RoundsWon + 1;
@@ -267,6 +284,7 @@ public class Match {
      *
      * @param observer
      */
+    //TODO Change method to make use of event bus
     public void addMatchOverObserver(final MatchOverObserver observer) {
         this.matchOverObservers.add(observer);
     }
@@ -275,6 +293,7 @@ public class Match {
      * Call the matchOver method on all observers that have been added to this
      * match.
      */
+    //TODO Change method to make use of event bus
     private void notifyMatchOverObservers() {
         Iterator<MatchOverObserver> iterator = this.matchOverObservers.iterator();
         while (iterator.hasNext()) {
@@ -282,10 +301,12 @@ public class Match {
         }
     }
 
+    //TODO Change method to make use of event bus
     public void addDuelObserver(final DuelObserver observer) {
         this.duelObservers.add(observer);
     }
 
+    //TODO Change method to make use of event bus
     private void notifyDuelObserversDuelStarted() {
         Iterator<DuelObserver> iterator = this.duelObservers.iterator();
         while (iterator.hasNext()) {
@@ -293,6 +314,7 @@ public class Match {
         }
     }
 
+    //TODO Change method to make use of event bus
     private void notifyDuelObserversDuelEnded() {
         Iterator<DuelObserver> iterator = this.duelObservers.iterator();
         while (iterator.hasNext()) {
@@ -341,20 +363,28 @@ public class Match {
         }
     }
 
+    /**
+     * If it's player ONE's turn when this is called, turn moves to player
+     * TWO. And vice versa.
+     */
     private void switchPlayerUpNext() {
         this.playerWhoseTurnItIs = this.playerWhoseTurnItIs == Player.ONE ? Player.TWO :
                 Player.ONE;
     }
 
-    /*
-    Instant class is immutable, which makes this safe.
+    /**
+     * @return the Instant object created at the start of the match. Returns
+     * null if tha match has not been started.
      */
     public Instant getStartTime() {
+        //This is safe since Instants are immutable
         return startTime;
     }
 
-    /*
-    Instant class is immutable, which makes this safe.
+    /**
+     *
+     * @return the Instant object created at the end of the match. Returns
+     * null if the match has not ended.
      */
     public Instant getEndTime() {
         return endTime;
@@ -363,6 +393,10 @@ public class Match {
     public class MatchNotOverException extends Exception {
     }
 
+    /**
+     * Class representing the glasses in the match. A glass is either active
+     * or inactive.
+     */
     public class Glass {
         private boolean isActive = true;
 
@@ -371,6 +405,12 @@ public class Match {
         }
     }
 
+    /**
+     *
+     * @return a String representing match as player names with an asterisk
+     * at player who's turn it is and a representation of the glasses, where
+     * 'O' marks active glass and 'X' marks inactive glass.
+     */
     public String toString() {
         String p1 = player1 == null ? "Not set" : player1.getNickname();
         String p2 = player2 == null ? "Not set" : player2.getNickname();
