@@ -95,6 +95,14 @@ public class Match {
     //Getters
 
     /**
+     * @return true if the match has started but not yet finished. Returns
+     * true also if the match is paused. Returns false otherwise.
+     */
+    public boolean isOngoing() {
+        return this.isOngoing;
+    }
+
+    /**
      * @return Whether game is currently in a duel or not.
      */
     public boolean isDuelling() {

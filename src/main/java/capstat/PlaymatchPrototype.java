@@ -51,7 +51,8 @@ public class PlaymatchPrototype implements MatchOverObserver, DuelObserver {
     public void matchOver() {
         try {
             System.out.println(match);
-            System.out.println("Winner is " + match.getWinner().getNickname() + "!");
+            System.out.println("Winner is " + match.getPlayer(match.getWinner())
+                    .getNickname() + "!");
             System.exit(0);
         } catch (Match.MatchNotOverException e) {
             System.out.println("Error! Match should be over, but can't get a " +
