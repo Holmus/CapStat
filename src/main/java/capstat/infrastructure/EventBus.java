@@ -50,13 +50,21 @@ public class EventBus {
      * @param listener the listener to be unregistered
      */
     public void removeNotifyEventListener(final String event, final NotifyEventListener listener) {
+
         Set<NotifyEventListener> set = this.notifyListenersMap.get(event);
-        set.remove(listener);
-        if (set.isEmpty()) this.notifyListenersMap.remove(event);
+        if (set != null) {
+            set.remove(listener);
+            if (set.isEmpty()) this.notifyListenersMap.remove(event);
+        }
     }
 
     public void notify(final String event) {
-
+        Set<NotifyEventListener> set = this.notifyListenersMap.get(event);
+        if (set != null) {
+            for (NotifyEventListener listener : set) {
+                listener.notify(event);
+            }
+        }
     }
 
     /**
@@ -84,12 +92,21 @@ public class EventBus {
      * @param listener the listener to be unregistered
      */
     public void removeDataEventListener(final String event, final DataEventListener listener) {
+
         Set<DataEventListener> set = this.dataListenersMap.get(event);
-        set.remove(listener);
-        if (set.isEmpty()) this.dataListenersMap.remove(event);
+        if (set != null) {
+            set.remove(listener);
+            if (set.isEmpty()) this.dataListenersMap.remove(event);
+        }
+
     }
 
     public void dataNotify(final String event, final Object data) {
-
+        Set<DataEventListener> set = this.dataListenersMap.get(event);
+        if (set != null) {
+            for (DataEventListener listener : set) {
+                listener.dataNotify(event, data);
+            }
+        }
     }
 }

@@ -97,6 +97,7 @@ public class EventBusTest {
     }
 
     private static void hasBeenNotified(final Object dataObject) {
+        hasBeenNotified();
         dataReceiveObject = dataObject;
     }
 
