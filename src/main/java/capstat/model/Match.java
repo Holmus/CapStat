@@ -185,6 +185,14 @@ public class Match {
     }
 
     /**
+     *
+     * @return the winner of the last round, or null if no round has ended.
+     */
+    public Player getRoundWinner() {
+        return roundWinner;
+    }
+
+    /**
      * @return the User who is the winner of the game. If the players have
      * not been set, null will be returned.
      * @throws MatchNotOverException if and only if match is ongoing, which
