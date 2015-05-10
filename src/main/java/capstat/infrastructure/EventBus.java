@@ -42,8 +42,17 @@ public class EventBus {
         this.notifyListenersMap.get(event).add(listener);
     }
 
+    /**
+     * Unregisters the specified listener from events with the specified
+     * String. If the listener is not registered before, this method has no
+     * effect
+     * @param event the string that the listener will no longer get notified by
+     * @param listener the listener to be unregistered
+     */
     public void removeNotifyEventListener(final String event, final NotifyEventListener listener) {
-
+        Set<NotifyEventListener> set = this.notifyListenersMap.get(event);
+        set.remove(listener);
+        if (set.isEmpty()) this.notifyListenersMap.remove(event);
     }
 
     public void notify(final String event) {
@@ -67,8 +76,17 @@ public class EventBus {
 
     }
 
+    /**
+     * Unregisters the specified listener from events with the specified
+     * String. If the listener is not registered before, this method has no
+     * effect
+     * @param event the string that the listener will no longer get notified by
+     * @param listener the listener to be unregistered
+     */
     public void removeDataEventListener(final String event, final DataEventListener listener) {
-
+        Set<DataEventListener> set = this.dataListenersMap.get(event);
+        set.remove(listener);
+        if (set.isEmpty()) this.dataListenersMap.remove(event);
     }
 
     public void dataNotify(final String event, final Object data) {
