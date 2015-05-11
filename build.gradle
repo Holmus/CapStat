@@ -40,10 +40,4 @@ test {
     }
 }
 
-/*
-task execute(type:JavaExec) {
-    main = mainClass
-    classpath = sourceSets.main.runtimeClasspath
 }
-*/
-
