@@ -34,9 +34,17 @@ public class DatabaseConnection {
 		}
 	}
 
-	public void alter(String statemenet) {
+	public void alter(String statement) {
 
 		//TODO
+
+		Statement myStmt;
+		try {
+			myStmt = conn.createStatement();
+			myStmt.executeUpdate(statement);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public List<String> read(String statement) {

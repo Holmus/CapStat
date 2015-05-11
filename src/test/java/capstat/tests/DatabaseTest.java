@@ -29,7 +29,7 @@ public class DatabaseTest {
 
 	@Test
 	public void insertUsers () {
-		db.insert("INSERT INTO Users (nick, name, pass, chalmersAge, iloRank) VALUES ('lol2kpe', 'Johan Andersson', 'lol', 912, 'Master')");
+		db.insert("INSERT INTO Users (nick, name, pass, chalmersAge, iloRank) VALUES ('lol2kpe', 'Johan Andersson', 'lol', 913, 'Master')");
 		db.insert("INSERT INTO Users (nick, name, pass, chalmersAge, iloRank) VALUES ('user1', 'Arne Ranta', 'lol2', 123, 'n00b')");
 		db.insert("INSERT INTO Users (nick, name, pass, chalmersAge, iloRank) VALUES ('user2', 'Ben Dover', 'lol4', 1212, 'n00b')");
 	}
