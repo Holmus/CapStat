@@ -7,6 +7,8 @@ import capstat.model.Match;
  */
 public abstract class MatchFactory {
     public static Match createDefaultMatch() {
-        return new Match(7, 2);
+        Match match = new Match(7, 2);
+        match.setSpectator(CapStat.getInstance().getLoggedInUser());
+        return match;
     }
 }

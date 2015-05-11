@@ -1,5 +1,7 @@
 package capstat.model;
 
+import java.time.LocalDateTime;
+
 /**
  * @author Christian Persson
  */
@@ -34,5 +36,23 @@ public abstract class UserFactory {
 
         User user = new User(nickname, name, hashedPassword, chalmersAge, ranking);
         return user;
+    }
+
+    public static User createGuestUser() {
+        String nickname = "Guest";
+        String name = "Guest";
+        String password = "";
+        String hashedPassword = Security.hashPassword(password);
+
+        LocalDateTime now = LocalDateTime.now();
+        Birthday birthday = new Birthday(now.getYear(), now.getMonthValue(), now
+                .getDayOfMonth());
+        Admittance admittance = new Admittance(now.getYear(), 1);
+        ChalmersAge chalmersAge = new ChalmersAge(birthday, admittance);
+
+        ELORanking ranking = ELORanking.defaultRanking();
+
+        return new User(nickname, name, hashedPassword, chalmersAge,
+                ranking);
     }
 }
