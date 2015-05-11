@@ -1,9 +1,10 @@
 package capstat.model;
 
+import capstat.infrastructure.DataEventListener;
+import capstat.infrastructure.EventBus;
+import capstat.infrastructure.NotifyEventListener;
+
 import java.time.Instant;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
 
 /**
  * @author hjorthjort, holmus
@@ -32,8 +33,6 @@ public class Match {
     private Match.Glass[] glasses;
     private User player1, player2, spectator;
     private Player roundWinner, playerWhoseTurnItIs, winner;
-    private Set<MatchOverObserver> matchOverObservers;
-    private Set<DuelObserver> duelObservers;
     private int p1RoundsWon, p2RoundsWon, roundsToWin, numberOfGlasses;
     private Instant startTime, endTime;
 
@@ -71,8 +70,6 @@ public class Match {
         this.numberOfGlasses = numberOfGlasses;
         this.isOngoing = false;
         this.roundsToWin = roundsToWin;
-        this.matchOverObservers = new HashSet<>();
-        this.duelObservers = new HashSet<>();
         this.playerWhoseTurnItIs = Player.ONE;
         p1RoundsWon = 0;
         p2RoundsWon = 0;
@@ -280,7 +277,7 @@ public class Match {
     public void recordHit() {
         if(isOngoing) {
             if (!this.isDuelling()) {
-                this.notifyDuelObserversDuelStarted();
+                this.notifyListeners(DUEL_STARTED);
             }
             this.switchPlayerUpNext();
             this.throwSequence.add(Throw.HIT);
@@ -293,7 +290,7 @@ public class Match {
     public void recordMiss() {
         if(isOngoing) {
             if (this.isDuelling()) {
-                this.notifyDuelObserversDuelEnded();
+                this.notifyListeners(DUEL_ENDED);
                 this.removeGlass();
                 this.endRoundIfNecessary();
             } else {
@@ -349,7 +346,7 @@ public class Match {
             throw new ArithmeticException("We've dun goofed");
         }
         this.winner = p1RoundsWon > p2RoundsWon ? Player.ONE : Player.TWO;
-        this.notifyMatchOverObservers();
+        this.notifyListeners(MATCH_ENDED);
     }
 
     private void removeGlass() {
@@ -395,49 +392,43 @@ public class Match {
         return false;
     }
 
-    //Subscription
+    //Event Handling
 
     /**
      * Add an observer that will be notified when the game is over.
      *
-     * @param observer
+     * @param event the event string that should be listened for. By
+     *              default Match uses only the predefined constants String
+     *              constants in the class for updates.
+     * @param listener the listener that will get notified by event with the
+     *                 specified String.
      */
-    //TODO Change method to make use of event bus
-    public void addMatchOverObserver(final MatchOverObserver observer) {
-        this.matchOverObservers.add(observer);
+    public void addNotificationEventListener(final String event, final
+    NotifyEventListener listener) {
+        EventBus.getInstance().addNotifyEventListener(event, listener);
     }
 
-    /**
-     * Call the matchOver method on all observers that have been added to this
-     * match.
-     */
-    //TODO Change method to make use of event bus
-    private void notifyMatchOverObservers() {
-        Iterator<MatchOverObserver> iterator = this.matchOverObservers.iterator();
-        while (iterator.hasNext()) {
-            iterator.next().matchOver();
-        }
+    public void removeNotificationEventListener(final String event, final
+                                           NotifyEventListener listener) {
+        EventBus.getInstance().removeNotifyEventListener(event, listener);
     }
 
-    //TODO Change method to make use of event bus
-    public void addDuelObserver(final DuelObserver observer) {
-        this.duelObservers.add(observer);
+    private void notifyListeners(final String event) {
+        EventBus.getInstance().notify(event);
     }
 
-    //TODO Change method to make use of event bus
-    private void notifyDuelObserversDuelStarted() {
-        Iterator<DuelObserver> iterator = this.duelObservers.iterator();
-        while (iterator.hasNext()) {
-            iterator.next().duelStarted();
-        }
+    private void addDataEventListener(final String event, final
+        DataEventListener listener) {
+        EventBus.getInstance().addDataEventListener(event, listener);
     }
 
-    //TODO Change method to make use of event bus
-    private void notifyDuelObserversDuelEnded() {
-        Iterator<DuelObserver> iterator = this.duelObservers.iterator();
-        while (iterator.hasNext()) {
-            iterator.next().duelEnded();
-        }
+    public void removeDataEventListener(final String event, final
+    DataEventListener listener) {
+        EventBus.getInstance().removeDataEventListener(event, listener);
+    }
+
+    private void dataNotifyListeners(final String event, final Object data) {
+        EventBus.getInstance().dataNotify(event, data);
     }
 
     //Inner classes

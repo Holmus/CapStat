@@ -1,5 +1,6 @@
 package capstat.tests;
 
+import capstat.infrastructure.NotifyEventListener;
 import capstat.model.Match;
 import capstat.model.User;
 import capstat.model.MatchOverObserver;
@@ -15,7 +16,7 @@ import static org.junit.Assert.assertFalse;
 /**
  * @author hjorthjort
  */
-public class RecordMatchTest implements MatchOverObserver {
+public class RecordMatchTest implements NotifyEventListener {
 
     private Match match;
     private boolean gameIsOver;
@@ -97,7 +98,7 @@ public class RecordMatchTest implements MatchOverObserver {
 
     @Test
     public void winGameTest() {
-        match.addMatchOverObserver(this);
+        match.addNotificationEventListener(Match.MATCH_ENDED, this);
         /*
         Make player 2 win as fast as possible;
          */
@@ -121,4 +122,8 @@ public class RecordMatchTest implements MatchOverObserver {
         gameIsOver = true;
     }
 
+    @Override
+    public void notify(final String event) {
+        matchOver();
+    }
 }
