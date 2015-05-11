@@ -4,7 +4,7 @@ package capstat.infrastructure;
  * @author hjorthjort
  * Immutable value object class representing a database row for a single user.
  */
-public class UserDatabaseRow {
+public class UserBlueprint {
     public final String name;
     public final String nickname;
     public final String hashedPassword;
@@ -12,11 +12,11 @@ public class UserDatabaseRow {
     public final int admittanceYear, admittanceReadingPeriod;
     public final double ELORanking;
 
-    public UserDatabaseRow(String name, String nickname, String hashedPassword,
-                           int birthdayYear,
-                           int birthdayDay, int birthdayMonth,
-                           int admittanceYear,
-                           int admittanceReadingPeriod, double ELORanking) {
+    public UserBlueprint(String name, String nickname, String hashedPassword,
+                         int birthdayYear,
+                         int birthdayDay, int birthdayMonth,
+                         int admittanceYear,
+                         int admittanceReadingPeriod, double ELORanking) {
         this.name = name;
         this.nickname = nickname;
         this.hashedPassword = hashedPassword;
@@ -48,8 +48,8 @@ public class UserDatabaseRow {
     @Override
     public boolean equals(Object o) {
         if (o == null) return false;
-        if (!(o instanceof UserDatabaseRow)) return false;
-        UserDatabaseRow udbr = (UserDatabaseRow)o;
+        if (!(o instanceof UserBlueprint)) return false;
+        UserBlueprint udbr = (UserBlueprint)o;
         return (udbr.name.equals(this.name)
                 && udbr.nickname.equals(this.nickname))
                 && udbr.hashedPassword.equals(this.hashedPassword)

@@ -1,7 +1,7 @@
 package capstat.tests;
 
 import capstat.infrastructure.DatabaseQueryFactory;
-import capstat.infrastructure.UserDatabaseRow;
+import capstat.infrastructure.UserBlueprint;
 import capstat.infrastructure.UserDatabaseHelper;
 import capstat.model.*;
 import org.junit.After;
@@ -19,7 +19,7 @@ import static org.junit.Assert.*;
 public class UserDatabaseFacadeTest {
 
     private static UserDatabaseHelper userdb;
-    private UserDatabaseRow dummyRow1, dummyRow2;
+    private UserBlueprint dummyRow1, dummyRow2;
 
     @BeforeClass
     public static void init() {
@@ -43,20 +43,20 @@ public class UserDatabaseFacadeTest {
 
     @Test
     public void getUserByNicknameTest() {
-        UserDatabaseRow userDBRow = userdb.getUserByNickname(dummyRow1.nickname);
+        UserBlueprint userDBRow = userdb.getUserByNickname(dummyRow1.nickname);
         testUsersAreEqual(dummyRow1, userDBRow);
     }
 
     @Test
     public void getUserByNameTest() {
-        UserDatabaseRow userDBRow = userdb.getUserByName(dummyRow1.nickname);
+        UserBlueprint userDBRow = userdb.getUserByName(dummyRow1.nickname);
         testUsersAreEqual(dummyRow1, userDBRow);
     }
 
     @Test
     public void getUsersByNickRegexTest() {
         //Get a set containing only the dummy user above
-        Set<UserDatabaseRow> matches = userdb.getUsersByNicknameMatch(dummyRow2
+        Set<UserBlueprint> matches = userdb.getUsersByNicknameMatch(dummyRow2
                 .nickname);
         //contains-method in Set uses equals, not ==.
         assertTrue(matches.contains(dummyRow2));
@@ -66,7 +66,7 @@ public class UserDatabaseFacadeTest {
     @Test
     public void getUsersByNameRegexTest() {
         //Get a set containing only the dummy user above
-        Set<UserDatabaseRow> matches = userdb.getUsersByNameMatch(dummyRow2
+        Set<UserBlueprint> matches = userdb.getUsersByNameMatch(dummyRow2
                 .name);
         //contains-method in Set uses equals, not ==.
         assertTrue(matches.contains(dummyRow2));
@@ -79,7 +79,7 @@ public class UserDatabaseFacadeTest {
                 dummyRow2.ELORanking : dummyRow1.ELORanking;
         double highest = dummyRow1.ELORanking < dummyRow2.ELORanking ?
                 dummyRow2.ELORanking : dummyRow1.ELORanking;
-        Set<UserDatabaseRow> matches = userdb.getUsersInELORankRange(lowest-10,
+        Set<UserBlueprint> matches = userdb.getUsersInELORankRange(lowest-10,
                 highest+10);
         assertTrue(matches.contains(dummyRow1));
         assertTrue(matches.contains(dummyRow2));
@@ -89,8 +89,8 @@ public class UserDatabaseFacadeTest {
         assertFalse(matches.contains(dummyRow2));
     }
 
-    private void testUsersAreEqual(final UserDatabaseRow user, final
-    UserDatabaseRow userDB) {
+    private void testUsersAreEqual(final UserBlueprint user, final
+    UserBlueprint userDB) {
         String standardMessage = "Make sure the stored users fields and the database " +
                 "fields contain the same information: ";
         assertEquals(standardMessage + "Nickname ", user.nickname, userDB
@@ -119,11 +119,11 @@ public class UserDatabaseFacadeTest {
                 userDB.ELORanking);
     }
 
-    public UserDatabaseRow getDummyRow(User dummyUser) {
+    public UserBlueprint getDummyRow(User dummyUser) {
         Birthday bd = dummyUser.getChalmersAge().getBirthday();
         Admittance ad = dummyUser.getChalmersAge().getAdmittance();
         ELORanking elo = dummyUser.getRanking();
-        return new UserDatabaseRow(dummyUser.getName(),
+        return new UserBlueprint(dummyUser.getName(),
                 dummyUser.getNickname(), dummyUser.getHashedPassword(),
                 bd.getYear(), bd.getMonth(), bd.getDay(), ad.getYear(), ad
                 .getReadingPeriod(), elo.getPoints()

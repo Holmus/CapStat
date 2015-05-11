@@ -8,12 +8,12 @@ import java.util.Set;
  */
 public interface UserDatabaseHelper {
 
-    void addUserToDatabase(UserDatabaseRow user);
-    void addUserSetToDatabase(Set<UserDatabaseRow> userSet);
-    void removeUserFromDatabase(UserDatabaseRow user);
-    UserDatabaseRow getUserByNickname(String nickname);
-    UserDatabaseRow getUserByName(String name);
-    Set<UserDatabaseRow> getUsersByNicknameMatch(String regex);
-    Set<UserDatabaseRow> getUsersByNameMatch(String regex);
-    Set<UserDatabaseRow> getUsersInELORankRange(double minELO, double maxELO);
+    void addUserToDatabase(UserBlueprint user);
+    void addUserSetToDatabase(Set<UserBlueprint> userSet);
+    void removeUserFromDatabase(UserBlueprint user);
+    UserBlueprint getUserByNickname(String nickname);
+    UserBlueprint getUserByName(String name);
+    Set<UserBlueprint> getUsersByNicknameMatch(String regex);
+    Set<UserBlueprint> getUsersByNameMatch(String regex);
+    Set<UserBlueprint> getUsersInELORankRange(double minELO, double maxELO);
 }
