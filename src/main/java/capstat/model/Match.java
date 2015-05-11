@@ -16,6 +16,15 @@ import java.util.Set;
  */
 public class Match {
 
+    // Constants
+    public static final String MATCH_STARTED = "Match started";
+    public static final String MATCH_ENDED = "Match ended";
+    public static final String ROUND_STARTED = "Round started";
+    public static final String ROUND_ENDED = "Round ended";
+    public static final String DUEL_STARTED = "Duel started";
+    public static final String DUEL_ENDED = "Duel ended";
+    public static final String THROW_RECORDED = "Throw recorded";
+
     //Instance fields
 
     private boolean isOngoing;
