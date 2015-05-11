@@ -21,7 +21,7 @@ public class Match {
     private boolean isOngoing;
     private ThrowSequence throwSequence;
     private Match.Glass[] glasses;
-    private User player1, player2;
+    private User player1, player2, spectator;
     private Player roundWinner, playerWhoseTurnItIs, winner;
     private Set<MatchOverObserver> matchOverObservers;
     private Set<DuelObserver> duelObservers;
@@ -97,6 +97,10 @@ public class Match {
         this.player2 = player2;
     }
 
+    public void setSpectator(User spectator) {
+        this.spectator = spectator;
+    }
+
     /**
      * Sets the currently active player.
      * @param player the player, Match.Player.ONE or Match.Player.TWO
@@ -135,6 +139,10 @@ public class Match {
         } else{
             return this.player2;
         }
+    }
+
+    public User getSpectator() {
+        return spectator;
     }
 
     public int getPlayer1Score() {
