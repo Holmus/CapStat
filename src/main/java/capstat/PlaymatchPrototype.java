@@ -1,5 +1,6 @@
 package capstat;
 
+import capstat.infrastructure.NotifyEventListener;
 import capstat.model.*;
 import capstat.model.MatchFactory;
 import java.util.Scanner;
@@ -14,13 +15,17 @@ import java.util.Scanner;
  */
 
 //Method to start the match, register result and quit
-public class PlaymatchPrototype implements MatchOverObserver, DuelObserver {
+public class PlaymatchPrototype implements NotifyEventListener {
 
     private static Match match = MatchFactory.createDefaultMatch();
 
     public static void main(String[] args) {
-        match.addMatchOverObserver(new PlaymatchPrototype());
-        match.addDuelObserver(new PlaymatchPrototype());
+        match.addNotificationEventListener(Match.MATCH_ENDED, new
+                PlaymatchPrototype());
+        match.addNotificationEventListener(Match.DUEL_ENDED, new
+                PlaymatchPrototype());
+        match.addNotificationEventListener(Match.DUEL_STARTED, new
+                PlaymatchPrototype());
         match.setPlayer1(new User("Holmus", "", "", new ChalmersAge(new
                 Birthday(1234, 56, 78), new Admittance(1111, 1)),
                 new ELORanking(13124)));
@@ -47,7 +52,6 @@ public class PlaymatchPrototype implements MatchOverObserver, DuelObserver {
         }
     }
 
-    @Override
     public void matchOver() {
         try {
             System.out.println(match);
@@ -61,14 +65,25 @@ public class PlaymatchPrototype implements MatchOverObserver, DuelObserver {
         }
     }
 
-    @Override
     public void duelStarted() {
         System.out.println("Duel!");
     }
 
-    @Override
     public void duelEnded() {
         System.out.println("Duel ended, " + match.getPlayer(match.getPlayerWhoseTurnItIs())
                 .getNickname() + " lost :_(");
+    }
+
+    @Override
+    public void notify(final String event) {
+        switch (event) {
+            case Match.MATCH_ENDED:
+                matchOver(); break;
+            case Match.DUEL_STARTED:
+                duelStarted(); break;
+            case Match.DUEL_ENDED:
+                duelEnded(); break;
+        }
+
     }
 }
