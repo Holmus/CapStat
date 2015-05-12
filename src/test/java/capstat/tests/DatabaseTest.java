@@ -1,6 +1,10 @@
 package capstat.tests;
 
+import static org.junit.Assert.*;
 import capstat.utils.DatabaseConnection;
+import org.jooq.DSLContext;
+import org.jooq.impl.DSL;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -9,6 +13,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Iterator;
 import java.util.List;
+import org.jooq.*;
 
 /**
  * Created by jibbs on 09/05/15.
@@ -20,7 +25,14 @@ public class DatabaseTest {
 	@Before
 	public void initiateConnection() {
 		db = new DatabaseConnection();
+		db.connect();
 	}
+
+	@Test
+	public void useJooq() {
+//		DSLContext create = DSL.using(mySql);
+	}
+
 
 	@Test
 	public void deleteAllUsers() {
@@ -68,5 +80,9 @@ public class DatabaseTest {
 
 	}
 
+	@After
+	public void closeConn() {
+		db.disconnect();
+	}
 
 }
