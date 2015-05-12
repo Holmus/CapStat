@@ -3,7 +3,6 @@ package capstat.tests;
 import capstat.infrastructure.NotifyEventListener;
 import capstat.model.Match;
 import capstat.model.User;
-import capstat.model.MatchOverObserver;
 import capstat.model.MatchFactory;
 import capstat.model.UserFactory;
 
