@@ -9,6 +9,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.time.LocalDate;
 import java.util.Set;
 
 import static org.junit.Assert.*;
@@ -102,13 +103,13 @@ public class UserDatabaseFacadeTest {
 
         //Create a new ChalmersAge from the fields in the database row objects
         ChalmersAge dummyUserChalmersAge = new ChalmersAge(
-                new Birthday(user.birthdayYear, user.birthdayMonth,
+               LocalDate.of(user.birthdayYear, user.birthdayMonth,
                         user.birthdayDay),
                 new Admittance(user.admittanceYear,
                         user.admittanceReadingPeriod)
         );
         ChalmersAge userDBChalmersAge = new ChalmersAge(
-                new Birthday(userDB.birthdayYear, userDB.birthdayMonth,
+                LocalDate.of(userDB.birthdayYear, userDB.birthdayMonth,
                         userDB.birthdayDay),
                 new Admittance(userDB.admittanceYear,
                         userDB.admittanceReadingPeriod)
@@ -120,12 +121,13 @@ public class UserDatabaseFacadeTest {
     }
 
     public UserBlueprint getDummyRow(User dummyUser) {
-        Birthday bd = dummyUser.getChalmersAge().getBirthday();
+        LocalDate bd = dummyUser.getChalmersAge().getBirthday();
         Admittance ad = dummyUser.getChalmersAge().getAdmittance();
         ELORanking elo = dummyUser.getRanking();
         return new UserBlueprint(dummyUser.getName(),
                 dummyUser.getNickname(), dummyUser.getHashedPassword(),
-                bd.getYear(), bd.getMonth(), bd.getDay(), ad.getYear().getValue(), ad
+                bd.getYear(), bd.getMonthValue(), bd.getDayOfMonth(), ad.getYear()
+                .getValue(), ad
                 .getReadingPeriod().ordinal()+1, elo.getPoints()
                 );
     }

@@ -1,5 +1,6 @@
 package capstat;
 
+import java.time.LocalDate;
 import java.time.Year;
 import java.util.List;
 import java.util.Scanner;
@@ -40,7 +41,8 @@ public class RegUserPrototype {
                     for (int i = 0; i < birthdayElements.length; i++) {
                         birthdayElements[i] = Integer.parseInt(birthdaySplits[i]);
                     }
-                    Birthday birthday = new Birthday(birthdayElements[0], birthdayElements[1], birthdayElements[2]);
+                    LocalDate birthday = LocalDate.of(birthdayElements[0],
+                            birthdayElements[1], birthdayElements[2]);
 
                     System.out.print("Admittance (YYYY-P): ");
                     String admittanceString = sc.nextLine();

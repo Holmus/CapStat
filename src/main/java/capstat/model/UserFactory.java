@@ -14,7 +14,7 @@ public abstract class UserFactory {
         String password = "foobar";
         String hashedPassword = Security.hashPassword(password);
 
-        Birthday birthday = new Birthday(1992, 1, 13);
+        LocalDate birthday = LocalDate.of(1992, 1, 13);
         Admittance admittance = new Admittance(Year.of(2013), Admittance
                 .Period.ONE);
         ChalmersAge chalmersAge = new ChalmersAge(birthday, admittance);
@@ -31,7 +31,7 @@ public abstract class UserFactory {
         String password = "boofaz";
         String hashedPassword = Security.hashPassword(password);
 
-        Birthday birthday = new Birthday(1995, 8, 9);
+        LocalDate birthday = LocalDate.of(1995, 8, 9);
         Admittance admittance = new Admittance(Year.of(2014), Admittance
                 .Period.TWO);
         ChalmersAge chalmersAge = new ChalmersAge(birthday, admittance);
@@ -49,8 +49,7 @@ public abstract class UserFactory {
         String hashedPassword = Security.hashPassword(password);
 
         LocalDateTime now = LocalDateTime.now();
-        Birthday birthday = new Birthday(now.getYear(), now.getMonthValue(), now
-                .getDayOfMonth());
+        LocalDate birthday = LocalDate.now();
         Admittance admittance = new Admittance(Year.now(), Admittance
                 .Period.ONE);
         ChalmersAge chalmersAge = new ChalmersAge(birthday, admittance);

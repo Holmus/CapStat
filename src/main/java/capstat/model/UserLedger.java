@@ -1,7 +1,14 @@
 package capstat.model;
 
+import capstat.infrastructure.DatabaseFacade;
+import capstat.infrastructure.DatabaseHelperFactory;
+import capstat.infrastructure.UserBlueprint;
+import capstat.infrastructure.UserDatabaseHelper;
+
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
@@ -15,11 +22,13 @@ public class UserLedger {
 
     private static UserLedger instance;
     private Collection<User> users;
+    private UserDatabaseHelper dbHelper;
 
     //Creation
 
     private UserLedger() {
-        this.users = new ArrayList<>();
+        this.users = new HashSet<>();
+        this.dbHelper = new DatabaseHelperFactory().createUserQueryHelper();
     }
 
     /**
@@ -33,6 +42,17 @@ public class UserLedger {
         return instance;
     }
 
+    //Retrieval
+    public User getUserByNickname(String nickname) {
+        UserBlueprint blueprint = this.dbHelper.getUserByNickname(nickname);
+        return this.reconstituteUserFromBlueprint(blueprint);
+    }
+
+    private User reconstituteUserFromBlueprint(final UserBlueprint blueprint) {
+        //TODO
+        return null;
+    }
+
     //Registration
 
     /**
@@ -40,13 +60,13 @@ public class UserLedger {
      * @param nickname the nickname of the new User
      * @param name the name of the new User
      * @param password the plaintext password of the new User
-     * @param birthday the Birthday instance of the new User
+     * @param birthday the birthday of the new User
      * @param admittance the Admittance instance of the new User
      *
      * @pre this.isNicknameValid(nickname) == true
      */
     public void registerNewUser(String nickname, String name, String
-            password, Birthday birthday, Admittance admittance) {
+            password, LocalDate birthday, Admittance admittance) {
         ChalmersAge chalmersAge = new ChalmersAge(birthday, admittance);
         String hashedPassword = Security.hashPassword(password);
         ELORanking ranking = ELORanking.defaultRanking();
@@ -83,7 +103,7 @@ public class UserLedger {
     public String toString() {
         String ret = "";
         for (User user : this.users) {
-            ret.concat("Nickname: " + user.getNickname() );
+            ret.concat("Nickname: " + user.getNickname());
             ret.concat("\n\nName: " + user.getName());
             ret.concat("\nPassword (hashed): " + user.getHashedPassword());
             ret.concat("\nAge: " + user.getChalmersAge());

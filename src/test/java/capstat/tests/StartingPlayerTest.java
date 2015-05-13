@@ -1,7 +1,6 @@
 package capstat.tests;
 
 import capstat.model.Admittance;
-import capstat.model.Birthday;
 import capstat.model.ChalmersAge;
 import capstat.model.ELORanking;
 import capstat.model.Match;
@@ -13,6 +12,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.time.LocalDate;
 import java.time.Year;
 
 /**
@@ -23,7 +23,7 @@ public class StartingPlayerTest {
     private Match match;
     private User p1, p2;
     private ChalmersAge age1, age2;
-    private Birthday bd1, bd2;
+    private LocalDate bd1, bd2;
     private Admittance adm1, adm2;
     private ELORanking ranking = ELORanking.defaultRanking();
 
@@ -34,12 +34,12 @@ public class StartingPlayerTest {
 
    @Test
     public void sameAdmittance() {
-        this.bd1 = new Birthday(1995, 6, 2);
+        this.bd1 = LocalDate.of(1995, 6, 2);
         this.adm1 = new Admittance(Year.of(2014), Admittance.Period.ONE);
         this.age1 = new ChalmersAge(this.bd1, this.adm1);
         this.p1 = new User("P1", "Player 1", Security.hashPassword("asdfasdf"), this.age1, this.ranking);
 
-        this.bd2 = new Birthday(1995, 5, 18);
+        this.bd2 = LocalDate.of(1995, 5, 18);
         this.adm2 = new Admittance(Year.of(2014), Admittance.Period.ONE);
         this.age2 = new ChalmersAge(this.bd2, this.adm2);
         this.p2 = new User("P2", "Player 2", Security.hashPassword("fdsafdsa"), this.age2, this.ranking);
@@ -52,12 +52,12 @@ public class StartingPlayerTest {
 
     @Test
     public void sameBirthday() {
-        this.bd1 = new Birthday(1995, 6, 2);
+        this.bd1 = LocalDate.of(1995, 6, 2);
         this.adm1 = new Admittance(Year.of(2014), Admittance.Period.ONE);
         this.age1 = new ChalmersAge(this.bd1, this.adm1);
         this.p1 = new User("P1", "Player 1", Security.hashPassword("asdfasdf"), this.age1, this.ranking);
 
-        this.bd2 = new Birthday(1995, 6, 2);
+        this.bd2 = LocalDate.of(1995, 6, 2);
         this.adm2 = new Admittance(Year.of(2013), Admittance.Period.ONE);
         this.age2 = new ChalmersAge(this.bd2, this.adm2);
         this.p2 = new User("P2", "Player 2", Security.hashPassword("fdsafdsa"), this.age2, this.ranking);
@@ -71,12 +71,12 @@ public class StartingPlayerTest {
 
     @Test
     public void youngerAndEarlierAdmittance() {
-        this.bd1 = new Birthday(1995, 6, 2);
+        this.bd1 = LocalDate.of(1995, 6, 2);
         this.adm1 = new Admittance(Year.of(2012), Admittance.Period.FOUR);
         this.age1 = new ChalmersAge(this.bd1, this.adm1);
         this.p1 = new User("P1", "Player 1", Security.hashPassword("asdfasdf"), this.age1, this.ranking);
 
-        this.bd2 = new Birthday(1992, 8, 12);
+        this.bd2 = LocalDate.of(1992, 8, 12);
         this.adm2 = new Admittance(Year.of(2013), Admittance.Period.ONE);
         this.age2 = new ChalmersAge(this.bd2, this.adm2);
         this.p2 = new User("P2", "Player 2", Security.hashPassword("fdsafdsa"), this.age2, this.ranking);
@@ -91,12 +91,12 @@ public class StartingPlayerTest {
 
     @Test
     public void youngerAndLaterAdmittance() {
-        this.bd1 = new Birthday(1995, 6, 2);
+        this.bd1 = LocalDate.of(1995, 6, 2);
         this.adm1 = new Admittance(Year.of(2014), Admittance.Period.ONE);
         this.age1 = new ChalmersAge(this.bd1, this.adm1);
         this.p1 = new User("P1", "Player 1", Security.hashPassword("asdfasdf"), this.age1, this.ranking);
 
-        this.bd2 = new Birthday(1992, 8, 12);
+        this.bd2 = LocalDate.of(1992, 8, 12);
         this.adm2 = new Admittance(Year.of(2013), Admittance.Period.ONE);
         this.age2 = new ChalmersAge(this.bd2, this.adm2);
         this.p2 = new User("P2", "Player 2", Security.hashPassword("fdsafdsa"), this.age2, this.ranking);
@@ -111,12 +111,12 @@ public class StartingPlayerTest {
 
     @Test
     public void sameBirthdayAndAdmittance() {
-        this.bd1 = new Birthday(1995, 6, 2);
+        this.bd1 = LocalDate.of(1995, 6, 2);
         this.adm1 = new Admittance(Year.of(2014), Admittance.Period.ONE);
         this.age1 = new ChalmersAge(this.bd1, this.adm1);
         this.p1 = new User("P1", "Player 1", Security.hashPassword("asdfasdf"), this.age1, this.ranking);
 
-        this.bd2 = new Birthday(1995, 6, 2);
+        this.bd2 = LocalDate.of(1995, 6, 2);
         this.adm2 = new Admittance(Year.of(2014), Admittance.Period.ONE);
         this.age2 = new ChalmersAge(this.bd2, this.adm2);
         this.p2 = new User("P2", "Player 2", Security.hashPassword("fdsafdsa"), this.age2, this.ranking);
