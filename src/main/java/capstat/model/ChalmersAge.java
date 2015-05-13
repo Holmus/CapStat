@@ -47,13 +47,15 @@ public class ChalmersAge implements Comparable<ChalmersAge> {
 
     @Override
     public int compareTo(ChalmersAge other) {
-        Birthday otherBirthday = other.getBirthday();
-        int birthdayCompare = this.birthday.compareTo(otherBirthday);
-        if (birthdayCompare != 0) return birthdayCompare;
-
+        //First, compare by time of admittance. Youngest first.
         Admittance otherAdmittance = other.getAdmittance();
         int admittanceCompare = this.admittance.compareTo(otherAdmittance);
         if (admittanceCompare != 0) return admittanceCompare;
+
+        //Second, compare by birthday. Youngest first.
+        Birthday otherBirthday = other.getBirthday();
+        int birthdayCompare = this.birthday.compareTo(otherBirthday);
+        if (birthdayCompare != 0) return birthdayCompare;
 
         return 0;
     }
