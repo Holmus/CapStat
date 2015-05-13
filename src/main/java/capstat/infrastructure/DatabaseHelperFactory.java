@@ -3,7 +3,7 @@ package capstat.infrastructure;
 /**
  * @author hjorthjort
  */
-public class DatabaseQueryFactory {
+public class DatabaseHelperFactory {
 
     public UserDatabaseHelper createUserQueryHelper() {
         return new DatabaseFacade();

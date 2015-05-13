@@ -1,6 +1,6 @@
 package capstat.tests;
 
-import capstat.infrastructure.DatabaseQueryFactory;
+import capstat.infrastructure.DatabaseHelperFactory;
 import capstat.infrastructure.UserBlueprint;
 import capstat.infrastructure.UserDatabaseHelper;
 import capstat.model.*;
@@ -23,7 +23,7 @@ public class UserDatabaseFacadeTest {
 
     @BeforeClass
     public static void init() {
-        DatabaseQueryFactory factory = new DatabaseQueryFactory();
+        DatabaseHelperFactory factory = new DatabaseHelperFactory();
         userdb = factory.createUserQueryHelper();
     }
 
