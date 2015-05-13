@@ -59,7 +59,7 @@ public class Admittance implements Comparable<Admittance> {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return false;
+        if (this == o) return true;
         if (o == null || this.getClass() != o.getClass()) return false;
 
         Admittance bd = (Admittance) o;
