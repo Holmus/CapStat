@@ -18,7 +18,7 @@ public class UserLedger {
      * Returns the only instance of CapStat.
      * @return the only instance of CapStat
      */
-    public static UserLedger getInstance() {
+    public synchronized static UserLedger getInstance() {
         if (instance == null) {
             instance = new UserLedger();
         }
