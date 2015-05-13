@@ -1,15 +1,12 @@
 package capstat.model;
 
-import capstat.infrastructure.DatabaseFacade;
 import capstat.infrastructure.DatabaseHelperFactory;
 import capstat.infrastructure.UserBlueprint;
 import capstat.infrastructure.UserDatabaseHelper;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
@@ -70,21 +67,17 @@ public class UserLedger {
         ChalmersAge chalmersAge = new ChalmersAge(birthday, admittance);
         String hashedPassword = Security.hashPassword(password);
         ELORanking ranking = ELORanking.defaultRanking();
-        this.createUserInDatabase(nickname, name, hashedPassword, chalmersAge, ranking);
+        User user = new User(nickname, name, hashedPassword, chalmersAge, ranking);
+        this.addUserToLedger(user);
     }
 
     /**
      * Adds a new User to the database.
-     * @param nickname the nickname of the new User
-     * @param name the name of the new User
-     * @param hashedPassword the hashed password of the new User
-     * @param chalmersAge the ChalmersAge instance of the new User
-     * @param ranking the ELORanking instance of the new User
+     * @param user the user to be added
      *
      * @pre this.isNicknameValid(nickname) == true
      */
-    private void createUserInDatabase(String nickname, String name, String hashedPassword, ChalmersAge chalmersAge, ELORanking ranking) {
-        User user = new User(nickname, name, hashedPassword, chalmersAge, ranking);
+    private void addUserToLedger(User user) {
         users.add(user);
     }
 
