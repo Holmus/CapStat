@@ -14,7 +14,7 @@ public class UserBlueprint {
     public final String hashedPassword;
     public final int birthdayYear, birthdayMonth, birthdayDay;
     public final Year admittanceYear;
-    public final Admittance.Period admittanceReadingPeriod;
+    public final int admittanceReadingPeriod;
     public final double ELORanking;
 
     public UserBlueprint(String name, String nickname, String hashedPassword,
@@ -29,8 +29,7 @@ public class UserBlueprint {
         this.birthdayMonth = birthdayMonth;
         this.birthdayDay = birthdayDay;
         this.admittanceYear = Year.of(admittanceYear);
-        this.admittanceReadingPeriod = Admittance.Period
-                .values()[admittanceReadingPeriod];
+        this.admittanceReadingPeriod = admittanceReadingPeriod;
         this.ELORanking = ELORanking;
     }
 
@@ -45,7 +44,7 @@ public class UserBlueprint {
         result = 31 * result + birthdayMonth;
         result = 31 * result + birthdayDay;
         result = 31 * result + admittanceYear.hashCode();
-        result = 31 * result + admittanceReadingPeriod.hashCode();
+        result = 31 * result + admittanceReadingPeriod;
         temp = Double.doubleToLongBits(ELORanking);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         return result;
