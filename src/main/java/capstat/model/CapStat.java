@@ -68,10 +68,11 @@ public class CapStat {
      * @pre this.isNicknameValid(nickname) == true
      */
     public void registerUser(String nickname, String name, String password, Birthday birthday, Admittance admittance) {
-        this.userLedger.registerUser(nickname, name, password, birthday, admittance);
+        this.userLedger.registerNewUser(nickname, name, password, birthday,
+                admittance);
     }
 
     public void printUsers() {
-        this.userLedger.printUsers();
+        System.out.println(this.userLedger.toString());
     }
 }

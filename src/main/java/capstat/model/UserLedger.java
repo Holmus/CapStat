@@ -1,14 +1,22 @@
 package capstat.model;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
+/**
+ * A class representing a book or ledger where all users are stored, and from
+ * which Users can be retrieved. This class represents a repository in
+ * the domain and delegates the issue of persistant sotrage of User objects.
+ */
 public class UserLedger {
 
     private static UserLedger instance;
-    private List<User> users;
+    private Collection<User> users;
+
+    //Creation
 
     private UserLedger() {
         this.users = new ArrayList<>();
@@ -25,15 +33,7 @@ public class UserLedger {
         return instance;
     }
 
-    /**
-     * Checks whether a given nickname is a valid nickname. A valid nickname is any nickname that is unique among other nicknames, and contains one or more of the characters A-Z, a-z, ÅÄÖ, åäö, 0-9, (), period, underscore, and space.
-     * @return true if the nickname is valid; false otherwise
-     */
-    public boolean isNicknameValid(String nickname) {
-        Stream<Boolean> conflicts = this.users.stream().map(u -> u.getNickname().equals(nickname));
-        Predicate<Boolean> noConflict = conflict -> conflict == false;
-        return nickname.matches("^[A-Za-zÅÄÖåäöü0-9 \\(\\)\\._\\-]+$") && conflicts.allMatch(noConflict);
-    }
+    //Registration
 
     /**
      * Registers a new user in the system.
@@ -45,7 +45,8 @@ public class UserLedger {
      *
      * @pre this.isNicknameValid(nickname) == true
      */
-    public void registerUser(String nickname, String name, String password, Birthday birthday, Admittance admittance) {
+    public void registerNewUser(String nickname, String name, String
+            password, Birthday birthday, Admittance admittance) {
         ChalmersAge chalmersAge = new ChalmersAge(birthday, admittance);
         String hashedPassword = Security.hashPassword(password);
         ELORanking ranking = ELORanking.defaultRanking();
@@ -67,14 +68,28 @@ public class UserLedger {
         users.add(user);
     }
 
-    public void printUsers() {
+    //Utils
+
+    /**
+     * Checks whether a given nickname is a valid nickname. A valid nickname is any nickname that is unique among other nicknames, and contains one or more of the characters A-Z, a-z, ÅÄÖ, åäö, 0-9, (), period, underscore, and space.
+     * @return true if the nickname is valid; false otherwise
+     */
+    public boolean isNicknameValid(String nickname) {
+        Stream<Boolean> conflicts = this.users.stream().map(u -> u.getNickname().equals(nickname));
+        Predicate<Boolean> noConflict = conflict -> conflict == false;
+        return nickname.matches("^[A-Za-zÅÄÖåäöü0-9 \\(\\)\\._\\-]+$") && conflicts.allMatch(noConflict);
+    }
+
+    public String toString() {
+        String ret = "";
         for (User user : this.users) {
-            System.out.println("Nickname: " + user.getNickname());
-            System.out.println("Name: " + user.getName());
-            System.out.println("Password (hashed): " + user.getHashedPassword());
-            System.out.println("Age: " + user.getChalmersAge());
-            System.out.println("Ranking: " + user.getRanking());
-            System.out.println();
+            ret.concat("Nickname: " + user.getNickname() );
+            ret.concat("\n\nName: " + user.getName());
+            ret.concat("\nPassword (hashed): " + user.getHashedPassword());
+            ret.concat("\nAge: " + user.getChalmersAge());
+            ret.concat("\nRanking: " + user.getRanking());
+            ret.concat("\n");
         }
+        return ret;
     }
 }
