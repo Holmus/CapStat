@@ -1,5 +1,6 @@
 package capstat;
 
+import java.time.Year;
 import java.util.List;
 import java.util.Scanner;
 
@@ -49,7 +50,10 @@ public class RegUserPrototype {
                     for (int i = 0; i < admittanceElements.length; i++) {
                         admittanceElements[i] = Integer.parseInt(admittanceSplits[i]);
                     }
-                    Admittance admittance = new Admittance(admittanceElements[0], admittanceElements[1]);
+                    Admittance admittance = new Admittance
+                            (Year.of(admittanceElements[0]),
+                                    Admittance.Period.values()[
+                                            (admittanceElements[1])]);
 
                     cs.registerUser(nickname, name, password, birthday, admittance);
                     break;

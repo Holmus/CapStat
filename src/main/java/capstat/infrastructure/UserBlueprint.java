@@ -1,5 +1,9 @@
 package capstat.infrastructure;
 
+import capstat.model.Admittance;
+
+import java.time.Year;
+
 /**
  * @author hjorthjort
  * Immutable value object class representing a database row for a single user.
@@ -9,7 +13,8 @@ public class UserBlueprint {
     public final String nickname;
     public final String hashedPassword;
     public final int birthdayYear, birthdayMonth, birthdayDay;
-    public final int admittanceYear, admittanceReadingPeriod;
+    public final Year admittanceYear;
+    public final Admittance.Period admittanceReadingPeriod;
     public final double ELORanking;
 
     public UserBlueprint(String name, String nickname, String hashedPassword,
@@ -23,8 +28,9 @@ public class UserBlueprint {
         this.birthdayYear = birthdayYear;
         this.birthdayMonth = birthdayMonth;
         this.birthdayDay = birthdayDay;
-        this.admittanceYear = admittanceYear;
-        this.admittanceReadingPeriod = admittanceReadingPeriod;
+        this.admittanceYear = Year.of(admittanceYear);
+        this.admittanceReadingPeriod = Admittance.Period
+                .values()[admittanceReadingPeriod];
         this.ELORanking = ELORanking;
     }
 
@@ -38,8 +44,8 @@ public class UserBlueprint {
         result = 31 * result + birthdayYear;
         result = 31 * result + birthdayMonth;
         result = 31 * result + birthdayDay;
-        result = 31 * result + admittanceYear;
-        result = 31 * result + admittanceReadingPeriod;
+        result = 31 * result + admittanceYear.hashCode();
+        result = 31 * result + admittanceReadingPeriod.hashCode();
         temp = Double.doubleToLongBits(ELORanking);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         return result;

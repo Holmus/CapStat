@@ -125,8 +125,8 @@ public class UserDatabaseFacadeTest {
         ELORanking elo = dummyUser.getRanking();
         return new UserBlueprint(dummyUser.getName(),
                 dummyUser.getNickname(), dummyUser.getHashedPassword(),
-                bd.getYear(), bd.getMonth(), bd.getDay(), ad.getYear(), ad
-                .getReadingPeriod(), elo.getPoints()
+                bd.getYear(), bd.getMonth(), bd.getDay(), ad.getYear().getValue(), ad
+                .getReadingPeriod().ordinal()+1, elo.getPoints()
                 );
     }
 }
