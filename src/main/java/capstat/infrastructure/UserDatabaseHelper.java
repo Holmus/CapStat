@@ -8,6 +8,10 @@ import java.util.Set;
  */
 public interface UserDatabaseHelper {
 
+    /**
+     * Adds this user to the database. If one already exists, overwrite it.
+     * @param user
+     */
     void addUserToDatabase(UserBlueprint user);
     void addUserSetToDatabase(Set<UserBlueprint> userSet);
     void removeUserFromDatabase(UserBlueprint user);
