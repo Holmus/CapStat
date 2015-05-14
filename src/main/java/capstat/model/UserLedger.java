@@ -5,8 +5,8 @@ import capstat.infrastructure.UserBlueprint;
 import capstat.infrastructure.UserDatabaseHelper;
 
 import java.time.LocalDate;
-import java.util.Collection;
-import java.util.HashSet;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
@@ -18,13 +18,13 @@ import java.util.stream.Stream;
 public class UserLedger {
 
     private static UserLedger instance;
-    private Collection<User> users;
+    private Map<String, User> users;
     private UserDatabaseHelper dbHelper;
 
     //Creation
 
     private UserLedger() {
-        this.users = new HashSet<>();
+        this.users = new HashMap<>();
         this.dbHelper = new DatabaseHelperFactory().createUserQueryHelper();
     }
 
@@ -78,7 +78,24 @@ public class UserLedger {
      * @pre this.isNicknameValid(nickname) == true
      */
     private void addUserToLedger(User user) {
-        users.add(user);
+        if (this.users.containsKey(user.getNickname())) {
+            this.users.remove(user.getNickname());
+        }
+        this.users.put(user.getNickname(), user);
+        ChalmersAge chalmersAge = user.getChalmersAge();
+        LocalDate birthday = chalmersAge.getBirthday();
+        Admittance admittance = chalmersAge.getAdmittance();
+        UserBlueprint blueprint = new UserBlueprint(
+                user.getNickname(),
+                user.getName(),
+                user.getHashedPassword(),
+                birthday.getYear(),
+                birthday.getMonthValue(),
+                birthday.getDayOfMonth(),
+                admittance.getYear().getValue(),
+                admittance.getReadingPeriod().ordinal() + 1,
+                user.getRanking().getPoints());
+        this.dbHelper.addUserToDatabase(blueprint);
     }
 
     //Utils
@@ -88,14 +105,15 @@ public class UserLedger {
      * @return true if the nickname is valid; false otherwise
      */
     public boolean isNicknameValid(String nickname) {
-        Stream<Boolean> conflicts = this.users.stream().map(u -> u.getNickname().equals(nickname));
+        Stream<Boolean> conflicts = this.users.keySet().stream().map(u -> u
+                .equals(nickname));
         Predicate<Boolean> noConflict = conflict -> conflict == false;
         return nickname.matches("^[A-Za-zÅÄÖåäöü0-9 \\(\\)\\._\\-]+$") && conflicts.allMatch(noConflict);
     }
 
     public String toString() {
         String ret = "";
-        for (User user : this.users) {
+        for (User user : this.users.values()) {
             ret.concat("Nickname: " + user.getNickname());
             ret.concat("\n\nName: " + user.getName());
             ret.concat("\nPassword (hashed): " + user.getHashedPassword());
