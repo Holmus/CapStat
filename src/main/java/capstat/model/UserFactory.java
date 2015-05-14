@@ -59,4 +59,10 @@ public abstract class UserFactory {
         return new User(nickname, name, hashedPassword, chalmersAge,
                 ranking);
     }
+
+    public static User createNewUser(String nickname, String name, String
+            password, LocalDate birthday, Year admittanceYear, Admittance
+            .Period period, double ranking) {
+        return null;
+    }
 }
