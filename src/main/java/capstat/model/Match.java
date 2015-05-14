@@ -255,8 +255,10 @@ public class Match {
         ChalmersAge age2 = this.player2.getChalmersAge();
         int comparison = age1.compareTo(age2);
 
-        // Only change the starting player if player 1 is "older" than player 2
-        if (comparison > 0)
+        // Only change the starting player if player 1 is "older" than player
+        // 2. If player 1 is older, their ChalmersAge are earlier on the
+        // timeline, and thus the comparison should return a value less than 0.
+        if (comparison < 0)
             user = this.player2;
 
         return new User(user);
