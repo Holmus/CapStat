@@ -40,14 +40,37 @@ public class UserLedger {
     }
 
     //Retrieval
+
+    /**
+     *
+     * @param nickname the nickname of the player to fetch from this repository
+     * @return the User requested. If no such user exists, return null
+     */
     public User getUserByNickname(String nickname) {
+        //First, check if the object is in memory, return it if it is. The
+        // structure of the database guarantees that only one user can have a
+        // certain nickname.
+        if(this.users.containsKey(nickname)) return this.users.get(nickname);
         UserBlueprint blueprint = this.dbHelper.getUserByNickname(nickname);
-        return this.reconstituteUserFromBlueprint(blueprint);
+        User user = blueprint == null ? null : this
+                .reconstituteUserFromBlueprint
+                (blueprint);
+        return user;
     }
 
     private User reconstituteUserFromBlueprint(final UserBlueprint blueprint) {
-        //TODO
-        return null;
+         LocalDate birthday = LocalDate.of(blueprint.birthdayYear, blueprint
+                .birthdayMonth, blueprint.birthdayDay);
+        //The blueprint object gives either reading period 1, 2, 3, or 4. In
+        // the Admittance class, this is an Enum, where ONE is represented by
+        // 0, TWO by 1, and so on (zero indexing). Thereby the row below.
+        Admittance admittance = new Admittance(blueprint.admittanceYear,
+                Admittance.Period.values()[blueprint.admittanceReadingPeriod-1]);
+        User user = UserFactory.createNewUser(blueprint.nickname, blueprint
+                        .name,
+                blueprint.hashedPassword, birthday, admittance.getYear(),
+                admittance.getReadingPeriod(), blueprint.ELORanking);
+        return user;
     }
 
     //Registration
