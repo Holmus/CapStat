@@ -6,12 +6,12 @@ import java.util.List;
 /**
  * @author hjorthjort
  */
-public class MatchResultBlueprint {
+public final class MatchResultBlueprint {
     public final long id;
     public final String player1Nickname, player2Nickname, spectatorNickname;
     public final int player1score, player2score;
     public final Instant startTime, endTime;
-    public final List<ThrowSequenceBlueprint> sequences;
+    public final List<PartialSequenceBlueprint> sequences;
 
     public MatchResultBlueprint(final long id, final String player1Nickname,
                                 final String player2Nickname, final String
@@ -19,7 +19,7 @@ public class MatchResultBlueprint {
                                         player1score, final int player2score,
                                 final Instant startTime, final Instant
                                         endTime, final
-                                List<ThrowSequenceBlueprint> sequences) {
+                                List<PartialSequenceBlueprint> sequences) {
         this.id = id;
         this.player1Nickname = player1Nickname;
         this.player2Nickname = player2Nickname;

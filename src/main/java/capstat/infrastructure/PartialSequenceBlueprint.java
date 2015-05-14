@@ -1,12 +1,10 @@
 package capstat.infrastructure;
 
-import java.util.LinkedList;
-
 /**
  * A value object a throw sequence, as stored in a database table.
  * @author hjorthjort
  */
-public class ThrowSequenceBlueprint {
+public final class PartialSequenceBlueprint {
     /**
      * An array representing the glasses at the time the partial sequence
      * starts. true value indicates active, false inactive.
@@ -26,9 +24,9 @@ public class ThrowSequenceBlueprint {
      */
     public final boolean[] sequence;
 
-    public ThrowSequenceBlueprint(final boolean[] glasses, final int
+    public PartialSequenceBlueprint(final boolean[] glasses, final int
             startingPlayer, final boolean throwBeforeWasHit, final boolean[]
-            sequence) {
+                                            sequence) {
         this.glasses = glasses;
         this.startingPlayer = startingPlayer;
         this.throwBeforeWasHit = throwBeforeWasHit;
