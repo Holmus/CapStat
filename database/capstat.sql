@@ -1,4 +1,4 @@
-/* --- WHIPE DATABASE (Oracle syntax) --- */
+/* --- WIPE DATABASE (Oracle syntax) --- */
 /*
 begin
 for c in (select table_name from user_tables) loop
@@ -13,7 +13,7 @@ end loop;
 end;
 /
 */
-/* END WHIPE DATABASE */
+/* END WIPE DATABASE */
 
 
 
@@ -38,7 +38,7 @@ CREATE TABLE Users (
   name          VARCHAR(30),
   pass          VARCHAR(30),
   chalmersAge   INT,
-  iloRank       VARCHAR(30)
+  eloRank       VARCHAR(30)
 );
 
 CREATE TABLE Matches (
