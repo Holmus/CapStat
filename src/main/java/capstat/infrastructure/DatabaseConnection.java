@@ -1,4 +1,4 @@
-package capstat.utils;
+package capstat.infrastructure;
 
 import org.jooq.DSLContext;
 import org.jooq.SQLDialect;
@@ -40,7 +40,6 @@ public class DatabaseConnection {
 			this.conn = DriverManager.getConnection("" + url + "?user=" + userName + "&password=" + password);
 		} catch (SQLException e) {
 			System.err.println(e);
-			System.exit(2);
 		}
 	}
 
