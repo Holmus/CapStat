@@ -10,6 +10,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.time.LocalDate;
+import java.time.Year;
 import java.util.Set;
 
 import static org.junit.Assert.*;
@@ -106,17 +107,18 @@ public class UserDatabaseFacadeTest {
                LocalDate.of(user.birthdayYear, user.birthdayMonth,
                         user.birthdayDay),
                 new Admittance(user.admittanceYear,
-                        user.admittanceReadingPeriod)
+                        Admittance.Period.values()[user.admittanceReadingPeriod-1])
         );
         ChalmersAge userDBChalmersAge = new ChalmersAge(
                 LocalDate.of(userDB.birthdayYear, userDB.birthdayMonth,
                         userDB.birthdayDay),
                 new Admittance(userDB.admittanceYear,
-                        userDB.admittanceReadingPeriod)
+                        Admittance.Period.values()[userDB
+                                .admittanceReadingPeriod])
         );
         assertEquals(standardMessage + "Chalmers age", dummyUserChalmersAge,
                 userDBChalmersAge);
-        assertEquals(standardMessage + "ELORanking", user.ELORanking,
+        assertTrue(standardMessage + "ELORanking", user.ELORanking ==
                 userDB.ELORanking);
     }
 
