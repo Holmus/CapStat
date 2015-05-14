@@ -83,7 +83,8 @@ public class StartingPlayerTest {
         this.match.setPlayer2(this.p2);
         // Player 1 is younger and should therefore be the starting player, even
         // though he was admitted to Chalmers earlier.
-        assertEquals("Same birthday, different admittances", this.match.calculateStartingPlayer(), this.p1);
+        assertEquals("Same birthday, different admittances", this.match
+                .calculateStartingPlayer(), this.p2);
     }
 
     @Test
