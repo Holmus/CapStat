@@ -6,7 +6,7 @@ import java.util.Set;
  * @author hjorthjort
  */
 //TODO Make class implement a MatchDatabaseHelper
-public class DatabaseFacade implements UserDatabaseHelper {
+class DatabaseFacade implements UserDatabaseHelper {
 
     @Override
     public void addUserToDatabase(final UserBlueprint user) {
