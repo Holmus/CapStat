@@ -37,23 +37,27 @@ buildscript {
     }
 }
 
+// Defines a writer and xml builder to construct jooq script.
 def writer = new StringWriter()
 def xml = new MarkupBuilder(writer)
         .configuration('xmlns': 'http://www.jooq.org/xsd/jooq-codegen-3.6.0.xsd') {
+
+    // Defining jdbc driver with user credentials.
     jdbc() {
         driver('com.mysql.jdbc.Driver')
         url('jdbc:mysql://localhost:3306/capstat')
         user('capstat_user')
         password('1234')
     }
+
     generator() {
         database() {
         }
         generate() {
         }
         target() {
-            packageName('org.jooq.generated.db')
-            directory('src/main/java')
+            packageName('org.jooq.generated.db') // The folder to generate the database-classes.
+            directory('src/main/java') // The path to put that folder.
         }
     }
 }
@@ -63,7 +67,7 @@ def xml = new MarkupBuilder(writer)
 GenerationTool.main(
         JAXB.unmarshal(new StringReader(writer.toString()), org.jooq.util.jaxb.Configuration.class)
 )
-
+// End the code generator
 
 jar {
     baseName = "capstat"
