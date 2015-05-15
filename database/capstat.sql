@@ -36,8 +36,10 @@ GRANT ALL PRIVILEGES ON proc.* TO 'capstat_user'@'localhost';
 CREATE TABLE Users (
   nick          VARCHAR(30)   PRIMARY KEY,
   name          VARCHAR(30),
-  pass          VARCHAR(30),
-  chalmersAge   INT,
+  pass          VARCHAR(300),
+  birthday      DATE,
+  admittanceYear  INT,
+  admittanceReadingPeriod INT,
   eloRank       VARCHAR(30)
 );
 
