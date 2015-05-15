@@ -1,6 +1,6 @@
 package capstat.tests;
 
-import capstat.utils.DatabaseConnection;
+import capstat.infrastructure.DatabaseConnection;
 import org.jooq.DSLContext;
 import org.jooq.Record;
 import org.jooq.Result;
@@ -44,11 +44,11 @@ public class DatabaseTest {
 	 */
 	@Test
 	public void insertUsers () {
-		db.insertInto(Users.USERS, Users.USERS.NICK, Users.USERS.NAME, Users.USERS.PASS, Users.USERS.CHALMERSAGE, Users.USERS.ILORANK)
+		db.insertInto(Users.USERS, Users.USERS.NICK, Users.USERS.NAME, Users.USERS.PASS, Users.USERS.CHALMERSAGE, Users.USERS.ELORANK)
 				.values("lol2kpe", "Johan Andersson", "lol", 913, "Master" ).execute();
-		db.insertInto(Users.USERS, Users.USERS.NICK, Users.USERS.NAME, Users.USERS.PASS, Users.USERS.CHALMERSAGE, Users.USERS.ILORANK)
+		db.insertInto(Users.USERS, Users.USERS.NICK, Users.USERS.NAME, Users.USERS.PASS, Users.USERS.CHALMERSAGE, Users.USERS.ELORANK)
 				.values("user1", "Arne Ranta", "lol2", 123, "n00b" ).execute();
-		db.insertInto(Users.USERS, Users.USERS.NICK, Users.USERS.NAME, Users.USERS.PASS, Users.USERS.CHALMERSAGE, Users.USERS.ILORANK)
+		db.insertInto(Users.USERS, Users.USERS.NICK, Users.USERS.NAME, Users.USERS.PASS, Users.USERS.CHALMERSAGE, Users.USERS.ELORANK)
 				.values("user2", "Ben Dover", "lol4", 347, "Mediocre" ).execute();
 	}
 
@@ -74,7 +74,7 @@ public class DatabaseTest {
 	 */
 	@Test
 	public void insertMatches() {
-
+		// TODO
 	}
 
 	/**
@@ -82,7 +82,7 @@ public class DatabaseTest {
 	 */
 	@Test
 	public void getMatches() {
-
+		// TODO
 	}
 
 	/**
@@ -90,7 +90,7 @@ public class DatabaseTest {
 	 */
 	@Test
 	public void insertThrowSequences() {
-
+		// TODO
 	}
 
 	/**
@@ -98,7 +98,7 @@ public class DatabaseTest {
 	 */
 	@Test
 	public void getAll() {
-
+		//TODO
 	}
 
 	/**
