@@ -12,6 +12,8 @@ import java.util.Set;
 
 /**
  * @author hjorthjort
+ *
+ * Using CSV standard to store database data as strings
  */
 //TODO Make class implement a MatchDatabaseHelper
 class DatabaseFacade implements UserDatabaseHelper {
@@ -65,9 +67,7 @@ class DatabaseFacade implements UserDatabaseHelper {
 
     @Override
     public void addUserSetToDatabase(final Set<UserBlueprint> userSet) {
-
-
-        //TODO Implement adding several users at once
+        userSet.forEach(this::addUserToDatabase);
     }
 
     @Override
@@ -78,19 +78,25 @@ class DatabaseFacade implements UserDatabaseHelper {
 
     @Override
     public UserBlueprint getUserByNickname(final String nickname) {
-        //TODO get user by exact nickname match
-        return null;
+        Result<Record> result = db.database.select().from(Users.USERS).where(Users.USERS.NICK.equal(nickname)).fetch();
+        String[] parsed = queryStringParser(result.formatCSV());
+        return dbEntryToUserBluePrint(parsed);
     }
 
     @Override
     public UserBlueprint getUserByName(final String name) {
-        //TODO get user by exact name match
-        return null;
+        //TODO A user cannot be identified by name, this could result in more than one user entry. now only returns the first found.
+        Result<Record> result = db.database.select().from(Users.USERS).where(Users.USERS.NAME.equal(name)).fetch();
+        String[] parsed = queryStringParser(result.formatCSV());
+        return dbEntryToUserBluePrint(parsed);
     }
 
     @Override
     public Set<UserBlueprint> getUsersByNicknameMatch(final String regex) {
+
         //TODO Implement getting a set of users by a matching regex
+        // Is this a partly matched string/entry?
+
         return null;
     }
 
@@ -98,6 +104,7 @@ class DatabaseFacade implements UserDatabaseHelper {
     public Set<UserBlueprint> getUsersByNameMatch(final String regex) {
         //TODO Implement geting a set of users by matching their names to a
         // regex
+        // Is this a partly matched string/entry?
         return null;
     }
 
@@ -110,23 +117,26 @@ class DatabaseFacade implements UserDatabaseHelper {
     }
 
     private String[] queryStringParser (String s) {
-        return s.split(":");
+        return s.split(",");
     }
 
     private String userBluePrintToQueueEntry(UserBlueprint ubp) {
-        return ubp.name + ":" +
+        return ubp.name + "," +
                 ubp.nickname + ":" +
-                ubp.hashedPassword + ":" +
-                ubp.birthdayYear + ":" +
-                ubp.birthdayMonth + ":" +
-                ubp.birthdayDay + ":" +
-                ubp.admittanceYear + ":" +
-                ubp.admittanceReadingPeriod + ":" +
+                ubp.hashedPassword + "," +
+                ubp.birthdayYear + "," +
+                ubp.birthdayMonth + "," +
+                ubp.birthdayDay + "," +
+                ubp.admittanceYear + "," +
+                ubp.admittanceReadingPeriod + "," +
                 ubp.ELORanking;
     }
 
-    private UserBlueprint dbEntryToUserBluePrint(String s) {
+    private UserBlueprint dbEntryToUserBluePrint(String[] s) {
         //TODO parse the database fetch to a userBluePrint
-        return null;
+        //TODO Should this return an object from the UserLedger instead of creating a new UserBluePrint-object?
+        String[] date = s[3].split("-");
+        return new UserBlueprint(s[1],s[0],s[2],Integer.parseInt(date[0]),Integer.parseInt(date[1]),
+                Integer.parseInt(date[2]),Integer.parseInt(s[4]),Integer.parseInt(s[5]),Double.parseDouble(s[6]));
     }
 }

@@ -70,6 +70,7 @@ public class DatabaseConnectionTest {
 		}
 
 		System.out.println ( "\nPRINTING SECOND USERS NICK USING RESULT.GETVALUE: " + result.getValue(1,"nick") + "\n");
+		System.out.println ( "\nPRINTING SECOND USERS NICK USING RESULT.GETVALUE: " + result.formatCSV() + "\n");
 	}
 
 	/**
