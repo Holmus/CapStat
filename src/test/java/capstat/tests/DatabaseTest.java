@@ -44,11 +44,14 @@ public class DatabaseTest {
 	 */
 	@Test
 	public void insertUsers () {
-		db.insertInto(Users.USERS, Users.USERS.NICK, Users.USERS.NAME, Users.USERS.PASS, Users.USERS.CHALMERSAGE, Users.USERS.ELORANK)
+		db.insertInto(Users.USERS, Users.USERS.NICK, Users.USERS.NAME, Users
+				.USERS.PASS, Users.USERS.CHALMERSAGE, Users.USERS.ILORANK)
 				.values("lol2kpe", "Johan Andersson", "lol", 913, "Master" ).execute();
-		db.insertInto(Users.USERS, Users.USERS.NICK, Users.USERS.NAME, Users.USERS.PASS, Users.USERS.CHALMERSAGE, Users.USERS.ELORANK)
+		db.insertInto(Users.USERS, Users.USERS.NICK, Users.USERS.NAME, Users
+				.USERS.PASS, Users.USERS.CHALMERSAGE, Users.USERS.ILORANK)
 				.values("user1", "Arne Ranta", "lol2", 123, "n00b" ).execute();
-		db.insertInto(Users.USERS, Users.USERS.NICK, Users.USERS.NAME, Users.USERS.PASS, Users.USERS.CHALMERSAGE, Users.USERS.ELORANK)
+		db.insertInto(Users.USERS, Users.USERS.NICK, Users.USERS.NAME, Users
+				.USERS.PASS, Users.USERS.CHALMERSAGE, Users.USERS.ILORANK)
 				.values("user2", "Ben Dover", "lol4", 347, "Mediocre" ).execute();
 	}
 
