@@ -252,18 +252,14 @@ public class Match {
      * more details.
      * @return the starting player of this match
      */
-    public User calculateStartingPlayer() {
-        // Suppose player 1 is younger
-        User user = this.player1;
-        ChalmersAge age1 = this.player1.getChalmersAge();
-        ChalmersAge age2 = this.player2.getChalmersAge();
-        int comparison = age1.compareTo(age2);
-
-        // Only change the starting player if player 1 is "older" than player 2
-        if (comparison > 0)
-            user = this.player2;
-
-        return new User(user);
+    public Player calculateStartingPlayer() {
+        //If player 1 is younger, or if they are equally young, player one
+        // gets to start. If player 2 is younger, they get to start.
+        // Only change the starting player if player 1 is "older" than player
+        // 2. If player 1 is older, the comparison should return a value
+        // larger than.
+        return this.player1.getChalmersAge().compareTo(this.player2
+                .getChalmersAge()) <= 0 ? Player.ONE : Player.TWO;
     }
 
     /**
