@@ -1,6 +1,8 @@
 package capstat.model;
 
 /**
+ * A User is the root of an aggregate containing among other things a ranking
+ * and a Chalmers age.
  * @author Christian Persson
  */
 public class User {

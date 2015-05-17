@@ -5,6 +5,23 @@ import java.util.List;
 import java.util.Stack;
 
 /**
+ * The ThrowSequnece class represents a play by play recap of a Match. The
+ * ThrowSequnece itself maintains an ordered collection of PartialSequences,
+ * and methods for rewinding and forwarding a sequence.
+ *
+ * The Partial Sequence represents a series of throws from a given point in
+ * the match. A new PartialSequence is started by calling updateRecordState
+ * with arguments representing the state of a match. The PartialSequence
+ * keeps track of this starting point, so that it can be used to follow a
+ * game from this point on, play by play.
+ *
+ * This implementation of PartialSequence makes it possible to start over
+ * fresh if the match input has gotten out of sync with the actual match. If
+ * a user has made an erroneous input somewhere, they may restart the
+ * recording from the exact point where they are, while maintaingin maximal
+ * integrity of the data.
+ *
+ * This class if very tightly couple with the Match class.
  * @author hjorthjort
  */
 public class ThrowSequence {
@@ -95,6 +112,7 @@ public class ThrowSequence {
 
     /**
      * This has great importance for knowing whether the game is in a duel.
+     * That the last throw was a hit == tha match is in a duel.
      *
      * @return whether the last throw in the sequence was a hit or not.
      */

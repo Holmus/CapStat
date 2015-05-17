@@ -3,6 +3,9 @@ package capstat.model;
 import java.time.LocalDateTime;
 
 /**
+ * A class for creating Users. The methods return User objects which are the
+ * root of aggregates. Users should be instantiated through this class, not
+ * by calling the constructor in User
  * @author Christian Persson
  */
 public abstract class UserFactory {

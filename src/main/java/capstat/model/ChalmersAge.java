@@ -45,6 +45,12 @@ public class ChalmersAge implements Comparable<ChalmersAge> {
         return new Admittance(this.admittance);
     }
 
+    /**
+     * @param other
+     * @return a number less than 0 if this player is older than other
+     * player, in Chalmers age. If they are equal in Chalmers age, return 0.
+     * Otherwise, return a number larger than 0.
+     */
     @Override
     public int compareTo(ChalmersAge other) {
         //First, compare by time of admittance. Youngest first.

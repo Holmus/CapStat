@@ -7,12 +7,16 @@ import capstat.infrastructure.NotifyEventListener;
 import java.time.Instant;
 
 /**
+ * A class representing a match of caps. It encapsulates most behavior that
+ * is related to such a match, and methods for manipulating the state of the
+ * match by only inputting whether the last throw was a hit or not.
+ *
+ * This class if very tightly couple with the ThrowSequence class, and is
+ * separated from it mostly for legibility reasons.
  * @author hjorthjort, holmus
  */
 
 /*
- * ToDo: Update constructors when Enum for Player1, Player2 is implemented.
- * ToDo: Set default number of rounds to win (2?)
  * ToDo: Bad implementation of GameOver, work out better solution
  */
 public class Match {
