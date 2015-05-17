@@ -7,6 +7,11 @@ import capstat.infrastructure.PartialSequenceBlueprint;
 import java.util.*;
 
 /**
+ * A class representing a "book of results". When a match finishes, it is saved
+ * to the results ledger. From there on it is possible to find the match in
+ * the ledger, either by providing a match id which is attached to the match
+ * when it is saved, or by asking for any match where a given user has been
+ * playing.
  * @author hjorthjort
  */
 public class ResultsLedger {
