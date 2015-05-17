@@ -9,15 +9,16 @@ import java.util.List;
 
 /**
  * An immutable value object class that can be queried to figure out how a
- * game turned out. It
+ * game turned out.
+ *
  * @author hjorthjort
  */
 public class MatchResult {
-    public final long id;
-    public final User player1, player2, spectator;
-    public final int player1score, player2score;
-    public final Instant startTime, endTime;
-    public final List<PartialSequenceResult> sequences;
+    private final long id;
+    private final User player1, player2, spectator;
+    private final int player1score, player2score;
+    private final Instant startTime, endTime;
+    private final List<PartialSequenceResult> sequences;
 
     public MatchResult(MatchResultBlueprint blueprint) {
         this.id = blueprint.id;
@@ -44,5 +45,43 @@ public class MatchResult {
     private PartialSequenceResult convertSingleSequenceFromBlueprint
             (final PartialSequenceBlueprint sequence) {
         return new PartialSequenceResult(sequence);
+    }
+
+    public long getId() {
+        return this.id;
+    }
+
+    public User getPlayer(Match.Player player) {
+        if (player == Match.Player.ONE)
+            return this.player1;
+        else if (player == Match.Player.TWO)
+            return this.player2;
+        else
+            throw new IllegalArgumentException("Must either get Player.ONE or Player.TWO");
+    }
+
+    public User getSpectator() {
+        return this.spectator;
+    }
+
+    public int getPlayerScore(Match.Player player) {
+        if (player == Match.Player.ONE)
+            return this.player1score;
+        else if (player == Match.Player.TWO)
+            return this.player2score;
+        else
+            throw new IllegalArgumentException("Must either get Player.ONE or Player.TWO");
+    }
+
+    public Instant getStartTime() {
+        return this.startTime;
+    }
+
+    public Instant getEndTime() {
+        return this.endTime;
+    }
+
+    public List<PartialSequenceResult> getSequences() {
+        return new LinkedList<>(this.sequences);
     }
 }
