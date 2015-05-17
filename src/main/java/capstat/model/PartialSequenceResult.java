@@ -1,5 +1,7 @@
 package capstat.model;
 
+import java.util.Arrays;
+
 import capstat.infrastructure.PartialSequenceBlueprint;
 import capstat.model.Match;
 
@@ -16,20 +18,20 @@ public class PartialSequenceResult {
      * An array representing the glasses at the time the partial sequence
      * starts. true value indicates active, false inactive.
      */
-    public final Match.Glass[] glasses;
+    private final Match.Glass[] glasses;
 
     /**
      * An int representing starting player. Must be either 1 or 2.
      */
-    public final Match.Player startingPlayer;
+    private final Match.Player startingPlayer;
 
-    public final boolean throwBeforeWasHit;
+    private final boolean throwBeforeWasHit;
 
     /**
      * An array representing the throws. True indicates hit, false indicates
      * miss
      */
-    public final Match.Throw[] sequence;
+    private final Match.Throw[] sequence;
 
     public PartialSequenceResult(PartialSequenceBlueprint blueprint) {
         this.glasses = glassesFromBooleans(blueprint.glasses);
@@ -64,5 +66,21 @@ public class PartialSequenceResult {
             sequence[i] = t;
         }
         return sequence;
+    }
+
+    public Match.Glass[] getGlasses() {
+        return Arrays.copyOf(this.glasses, this.glasses.length);
+    }
+
+    public Match.Player getStartingPlayer() {
+        return this.startingPlayer;
+    }
+
+    public boolean throwBeforeWasHit() {
+        return this.throwBeforeWasHit;
+    }
+
+    public Match.Throw[] getSequence() {
+        return Arrays.copyOf(this.sequence, this.sequence.length);
     }
 }
