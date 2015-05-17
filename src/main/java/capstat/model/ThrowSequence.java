@@ -1,5 +1,7 @@
 package capstat.model;
 
+import capstat.infrastructure.PartialSequenceBlueprint;
+
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Stack;
@@ -184,6 +186,20 @@ public class ThrowSequence {
          */
         public PartialSequence clone() {
             return new PartialSequence(this);
+        }
+
+        public PartialSequenceBlueprint createBlueprint() {
+            boolean[] glasses = new boolean[this.glasses.length];
+            for (int i = 0; i < this.glasses.length; i++) {
+                glasses[i] = this.glasses[i].isActive();
+            }
+            int startingPlayer = this.getStartingPlayer().ordinal()+1;
+            boolean[] sequence = new boolean[this.sequence.size()];
+            for (int i = 0; i < sequence.length; i++) {
+                sequence[i] = this.sequence.get(i) == Match.Throw.HIT;
+            }
+            return new PartialSequenceBlueprint(glasses, startingPlayer, this
+                    .throwBeforeWasHit, sequence);
         }
     }
 
