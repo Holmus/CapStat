@@ -1,15 +1,12 @@
 package capstat.infrastructure;
 
-import capstat.model.User;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.generated.db.capstat.tables.Users;
 
 import java.io.File;
 import java.io.IOException;
-import java.time.Year;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -27,7 +24,7 @@ class DatabaseFacade implements UserDatabaseHelper {
     @Override
     public void addUserToDatabase(final UserBlueprint user) {
 
-        // TODO check how this should be implemented properly
+        // TODO this should call a new thread to handle the txt-to-database process.
 
         TextFileTaskQueue txtQ = null;
 
@@ -38,7 +35,7 @@ class DatabaseFacade implements UserDatabaseHelper {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        //TODO the date adds 1900 years when inserted in db, find out why and fix it.
+
         // INSERTS THE FIRST USER IN THE QUEUE TO THE DATABASE
         String[] parsed = queryStringParser(txtQ.peek());
 
@@ -58,9 +55,6 @@ class DatabaseFacade implements UserDatabaseHelper {
                 e.printStackTrace();
             }
         }
-
-
-
     }
 
     @Override
@@ -77,69 +71,43 @@ class DatabaseFacade implements UserDatabaseHelper {
     @Override
     public UserBlueprint getUserByNickname(final String nickname) {
         Result<Record> result = db.database.select().from(Users.USERS).where(Users.USERS.NICK.equal(nickname)).fetch();
-        String resultString = result.formatCSV();
-        String[] parsed = queryStringParser(resultString.substring(resultString.indexOf(System.getProperty("line.separator")) + 1));
-        return dbEntryToUserBluePrint(parsed);
+        return getUsersFromResult(result).iterator().next();
     }
-
     @Override
     public UserBlueprint getUserByName(final String name) {
         //TODO A user cannot be identified by name, this could result in more than one user entry. now only returns the first found.
         Result<Record> result = db.database.select().from(Users.USERS).where(Users.USERS.NAME.equal(name)).fetch();
-        String resultString = result.formatCSV();
-        String[] parsed = queryStringParser(resultString.substring(resultString.indexOf(System.getProperty("line.separator")) + 1));
-        return dbEntryToUserBluePrint(parsed);
+        return getUsersFromResult(result).iterator().next();
     }
 
     @Override
     public Set<UserBlueprint> getUsersByNicknameMatch(final String regex) {
         Result<Record> result = db.database.select().from(Users.USERS).where(Users.USERS.NICK.likeRegex("" + regex)).fetch();
-        Set<UserBlueprint> userSet = new HashSet<>();
-        String resultString = result.formatCSV();
-        String[] rows = resultString.substring(resultString.indexOf(System.getProperty("line.separator")) + 1).split("\n");
-
-        for (String s : rows) {
-            userSet.add(dbEntryToUserBluePrint(queryStringParser(s)));
-        }
-
-        //TODO Implement getting a set of users by a matching regex
-        // Is this a partly matched string/entry?
-
-        return userSet;
+        return getUsersFromResult(result);
     }
 
     @Override
     public Set<UserBlueprint> getUsersByNameMatch(final String regex) {
         Result<Record> result = db.database.select().from(Users.USERS).where(Users.USERS.NAME.likeRegex(regex)).fetch();
-        Set<UserBlueprint> userSet = new HashSet<>();
-        String resultString = result.formatCSV();
-        String[] rows = resultString.substring(resultString.indexOf(System.getProperty("line.separator")) + 1).split("\n");
-        for (String s : rows) {
-            userSet.add(dbEntryToUserBluePrint(queryStringParser(s)));
-        }
-
-        //TODO Implement getting a set of users by a matching their name to a regex
-        // Is this a partly matched string/entry?
-
-        return userSet;
+        return getUsersFromResult(result);
     }
 
     @Override
-    public Set<UserBlueprint> getUsersInELORankRange(final double minELO,
-                                                     final double maxELO) {
-        //TODO Implement getting all users that have an ELO ranking in a
-        // given, inclusive range.
+    public Set<UserBlueprint> getUsersInELORankRange(final double minELO, final double maxELO) {
         Result<Record> result = db.database.select().from(Users.USERS).where(Users.USERS.ELORANK.between(minELO).and(maxELO)).fetch();
+        return getUsersFromResult(result);
+    }
+
+    private Set<UserBlueprint> getUsersFromResult (Result<Record> result) {
         Set<UserBlueprint> userSet = new HashSet<>();
         String resultString = result.formatCSV();
         String[] rows = resultString.substring(resultString.indexOf(System.getProperty("line.separator")) + 1).split("\n");
 
         for (String s : rows) {
-            if ( s.length() > 0 ) {
+            if (s.length() > 0) {
                 userSet.add(dbEntryToUserBluePrint(queryStringParser(s)));
             }
         }
-
         return userSet;
     }
 

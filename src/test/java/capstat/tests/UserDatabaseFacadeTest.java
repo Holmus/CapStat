@@ -85,11 +85,7 @@ public class UserDatabaseFacadeTest {
                 highest+10.0);
         assertTrue(matches.contains(dummyRow1));
         assertTrue(matches.contains(dummyRow2));
-        System.out.println(matches.contains(dummyRow1));
-        System.out.println(matches.contains(dummyRow2));
         matches = userdb.getUsersInELORankRange(lowest-15, lowest-1);
-        System.out.println(matches.contains(dummyRow1));
-        System.out.println(matches.contains(dummyRow2));
         assertFalse(matches.contains(dummyRow1));
         assertFalse(matches.contains(dummyRow2));
     }
