@@ -9,21 +9,22 @@ import java.time.Year;
  * Immutable value object class representing a database row for a single user.
  */
 public class UserBlueprint {
-    public final String name;
     public final String nickname;
+    public final String name;
     public final String hashedPassword;
     public final int birthdayYear, birthdayMonth, birthdayDay;
     public final Year admittanceYear;
     public final int admittanceReadingPeriod;
     public final double ELORanking;
 
-    public UserBlueprint(String name, String nickname, String hashedPassword,
+    public UserBlueprint(String nickname, String name, String hashedPassword,
                          int birthdayYear,
-                         int birthdayDay, int birthdayMonth,
+                         int birthdayMonth,
+                         int birthdayDay,
                          int admittanceYear,
                          int admittanceReadingPeriod, double ELORanking) {
-        this.name = name;
         this.nickname = nickname;
+        this.name = name;
         this.hashedPassword = hashedPassword;
         this.birthdayYear = birthdayYear;
         this.birthdayMonth = birthdayMonth;
@@ -37,8 +38,8 @@ public class UserBlueprint {
     public int hashCode() {
         int result;
         long temp;
-        result = name.hashCode();
-        result = 31 * result + nickname.hashCode();
+        result = nickname.hashCode();
+        result = 31 * result + name.hashCode();
         result = 31 * result + hashedPassword.hashCode();
         result = 31 * result + birthdayYear;
         result = 31 * result + birthdayMonth;
@@ -52,16 +53,17 @@ public class UserBlueprint {
 
     @Override
     public boolean equals(Object o) {
+
         if (o == null) return false;
         if (!(o instanceof UserBlueprint)) return false;
         UserBlueprint udbr = (UserBlueprint)o;
-        return (udbr.name.equals(this.name)
-                && udbr.nickname.equals(this.nickname))
+        return (udbr.nickname.equals(this.nickname)
+                && udbr.name.equals(this.name))
                 && udbr.hashedPassword.equals(this.hashedPassword)
                 && udbr.birthdayYear == this.birthdayYear
                 && udbr.birthdayMonth == this.birthdayMonth
                 && udbr.birthdayDay == this.birthdayDay
-                && udbr.admittanceYear == this.admittanceYear
+                && udbr.admittanceYear.equals(this.admittanceYear)
                 && udbr.admittanceReadingPeriod == this.admittanceReadingPeriod
                 && udbr.ELORanking == this.ELORanking;
     }

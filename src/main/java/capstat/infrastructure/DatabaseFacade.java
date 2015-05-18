@@ -45,8 +45,8 @@ class DatabaseFacade implements UserDatabaseHelper {
         db.database.insertInto(Users.USERS, Users.USERS.NICK, Users.USERS.NAME, Users.USERS.PASS, Users.USERS.BIRTHDAY,
                 Users.USERS.ADMITTANCEYEAR, Users.USERS.ADMITTANCEREADINGPERIOD, Users.USERS.ELORANK)
                 .values(parsed[0], parsed[1], parsed[2],
-                        new java.sql.Date(Integer.parseInt(parsed[3]), Integer.parseInt(parsed[4]), Integer.parseInt(parsed[5])),
-                        Integer.parseInt(parsed[6]), Integer.parseInt(parsed[7]), (parsed[8])).execute();
+                        new java.sql.Date(Integer.parseInt(parsed[3]) - 1900, Integer.parseInt(parsed[4]) - 1, Integer.parseInt(parsed[5])),
+                        Integer.parseInt(parsed[6]), Integer.parseInt(parsed[7]), Double.parseDouble(parsed[8])).execute();
 
         // DELETE USER FROM QUEUE IF SUCCESSFUL INSERT INTO DATABASE
 
@@ -93,11 +93,12 @@ class DatabaseFacade implements UserDatabaseHelper {
 
     @Override
     public Set<UserBlueprint> getUsersByNicknameMatch(final String regex) {
-        Result<Record> result = db.database.select().from(Users.USERS).where(Users.USERS.NICK.likeRegex("*" + regex + "*")).fetch();
+        Result<Record> result = db.database.select().from(Users.USERS).where(Users.USERS.NICK.likeRegex("" + regex)).fetch();
         Set<UserBlueprint> userSet = new HashSet<>();
         String resultString = result.formatCSV();
-        String[] parsed = queryStringParser(resultString.substring(resultString.indexOf(System.getProperty("line.separator")) + 1));
-        for (String s : parsed) {
+        String[] rows = resultString.substring(resultString.indexOf(System.getProperty("line.separator")) + 1).split("\n");
+
+        for (String s : rows) {
             userSet.add(dbEntryToUserBluePrint(queryStringParser(s)));
         }
 
@@ -109,11 +110,11 @@ class DatabaseFacade implements UserDatabaseHelper {
 
     @Override
     public Set<UserBlueprint> getUsersByNameMatch(final String regex) {
-        Result<Record> result = db.database.select().from(Users.USERS).where(Users.USERS.NAME.likeRegex("*" + regex + "*")).fetch();
+        Result<Record> result = db.database.select().from(Users.USERS).where(Users.USERS.NAME.likeRegex(regex)).fetch();
         Set<UserBlueprint> userSet = new HashSet<>();
         String resultString = result.formatCSV();
-        String[] parsed = queryStringParser(resultString.substring(resultString.indexOf(System.getProperty("line.separator")) + 1));
-        for (String s : parsed) {
+        String[] rows = resultString.substring(resultString.indexOf(System.getProperty("line.separator")) + 1).split("\n");
+        for (String s : rows) {
             userSet.add(dbEntryToUserBluePrint(queryStringParser(s)));
         }
 
@@ -128,12 +129,15 @@ class DatabaseFacade implements UserDatabaseHelper {
                                                      final double maxELO) {
         //TODO Implement getting all users that have an ELO ranking in a
         // given, inclusive range.
-        Result<Record> result = db.database.select().from(Users.USERS).where(Users.USERS.ELORANK.between(String.valueOf(minELO), String.valueOf(maxELO))).fetch();
+        Result<Record> result = db.database.select().from(Users.USERS).where(Users.USERS.ELORANK.between(minELO).and(maxELO)).fetch();
         Set<UserBlueprint> userSet = new HashSet<>();
         String resultString = result.formatCSV();
-        String[] parsed = queryStringParser(resultString.substring(resultString.indexOf(System.getProperty("line.separator")) + 1));
-        for (String s : parsed) {
-            userSet.add(dbEntryToUserBluePrint(queryStringParser(s)));
+        String[] rows = resultString.substring(resultString.indexOf(System.getProperty("line.separator")) + 1).split("\n");
+
+        for (String s : rows) {
+            if ( s.length() > 0 ) {
+                userSet.add(dbEntryToUserBluePrint(queryStringParser(s)));
+            }
         }
 
         return userSet;
@@ -159,7 +163,7 @@ class DatabaseFacade implements UserDatabaseHelper {
         //TODO parse the database fetch to a userBluePrint
         //TODO Should this return an object from the UserLedger instead of creating a new UserBluePrint-object?
         String[] date = s[3].split("-");
-        return new UserBlueprint(s[1],s[0],s[2],Integer.parseInt(date[0]),Integer.parseInt(date[1]),
+        return new UserBlueprint(s[0],s[1],s[2],Integer.parseInt(date[0]),Integer.parseInt(date[1]),
                 Integer.parseInt(date[2]),Integer.parseInt(s[4]),Integer.parseInt(s[5]),Double.parseDouble(s[6]));
     }
 }

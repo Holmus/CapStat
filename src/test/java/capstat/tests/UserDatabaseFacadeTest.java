@@ -81,12 +81,15 @@ public class UserDatabaseFacadeTest {
                 dummyRow2.ELORanking : dummyRow1.ELORanking;
         double highest = dummyRow1.ELORanking < dummyRow2.ELORanking ?
                 dummyRow2.ELORanking : dummyRow1.ELORanking;
-        Set<UserBlueprint> matches = userdb.getUsersInELORankRange(lowest-10,
-                highest+10);
+        Set<UserBlueprint> matches = userdb.getUsersInELORankRange(lowest-10.0,
+                highest+10.0);
         assertTrue(matches.contains(dummyRow1));
         assertTrue(matches.contains(dummyRow2));
-
+        System.out.println(matches.contains(dummyRow1));
+        System.out.println(matches.contains(dummyRow2));
         matches = userdb.getUsersInELORankRange(lowest-15, lowest-1);
+        System.out.println(matches.contains(dummyRow1));
+        System.out.println(matches.contains(dummyRow2));
         assertFalse(matches.contains(dummyRow1));
         assertFalse(matches.contains(dummyRow2));
     }
@@ -97,7 +100,7 @@ public class UserDatabaseFacadeTest {
                 "fields contain the same information: ";
         assertEquals(standardMessage + "Nickname ", user.nickname, userDB
                 .nickname);
-        assertEquals(standardMessage + "Name", user.nickname, userDB.name);
+        assertEquals(standardMessage + "Name", user.name, userDB.name);
         assertEquals(standardMessage + "Hashed password", user
                 .hashedPassword, userDB
                 .hashedPassword);
@@ -107,7 +110,7 @@ public class UserDatabaseFacadeTest {
                LocalDate.of(user.birthdayYear, user.birthdayMonth,
                         user.birthdayDay),
                 new Admittance(user.admittanceYear,
-                        Admittance.Period.values()[user.admittanceReadingPeriod-1])
+                        Admittance.Period.values()[user.admittanceReadingPeriod])
         );
         ChalmersAge userDBChalmersAge = new ChalmersAge(
                 LocalDate.of(userDB.birthdayYear, userDB.birthdayMonth,
@@ -126,8 +129,8 @@ public class UserDatabaseFacadeTest {
         LocalDate bd = dummyUser.getChalmersAge().getBirthday();
         Admittance ad = dummyUser.getChalmersAge().getAdmittance();
         ELORanking elo = dummyUser.getRanking();
-        return new UserBlueprint(dummyUser.getName(),
-                dummyUser.getNickname(), dummyUser.getHashedPassword(),
+        return new UserBlueprint(dummyUser.getNickname(), dummyUser.getName(),
+                dummyUser.getHashedPassword(),
                 bd.getYear(), bd.getMonthValue(), bd.getDayOfMonth(), ad.getYear()
                 .getValue(), ad
                 .getReadingPeriod().ordinal()+1, elo.getPoints()

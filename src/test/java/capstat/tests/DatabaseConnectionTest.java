@@ -46,13 +46,13 @@ public class DatabaseConnectionTest {
 	public void insertUsers () {
 		db.insertInto(Users.USERS, Users.USERS.NICK, Users.USERS.NAME, Users.USERS.PASS, Users.USERS.BIRTHDAY,
 				Users.USERS.ADMITTANCEYEAR, Users.USERS.ADMITTANCEREADINGPERIOD, Users.USERS.ELORANK)
-				.values("lol2kpe", "Johan Andersson", "lol", new java.sql.Date(2016, 02, 29), 2012, 1, "Master" ).execute();
+				.values("lol2kpe", "Johan Andersson", "lol", new java.sql.Date(1988-1900, 02-1, 29), 2012, 1, 1337.0 ).execute();
 		db.insertInto(Users.USERS, Users.USERS.NICK, Users.USERS.NAME, Users.USERS.PASS, Users.USERS.BIRTHDAY,
 				Users.USERS.ADMITTANCEYEAR, Users.USERS.ADMITTANCEREADINGPERIOD, Users.USERS.ELORANK)
-				.values("user1", "Arne Ranta", "lol2", new java.sql.Date(1942, 12, 30), 1971, 3, "n00b").execute();
+				.values("user1", "Arne Ranta", "lol2", new java.sql.Date(1942-1900, 12-1, 30), 1971, 3, 123.4).execute();
 		db.insertInto(Users.USERS, Users.USERS.NICK, Users.USERS.NAME, Users.USERS.PASS, Users.USERS.BIRTHDAY,
 				Users.USERS.ADMITTANCEYEAR, Users.USERS.ADMITTANCEREADINGPERIOD, Users.USERS.ELORANK)
-				.values("user2", "Ben Dover", "lol4", new java.sql.Date(1994, 06, 21), 2013, 1, "Mediocre").execute();
+				.values("user2", "Ben Dover", "lol4", new java.sql.Date(1994-1900, 06-1, 21), 2013, 1, 324.8).execute();
 	}
 
 	/**

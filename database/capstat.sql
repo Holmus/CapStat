@@ -40,7 +40,7 @@ CREATE TABLE Users (
   birthday      DATE,
   admittanceYear  INT,
   admittanceReadingPeriod INT,
-  eloRank       VARCHAR(30)
+  eloRank       DOUBLE
 );
 
 CREATE TABLE Matches (
