@@ -57,9 +57,6 @@ public class ChalmersAge implements Comparable<ChalmersAge> {
     public int compareTo(ChalmersAge other) {
         //First, compare by time of admittance. Youngest first.
         Admittance otherAdmittance = other.getAdmittance();
-        System.out.println("This.bd : " + this.birthday + "   This.admittance : " + this.admittance + "   other.bd : "
-                +other.birthday + "   other.admittance : " + other.admittance);
-        System.out.println("cmp.adm: " + this.admittance.compareTo(otherAdmittance) + "   cmp.bd : " + this.birthday.compareTo(other.birthday));
         int admittanceCompare = this.admittance.compareTo(otherAdmittance);
         if (admittanceCompare != 0) return admittanceCompare;
 
