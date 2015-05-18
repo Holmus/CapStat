@@ -1,5 +1,6 @@
 package capstat.infrastructure;
 
+import capstat.model.User;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.generated.db.capstat.tables.Users;
@@ -7,6 +8,7 @@ import org.jooq.generated.db.capstat.tables.Users;
 import java.io.File;
 import java.io.IOException;
 import java.time.Year;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -32,10 +34,6 @@ class DatabaseFacade implements UserDatabaseHelper {
         // ADDS USER INSERTION TO QUEUE
         try {
             txtQ = new TextFileTaskQueue(dbQueue);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try {
             txtQ.add(userBluePrintToQueueEntry(user));
         } catch (IOException e) {
             e.printStackTrace();
@@ -43,19 +41,19 @@ class DatabaseFacade implements UserDatabaseHelper {
         //TODO the date adds 1900 years when inserted in db, find out why and fix it.
         // INSERTS THE FIRST USER IN THE QUEUE TO THE DATABASE
         String[] parsed = queryStringParser(txtQ.peek());
+
         db.database.insertInto(Users.USERS, Users.USERS.NICK, Users.USERS.NAME, Users.USERS.PASS, Users.USERS.BIRTHDAY,
                 Users.USERS.ADMITTANCEYEAR, Users.USERS.ADMITTANCEREADINGPERIOD, Users.USERS.ELORANK)
-                .values(parsed[1], parsed[0], parsed[2],
+                .values(parsed[0], parsed[1], parsed[2],
                         new java.sql.Date(Integer.parseInt(parsed[3]), Integer.parseInt(parsed[4]), Integer.parseInt(parsed[5])),
-                        Integer.parseInt(parsed[6]), Integer.parseInt(parsed[7]), parsed[8]).execute();
+                        Integer.parseInt(parsed[6]), Integer.parseInt(parsed[7]), (parsed[8])).execute();
 
         // DELETE USER FROM QUEUE IF SUCCESSFUL INSERT INTO DATABASE
 
         UserBlueprint insertedUser = getUserByNickname(parsed[0]);
-
         if ( userBluePrintToQueueEntry(insertedUser).equals(txtQ.peek()) ) {
             try {
-                String tmp = txtQ.pop();
+                txtQ.pop();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -79,7 +77,8 @@ class DatabaseFacade implements UserDatabaseHelper {
     @Override
     public UserBlueprint getUserByNickname(final String nickname) {
         Result<Record> result = db.database.select().from(Users.USERS).where(Users.USERS.NICK.equal(nickname)).fetch();
-        String[] parsed = queryStringParser(result.formatCSV());
+        String resultString = result.formatCSV();
+        String[] parsed = queryStringParser(resultString.substring(resultString.indexOf(System.getProperty("line.separator")) + 1));
         return dbEntryToUserBluePrint(parsed);
     }
 
@@ -87,25 +86,41 @@ class DatabaseFacade implements UserDatabaseHelper {
     public UserBlueprint getUserByName(final String name) {
         //TODO A user cannot be identified by name, this could result in more than one user entry. now only returns the first found.
         Result<Record> result = db.database.select().from(Users.USERS).where(Users.USERS.NAME.equal(name)).fetch();
-        String[] parsed = queryStringParser(result.formatCSV());
+        String resultString = result.formatCSV();
+        String[] parsed = queryStringParser(resultString.substring(resultString.indexOf(System.getProperty("line.separator")) + 1));
         return dbEntryToUserBluePrint(parsed);
     }
 
     @Override
     public Set<UserBlueprint> getUsersByNicknameMatch(final String regex) {
+        Result<Record> result = db.database.select().from(Users.USERS).where(Users.USERS.NICK.likeRegex("*" + regex + "*")).fetch();
+        Set<UserBlueprint> userSet = new HashSet<>();
+        String resultString = result.formatCSV();
+        String[] parsed = queryStringParser(resultString.substring(resultString.indexOf(System.getProperty("line.separator")) + 1));
+        for (String s : parsed) {
+            userSet.add(dbEntryToUserBluePrint(queryStringParser(s)));
+        }
 
         //TODO Implement getting a set of users by a matching regex
         // Is this a partly matched string/entry?
 
-        return null;
+        return userSet;
     }
 
     @Override
     public Set<UserBlueprint> getUsersByNameMatch(final String regex) {
-        //TODO Implement geting a set of users by matching their names to a
-        // regex
+        Result<Record> result = db.database.select().from(Users.USERS).where(Users.USERS.NAME.likeRegex("*" + regex + "*")).fetch();
+        Set<UserBlueprint> userSet = new HashSet<>();
+        String resultString = result.formatCSV();
+        String[] parsed = queryStringParser(resultString.substring(resultString.indexOf(System.getProperty("line.separator")) + 1));
+        for (String s : parsed) {
+            userSet.add(dbEntryToUserBluePrint(queryStringParser(s)));
+        }
+
+        //TODO Implement getting a set of users by a matching their name to a regex
         // Is this a partly matched string/entry?
-        return null;
+
+        return userSet;
     }
 
     @Override
@@ -113,7 +128,15 @@ class DatabaseFacade implements UserDatabaseHelper {
                                                      final double maxELO) {
         //TODO Implement getting all users that have an ELO ranking in a
         // given, inclusive range.
-        return null;
+        Result<Record> result = db.database.select().from(Users.USERS).where(Users.USERS.ELORANK.between(String.valueOf(minELO), String.valueOf(maxELO))).fetch();
+        Set<UserBlueprint> userSet = new HashSet<>();
+        String resultString = result.formatCSV();
+        String[] parsed = queryStringParser(resultString.substring(resultString.indexOf(System.getProperty("line.separator")) + 1));
+        for (String s : parsed) {
+            userSet.add(dbEntryToUserBluePrint(queryStringParser(s)));
+        }
+
+        return userSet;
     }
 
     private String[] queryStringParser (String s) {
@@ -121,8 +144,8 @@ class DatabaseFacade implements UserDatabaseHelper {
     }
 
     private String userBluePrintToQueueEntry(UserBlueprint ubp) {
-        return ubp.name + "," +
-                ubp.nickname + ":" +
+        return ubp.nickname + "," +
+                ubp.name + "," +
                 ubp.hashedPassword + "," +
                 ubp.birthdayYear + "," +
                 ubp.birthdayMonth + "," +
