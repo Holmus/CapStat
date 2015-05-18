@@ -1,14 +1,8 @@
-package capstat.controllers;
-import capstat.controllers.Main;
+package capstat.view;
 import capstat.infrastructure.DataEventListener;
 import capstat.infrastructure.EventBus;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.stage.Stage;
-
-import java.io.IOException;
 
 /**
  * Created by Jakob on 14/05/15.

@@ -1,4 +1,4 @@
-package capstat.controllers;
+package capstat.view;
 
 import capstat.infrastructure.DataEventListener;
 import capstat.infrastructure.EventBus;
