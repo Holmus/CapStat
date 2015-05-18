@@ -1,80 +1,149 @@
 package capstat.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import capstat.infrastructure.DatabaseHelperFactory;
+import capstat.infrastructure.UserBlueprint;
+import capstat.infrastructure.UserDatabaseHelper;
+
+import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
+/**
+ * A class representing a book or ledger where all users are stored, and from
+ * which Users can be retrieved. This class represents a repository in
+ * the domain and delegates the issue of persistant sotrage of User objects.
+ */
 public class UserLedger {
 
     private static UserLedger instance;
-    private List<User> users;
+    private Map<String, User> users;
+    private UserDatabaseHelper dbHelper;
+
+    //Creation
 
     private UserLedger() {
-        this.users = new ArrayList<>();
+        this.users = new HashMap<>();
+        this.dbHelper = new DatabaseHelperFactory().createUserQueryHelper();
     }
 
     /**
      * Returns the only instance of CapStat.
      * @return the only instance of CapStat
      */
-    public static UserLedger getInstance() {
+    public synchronized static UserLedger getInstance() {
         if (instance == null) {
             instance = new UserLedger();
         }
         return instance;
     }
 
+    //Retrieval
+
     /**
-     * Checks whether a given nickname is a valid nickname. A valid nickname is any nickname that is unique among other nicknames, and contains one or more of the characters A-Z, a-z, ÅÄÖ, åäö, 0-9, (), period, underscore, and space.
-     * @return true if the nickname is valid; false otherwise
+     *
+     * @param nickname the nickname of the player to fetch from this repository
+     * @return the User requested. If no such user exists, return null
      */
-    public boolean isNicknameValid(String nickname) {
-        Stream<Boolean> conflicts = this.users.stream().map(u -> u.getNickname().equals(nickname));
-        Predicate<Boolean> noConflict = conflict -> conflict == false;
-        return nickname.matches("^[A-Za-zÅÄÖåäöü0-9 \\(\\)\\._\\-]+$") && conflicts.allMatch(noConflict);
+    public User getUserByNickname(String nickname) {
+        //First, check if the object is in memory, return it if it is. The
+        // structure of the database guarantees that only one user can have a
+        // certain nickname.
+        if(this.users.containsKey(nickname)) return this.users.get(nickname);
+        UserBlueprint blueprint = this.dbHelper.getUserByNickname(nickname);
+        User user = blueprint == null ? null : this
+                .reconstituteUserFromBlueprint
+                (blueprint);
+        return user;
     }
+
+    private User reconstituteUserFromBlueprint(final UserBlueprint blueprint) {
+         LocalDate birthday = LocalDate.of(blueprint.birthdayYear, blueprint
+                .birthdayMonth, blueprint.birthdayDay);
+        //The blueprint object gives either reading period 1, 2, 3, or 4. In
+        // the Admittance class, this is an Enum, where ONE is represented by
+        // 0, TWO by 1, and so on (zero indexing). Thereby the row below.
+        Admittance admittance = new Admittance(blueprint.admittanceYear,
+                Admittance.Period.values()[blueprint.admittanceReadingPeriod-1]);
+        User user = UserFactory.createNewUser(blueprint.nickname, blueprint
+                        .name,
+                blueprint.hashedPassword, birthday, admittance.getYear(),
+                admittance.getReadingPeriod(), blueprint.ELORanking);
+        return user;
+    }
+
+    //Registration
 
     /**
      * Registers a new user in the system.
      * @param nickname the nickname of the new User
      * @param name the name of the new User
      * @param password the plaintext password of the new User
-     * @param birthday the Birthday instance of the new User
+     * @param birthday the birthday of the new User
      * @param admittance the Admittance instance of the new User
      *
      * @pre this.isNicknameValid(nickname) == true
      */
-    public void registerUser(String nickname, String name, String password, Birthday birthday, Admittance admittance) {
+    public void registerNewUser(String nickname, String name, String
+            password, LocalDate birthday, Admittance admittance) {
         ChalmersAge chalmersAge = new ChalmersAge(birthday, admittance);
         String hashedPassword = Security.hashPassword(password);
         ELORanking ranking = ELORanking.defaultRanking();
-        this.createUserInDatabase(nickname, name, hashedPassword, chalmersAge, ranking);
+        User user = new User(nickname, name, hashedPassword, chalmersAge, ranking);
+        this.addUserToLedger(user);
     }
 
     /**
      * Adds a new User to the database.
-     * @param nickname the nickname of the new User
-     * @param name the name of the new User
-     * @param hashedPassword the hashed password of the new User
-     * @param chalmersAge the ChalmersAge instance of the new User
-     * @param ranking the ELORanking instance of the new User
+     * @param user the user to be added
      *
      * @pre this.isNicknameValid(nickname) == true
      */
-    private void createUserInDatabase(String nickname, String name, String hashedPassword, ChalmersAge chalmersAge, ELORanking ranking) {
-        User user = new User(nickname, name, hashedPassword, chalmersAge, ranking);
-        users.add(user);
+    private void addUserToLedger(User user) {
+        if (this.users.containsKey(user.getNickname())) {
+            this.users.remove(user.getNickname());
+        }
+        this.users.put(user.getNickname(), user);
+        ChalmersAge chalmersAge = user.getChalmersAge();
+        LocalDate birthday = chalmersAge.getBirthday();
+        Admittance admittance = chalmersAge.getAdmittance();
+        UserBlueprint blueprint = new UserBlueprint(
+                user.getNickname(),
+                user.getName(),
+                user.getHashedPassword(),
+                birthday.getYear(),
+                birthday.getMonthValue(),
+                birthday.getDayOfMonth(),
+                admittance.getYear().getValue(),
+                admittance.getReadingPeriod().ordinal() + 1,
+                user.getRanking().getPoints());
+        this.dbHelper.addUserToDatabase(blueprint);
     }
 
-    public void printUsers() {
-        for (User user : this.users) {
-            System.out.println("Nickname: " + user.getNickname());
-            System.out.println("Name: " + user.getName());
-            System.out.println("Password (hashed): " + user.getHashedPassword());
-            System.out.println("Age: " + user.getChalmersAge());
-            System.out.println("Ranking: " + user.getRanking());
-            System.out.println();
+    //Utils
+
+    /**
+     * Checks whether a given nickname is a valid nickname. A valid nickname is any nickname that is unique among other nicknames, and contains one or more of the characters A-Z, a-z, ÅÄÖ, åäö, 0-9, (), period, underscore, and space.
+     * @return true if the nickname is valid; false otherwise
+     */
+    public boolean isNicknameValid(String nickname) {
+        Stream<Boolean> conflicts = this.users.keySet().stream().map(u -> u
+                .equals(nickname));
+        Predicate<Boolean> noConflict = conflict -> conflict == false;
+        return nickname.matches("^[A-Za-zÅÄÖåäöü0-9 \\(\\)\\._\\-]+$") && conflicts.allMatch(noConflict);
+    }
+
+    public String toString() {
+        String ret = "";
+        for (User user : this.users.values()) {
+            ret.concat("Nickname: " + user.getNickname());
+            ret.concat("\n\nName: " + user.getName());
+            ret.concat("\nPassword (hashed): " + user.getHashedPassword());
+            ret.concat("\nAge: " + user.getChalmersAge());
+            ret.concat("\nRanking: " + user.getRanking());
+            ret.concat("\n");
         }
+        return ret;
     }
 }

@@ -1,5 +1,7 @@
 package capstat.model;
 
+import java.time.LocalDate;
+
 /**
  * Immutable value object.
  *
@@ -7,15 +9,15 @@ package capstat.model;
  */
 public class ChalmersAge implements Comparable<ChalmersAge> {
 
-    private final Birthday birthday;
+    private final LocalDate birthday;
     private final Admittance admittance;
 
     /**
      * Creates a ChalmersAge instance.
-     * @param birthday the Birthday instance for this ChalmersAge
+     * @param birthday the birthday instance for this ChalmersAge
      * @param admittance the Admittance instance for this ChalmersAge
      */
-    public ChalmersAge(Birthday birthday, Admittance admittance) {
+    public ChalmersAge(LocalDate birthday, Admittance admittance) {
         this.birthday = birthday;
         this.admittance = admittance;
     }
@@ -25,16 +27,16 @@ public class ChalmersAge implements Comparable<ChalmersAge> {
      * @param chalmersAge the ChalmersAge instance to create a copy of
      */
     public ChalmersAge(ChalmersAge chalmersAge) {
-        this.birthday = chalmersAge.getBirthday();
-        this.admittance = chalmersAge.getAdmittance();
+        this.birthday = chalmersAge.birthday;
+        this.admittance = chalmersAge.admittance;
     }
 
     /**
      * Returns the birthday of the ChalmersAge.
      * @return the birthday of the ChalmersAge
      */
-    public Birthday getBirthday() {
-        return new Birthday(this.birthday);
+    public LocalDate getBirthday() {
+        return this.birthday;
     }
 
     /**
@@ -55,15 +57,15 @@ public class ChalmersAge implements Comparable<ChalmersAge> {
     public int compareTo(ChalmersAge other) {
         //First, compare by time of admittance. Youngest first.
         Admittance otherAdmittance = other.getAdmittance();
+        System.out.println("This.bd : " + this.birthday + "   This.admittance : " + this.admittance + "   other.bd : "
+                +other.birthday + "   other.admittance : " + other.admittance);
+        System.out.println("cmp.adm: " + this.admittance.compareTo(otherAdmittance) + "   cmp.bd : " + this.birthday.compareTo(other.birthday));
         int admittanceCompare = this.admittance.compareTo(otherAdmittance);
         if (admittanceCompare != 0) return admittanceCompare;
 
         //Second, compare by birthday. Youngest first.
-        Birthday otherBirthday = other.getBirthday();
-        int birthdayCompare = this.birthday.compareTo(otherBirthday);
-        if (birthdayCompare != 0) return birthdayCompare;
-
-        return 0;
+        LocalDate otherBirthday = other.getBirthday();
+        return this.birthday.compareTo(otherBirthday);
     }
 
     @Override

@@ -26,12 +26,8 @@ public class PlaymatchPrototype implements NotifyEventListener {
                 PlaymatchPrototype());
         match.addNotificationEventListener(Match.DUEL_STARTED, new
                 PlaymatchPrototype());
-        match.setPlayer1(new User("Holmus", "", "", new ChalmersAge(new
-                Birthday(1234, 56, 78), new Admittance(1111, 1)),
-                new ELORanking(13124)));
-        match.setPlayer2(new User("Saser", "", "", new ChalmersAge(new
-                Birthday(1234, 56, 78), new Admittance(1111, 1)), new
-                ELORanking(1222)));
+        match.setPlayer1(UserFactory.createDummyUser1());
+        match.setPlayer2(UserFactory.createDummyUser2());
         match.startMatch();
         System.out.println(match);
         Scanner sc = new Scanner(System.in);

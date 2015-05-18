@@ -259,7 +259,7 @@ public class Match {
         // 2. If player 1 is older, the comparison should return a value
         // larger than.
         return this.player1.getChalmersAge().compareTo(this.player2
-                .getChalmersAge()) <= 0 ? Player.ONE : Player.TWO;
+                .getChalmersAge()) >= 0 ? Player.ONE : Player.TWO;
     }
 
     /**
