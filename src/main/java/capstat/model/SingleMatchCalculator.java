@@ -6,9 +6,15 @@ import capstat.model.PartialSequenceResult;
 
 import java.util.List;
 
-public abstract class SingleMatchCalculator {
+public class SingleMatchCalculator {
 
-    public static double getAccuracy(MatchResult mr, Match.Player player) {
+    private MatchResult mr;
+
+    public SingleMatchCalculator(MatchResult mr) {
+        this.mr = mr;
+    }
+
+    public double getAccuracy(Match.Player player) {
         int hits = 0, total = 0;
         List<PartialSequenceResult> sequences = mr.getSequences();
         for (PartialSequenceResult psr : sequences) {
