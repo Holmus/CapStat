@@ -101,4 +101,9 @@ public class TextFileTaskQueue implements ITaskQueue {
         return this.taskList.contains(task);
     }
 
+    @Override
+    public void delete() {
+        this.taskFile.delete();
+    }
+
 }
