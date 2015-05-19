@@ -13,14 +13,14 @@ public class Main extends Application{
     Stage stage;
     Parent root;
     Scene scene;
-    registerController rc = new registerController();
+    RegisterController rc = new RegisterController();
     public static void main (String [] args){
         launch(args);
     }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        root = FXMLLoader.load(getClass().getResource("/fxml/register.fxml"));
+        root = FXMLLoader.load(getClass().getResource("/fxml/login.fxml"));
         scene = new Scene(root, 600, 450);
         stage = primaryStage;
         stage.setTitle("CapStat");

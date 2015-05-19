@@ -5,6 +5,7 @@ import capstat.infrastructure.EventBus;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.PasswordField;
 
 import java.io.IOException;
 
@@ -13,6 +14,7 @@ public class LoginController implements DataEventListener{
     EventBus eb = EventBus.getInstance();
     private String SCENE_CHANGED = MainController.SCENE_CHANGED;
 
+    @FXML PasswordField passField;
     @FXML private void loginPressed() throws IOException {
         //VALIDATE USER HERE, BEFORE CHANGING SCENE
         scene = new Scene(FXMLLoader.load(getClass().getResource("/fxml/main.fxml")), 600, 450);
