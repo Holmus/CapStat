@@ -67,10 +67,11 @@ public class UserLedger {
         // 0, TWO by 1, and so on (zero indexing). Thereby the row below.
         Admittance admittance = new Admittance(blueprint.admittanceYear,
                 Admittance.Period.values()[blueprint.admittanceReadingPeriod-1]);
-        User user = UserFactory.createNewUser(blueprint.nickname, blueprint
+        User user = UserFactory.createOldUser(blueprint.nickname, blueprint
                         .name,
                 blueprint.hashedPassword, birthday, admittance.getYear(),
-                admittance.getReadingPeriod(), blueprint.ELORanking);
+                admittance.getReadingPeriod().ordinal()+1, blueprint
+                        .ELORanking);
         return user;
     }
 
