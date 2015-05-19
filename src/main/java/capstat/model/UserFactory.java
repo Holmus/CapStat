@@ -64,8 +64,7 @@ public abstract class UserFactory {
     }
 
     public static User createNewUser(String nickname, String name, String
-            password, LocalDate birthday, Year admittanceYear, Admittance
-            .Period period, double ranking) {
+            password, LocalDate birthday, Year admittanceYear, int readingPeriod) {
         return null;
     }
 }

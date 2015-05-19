@@ -5,6 +5,7 @@ import capstat.infrastructure.UserBlueprint;
 import capstat.infrastructure.UserDatabaseHelper;
 
 import java.time.LocalDate;
+import java.time.Year;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Predicate;
@@ -81,16 +82,19 @@ public class UserLedger {
      * @param name the name of the new User
      * @param password the plaintext password of the new User
      * @param birthday the birthday of the new User
-     * @param admittance the Admittance instance of the new User
+     * @param admittanceYear the admittance year  of the new User
+     * @param readingPeriod the reading period in which this user was admitted.
      *
      * @pre this.isNicknameValid(nickname) == true
      */
     public void registerNewUser(String nickname, String name, String
-            password, LocalDate birthday, Admittance admittance) {
-        ChalmersAge chalmersAge = new ChalmersAge(birthday, admittance);
-        String hashedPassword = Security.hashPassword(password);
-        ELORanking ranking = ELORanking.defaultRanking();
-        User user = new User(nickname, name, hashedPassword, chalmersAge, ranking);
+            password, LocalDate birthday, Year admittanceYear, int
+            readingPeriod) {
+        //Nickname must be valid
+        if (!this.isNicknameValid(nickname)) throw new
+                IllegalArgumentException("Invalid nickname");
+        User user = UserFactory.createNewUser(nickname, name, password,
+                birthday, admittanceYear, readingPeriod);
         this.addUserToLedger(user);
     }
 

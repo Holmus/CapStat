@@ -73,7 +73,8 @@ public class CapStat {
                              LocalDate
             birthday, Admittance admittance) {
         this.userLedger.registerNewUser(nickname, name, password, birthday,
-                admittance);
+                admittance.getYear(), admittance.getReadingPeriod().ordinal()
+                        +1);
     }
 
     public void printUsers() {
