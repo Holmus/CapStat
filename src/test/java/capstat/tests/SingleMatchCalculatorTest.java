@@ -123,6 +123,87 @@ public class SingleMatchCalculatorTest {
         assertEquals("Player 2 accuracy for match should be around 58,14%", 0.5814, player2Accuracy, 0.01);
 
         psbs.clear();
+
+        // ---------------------------------------------------------------------
+
+        // Again, the same match, but with the partial sequences more randomly spread.
+        psbs.add(new PartialSequenceBlueprint(
+            new boolean[] { true, true, true, true, true, true, true },
+            1,
+            false,
+            new boolean[] { false, false, false, false, false, true, true, true, false, false, true }
+        ));
+        psbs.add(new PartialSequenceBlueprint(
+            new boolean[] { false, true, true, true, true, true, true },
+            1,
+            true,
+            new boolean[] { true, true, false, false, false, true, false, false, true, true, true, true, false, false }
+        ));
+        psbs.add(new PartialSequenceBlueprint(
+            new boolean[] { false, false, false, true, true, true, false },
+            2,
+            false,
+            new boolean[] { false, false, false, true, true, false }
+        ));
+        psbs.add(new PartialSequenceBlueprint(
+            new boolean[] { true, true, true, true, true, true, true },
+            1,
+            false,
+            new boolean[] { false, true, true, true, true, true, false, false, false, true, true, true, true, true, true, true }
+        ));
+        psbs.add(new PartialSequenceBlueprint(
+            new boolean[] { false, true, true, true, true, true, true },
+            2,
+            true,
+            new boolean[] { false, true, true, true, true, false, false, false, false, false, false }
+        ));
+        psbs.add(new PartialSequenceBlueprint(
+            new boolean[] { false, true, true, true, true, false, false },
+            1,
+            false,
+            new boolean[] { false, true, true, true, false, false }
+        ));
+        psbs.add(new PartialSequenceBlueprint(
+            new boolean[] { false, false, true, true, true, false, false },
+            2,
+            false,
+            new boolean[] { true, true, true, false, false, false, false, false, false, false, true, true }
+        ));
+        psbs.add(new PartialSequenceBlueprint(
+            new boolean[] { false, false, false, true, true, false, false },
+            1,
+            true,
+            new boolean[] { true, true, true, false, false, false, true, true, true, true }
+        ));
+        psbs.add(new PartialSequenceBlueprint(
+            new boolean[] { false, false, false, true, false, false, false },
+            2,
+            true,
+            new boolean[] { true, true, true, false }
+        ));
+
+        mrb = new MatchResultBlueprint(
+            -1,
+            "Dummy 1",
+            "Dummy 2",
+            "Spectator",
+            0,
+            2,
+            start,
+            end,
+            psbs
+        );
+        mr = new MatchResult(mrb);
+
+        smc = new SingleMatchCalculator(mr);
+
+        player1Accuracy = smc.getAccuracy(Match.Player.ONE);
+        player2Accuracy = smc.getAccuracy(Match.Player.TWO);
+
+        assertEquals("Player 1 accuracy for match should be around 46,81%", 0.4681, player1Accuracy, 0.01);
+        assertEquals("Player 2 accuracy for match should be around 58,14%", 0.5814, player2Accuracy, 0.01);
+
+        psbs.clear();
     }
 
 }
