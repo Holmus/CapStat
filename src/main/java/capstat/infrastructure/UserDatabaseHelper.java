@@ -12,9 +12,9 @@ public interface UserDatabaseHelper {
      * Adds this user to the database. If one already exists, overwrite it.
      * @param user
      */
-    void addUserToDatabase(UserBlueprint user);
-    void addUserSetToDatabase(Set<UserBlueprint> userSet);
-    void removeUserFromDatabase(UserBlueprint user);
+    void addUser(UserBlueprint user);
+    void addUserSet(Set<UserBlueprint> userSet);
+    void removeUser(UserBlueprint user);
     UserBlueprint getUserByNickname(String nickname);
     UserBlueprint getUserByName(String name);
     Set<UserBlueprint> getUsersByNicknameMatch(String regex);

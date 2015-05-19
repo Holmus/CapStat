@@ -118,7 +118,7 @@ public class UserLedger {
                 admittance.getYear().getValue(),
                 admittance.getReadingPeriod().ordinal() + 1,
                 user.getRanking().getPoints());
-        this.dbHelper.addUserToDatabase(blueprint);
+        this.dbHelper.addUser(blueprint);
     }
 
     //Utils

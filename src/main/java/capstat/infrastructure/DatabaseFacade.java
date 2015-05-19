@@ -6,6 +6,7 @@ import org.jooq.generated.db.capstat.tables.Users;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -15,14 +16,17 @@ import java.util.Set;
  * Using CSV standard to store database data as strings
  */
 //TODO Make class implement a MatchDatabaseHelper
-class DatabaseFacade implements UserDatabaseHelper {
+class DatabaseFacade implements UserDatabaseHelper, MatchDatabaseHelper {
 
     // Path and filename as string.
     File dbQueue = new File("dbqueue.txt");
     DatabaseConnection db = new DatabaseConnection();
 
+
+	// START USERS
+
     @Override
-    public void addUserToDatabase(final UserBlueprint user) {
+    public void addUser(final UserBlueprint user) {
 
         // TODO this should call a new thread to handle the txt-to-database process.
 
@@ -31,7 +35,7 @@ class DatabaseFacade implements UserDatabaseHelper {
         // ADDS USER INSERTION TO QUEUE
         try {
             txtQ = new TextFileTaskQueue(dbQueue);
-            txtQ.add(userBluePrintToQueueEntry(user));
+            txtQ.add(userBlueprintToQueueEntry(user));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -48,7 +52,7 @@ class DatabaseFacade implements UserDatabaseHelper {
         // DELETE USER FROM QUEUE IF SUCCESSFUL INSERT INTO DATABASE
 
         UserBlueprint insertedUser = getUserByNickname(parsed[0]);
-        if ( userBluePrintToQueueEntry(insertedUser).equals(txtQ.peek()) ) {
+        if ( userBlueprintToQueueEntry(insertedUser).equals(txtQ.peek()) ) {
             try {
                 txtQ.pop();
             } catch (IOException e) {
@@ -58,12 +62,12 @@ class DatabaseFacade implements UserDatabaseHelper {
     }
 
     @Override
-    public void addUserSetToDatabase(final Set<UserBlueprint> userSet) {
-        userSet.forEach(this::addUserToDatabase);
+    public void addUserSet(final Set<UserBlueprint> userSet) {
+        userSet.forEach(this::addUser);
     }
 
     @Override
-    public void removeUserFromDatabase(final UserBlueprint user) {
+    public void removeUser(final UserBlueprint user) {
         db.database.deleteFrom(Users.USERS).where(Users.USERS.NICK.equal(user.nickname)).execute();
         //TODO check if this is done or not.
     }
@@ -105,17 +109,13 @@ class DatabaseFacade implements UserDatabaseHelper {
 
         for (String s : rows) {
             if (s.length() > 0) {
-                userSet.add(dbEntryToUserBluePrint(queryStringParser(s)));
+                userSet.add(dbEntryToUserBlueprint(queryStringParser(s)));
             }
         }
         return userSet;
     }
 
-    private String[] queryStringParser (String s) {
-        return s.split(",");
-    }
-
-    private String userBluePrintToQueueEntry(UserBlueprint ubp) {
+    private String userBlueprintToQueueEntry(UserBlueprint ubp) {
         return ubp.nickname + "," +
                 ubp.name + "," +
                 ubp.hashedPassword + "," +
@@ -127,11 +127,110 @@ class DatabaseFacade implements UserDatabaseHelper {
                 ubp.ELORanking;
     }
 
-    private UserBlueprint dbEntryToUserBluePrint(String[] s) {
-        //TODO parse the database fetch to a userBluePrint
-        //TODO Should this return an object from the UserLedger instead of creating a new UserBluePrint-object?
+    private UserBlueprint dbEntryToUserBlueprint(String[] s) {
+        //TODO parse the database fetch to a userBlueprint
+        //TODO Should this return an object from the UserLedger instead of creating a new UserBlueprint-object?
         String[] date = s[3].split("-");
         return new UserBlueprint(s[0],s[1],s[2],Integer.parseInt(date[0]),Integer.parseInt(date[1]),
                 Integer.parseInt(date[2]),Integer.parseInt(s[4]),Integer.parseInt(s[5]),Double.parseDouble(s[6]));
     }
+
+	// END USERS
+
+	// START MATCHES
+
+
+
+	@Override
+	public void addMatch(MatchBlueprint match, ThrowSequenceBlueprint throwSequence) {
+
+	}
+
+	@Override
+	public void addMatchSet(Set<MatchBlueprint> matches, Set<ThrowSequenceBlueprint> throwSequences) {
+
+	}
+
+	@Override
+	public void removeMatch(int id) {
+
+	}
+
+	@Override
+	public MatchBlueprint getMatch(int id) {
+		return null;
+	}
+
+	@Override
+	public Set<MatchBlueprint> getAllMatches() {
+		return null;
+	}
+
+	@Override
+	public Set<MatchBlueprint> getMatchesForUser(String player) {
+		return null;
+	}
+
+	@Override
+	public Set<MatchBlueprint> getMatchesForUsers(String p1, String p2) {
+		return null;
+	}
+
+	@Override
+	public Set<MatchBlueprint> getMatchesInDateRange(Date from, Date to) {
+		return null;
+	}
+
+	@Override
+	public Set<MatchBlueprint> getMatchForSpectator(String spectator) {
+		return null;
+	}
+
+	private Set<MatchBlueprint> getMatchesFromResult (Result<Record> result) {
+		Set<MatchBlueprint> matchSet = new HashSet<>();
+		String resultString = result.formatCSV();
+		String[] rows = resultString.substring(resultString.indexOf(System.getProperty("line.separator")) + 1).split("\n");
+
+		for (String s : rows) {
+			if (s.length() > 0) {
+				matchSet.add(dbEntryToMatchBlueprint(queryStringParser(s)));
+			}
+		}
+		return matchSet;
+	}
+
+	private String matchBlueprintToQueueEntry(MatchBlueprint mbp) {
+		return mbp.id + "," +
+				mbp.p1 + "," +
+				mbp.p2 + "," +
+				mbp.p1Score + "," +
+				mbp.p2Score + "," +
+				mbp.spectator + "," +
+				mbp.year + "," +
+				mbp.month + "," +
+				mbp.day + "," +
+				mbp.hour + "," +
+				mbp.minute + "," +
+				mbp.second;
+
+	}
+
+	private MatchBlueprint dbEntryToMatchBlueprint(String[] s) {
+		//TODO parse the database fetch to a matchBlueprint
+		//TODO Should this return an object from the ResultLedger instead of creating a new MatchBlueprint-object?
+		return null;
+	}
+
+	// END MATCHES
+
+	// START COMMON HELP METHODS
+
+	private String[] queryStringParser (String s) {
+		return s.split(",");
+	}
+
+	// END COMMON HELP METHODS
+
 }
+
+

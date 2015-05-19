@@ -1,16 +1,22 @@
 package capstat.infrastructure;
 
+import java.util.Date;
 import java.util.Set;
 
 /**
  * @author jibbs
- * An interface for a Facade used to get and add users from the database.
+ * An interface for a Facade used to get and add matches from the database.
  */
 public interface MatchDatabaseHelper {
 
-	/**
-	 * Adds this user to the database. If one already exists, overwrite it.
-	 * @param user
-	 */
+	void addMatch(MatchBlueprint match, ThrowSequenceBlueprint throwSequence);
+	void addMatchSet(Set<MatchBlueprint> matches, Set<ThrowSequenceBlueprint> throwSequences);
+	void removeMatch(int id);
+	MatchBlueprint getMatch(int id);
+	Set<MatchBlueprint> getAllMatches();
+	Set<MatchBlueprint> getMatchesForUser(String player);
+	Set<MatchBlueprint> getMatchesForUsers(String p1, String p2);
+	Set<MatchBlueprint> getMatchesInDateRange(Date from, Date to);
+	Set<MatchBlueprint> getMatchForSpectator(String spectator);
 
 }
