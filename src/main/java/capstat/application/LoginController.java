@@ -1,5 +1,7 @@
 package capstat.application;
 
+import capstat.model.CapStat;
+
 /**
  * Created by Jakob on 20/05/15.
  *
@@ -7,6 +9,8 @@ package capstat.application;
  *
  */
 public class LoginController {
+
+    private CapStat capStat = CapStat.getInstance();
 
     /**
      * Method to validate user credentials and login
@@ -21,6 +25,6 @@ public class LoginController {
      * Should set the logged in user to a guest-user
      */
     public void loginAsGuest() {
-
+        this.capStat.setGuestLoggedIn();
     }
 }
