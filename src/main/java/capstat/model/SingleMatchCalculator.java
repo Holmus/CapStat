@@ -30,9 +30,17 @@ public class SingleMatchCalculator {
             if (t == Match.Throw.HIT) hits++;
         }
 
-        total = playerThrows.size();
+        total = getTotalNumberOfThrows(player);
 
         return (double) hits / (double) total;
+    }
+
+    public int getTotalNumberOfThrows() {
+        return getThrowsFromSequences(mr.getSequences()).size();
+    }
+
+    public int getTotalNumberOfThrows(Match.Player player) {
+        return getThrowsForPlayer(mr.getSequences(), player).size();
     }
 
     private static List<Match.Player> getPlayerTurnsFromSequences(List<PartialSequenceResult> sequences) {
