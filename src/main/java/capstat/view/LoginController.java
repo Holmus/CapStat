@@ -21,6 +21,7 @@ public class LoginController implements NotifyEventListener, Initializable{
     @FXML Label registeredLabel;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        eb.addNotifyEventListener(Main.USER_REGISTERED, this);
         registeredLabel.setVisible(false);
     }
 
