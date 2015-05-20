@@ -9,14 +9,14 @@ import java.util.Set;
  */
 public interface MatchDatabaseHelper {
 
-	void addMatch(MatchBlueprint match, ThrowSequenceBlueprint throwSequence);
-	void addMatchSet(Set<MatchBlueprint> matches, Set<ThrowSequenceBlueprint> throwSequences);
+	void addMatch(MatchResultBlueprint match, ThrowSequenceBlueprint throwSequence);
+	void addMatchSet(Set<MatchResultBlueprint> matches, Set<ThrowSequenceBlueprint> throwSequences);
 	void removeMatch(int id);
-	MatchBlueprint getMatch(int id);
-	Set<MatchBlueprint> getAllMatches();
-	Set<MatchBlueprint> getMatchesForUser(String player);
-	Set<MatchBlueprint> getMatchesForUsers(String p1, String p2);
-	Set<MatchBlueprint> getMatchesInDateRange(Date from, Date to);
-	Set<MatchBlueprint> getMatchForSpectator(String spectator);
+	MatchResultBlueprint getMatch(int id);
+	Set<MatchResultBlueprint> getAllMatches();
+	Set<MatchResultBlueprint> getMatchesForUser(String player);
+	Set<MatchResultBlueprint> getMatchesForUsers(String p1, String p2);
+	Set<MatchResultBlueprint> getMatchesInDateRange(Date from, Date to);
+	Set<MatchResultBlueprint> getMatchForSpectator(String spectator);
 
 }

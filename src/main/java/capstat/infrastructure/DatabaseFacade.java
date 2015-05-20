@@ -142,12 +142,12 @@ class DatabaseFacade implements UserDatabaseHelper, MatchDatabaseHelper {
 
 
 	@Override
-	public void addMatch(MatchBlueprint match, ThrowSequenceBlueprint throwSequence) {
+	public void addMatch(MatchResultBlueprint match, ThrowSequenceBlueprint throwSequence) {
 
 	}
 
 	@Override
-	public void addMatchSet(Set<MatchBlueprint> matches, Set<ThrowSequenceBlueprint> throwSequences) {
+	public void addMatchSet(Set<MatchResultBlueprint> matches, Set<ThrowSequenceBlueprint> throwSequences) {
 
 	}
 
@@ -157,37 +157,37 @@ class DatabaseFacade implements UserDatabaseHelper, MatchDatabaseHelper {
 	}
 
 	@Override
-	public MatchBlueprint getMatch(int id) {
+	public MatchResultBlueprint getMatch(int id) {
 		return null;
 	}
 
 	@Override
-	public Set<MatchBlueprint> getAllMatches() {
+	public Set<MatchResultBlueprint> getAllMatches() {
 		return null;
 	}
 
 	@Override
-	public Set<MatchBlueprint> getMatchesForUser(String player) {
+	public Set<MatchResultBlueprint> getMatchesForUser(String player) {
 		return null;
 	}
 
 	@Override
-	public Set<MatchBlueprint> getMatchesForUsers(String p1, String p2) {
+	public Set<MatchResultBlueprint> getMatchesForUsers(String p1, String p2) {
 		return null;
 	}
 
 	@Override
-	public Set<MatchBlueprint> getMatchesInDateRange(Date from, Date to) {
+	public Set<MatchResultBlueprint> getMatchesInDateRange(Date from, Date to) {
 		return null;
 	}
 
 	@Override
-	public Set<MatchBlueprint> getMatchForSpectator(String spectator) {
+	public Set<MatchResultBlueprint> getMatchForSpectator(String spectator) {
 		return null;
 	}
 
-	private Set<MatchBlueprint> getMatchesFromResult (Result<Record> result) {
-		Set<MatchBlueprint> matchSet = new HashSet<>();
+	private Set<MatchResultBlueprint> getMatchesFromResult (Result<Record> result) {
+		Set<MatchResultBlueprint> matchSet = new HashSet<>();
 		String resultString = result.formatCSV();
 		String[] rows = resultString.substring(resultString.indexOf(System.getProperty("line.separator")) + 1).split("\n");
 
@@ -199,7 +199,7 @@ class DatabaseFacade implements UserDatabaseHelper, MatchDatabaseHelper {
 		return matchSet;
 	}
 
-	private String matchBlueprintToQueueEntry(MatchBlueprint mbp) {
+	private String matchBlueprintToQueueEntry(MatchResultBlueprint mbp) {
 		return mbp.id + "," +
 				mbp.p1 + "," +
 				mbp.p2 + "," +
@@ -215,9 +215,9 @@ class DatabaseFacade implements UserDatabaseHelper, MatchDatabaseHelper {
 
 	}
 
-	private MatchBlueprint dbEntryToMatchBlueprint(String[] s) {
+	private MatchResultBlueprint dbEntryToMatchBlueprint(String[] s) {
 		//TODO parse the database fetch to a matchBlueprint
-		//TODO Should this return an object from the ResultLedger instead of creating a new MatchBlueprint-object?
+		//TODO Should this return an object from the ResultLedger instead of creating a new MatchResultBlueprint-object?
 		return null;
 	}
 

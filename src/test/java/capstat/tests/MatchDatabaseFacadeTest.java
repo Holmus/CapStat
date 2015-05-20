@@ -1,24 +1,38 @@
 package capstat.tests;
 
-import capstat.infrastructure.DatabaseHelperFactory;
-import capstat.infrastructure.UserBlueprint;
-import capstat.infrastructure.UserDatabaseHelper;
+import capstat.infrastructure.*;
 import capstat.model.*;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import java.time.LocalDate;
-import java.util.Set;
-
-import static org.junit.Assert.*;
-
 /**
  * Created by jibbs on 19/05/15.
  * A class to test the match-part in DatabaseFacade.
  */
 public class MatchDatabaseFacadeTest {
+
+	private static MatchDatabaseHelper matchdb;
+	private MatchResultBlueprint dummyMatchResult1;
+	private ThrowSequenceBlueprint dummyThrowSequence1;
+
+	@BeforeClass
+	public static void init() {
+		DatabaseHelperFactory factory = new DatabaseHelperFactory();
+		matchdb = factory.createMatchQueryHelper();
+	}
+
+	@Before
+	public void addNewMatch() {
+
+
+	}
+
+	@After
+	public void removeNewUser() {
+		matchdb.removeMatch(1);
+	}
 
 	@Test
 	public void testAddMatch() throws Exception {
@@ -64,4 +78,12 @@ public class MatchDatabaseFacadeTest {
 	public void testGetMatchForSpectator() throws Exception {
 
 	}
+
+	public MatchResultBlueprint getDummyMatchResult(MatchResult dmr) {
+		return new MatchResultBlueprint(dmr.getId(), dmr.getP1(), dmr.getP2(), dmr.getP1Score(),
+				dmr.getP2Score(), dmr.getSpectator(), dmr.getYear(), dmr.getMonth(), dmr.getDay(),
+				dmr.getHour(), dmr.getMinute(), dmr.getSecond()
+		);
+	}
+
 }
