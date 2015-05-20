@@ -23,7 +23,6 @@ class DatabaseFacade implements UserDatabaseHelper, MatchDatabaseHelper {
     DatabaseConnection db = new DatabaseConnection();
     ITaskQueue txtQ = null;
 
-
 	// START USERS
 
     @Override
@@ -152,22 +151,22 @@ class DatabaseFacade implements UserDatabaseHelper, MatchDatabaseHelper {
 
 
 	@Override
-	public void addMatch(MatchResultBlueprint match, ThrowSequenceBlueprint throwSequence) {
+	public void addMatch(MatchResultBlueprint match) {
 
 	}
 
 	@Override
-	public void addMatchSet(Set<MatchResultBlueprint> matches, Set<ThrowSequenceBlueprint> throwSequences) {
+	public void addMatchSet(Set<MatchResultBlueprint> matches) {
 
 	}
 
 	@Override
-	public void removeMatch(int id) {
+	public void removeMatch(long id) {
 
 	}
 
 	@Override
-	public MatchResultBlueprint getMatch(int id) {
+	public MatchResultBlueprint getMatch(long id) {
 		return null;
 	}
 
@@ -209,21 +208,17 @@ class DatabaseFacade implements UserDatabaseHelper, MatchDatabaseHelper {
 		return matchSet;
 	}
 
-	private String matchBlueprintToQueueEntry(MatchResultBlueprint mbp) {
-		return mbp.id + "," +
-				mbp.p1 + "," +
-				mbp.p2 + "," +
-				mbp.p1Score + "," +
-				mbp.p2Score + "," +
-				mbp.spectator + "," +
-				mbp.year + "," +
-				mbp.month + "," +
-				mbp.day + "," +
-				mbp.hour + "," +
-				mbp.minute + "," +
-				mbp.second;
-
+	private String matchBlueprintToQueueEntry(MatchResultBlueprint mrb) {
+		return String.format("%d,%s,%s,%s,%d,%d,%l,%l", mrb.id, mrb.player1Nickname, mrb.player2Nickname,
+				mrb.spectatorNickname, mrb.player1score, mrb.player2score, mrb.startTime, mrb.endTime);
 	}
+
+
+	private String partialSequenceToQueueEntry(PartialSequenceBlueprint psb) {
+		// TODO implement psb to queue entry. Begin with matchID-ish!!!
+		return null;
+	}
+
 
 	private MatchResultBlueprint dbEntryToMatchBlueprint(String[] s) {
 		//TODO parse the database fetch to a matchBlueprint

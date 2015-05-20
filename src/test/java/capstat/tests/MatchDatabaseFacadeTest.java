@@ -7,6 +7,10 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  * Created by jibbs on 19/05/15.
  * A class to test the match-part in DatabaseFacade.
@@ -25,7 +29,6 @@ public class MatchDatabaseFacadeTest {
 
 	@Before
 	public void addNewMatch() {
-
 
 	}
 
@@ -79,11 +82,81 @@ public class MatchDatabaseFacadeTest {
 
 	}
 
-	public MatchResultBlueprint getDummyMatchResult(MatchResult dmr) {
-		return new MatchResultBlueprint(dmr.getId(), dmr.getP1(), dmr.getP2(), dmr.getP1Score(),
-				dmr.getP2Score(), dmr.getSpectator(), dmr.getYear(), dmr.getMonth(), dmr.getDay(),
-				dmr.getHour(), dmr.getMinute(), dmr.getSecond()
-		);
-	}
+	public MatchResultBlueprint getDummyMatchResult(MatchResult mr) {
+/*		List<PartialSequenceBlueprint> psbs = new ArrayList<>();
+		List<PartialSequenceResult> sequences = mr.getSequences();
+		for (PartialSequenceResult psr : sequences) {
+			Match.Glass[] glassObjs = psr.getGlasses();
+			boolean[] glasses = new boolean[glassObjs.length];
+			for (int i = 0; i < glasses.length; i++) {
+				glasses[i] = glassObjs[i].isActive();
+			}
+			int startingPlayer = psr.getStartingPlayer() == Match.Player.ONE ? 1 : 2;
+			boolean throwBeforeWasHit = psr.throwBeforeWasHit();
 
+			Match.Throw[] throwObjs = psr.getSequence();
+			boolean[] throwArr = new boolean[throwObjs.length];
+			for (int i = 0; i < throwArr.length; i++) {
+				throwArr[i] = throwObjs[i] == Match.Throw.HIT;
+			}
+
+			psbs.add(new PartialSequenceBlueprint(
+				glasses,
+				startingPlayer,
+				throwBeforeWasHit,
+				throwArr
+			));
+		}*/
+
+
+		boolean[] sequence = new boolean[10];
+		sequence[0] = true;
+		sequence[1] = false;//1
+		sequence[2] = false;
+		sequence[3] = true;
+		sequence[4] = true;
+		sequence[5] = true;
+		sequence[6] = false;//1
+		sequence[7] = true;
+		sequence[8] = false;//2
+		sequence[9] = true;//p1
+
+		boolean[] glasses = new boolean[7];
+		glasses[0] = true;
+		glasses[1] = true;
+		glasses[2] = true;
+		glasses[3] = true;
+		glasses[4] = true;
+		glasses[5] = true;
+		glasses[6] = true;
+
+		PartialSequenceBlueprint psb = new PartialSequenceBlueprint(glasses, 1, false, sequence);
+		List<PartialSequenceBlueprint> psbs = new ArrayList<>();
+		psbs.add(psb);
+
+		glasses[0] = false;
+		glasses[1] = true;
+		glasses[2] = true;
+		glasses[3] = true;
+		glasses[4] = true;
+		glasses[5] = false;
+		glasses[6] = false;
+
+		sequence = new boolean[6];
+		sequence[0] = true;
+		sequence[1] = true;
+		sequence[2] = false;
+		sequence[3] = true;
+		sequence[4] = true;
+		sequence[5] = false;
+
+		psb = new PartialSequenceBlueprint(glasses, 2, true, sequence);
+
+		psbs.add(psb);
+
+
+		return new MatchResultBlueprint(mr.getId(), mr.getPlayer1().getNickname(),
+				mr.getPlayer2().getNickname(), mr.getSpectator().getNickname(), mr.getPlayer1score(),
+				mr.getPlayer2score(), mr.getStartTime(), mr.getEndTime(), psbs);
+	}
 }

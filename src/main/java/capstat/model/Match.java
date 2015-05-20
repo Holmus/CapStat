@@ -440,11 +440,15 @@ public class Match {
      * Class representing the glasses in the match. A glass is either active
      * or inactive.
      */
-    public class Glass {
+    public static class Glass {
         private boolean isActive = true;
 
         public boolean isActive() {
             return isActive;
+        }
+
+        public void setActive(boolean active) {
+            this.isActive = active;
         }
     }
 

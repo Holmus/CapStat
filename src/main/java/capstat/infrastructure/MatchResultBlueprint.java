@@ -1,39 +1,35 @@
 package capstat.infrastructure;
 
+import java.time.Instant;
+import java.util.List;
+
 /**
- * Created by jibbs on 19/05/15.
+ * @author hjorthjort
  */
-public class MatchResultBlueprint {
-	public final int id;
-	public final String p1, p2;
-	public final int p1Score, p2Score;
-	public final String spectator;
-	public final int year, month, day, hour, minute, second;
+public final class MatchResultBlueprint {
+    public final long id;
+    public final String player1Nickname, player2Nickname, spectatorNickname;
+    public final int player1score, player2score;
+    public final Instant startTime, endTime;
+    public final List<PartialSequenceBlueprint> sequences;
 
-	public MatchResultBlueprint(int id,
-	                            String p1,
-	                            String p2,
-	                            int p1Score,
-	                            int p2Score,
-	                            String spectator,
-	                            int year,
-	                            int month,
-	                            int day,
-	                            int hour,
-	                            int minute,
-	                            int second) {
-
-		this.id = id;
-		this.p1 = p1;
-		this.p2 = p2;
-		this.p1Score = p1Score;
-		this.p2Score = p2Score;
-		this.spectator = spectator;
-		this.year = year;
-		this.month = month;
-		this.day = day;
-		this.hour = hour;
-		this.minute = minute;
-		this.second = second;
-	}
+    public MatchResultBlueprint(final long id,
+                                final String player1Nickname,
+                                final String player2Nickname,
+                                final String spectatorNickname,
+                                final int player1score,
+                                final int player2score,
+                                final Instant startTime,
+                                final Instant endTime,
+                                final List<PartialSequenceBlueprint> sequences) {
+        this.id = id;
+        this.player1Nickname = player1Nickname;
+        this.player2Nickname = player2Nickname;
+        this.spectatorNickname = spectatorNickname;
+        this.player1score = player1score;
+        this.player2score = player2score;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.sequences = sequences;
+    }
 }
