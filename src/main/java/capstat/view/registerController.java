@@ -12,7 +12,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
-
 import java.net.URL;
 import java.text.DateFormat;
 import java.io.IOException;
@@ -23,7 +22,6 @@ import java.util.ResourceBundle;
 /**
  * Created by Jakob on 16/05/15.
  */
-//ToDo: On input username check if it's available using ul.isNicknameValid(); in method usernameTaken()
 
 public class RegisterController implements Initializable{
     EventBus eb = EventBus.getInstance();
@@ -52,21 +50,16 @@ public class RegisterController implements Initializable{
         attendYear.setValue(null);
     }
 
-    @FXML private void registerPressed() throws NumberFormatException, IOException {
+    @FXML private void registerPressed() throws NumberFormatException{
         if(checkInput()){
             return;
         }
-        try{
-            registerUser();
-        } catch (IOException e){
-            throw new IOException("path not found");
-        }
+        registerUser();
     }
-    private void registerUser() throws IOException{
+    private void registerUser(){
         ul.registerUser(usernameInput.getText(), fullNameInput.getText(), passField.getText(), birth, admitTime);
-        scene = new Scene(FXMLLoader.load(getClass().getResource("/fxml/login.fxml")), 600, 450);
+        eb.notify(Main.SETSCENE_LOGIN);
         eb.notify(Main.USER_REGISTERED);
-        eb.dataNotify(Main.CHANGE_SCENE, scene);
         ul.printUsers();
     }
     private boolean checkInput(){

@@ -16,7 +16,7 @@ public class MainController{
     private Scene scene;
     private Parent root;
 
-    @FXML private void playPressed() throws IOException {
-        eb.dataNotify(Main.CHANGE_SCENE, new Scene(FXMLLoader.load(getClass().getResource("/fxml/match.fxml")), 600, 450));
+    @FXML private void playPressed(){
+        eb.notify(Main.SETSCENE_MATCH);
     }
 }

@@ -9,23 +9,30 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+
 /**
  * Created by Jakob on 14/05/15.
  */
-public class Main extends Application implements DataEventListener{
-    public static final String CHANGE_SCENE = "Change scene";
-    public static final String USER_REGISTERED = "User registered";
+public class Main extends Application implements NotifyEventListener{
+    public static final String USER_REGISTERED = "New user registered";
+    public static final String SETSCENE_LOGIN = "/fxml/login.fxml";
+    public static final String SETSCENE_MAIN = "/fxml/main.fxml";
+    public static final String SETSCENE_MATCH = "/fxml/match.fxml";
+    public static final String SETSCENE_REGISTER = "/fxml/register.fxml";
     EventBus eb = EventBus.getInstance();
     Stage stage;
     Parent root;
     Scene scene;
-    public static void main (String [] args){
+    public static void start(String [] args){
         launch(args);
     }
-
     @Override
     public void start(Stage primaryStage) throws Exception {
-        eb.addDataEventListener(CHANGE_SCENE, this);
+        eb.addNotifyEventListener(SETSCENE_LOGIN, this);
+        eb.addNotifyEventListener(SETSCENE_MAIN, this);
+        eb.addNotifyEventListener(SETSCENE_MATCH, this);
+        eb.addNotifyEventListener(SETSCENE_REGISTER, this);
         root = FXMLLoader.load(getClass().getResource("/fxml/login.fxml"));
         scene = new Scene(root, 600, 450);
         stage = primaryStage;
@@ -35,12 +42,31 @@ public class Main extends Application implements DataEventListener{
     }
 
     @Override
-    public void dataNotify(String event, Object data) {
-        if(event.equals(CHANGE_SCENE)){
-            changeScene(data);
+    public void notify(String event) {
+        if(event.equals(SETSCENE_LOGIN)){
+            changeScene(event);
+        }
+        if(event.equals(SETSCENE_MAIN)){
+            changeScene(event);
+        }
+        if(event.equals(SETSCENE_MATCH)){
+            changeScene(event);
+        }
+        if(event.equals(SETSCENE_REGISTER)){
+            changeScene(event);
+        }
+
+    }
+    private void changeScene(String rootPath){
+        try{
+            scene = new Scene(FXMLLoader.load(getClass().getResource(rootPath)), 600, 450);
+            stage.setScene(scene);
+        } catch (IOException e){
+            //Scene will remain unchanged if the new scene root cant be found
+            e.printStackTrace();
+            stage.setScene(scene);
         }
     }
-    private void changeScene(Object scene){
-        stage.setScene((Scene) scene);
-    }
+
+
 }

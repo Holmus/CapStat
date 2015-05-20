@@ -25,20 +25,17 @@ public class LoginController implements NotifyEventListener, Initializable{
         registeredLabel.setVisible(false);
     }
 
-    @FXML private void loginPressed() throws IOException {
+    @FXML private void loginPressed(){
         //VALIDATE USER HERE, BEFORE CHANGING SCENE
-        scene = new Scene(FXMLLoader.load(getClass().getResource("/fxml/main.fxml")), 600, 450);
-        eb.dataNotify(Main.CHANGE_SCENE, scene);
+        eb.notify(Main.SETSCENE_MAIN);
     }
-    @FXML private void guestPressed() throws IOException {
+    @FXML private void guestPressed(){
         //SET USER TO GUESTUSER
-        scene = new Scene(FXMLLoader.load(getClass().getResource("/fxml/main.fxml")), 600, 450);
-        eb.dataNotify(Main.CHANGE_SCENE, scene);
+        eb.notify(Main.SETSCENE_MAIN);
 
     }
-    @FXML private void registerPressed() throws IOException {
-        scene = new Scene(FXMLLoader.load(getClass().getResource("/fxml/register.fxml")), 600, 450);
-        eb.dataNotify(Main.CHANGE_SCENE, scene);
+    @FXML private void registerPressed(){
+        eb.notify(Main.SETSCENE_REGISTER);
     }
     @Override
     public void notify(String event) {
