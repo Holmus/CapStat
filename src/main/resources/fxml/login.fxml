@@ -34,6 +34,11 @@
                   <Image url="@../images/capstat.png" />
                </image>
             </ImageView>
+            <Label fx:id="registeredLabel" layoutX="210.0" layoutY="377.0" prefHeight="18.0" prefWidth="191.0" text="User registered, please login!" textFill="#09cd1a">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
          </children>
       </Pane>
    </children>
