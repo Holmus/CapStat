@@ -1,9 +1,11 @@
 package capstat.model;
 
 import capstat.model.Match;
+import capstat.model.MatchFactory;
 import capstat.model.MatchResult;
 import capstat.model.PartialSequenceResult;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SingleMatchCalculator {
@@ -30,6 +32,28 @@ public class SingleMatchCalculator {
         }
 
         return (double) hits / (double) total;
+    }
+
+    private static List<Match.Player> getPlayerTurnsFromSequences(List<PartialSequenceResult> sequences) {
+        List<Match.Player> turns = new ArrayList<>();
+
+        // The match logic is already defined in the Match class, so we use it instead of rewriting it here
+        Match underlyingMatch = MatchFactory.createDefaultMatch();
+        underlyingMatch.startMatch();
+
+        for (PartialSequenceResult psr : sequences) {
+            underlyingMatch.setCurrentPlayer(psr.getStartingPlayer());
+
+            for (Match.Throw t : psr.getSequence()) {
+                turns.add(underlyingMatch.getPlayerWhoseTurnItIs());
+                if (t == Match.Throw.HIT)
+                    underlyingMatch.recordHit();
+                else
+                    underlyingMatch.recordMiss();
+            }
+        }
+
+        return turns;
     }
 
 }
