@@ -6,6 +6,7 @@ import capstat.model.MatchResult;
 import capstat.model.PartialSequenceResult;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class SingleMatchCalculator {
@@ -54,6 +55,14 @@ public class SingleMatchCalculator {
         }
 
         return turns;
+    }
+
+    private static List<Match.Throw> getThrowsFromSequences(List<PartialSequenceResult> sequences) {
+        List<Match.Throw> throwList = new ArrayList<>();
+        for (PartialSequenceResult psr : sequences) {
+            Collections.addAll(throwList, psr.getSequence());
+        }
+        return throwList;
     }
 
 }
