@@ -19,7 +19,7 @@ import java.util.ResourceBundle;
 /**
  * Created by Jakob on 16/05/15.
  */
-
+//ToDo: UPDATE from row 123, lp behaves differently now
 public class RegisterViewController implements Initializable{
     EventBus eb = EventBus.getInstance();
     UserLedger ul = UserLedger.getInstance();
