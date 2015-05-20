@@ -29,6 +29,9 @@ public class Match {
     public static final String DUEL_STARTED = "Duel started";
     public static final String DUEL_ENDED = "Duel ended";
     public static final String THROW_RECORDED = "Throw recorded";
+    public static final String HIT_RECORDED = "Hit recorded";
+    public static final String MISS_RECORDED = "Miss recorded";
+
 
     //Instance fields
 
@@ -282,6 +285,7 @@ public class Match {
             this.switchPlayerUpNext();
             this.throwSequence.add(Throw.HIT);
         }
+        this.notifyListeners(HIT_RECORDED);
     }
 
     /**
@@ -290,15 +294,16 @@ public class Match {
     public void recordMiss() {
         if(isOngoing) {
             if (this.isDuelling()) {
-                this.notifyListeners(DUEL_ENDED);
                 this.removeGlass();
                 this.endRoundIfNecessary();
+                this.notifyListeners(DUEL_ENDED);
             } else {
                 //Only switch turns if the throw did not end a duel.
                 this.switchPlayerUpNext();
             }
             this.throwSequence.add(Throw.MISS);
         }
+        this.notifyListeners(MISS_RECORDED);
     }
 
     public void manuallyChangeGameState(Match.Glass[] glasses, Player
@@ -323,6 +328,7 @@ public class Match {
             updateRoundWinner();
             endMatchIfNecessary();
             createGlasses();
+            notifyListeners(ROUND_ENDED);
         }
     }
 
