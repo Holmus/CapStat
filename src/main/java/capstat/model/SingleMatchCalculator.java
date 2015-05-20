@@ -65,4 +65,19 @@ public class SingleMatchCalculator {
         return throwList;
     }
 
+    private static List<Match.Throw> getThrowsForPlayer(List<PartialSequenceResult> sequences, Match.Player player) {
+        List<Match.Throw> playerThrows = new ArrayList<>();
+
+        List<Match.Player> turnList = getPlayerTurnsFromSequences(sequences);
+        List<Match.Throw> throwList = getThrowsFromSequences(sequences);
+        int count = turnList.size() > throwList.size() ? turnList.size() : throwList.size();
+        for (int i = 0; i < count; i++) {
+            Match.Player currentPlayer = turnList.get(i);
+            Match.Throw t = throwList.get(i);
+            if (currentPlayer == player) playerThrows.add(t);
+        }
+
+        return playerThrows;
+    }
+
 }
