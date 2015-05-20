@@ -3,17 +3,13 @@ package capstat.view;
 import capstat.infrastructure.EventBus;
 import capstat.model.Admittance;
 import capstat.model.UserLedger;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyCodeCombination;
+
 import java.net.URL;
 import java.text.DateFormat;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Year;
@@ -24,7 +20,7 @@ import java.util.ResourceBundle;
  * Created by Jakob on 16/05/15.
  */
 
-public class RegisterController implements Initializable{
+public class RegisterViewController implements Initializable{
     EventBus eb = EventBus.getInstance();
     UserLedger ul = UserLedger.getInstance();
     Scene scene;
@@ -59,8 +55,8 @@ public class RegisterController implements Initializable{
     }
     private void registerUser(){
         ul.registerNewUser(usernameInput.getText(), fullNameInput.getText(), passField.getText(), birth, admitTime.getYear(), admitTime.getReadingPeriod().ordinal() + 1);
-        eb.notify(Main.SETSCENE_LOGIN);
-        eb.notify(Main.USER_REGISTERED);
+        eb.notify(MainView.SETSCENE_LOGIN);
+        eb.notify(MainView.USER_REGISTERED);
         System.out.println(ul.toString());
     }
     private boolean checkInput(){

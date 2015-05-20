@@ -1,5 +1,6 @@
 package capstat.view;
 
+import capstat.application.MatchController;
 import capstat.infrastructure.DataEventListener;
 import capstat.infrastructure.EventBus;
 import capstat.infrastructure.NotifyEventListener;
@@ -35,9 +36,10 @@ import java.util.ResourceBundle;
 /**
  * Created by Jakob on 18/05/15.
  */
-public class MatchController implements NotifyEventListener, Initializable{
+public class MatchViewController implements NotifyEventListener, Initializable{
     EventBus eb = EventBus.getInstance();
-    Match match = MatchFactory.createDefaultMatch();
+    Match match = MatchController.createNewMatch();
+    MatchController mc = new MatchController(match);
     @FXML Button hitButton, missButton;
     @FXML Circle glass1, glass2, glass3, glass4, glass5, glass6, glass7;
     @FXML Pane p1Pane, p2Pane, mainPane, matchOverPane;
@@ -48,12 +50,12 @@ public class MatchController implements NotifyEventListener, Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources){
         mainPane.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
-        match.setPlayer1(UserFactory.createDummyUser1());
-        match.setPlayer2(UserFactory.createDummyUser2());
-        p1Name.setText(match.getPlayer(Match.Player.ONE).getName());
-        p2Name.setText(match.getPlayer(Match.Player.TWO).getName());
-        p1Rank.setText("" + match.getPlayer(Match.Player.ONE).getRanking().getPoints());
-        p2Rank.setText("" + match.getPlayer(Match.Player.TWO).getRanking().getPoints());
+
+        //p1Name.setText(match.getPlayer(Match.Player.ONE).getName());
+        //p2Name.setText(match.getPlayer(Match.Player.TWO).getName());
+        //p1Rank.setText("" + match.getPlayer(Match.Player.ONE).getRanking().getPoints());
+        //p2Rank.setText("" + match.getPlayer(Match.Player.TWO).getRanking().getPoints());
+
         eb.addNotifyEventListener(Match.HIT_RECORDED,this);
         eb.addNotifyEventListener(Match.MISS_RECORDED,this);
         eb.addNotifyEventListener(Match.DUEL_ENDED, this);
@@ -86,21 +88,21 @@ public class MatchController implements NotifyEventListener, Initializable{
     }
     @FXML private void missPressed() {
         if (!match.isOngoing()) {
-            match.startMatch();
+            mc.startMatch();
         }
         hitLabel.setVisible(false);
         missLabel.setVisible(true);
         duelLabel.setVisible(false);
-        match.recordMiss();
+        mc.recordMiss();
     }
     @FXML private void hitPressed(){
         if (!match.isOngoing()) {
-            match.startMatch();
+            mc.startMatch();
         }
         missLabel.setVisible(false);
         hitLabel.setVisible(true);
         duelLabel.setVisible(true);
-        match.recordHit();
+        mc.recordHit();
     }
 
 
@@ -133,6 +135,7 @@ public class MatchController implements NotifyEventListener, Initializable{
         }
     }
     private void updateGlasses(){
+        //ToDo: Find nice solution?
         Match.Glass[] glasses = match.getGlasses();
         if(!glasses[0].isActive()){
             glass1.setFill(Color.LIGHTGRAY);

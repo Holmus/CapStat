@@ -14,7 +14,7 @@ import java.io.IOException;
 /**
  * Created by Jakob on 14/05/15.
  */
-public class Main extends Application implements NotifyEventListener{
+public class MainView extends Application implements NotifyEventListener{
     public static final String USER_REGISTERED = "New user registered";
     public static final String SETSCENE_LOGIN = "/fxml/login.fxml";
     public static final String SETSCENE_MAIN = "/fxml/main.fxml";
