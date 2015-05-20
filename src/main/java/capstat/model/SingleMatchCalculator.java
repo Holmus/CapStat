@@ -17,20 +17,20 @@ public class SingleMatchCalculator {
         this.mr = mr;
     }
 
+    /**
+     * Calculates the accuracy for the given player. The accuracy is given as a double d in the range 0 ≤ d ≤ 1.
+     * @param player the Player to calculate the accuracy for (Match.Player.ONE or Match.Player.TWO)
+     * @return a double containing the accuracy
+     */
     public double getAccuracy(Match.Player player) {
-        int hits = 0, total = 0;
+        int hits = 0, total;
         List<PartialSequenceResult> sequences = mr.getSequences();
-        for (PartialSequenceResult psr : sequences) {
-            Match.Player current = psr.getStartingPlayer();
-            for (Match.Throw t : psr.getSequence()) {
-                if (t == Match.Throw.HIT && current == player) {
-                    hits++;
-                }
-
-                current = current == Match.Player.ONE ? Match.Player.TWO : Match.Player.ONE;
-                total++;
-            }
+        List<Match.Throw> playerThrows = getThrowsForPlayer(sequences, player);
+        for (Match.Throw t : playerThrows) {
+            if (t == Match.Throw.HIT) hits++;
         }
+
+        total = playerThrows.size();
 
         return (double) hits / (double) total;
     }
