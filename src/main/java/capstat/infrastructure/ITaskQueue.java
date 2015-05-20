@@ -60,4 +60,9 @@ public interface ITaskQueue {
      */
     public boolean contains(String task);
 
+    /**
+     * Removes the implementation of the queue from persistent storage, if
+     * any. A que implemeted with a file would for example remove that file.
+     */
+    public void delete();
 }

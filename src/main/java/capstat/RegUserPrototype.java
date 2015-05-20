@@ -57,7 +57,9 @@ public class RegUserPrototype {
                                     Admittance.Period.values()[
                                             (admittanceElements[1])]);
 
-                    cs.registerUser(nickname, name, password, birthday, admittance);
+                    UserLedger.getInstance().registerNewUser(nickname, name,
+                            password, birthday, admittance.getYear(),
+                            admittance.getReadingPeriod().ordinal()+1);
                     break;
                 case "list":
                     cs.printUsers();

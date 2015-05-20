@@ -3,6 +3,7 @@ package capstat.model;
 import capstat.model.Match;
 
 /**
+ * A class with factory method for creating matches of different kinds.
  * @author hjorthjort
  */
 public abstract class MatchFactory {

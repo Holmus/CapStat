@@ -21,25 +21,34 @@ class DatabaseFacade implements UserDatabaseHelper, MatchDatabaseHelper {
     // Path and filename as string.
     File dbQueue = new File("dbqueue.txt");
     DatabaseConnection db = new DatabaseConnection();
+    ITaskQueue txtQ = null;
 
 
 	// START USERS
 
     @Override
-    public void addUser(final UserBlueprint user) {
-
-        // TODO this should call a new thread to handle the txt-to-database process.
-
-        TextFileTaskQueue txtQ = null;
-
+    public void addUserToDatabase(final UserBlueprint user) {
         // ADDS USER INSERTION TO QUEUE
         try {
             txtQ = new TextFileTaskQueue(dbQueue);
-            txtQ.add(userBlueprintToQueueEntry(user));
+            txtQ.add(userBluePrintToQueueEntry(user));
+
+            //Start a new Thread that empties the task que and inserts users
+            // from the que into the database.
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    while (txtQ.hasElements())
+                        addFromQueueToDatabase();
+                    txtQ.delete();
+                }
+            }).start();
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
 
+    private void addFromQueueToDatabase() {
         // INSERTS THE FIRST USER IN THE QUEUE TO THE DATABASE
         String[] parsed = queryStringParser(txtQ.peek());
 

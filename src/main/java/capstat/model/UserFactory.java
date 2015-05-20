@@ -63,9 +63,47 @@ public abstract class UserFactory {
                 ranking);
     }
 
+    /**
+     * Instantiate a new aggregate for a User and return the User object that
+     * is the root of the aggregate.
+     * @param nickname
+     * @param name
+     * @param password
+     * @param birthday
+     * @param admittanceYear
+     * @param readingPeriod
+     * @return
+     */
     public static User createNewUser(String nickname, String name, String
-            password, LocalDate birthday, Year admittanceYear, Admittance
-            .Period period, double ranking) {
-        return null;
+            password, LocalDate birthday, Year admittanceYear, int readingPeriod) {
+        if (readingPeriod < 1 || readingPeriod > 4) throw new
+                IllegalArgumentException("Wrong admittance, must be between 1" +
+                " and 4");
+        String hashedPassword = Security.hashPassword(password);
+        ELORanking eloRanking = ELORanking.defaultRanking();
+
+        return createOldUser(nickname, name, hashedPassword, birthday,
+                admittanceYear, readingPeriod, eloRanking.getPoints());
+    }
+
+    /**
+     * Instantiate a user aggreagate of an old user, one already in the system.
+     * @param nickname
+     * @param name
+     * @param hashedPassword
+     * @param birthday
+     * @param admittanceYear
+     * @param readingPeriod
+     * @param ranking
+     * @return
+     */
+    static User createOldUser (String nickname, String name, String
+            hashedPassword, LocalDate birthday, Year admittanceYear, int
+            readingPeriod, double ranking) {
+        ChalmersAge chalmersAge = new ChalmersAge(birthday, new Admittance
+                (admittanceYear, Admittance.Period.values()[readingPeriod-1]));
+        User user = new User(nickname, name, hashedPassword, chalmersAge,
+                new ELORanking(ranking));
+        return user;
     }
 }

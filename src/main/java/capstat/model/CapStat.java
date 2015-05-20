@@ -59,22 +59,6 @@ public class CapStat {
     }
 
     //Users in system Operations
-    /**
-     * Registers a new user in the system.
-     * @param nickname the nickname of the new User
-     * @param name the name of the new User
-     * @param password the plaintext password of the new User
-     * @param birthday the LocalDate representing birthday of the new User
-     * @param admittance the Admittance instance of the new User
-     *
-     * @pre this.isNicknameValid(nickname) == true
-     */
-    public void registerUser(String nickname, String name, String password,
-                             LocalDate
-            birthday, Admittance admittance) {
-        this.userLedger.registerNewUser(nickname, name, password, birthday,
-                admittance);
-    }
 
     public void printUsers() {
         System.out.println(this.userLedger.toString());
