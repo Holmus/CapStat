@@ -1,15 +1,9 @@
 package capstat.view;
-
 import capstat.application.MatchController;
-import capstat.infrastructure.DataEventListener;
 import capstat.infrastructure.EventBus;
 import capstat.infrastructure.NotifyEventListener;
 import capstat.model.Match;
-import capstat.model.MatchFactory;
-import capstat.model.UserFactory;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
@@ -17,19 +11,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
-import javafx.scene.input.KeyCombination;
-import javafx.scene.input.Mnemonic;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.*;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
-
-import javax.xml.bind.SchemaOutputResolver;
-import java.awt.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 
