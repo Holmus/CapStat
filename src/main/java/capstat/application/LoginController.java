@@ -25,9 +25,14 @@ public class LoginController {
     public boolean loginAsUser(String username, String password) {
         User user = this.userLedger.getUserByNickname(username);
         String hashedPassword = Security.hashPassword(password);
-        if (hashedPassword.equals(user.getHashedPassword())) {
-            this.capStat.setLoggedInUser(user);
-            return true;
+        if(userLedger.doesUserExist(username)) {
+            if (hashedPassword.equals(user.getHashedPassword())) {
+                this.capStat.setLoggedInUser(user);
+                return true;
+            }
+            else {
+                return false;
+            }
         }
         return false;
     }
