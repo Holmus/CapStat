@@ -70,6 +70,13 @@ public class Admittance implements Comparable<Admittance> {
         return true;
     }
 
+    @Override
+    public int hashCode() {
+        int result = year.hashCode();
+        result = 31 * result + readingPeriod.hashCode();
+        return result;
+    }
+
     public enum Period {
         ONE, TWO, THREE, FOUR
     }

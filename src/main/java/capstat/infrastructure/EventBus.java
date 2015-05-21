@@ -1,6 +1,5 @@
 package capstat.infrastructure;
 
-import java.awt.*;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -62,7 +61,7 @@ public class EventBus {
         Set<NotifyEventListener> set = this.notifyListenersMap.get(event);
         if (set != null) {
             for (NotifyEventListener listener : set) {
-                listener.notify(event);
+                listener.notifyEvent(event);
             }
         }
     }

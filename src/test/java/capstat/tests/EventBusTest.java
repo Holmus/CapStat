@@ -16,22 +16,22 @@ import static org.junit.Assert.assertTrue;
  */
 public class EventBusTest {
 
-    private static EventBus bus;
-    private static boolean hasBeenNotified;
-    private static NotifyEventListener notifyListener;
-    private static DataEventListener dataListener;
-    private static Object dataSendObject, dataReceiveObject;
+    private EventBus bus;
+    private boolean hasBeenNotified;
+    private NotifyEventListener notifyListener;
+    private DataEventListener dataListener;
+    private Object dataSendObject, dataReceiveObject;
     private static final String NOTIFICATION_STRING = "Test";
 
-    @BeforeClass
-    public static void init() {
+    @Before
+    public void init() {
         //Get eventb bus
         bus = EventBus.getInstance();
         //Create a listener that will change the value of the boolean
         // hasBeenNotified
         notifyListener = new NotifyEventListener() {
             @Override
-            public void notify(final String event) {
+            public void notifyEvent(final String event) {
                 hasBeenNotified();
             }
         };
@@ -92,11 +92,11 @@ public class EventBusTest {
         assertFalse(dataSendObject == dataReceiveObject);
     }
 
-    private static void hasBeenNotified() {
+    private void hasBeenNotified() {
         hasBeenNotified = true;
     }
 
-    private static void hasBeenNotified(final Object dataObject) {
+    private void hasBeenNotified(final Object dataObject) {
         hasBeenNotified();
         dataReceiveObject = dataObject;
     }

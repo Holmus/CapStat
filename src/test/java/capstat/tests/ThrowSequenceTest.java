@@ -18,7 +18,6 @@ public class ThrowSequenceTest {
 
     @Before
     public void initiate() {
-        Random r = new Random();
         match = new Match(9, 3);
         match.startMatch();
     }

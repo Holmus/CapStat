@@ -122,7 +122,7 @@ public class RecordMatchTest implements NotifyEventListener {
     }
 
     @Override
-    public void notify(final String event) {
+    public void notifyEvent(final String event) {
         matchOver();
     }
 }

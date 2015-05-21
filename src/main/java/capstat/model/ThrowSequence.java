@@ -47,13 +47,13 @@ public class ThrowSequence {
     }
 
     /**
-     * Copy constructor returning deep clone
+     * Copy constructor returning deep getCopy
      * @param ts
      */
     public ThrowSequence(ThrowSequence ts) {
-        //Get a deep clone of the sequences list
+        //Get a deep getCopy of the sequences list
         this.sequences = new LinkedList<>(ts.getSequences());
-        this.currentSequence = ts.currentSequence.clone();
+        this.currentSequence = ts.currentSequence.getCopy();
         this.undoStack = (Stack<Match.Throw>)ts.undoStack.clone();
     }
 
@@ -135,7 +135,7 @@ public class ThrowSequence {
      */
     public List<PartialSequence> getSequences() {
         LinkedList<PartialSequence> clone = new LinkedList<>(this.sequences);
-        clone.add(this.currentSequence.clone());
+        clone.add(this.currentSequence.getCopy());
         return clone;
     }
 
@@ -143,7 +143,7 @@ public class ThrowSequence {
      * Objects of this class are immutable, except for by instances of
      * ThrowSequence.
      */
-    public class PartialSequence implements Cloneable {
+    public class PartialSequence {
         private Match.Glass[] glasses;
         private Match.Player startingPlayer;
         private boolean throwBeforeWasHit;
@@ -200,11 +200,11 @@ public class ThrowSequence {
          *
          * @return a deep copy of this sequence;
          */
-        public PartialSequence clone() {
+        public PartialSequence getCopy() {
             return new PartialSequence(this);
         }
     }
 
-    public class EmptySequenceException extends RuntimeException {
+    public static class EmptySequenceException extends RuntimeException {
     }
 }

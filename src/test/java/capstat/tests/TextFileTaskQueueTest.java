@@ -30,6 +30,7 @@ public class TextFileTaskQueueTest {
 
     @AfterClass
     public static void removeFile() {
+        //Return value ignored, since it does not matter for test purposes.
         taskFile.delete();
     }
 

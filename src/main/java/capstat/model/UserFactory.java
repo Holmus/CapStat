@@ -51,7 +51,6 @@ public abstract class UserFactory {
         String password = "";
         String hashedPassword = Security.hashPassword(password);
 
-        LocalDateTime now = LocalDateTime.now();
         LocalDate birthday = LocalDate.now();
         Admittance admittance = new Admittance(Year.now(), Admittance
                 .Period.ONE);

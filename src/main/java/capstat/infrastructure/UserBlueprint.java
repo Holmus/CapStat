@@ -65,6 +65,8 @@ public class UserBlueprint {
                 && udbr.birthdayDay == this.birthdayDay
                 && udbr.admittanceYear.equals(this.admittanceYear)
                 && udbr.admittanceReadingPeriod == this.admittanceReadingPeriod
+                //Since ELORankings are not subject to arithmetical operations,
+                // unless a new ranking is being created, this is safe.
                 && udbr.ELORanking == this.ELORanking;
     }
 }

@@ -1,9 +1,6 @@
 package capstat.infrastructure;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -34,6 +31,8 @@ public class TextFileTaskQueue implements ITaskQueue {
     }
 
     private static void ensureFileExists(File file) throws IOException {
+        //Return value ignored, since it does not matter if file existed
+        // previously or not.
         file.createNewFile();
     }
     private static List<String> readAllLines(File file) throws IOException {
@@ -47,13 +46,18 @@ public class TextFileTaskQueue implements ITaskQueue {
     }
 
     private void writeFile() throws IOException {
+        //This assumes all files are in standard encoding, which is enough for
+        // the purposes of this project.
         FileWriter fw = new FileWriter(this.taskFile);
         BufferedWriter out = new BufferedWriter(fw);
-        for (String s : this.taskList) {
-            out.write(s);
-            out.newLine();
+        try {
+            for (String s : this.taskList) {
+                out.write(s);
+                out.newLine();
+            }
+        } finally {
+            out.close();
         }
-        out.close();
     }
 
     @Override
@@ -103,6 +107,8 @@ public class TextFileTaskQueue implements ITaskQueue {
 
     @Override
     public void delete() {
+        //Return value ignored, since it does not matter if the file existed
+        // or not. If the file can't be deleted, an exception will be thrown.
         this.taskFile.delete();
     }
 

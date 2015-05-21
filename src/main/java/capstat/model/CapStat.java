@@ -22,7 +22,7 @@ public class CapStat {
      * Returns the only instance of CapStat.
      * @return the only instance of CapStat
      */
-    public static CapStat getInstance() {
+    public synchronized static CapStat getInstance() {
         if (instance == null) {
             instance = new CapStat();
         }

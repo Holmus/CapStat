@@ -13,7 +13,15 @@ import java.time.Instant;
  *
  * This class if very tightly couple with the ThrowSequence class, and is
  * separated from it mostly for legibility reasons.
- * @author hjorthjort, holmus
+ *
+ * A client that wishes to get notifications on events in this match must
+ * implement {@link NotifyEventListener} and register to the event bus using
+ * the String constant for the event it wishes to subscribe to. It may also
+ * use the methods implemented for subscription in the Match interface for
+ * convenience.
+ *
+ * @author hjorthjort
+ * @reviewed by holmus
  */
 
 /*
@@ -22,14 +30,46 @@ import java.time.Instant;
 public class Match {
 
     // Constants
+
+    /**
+     * The match will call the event bus with this key when it starts by a
+     * call to startMatch.
+     */
     public static final String MATCH_STARTED = "Match started";
+    /**
+     * The match will call the event bus with this key when it ends.
+     */
     public static final String MATCH_ENDED = "Match ended";
+    /**
+     * The match will call the event bus with this key when a new round starts.
+     */
     public static final String ROUND_STARTED = "Round started";
+    /**
+     * The match will call the event bus with this key when a round ends.
+     */
     public static final String ROUND_ENDED = "Round ended";
+    /**
+     * The match will call the event bus with this key when a duel starts.
+     */
     public static final String DUEL_STARTED = "Duel started";
+    /**
+     * The match will call the event bus with this key when a duel ends.
+     */
     public static final String DUEL_ENDED = "Duel ended";
+    /**
+     * The match will call the event bus with this key when any new throw is
+     * recorded.
+     */
     public static final String THROW_RECORDED = "Throw recorded";
+    /**
+     * The match will call the event bus with this key when a new hit is
+     * recorded, by a call to recordHit.
+     */
     public static final String HIT_RECORDED = "Hit recorded";
+    /**
+     * The match will call the event bus with this key when a new hit is
+     * recorded, by a call to recordMis.
+     */
     public static final String MISS_RECORDED = "Miss recorded";
 
 
@@ -193,7 +233,7 @@ public class Match {
 
     /**
      *
-     * @return a deep clone of the ThrowSequence of this match.
+     * @return a deep getCopy of the ThrowSequence of this match.
      */
     public ThrowSequence getThrowSequence() {
         return new ThrowSequence(this.throwSequence);
@@ -423,30 +463,16 @@ public class Match {
         EventBus.getInstance().notify(event);
     }
 
-    private void addDataEventListener(final String event, final
-        DataEventListener listener) {
-        EventBus.getInstance().addDataEventListener(event, listener);
-    }
-
-    public void removeDataEventListener(final String event, final
-    DataEventListener listener) {
-        EventBus.getInstance().removeDataEventListener(event, listener);
-    }
-
-    private void dataNotifyListeners(final String event, final Object data) {
-        EventBus.getInstance().dataNotify(event, data);
-    }
-
     //Inner classes
 
-    public class MatchNotOverException extends Exception {
+    public static class MatchNotOverException extends Exception {
     }
 
     /**
      * Class representing the glasses in the match. A glass is either active
      * or inactive.
      */
-    public class Glass {
+    public static class Glass {
         private boolean isActive = true;
 
         public boolean isActive() {
@@ -482,15 +508,15 @@ public class Match {
     public String toString() {
         String p1 = player1 == null ? "Not set" : player1.getNickname();
         String p2 = player2 == null ? "Not set" : player2.getNickname();
-        String gl = "  ";
+        StringBuffer gl = new StringBuffer("  ");
         for (int i = 0; i < this.glasses.length; i++) {
-            if (this.glasses[i].isActive) gl = gl + "O    ";
-            else gl = gl + "X     ";
+            if (this.glasses[i].isActive) gl = gl.append("O    ");
+            else gl = gl.append("X     ");
         }
         int spaces = gl.length() - (p1.length() + p2.length()) - 1;
-        String sp = "";
+        StringBuffer sp = new StringBuffer();
         for (int i = 0; i < spaces; i++) {
-            sp = sp + " ";
+            sp = sp.append(" ");
         }
         if (this.playerWhoseTurnItIs == Player.ONE) p1 = p1 + "*";
         else p2 = "*" + p2;

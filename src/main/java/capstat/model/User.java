@@ -98,6 +98,16 @@ public class User {
     }
 
     @Override
+    public int hashCode() {
+        int result = name.hashCode();
+        result = 31 * result + nickname.hashCode();
+        result = 31 * result + hashedPassword.hashCode();
+        result = 31 * result + chalmersAge.hashCode();
+        result = 31 * result + ranking.hashCode();
+        return result;
+    }
+
+    @Override
     public String toString() {
         return "User{" +
                 "name='" + name + '\'' +
