@@ -58,4 +58,7 @@ public class ELORanking {
         long hashing = Double.doubleToLongBits(points);
         return (int) (hashing ^ (hashing >>> 32));
     }
+
+    public static double[] calculateNewRanking(final User winner, final User 
+            loser) {return new double[0];}
 }
