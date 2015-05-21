@@ -24,9 +24,10 @@
          <children>
             <Label layoutX="461.0" layoutY="-7.0" text="Logged in as:" textFill="#727272" />
             <Label fx:id="userLabel" layoutX="548.0" layoutY="-6.0" text="USER" textFill="#727272" />
-            <Button fx:id="logoutButton" contentDisplay="CENTER" layoutX="525.0" layoutY="18.0" mnemonicParsing="false" onAction="#logoutPressed" prefHeight="0.0" prefWidth="59.0" text="Logout">
+
+            <Button fx:id="statisticsButton" layoutX="110.0" layoutY="246.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#statisticsPressed" prefHeight="60.0" prefWidth="120.0" text="Statistics">
                <font>
-                  <Font size="10.0" />
+                  <Font size="18.0" />
                </font>
             </Button>
             <Button fx:id="playButton" layoutX="337.0" layoutY="246.0" mnemonicParsing="false" onAction="#playPressed" prefHeight="60.0" prefWidth="120.0" text="Play Match">
@@ -34,9 +35,9 @@
                   <Font size="18.0" />
                </font>
             </Button>
-            <Button fx:id="statisticsButton" layoutX="110.0" layoutY="246.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#statisticsPressed" prefHeight="60.0" prefWidth="120.0" text="Statistics">
+            <Button fx:id="logoutButton" contentDisplay="CENTER" layoutX="525.0" layoutY="18.0" mnemonicParsing="false" onAction="#logoutPressed" prefHeight="0.0" prefWidth="59.0" text="Logout">
                <font>
-                  <Font size="18.0" />
+                  <Font size="10.0" />
                </font>
             </Button>
             <ImageView fitHeight="146.0" fitWidth="292.0" layoutX="143.0" layoutY="35.0">

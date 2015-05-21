@@ -27,8 +27,8 @@
             <Label layoutX="169.0" layoutY="223.0" text="Password:" textFill="#727272" />
             <PasswordField fx:id="passField" layoutX="243.0" layoutY="218.0" prefHeight="26.0" prefWidth="191.0" promptText="Password goes here" />
             <Button fx:id="loginButton" contentDisplay="CENTER" layoutX="169.0" layoutY="267.0" mnemonicParsing="false" onAction="#loginPressed" prefHeight="26.0" prefWidth="265.0" text="Login" />
-            <Button fx:id="guestButton" layoutX="305.0" layoutY="312.0" mnemonicParsing="false" onAction="#guestPressed" prefHeight="26.0" prefWidth="129.0" text="Continue as guest" />
             <Button fx:id="registerButton" layoutX="169.0" layoutY="312.0" mnemonicParsing="false" onAction="#registerPressed" prefHeight="26.0" prefWidth="129.0" text="Register" />
+            <Button fx:id="guestButton" layoutX="305.0" layoutY="312.0" mnemonicParsing="false" onAction="#guestPressed" prefHeight="26.0" prefWidth="129.0" text="Continue as guest" />
             <ImageView fitHeight="120.0" fitWidth="241.0" layoutX="167.0" layoutY="29.0">
                <image>
                   <Image url="@../images/capstat.png" />

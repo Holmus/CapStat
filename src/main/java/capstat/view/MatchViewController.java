@@ -34,7 +34,7 @@ public class MatchViewController implements NotifyEventListener, Initializable{
     Match match = MatchController.createNewMatch();
     MatchController mc = new MatchController(match);
     String winner = "";
-    @FXML Button hitButton, missButton,startMatchButton;
+    @FXML Button hitButton, missButton,startMatchButton, menuButton;
     @FXML Circle glass1, glass2, glass3, glass4, glass5, glass6, glass7;
     @FXML Pane p1Pane, p2Pane, mainPane, matchOverPane, preMatchPane;
     @FXML Label hitLabel, missLabel, duelLabel, p1Name, p2Name, p1Rank, p2Rank, p1Rounds, p2Rounds, winnerLabel;
@@ -90,6 +90,14 @@ public class MatchViewController implements NotifyEventListener, Initializable{
                 startMatchPressed();
             });
         });
+        Platform.runLater(() -> {
+            menuButton.getScene().getAccelerators().put(new KeyCodeCombination(KeyCode.ESCAPE), () -> {
+                returnToMenu();
+            });
+        });
+    }
+    @FXML private void returnToMenu(){
+        eb.notify(MainView.SETSCENE_MAIN);
     }
 
     @FXML private void missPressed() {
