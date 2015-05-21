@@ -26,7 +26,7 @@ public class MainViewController implements Initializable, NotifyEventListener{
     private Scene scene;
     private Parent root;
     @FXML Label userLabel, matchRegisteredLabel;
-    @FXML Button playButton, statisticsButton;
+    @FXML Button playButton, statisticsButton, logoutButton;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         eb.addNotifyEventListener(MainView.MATCH_REGISTERED, this);
@@ -40,6 +40,16 @@ public class MainViewController implements Initializable, NotifyEventListener{
         Platform.runLater(() -> {
             statisticsButton.getScene().getAccelerators().put(new KeyCodeCombination(KeyCode.S), () -> {
                 statisticsPressed();
+            });
+        });
+        Platform.runLater(() -> {
+            logoutButton.getScene().getAccelerators().put(new KeyCodeCombination(KeyCode.L), () -> {
+                logoutPressed();
+            });
+        });
+        Platform.runLater(() -> {
+            logoutButton.getScene().getAccelerators().put(new KeyCodeCombination(KeyCode.ESCAPE), () -> {
+                logoutPressed();
             });
         });
     }
