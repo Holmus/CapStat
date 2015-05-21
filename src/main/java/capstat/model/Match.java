@@ -13,7 +13,15 @@ import java.time.Instant;
  *
  * This class if very tightly couple with the ThrowSequence class, and is
  * separated from it mostly for legibility reasons.
- * @author hjorthjort, holmus
+ *
+ * A client that wishes to get notifications on events in this match must
+ * implement {@link NotifyEventListener} and register to the event bus using
+ * the String constant for the event it wishes to subscribe to. It may also
+ * use the methods implemented for subscription in the Match interface for
+ * convenience.
+ *
+ * @author hjorthjort
+ * @reviewed by holmus
  */
 
 /*
@@ -22,14 +30,46 @@ import java.time.Instant;
 public class Match {
 
     // Constants
+
+    /**
+     * The match will call the event bus with this key when it starts by a
+     * call to startMatch.
+     */
     public static final String MATCH_STARTED = "Match started";
+    /**
+     * The match will call the event bus with this key when it ends.
+     */
     public static final String MATCH_ENDED = "Match ended";
+    /**
+     * The match will call the event bus with this key when a new round starts.
+     */
     public static final String ROUND_STARTED = "Round started";
+    /**
+     * The match will call the event bus with this key when a round ends.
+     */
     public static final String ROUND_ENDED = "Round ended";
+    /**
+     * The match will call the event bus with this key when a duel starts.
+     */
     public static final String DUEL_STARTED = "Duel started";
+    /**
+     * The match will call the event bus with this key when a duel ends.
+     */
     public static final String DUEL_ENDED = "Duel ended";
+    /**
+     * The match will call the event bus with this key when any new throw is
+     * recorded.
+     */
     public static final String THROW_RECORDED = "Throw recorded";
+    /**
+     * The match will call the event bus with this key when a new hit is
+     * recorded, by a call to recordHit.
+     */
     public static final String HIT_RECORDED = "Hit recorded";
+    /**
+     * The match will call the event bus with this key when a new hit is
+     * recorded, by a call to recordMis.
+     */
     public static final String MISS_RECORDED = "Miss recorded";
 
 
