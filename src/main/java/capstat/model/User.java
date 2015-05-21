@@ -116,4 +116,8 @@ public class User {
                 ", ranking=" + ranking +
                 '}';
     }
+
+    public void setRanking(final double ranking) {
+        this.ranking = new ELORanking(ranking);
+    }
 }

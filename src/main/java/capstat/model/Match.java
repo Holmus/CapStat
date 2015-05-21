@@ -220,7 +220,7 @@ public class Match {
         int ret = player == Player.ONE ? this.p1RoundsWon : this.p2RoundsWon;
         return ret;
     }
-    
+
     public Player getPlayerWhoseTurnItIs() {
         if (playerWhoseTurnItIs == Player.ONE) {
             return Player.ONE;

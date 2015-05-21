@@ -59,6 +59,37 @@ public class ELORanking {
         return (int) (hashing ^ (hashing >>> 32));
     }
 
-    public static double[] calculateNewRanking(final User winner, final User 
-            loser) {return new double[0];}
+    /**
+     * @return an array with exactly two double values: The first
+     * representing the winners new score, and the second representing the
+     * losers.
+     */
+    public static double[] calculateNewRanking(final User winner, final User
+            loser, int winnerRoundsWon, int loserRoundsWon) {
+
+        //Current point + 32 * (score - expectedScore)
+        double winnerNewRanking = winner.getRanking().getPoints() + 32 *
+                        ((double) winnerRoundsWon / (double)
+                        loserRoundsWon -
+                                calculateExpectedScore(winner.getRanking().getPoints(),
+                                loser.getRanking().getPoints()));
+        double loserNewRanking =  loser.getRanking().getPoints() + 32 *
+                ((double) loserRoundsWon / (double)
+                        winnerRoundsWon -
+                        calculateExpectedScore(loser.getRanking().getPoints(),
+                                winner.getRanking().getPoints()));
+
+        winnerNewRanking = winnerNewRanking % 0.01;
+        loserNewRanking = loserNewRanking % 0.01;
+        double[] ret = {winnerNewRanking, loserNewRanking};
+        return ret;
+    }
+
+    private static double calculateExpectedScore(double player, double
+            opponent) {
+        double denominator = 1 + Math.pow(10, (player-opponent)/400);
+        return 1/denominator;
+    }
+
+
 }

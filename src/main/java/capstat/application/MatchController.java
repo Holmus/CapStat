@@ -100,12 +100,17 @@ public class MatchController implements NotifyEventListener {
                         "exception was thrown even though mathc reported " +
                         "being over.");
             }
+            Match.Player losingPlayer = winningPlayer == Match.Player.ONE ?
+                    Match.Player.TWO : Match.Player.ONE;
             //At this point, a new exception will have been thrown if
             // winningPlayer has not been declared to somehting other than null.
             User winner = match.getPlayer(winningPlayer);
-            User loser = winningPlayer == Match.Player.ONE ? match.getPlayer
-                    (Match.Player.TWO) : match.getPlayer(Match.Player.ONE);
-            double[] newRanking = ELORanking.calculateNewRanking(winner, loser);
+            User loser = match.getPlayer(losingPlayer);
+            double[] newRanking = ELORanking.calculateNewRanking(winner,
+                    loser, match.getPlayerRoundsWon(winningPlayer), match
+                            .getPlayerRoundsWon(losingPlayer));
+            winner.setRanking(newRanking[0]);
+            loser.setRanking(newRanking[1]);
         }
     }
 }
