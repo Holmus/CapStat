@@ -83,4 +83,21 @@ public class PartialSequenceResult {
     public Match.Throw[] getSequence() {
         return Arrays.copyOf(this.sequence, this.sequence.length);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        PartialSequenceResult that = (PartialSequenceResult) o;
+
+        if (throwBeforeWasHit != that.throwBeforeWasHit) return false;
+        if (!Arrays.equals(glasses, that.glasses)) return false;
+
+        if (!Arrays.equals(sequence, that.sequence)) return false;
+        if (startingPlayer != that.startingPlayer) return false;
+
+        return true;
+    }
+
 }
