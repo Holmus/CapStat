@@ -26,8 +26,8 @@
       <Pane maxHeight="450.0" maxWidth="600.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="600.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
          <children>
             <Label layoutX="461.0" layoutY="-7.0" text="Logged in as:" textFill="#727272" />
-            <Label layoutX="548.0" layoutY="-6.0" text="USER" textFill="#727272" />
-            <Button fx:id="logoutButon" contentDisplay="CENTER" layoutX="525.0" layoutY="18.0" mnemonicParsing="false" onMouseClicked="#logoutPressed" prefHeight="0.0" prefWidth="59.0" text="Logout">
+            <Label fx:id="currentUserLabel" layoutX="548.0" layoutY="-6.0" text="USER" textFill="#727272" />
+            <Button fx:id="logoutButton" contentDisplay="CENTER" layoutX="525.0" layoutY="18.0" mnemonicParsing="false" onMouseClicked="#logoutPressed" prefHeight="0.0" prefWidth="59.0" text="Logout">
                <font>
                   <Font size="10.0" />
                </font>
@@ -40,15 +40,15 @@
             <Pane layoutX="23.0" layoutY="209.0" prefHeight="231.0" prefWidth="550.0">
                <children>
                   <LineChart fx:id="lineChart" layoutX="-4.0" layoutY="19.0" prefHeight="230.0" prefWidth="550.0">
-                    <xAxis>
-                      <CategoryAxis fx:id="lineXAxis" side="BOTTOM" />
-                    </xAxis>
-                    <yAxis>
-                      <NumberAxis fx:id="lineYAxis" side="LEFT" />
-                    </yAxis>
+                     <xAxis>
+                        <NumberAxis fx:id="xAxis" label="Values for X-Axis" lowerBound="0" upperBound="3" tickUnit="1"/>
+                     </xAxis>
+                     <yAxis>
+                        <NumberAxis fx:id="yAxis" label="Values for Y-Axis" lowerBound="0" upperBound="3" tickUnit="1"/>
+                     </yAxis>
                   </LineChart>
-                  <Label layoutX="66.0" layoutY="6.0" prefHeight="16.0" prefWidth="42.0" text="X-Axis:" />
-                  <ComboBox layoutX="116.0" layoutY="2.0" prefWidth="150.0" promptText="Plot on X-Axis">
+                  <Label layoutX="33.0" layoutY="6.0" prefHeight="16.0" prefWidth="42.0" text="X-Axis:" />
+                  <ComboBox fx:id="XComboBox" layoutX="83.0" layoutY="2.0" prefWidth="150.0" promptText="Plot on X-Axis">
                   <items>
                      <FXCollections fx:factory="observableArrayList">
                         <String fx:value="Accuracy" />
@@ -57,8 +57,8 @@
                      </FXCollections>
                   </items>
                   </ComboBox>
-                  <Label layoutX="287.0" layoutY="6.0" text="Y-Axis:" />
-                  <ComboBox layoutX="338.0" layoutY="2.0" prefWidth="150.0" promptText="Plot on X-Axis">
+                  <Label layoutX="254.0" layoutY="6.0" text="Y-Axis:" />
+                  <ComboBox fx:id="YComboBox" layoutX="305.0" layoutY="2.0" prefWidth="150.0" promptText="Plot on X-Axis">
                   <items>
                      <FXCollections fx:factory="observableArrayList">
                         <String fx:value="Accuracy" />
@@ -67,6 +67,7 @@
                      </FXCollections>
                   </items>
                   </ComboBox>
+                  <Button fx:id="plotButton" layoutX="488.0" layoutY="2.0" mnemonicParsing="false" onMouseClicked="#plotClicked" prefHeight="26.0" prefWidth="59.0" text="Plot!" />
                </children>
             </Pane>
             <PieChart layoutX="14.0" layoutY="53.0" prefHeight="128.0" prefWidth="140.0" title="Accuracy" />

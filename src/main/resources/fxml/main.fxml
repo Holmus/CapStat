@@ -29,13 +29,12 @@
                   <Font size="10.0" />
                </font>
             </Button>
-            <Button layoutX="337.0" layoutY="246.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="120.0" onMouseClicked="#playPressed" text="Play Match">
+            <Button layoutX="337.0" layoutY="246.0" mnemonicParsing="false" onMouseClicked="#playPressed" prefHeight="60.0" prefWidth="120.0" text="Play Match">
                <font>
                   <Font size="18.0" />
                </font>
             </Button>
-            <Button layoutX="110.0" layoutY="246.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="60.0" prefWidth="120.0"
-                     onMouseClicked="#statisticsPressed" text="Statistics">
+            <Button layoutX="110.0" layoutY="246.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#statisticsPressed" prefHeight="60.0" prefWidth="120.0" text="Statistics">
                <font>
                   <Font size="18.0" />
                </font>
@@ -45,6 +44,7 @@
                   <Image url="@../images/capstat.png" />
                </image>
             </ImageView>
+            <Label fx:id="matchRegisteredLabel" layoutX="237.0" layoutY="363.0" text="Match registered!" textFill="#05d316" />
          </children>
       </Pane>
    </children>

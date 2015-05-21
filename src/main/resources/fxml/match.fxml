@@ -15,38 +15,65 @@
    <columnConstraints>
       <ColumnConstraints />
       <ColumnConstraints />
+      <ColumnConstraints />
    </columnConstraints>
    <rowConstraints>
       <RowConstraints />
       <RowConstraints />
    </rowConstraints>
    <children>
-      <Pane fx:id="mainPane" maxHeight="450.0" maxWidth="600.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="600.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+      <Pane fx:id="backgroundPane" maxHeight="450.0" maxWidth="600.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="600.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
          <children>
-            <Button fx:id="hitButton" layoutX="305.0" layoutY="359.0" mnemonicParsing="false" onMouseClicked="#hitPressed" prefHeight="60.0" prefWidth="120.0" text="Hit" textFill="#02bc02">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Button>
-            <Button fx:id="missButton" layoutX="165.0" layoutY="359.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#missPressed" prefHeight="60.0" prefWidth="120.0" text="Miss" textFill="RED">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Button>
-            <ImageView fitHeight="75.0" fitWidth="150.0" layoutX="218.0" layoutY="1.0">
-               <image>
-                  <Image url="@../images/capstat.png" />
-               </image>
-            </ImageView>
-
-            <Circle fx:id="glass1" fill="#ffc61f" layoutX="186.0" layoutY="243.0" radius="18.0" stroke="BLACK" strokeType="INSIDE" />
-            <Circle fx:id="glass2" fill="#ffc61f" layoutX="222.0" layoutY="243.0" radius="18.0" stroke="BLACK" strokeType="INSIDE" />
-            <Circle fx:id="glass3" fill="#ffc61f" layoutX="258.0" layoutY="243.0" radius="18.0" stroke="BLACK" strokeType="INSIDE" />
-            <Circle fx:id="glass4" fill="#ffc61f" layoutX="294.0" layoutY="243.0" radius="18.0" stroke="BLACK" strokeType="INSIDE" />
-            <Circle fx:id="glass5" fill="#ffc61f" layoutX="330.0" layoutY="243.0" radius="18.0" stroke="BLACK" strokeType="INSIDE" />
-            <Circle fx:id="glass6" fill="#ffc61f" layoutX="365.0" layoutY="243.0" radius="18.0" stroke="BLACK" strokeType="INSIDE" />
-            <Circle fx:id="glass7" fill="#ffc61f" layoutX="401.0" layoutY="243.0" radius="18.0" stroke="BLACK" strokeType="INSIDE" />
-            <Pane fx:id="p1Pane" layoutX="-11.0" layoutY="-10.0" prefHeight="460.0" prefWidth="175.0">
+            <Pane fx:id="mainPane" maxHeight="450.0" maxWidth="600.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="600.0">
+               <children>
+                  <Button fx:id="hitButton" layoutX="305.0" layoutY="359.0" mnemonicParsing="false" onMouseClicked="#hitPressed" prefHeight="60.0" prefWidth="120.0" text="Hit" textFill="#02bc02">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="missButton" layoutX="165.0" layoutY="359.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#missPressed" prefHeight="60.0" prefWidth="120.0" text="Miss" textFill="RED">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Button>
+                  <ImageView fitHeight="75.0" fitWidth="150.0" layoutX="218.0" layoutY="1.0">
+                     <image>
+                        <Image url="@../images/capstat.png" />
+                     </image>
+                  </ImageView>
+                  <Circle fx:id="glass1" fill="#ffc61f" layoutX="186.0" layoutY="243.0" radius="18.0" stroke="BLACK" strokeType="INSIDE" />
+                  <Circle fx:id="glass2" fill="#ffc61f" layoutX="222.0" layoutY="243.0" radius="18.0" stroke="BLACK" strokeType="INSIDE" />
+                  <Circle fx:id="glass3" fill="#ffc61f" layoutX="258.0" layoutY="243.0" radius="18.0" stroke="BLACK" strokeType="INSIDE" />
+                  <Circle fx:id="glass4" fill="#ffc61f" layoutX="294.0" layoutY="243.0" radius="18.0" stroke="BLACK" strokeType="INSIDE" />
+                  <Circle fx:id="glass5" fill="#ffc61f" layoutX="330.0" layoutY="243.0" radius="18.0" stroke="BLACK" strokeType="INSIDE" />
+                  <Circle fx:id="glass6" fill="#ffc61f" layoutX="365.0" layoutY="243.0" radius="18.0" stroke="BLACK" strokeType="INSIDE" />
+                  <Circle fx:id="glass7" fill="#ffc61f" layoutX="401.0" layoutY="243.0" radius="18.0" stroke="BLACK" strokeType="INSIDE" />
+                  <Label layoutX="256.0" layoutY="80.0" prefHeight="30.0" prefWidth="74.0" text="Rounds">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="p2Rounds" layoutX="357.0" layoutY="80.0" prefHeight="30.0" prefWidth="16.0" text="0" textAlignment="CENTER">
+                     <font>
+                        <Font size="25.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="p1Rounds" layoutX="214.0" layoutY="80.0" prefHeight="30.0" prefWidth="16.0" text="0" textAlignment="CENTER">
+                     <font>
+                        <Font size="25.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="167.0" layoutY="308.0" prefHeight="16.0" prefWidth="258.0" text="THROWSEQUENCE" textAlignment="CENTER" />
+                  <Label fx:id="hitLabel" layoutX="283.0" layoutY="189.0" text="Hit!" textFill="#02bc02" />
+                  <Label fx:id="missLabel" layoutX="279.0" layoutY="189.0" text="Miss!" textFill="RED" />
+                  <Label fx:id="duelLabel" layoutX="277.0" layoutY="142.0" text="Duel!">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+            <Pane fx:id="p1Pane" prefHeight="460.0" prefWidth="150.0">
                <children>
                   <Label fx:id="p1Name" layoutX="40.0" layoutY="69.0" prefHeight="20.0" prefWidth="101.0" text="Player 1">
                      <font>
@@ -56,47 +83,33 @@
                   <Label fx:id="p1Rank" layoutX="66.0" layoutY="104.0" text="RANK 1" />
                </children>
             </Pane>
-            <Pane fx:id="p2Pane" layoutX="425.0" layoutY="-10.0" prefHeight="460.0" prefWidth="175.0">
+            <Pane fx:id="matchOverPane" layoutX="155.0" prefHeight="460.0" prefWidth="281.0">
                <children>
-                  <Label fx:id="p2Name" layoutX="41.0" layoutY="66.0" prefHeight="20.0" prefWidth="101.0" text="Player 2">
-                     <font>
-                        <Font size="25.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="p2Rank" layoutX="64.0" layoutY="102.0" text="RANK 2" />
-               </children>
-            </Pane>
-            <Label layoutX="256.0" layoutY="80.0" prefHeight="30.0" prefWidth="74.0" text="Rounds">
-               <font>
-                  <Font size="20.0" />
-               </font>
-            </Label>
-            <Label fx:id="p2Rounds" layoutX="357.0" layoutY="80.0" prefHeight="30.0" prefWidth="16.0" text="0" textAlignment="CENTER">
-               <font>
-                  <Font size="25.0" />
-               </font>
-            </Label>
-            <Label fx:id="p1Rounds" layoutX="214.0" layoutY="80.0" prefHeight="30.0" prefWidth="16.0" text="0" textAlignment="CENTER">
-               <font>
-                  <Font size="25.0" />
-               </font>
-            </Label>
-            <Label layoutX="167.0" layoutY="308.0" prefHeight="16.0" prefWidth="258.0" text="THROWSEQUENCE" textAlignment="CENTER" />
-            <Label fx:id="hitLabel" layoutX="283.0" layoutY="189.0" text="Hit!" textFill="#02bc02" />
-            <Label fx:id="missLabel" layoutX="279.0" layoutY="189.0" text="Miss!" textFill="RED" />
-            <Label fx:id="duelLabel" layoutX="277.0" layoutY="142.0" text="Duel!">
-               <font>
-                  <Font name="System Bold" size="13.0" />
-               </font>
-            </Label>
-            <Pane fx:id="matchOverPane" layoutX="-11.0" layoutY="-10.0" prefHeight="460.0" prefWidth="610.0">
-               <children>
-                  <Button layoutX="240.0" layoutY="276.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="131.0" text="Save Result" />
-                  <Label layoutX="174.0" layoutY="92.0" prefHeight="24.0" prefWidth="181.0" text="Winner is: ">
+                  <Button fx:id="saveResultButton" layoutX="75.0" layoutY="276.0" mnemonicParsing="false" onMouseClicked="#saveResultPressed" prefHeight="60.0" prefWidth="131.0" text="Save Result" />
+                  <Label fx:id="winnerLabel" layoutX="41.0" layoutY="115.0" prefHeight="24.0" prefWidth="181.0" text="Winner is: ">
                      <font>
                         <Font name="System Bold" size="16.0" />
                      </font>
                   </Label>
+               </children>
+            </Pane>
+            <Pane fx:id="p2Pane" layoutX="449.0" layoutY="2.0" prefHeight="460.0" prefWidth="150.0">
+               <children>
+                  <Label fx:id="p2Name" layoutX="30.0" layoutY="66.0" prefHeight="20.0" prefWidth="101.0" text="Player 2">
+                     <font>
+                        <Font size="25.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="p2Rank" layoutX="54.0" layoutY="102.0" text="RANK 2" />
+               </children>
+            </Pane>
+            <Pane fx:id="preMatchPane" prefHeight="450.0" prefWidth="600.0">
+               <children>
+                  <Label layoutX="408.0" layoutY="170.0" text="Player two: " />
+                  <Label layoutX="111.0" layoutY="170.0" text="Player one:" />
+                  <TextField fx:id="setPlayer1Field" layoutX="63.0" layoutY="199.0" />
+                  <TextField fx:id="setPlayer2Field" layoutX="362.0" layoutY="199.0" />
+                  <Button fx:id="startMatchButton" layoutX="239.0" layoutY="279.0" mnemonicParsing="false" onMouseClicked="#startMatchPressed" prefHeight="36.0" prefWidth="120.0" text="Start match" />
                </children>
             </Pane>
          </children>

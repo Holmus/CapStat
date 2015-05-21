@@ -1,6 +1,7 @@
 package capstat.view;
 import capstat.application.LoginController;
 import capstat.infrastructure.EventBus;
+import capstat.infrastructure.NotifyEventListener;
 import capstat.model.CapStat;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -14,17 +15,18 @@ import java.util.ResourceBundle;
 /**
  * Created by Jakob on 14/05/15.
  */
-public class MainViewController implements Initializable{
+public class MainViewController implements Initializable, NotifyEventListener{
     private LoginController lc = new LoginController();
     private CapStat cs = CapStat.getInstance();
     private EventBus eb = EventBus.getInstance();
     private Scene scene;
     private Parent root;
-    @FXML Label userLabel;
-
+    @FXML Label userLabel, matchRegisteredLabel;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        eb.addNotifyEventListener(MainView.MATCH_REGISTERED, this);
         userLabel.setText(cs.getLoggedInUser().getNickname());
+        matchRegisteredLabel.setVisible(false);
     }
 
     @FXML private void playPressed(){
@@ -39,4 +41,11 @@ public class MainViewController implements Initializable{
     }
 
 
+    @Override
+    public void notify(String event) {
+        if(event.equals(MainView.MATCH_REGISTERED)){
+            matchRegisteredLabel.setVisible(true);
+        }
+
+    }
 }

@@ -4,11 +4,14 @@ import capstat.infrastructure.EventBus;
 import capstat.infrastructure.NotifyEventListener;
 import capstat.model.Match;
 import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.layout.Background;
@@ -22,28 +25,32 @@ import java.util.ResourceBundle;
 
 /**
  * Created by Jakob on 18/05/15.
+ *
+ * Class to update the MatchView
  */
 public class MatchViewController implements NotifyEventListener, Initializable{
     EventBus eb = EventBus.getInstance();
     Match match = MatchController.createNewMatch();
     MatchController mc = new MatchController(match);
-    @FXML Button hitButton, missButton;
+    String winner = "";
+    @FXML Button hitButton, missButton,startMatchButton;
     @FXML Circle glass1, glass2, glass3, glass4, glass5, glass6, glass7;
-    @FXML Pane p1Pane, p2Pane, mainPane, matchOverPane;
-    @FXML Label hitLabel, missLabel, duelLabel, p1Name, p2Name, p1Rank, p2Rank, p1Rounds, p2Rounds;
+    @FXML Pane p1Pane, p2Pane, mainPane, matchOverPane, preMatchPane;
+    @FXML Label hitLabel, missLabel, duelLabel, p1Name, p2Name, p1Rank, p2Rank, p1Rounds, p2Rounds, winnerLabel;
+    @FXML TextField setPlayer1Field, setPlayer2Field;
     Background activeBackground = new Background(new BackgroundFill(Color.CORNFLOWERBLUE, CornerRadii.EMPTY, Insets.EMPTY));
     Background inactiveBackground = new Background(new BackgroundFill(Color.LIGHTGRAY, CornerRadii.EMPTY, Insets.EMPTY));
+    //ToDo: matchOverPane should have a button to not save the result
+    //ToDo: add functionality for saving result
 
     @Override
     public void initialize(URL location, ResourceBundle resources){
         mainPane.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
-
         //p1Name.setText(match.getPlayer(Match.Player.ONE).getName());
         //p2Name.setText(match.getPlayer(Match.Player.TWO).getName());
         //p1Rank.setText("" + match.getPlayer(Match.Player.ONE).getRanking().getPoints());
         //p2Rank.setText("" + match.getPlayer(Match.Player.TWO).getRanking().getPoints());
-
-        eb.addNotifyEventListener(Match.HIT_RECORDED,this);
+        eb.addNotifyEventListener(Match.HIT_RECORDED, this);
         eb.addNotifyEventListener(Match.MISS_RECORDED,this);
         eb.addNotifyEventListener(Match.DUEL_ENDED, this);
         eb.addNotifyEventListener(Match.ROUND_ENDED, this);
@@ -52,8 +59,12 @@ public class MatchViewController implements NotifyEventListener, Initializable{
         missLabel.setVisible(false);
         duelLabel.setVisible(false);
         matchOverPane.setVisible(false);
+        p1Pane.setVisible(false);
+        p2Pane.setVisible(false);
+        mainPane.setVisible(false);
         hitButton.setFocusTraversable(false);
         missButton.setFocusTraversable(false);
+        preMatchPane.setVisible(true);
         resetGlasses();
         updatePlayer();
         /*hitButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -73,6 +84,7 @@ public class MatchViewController implements NotifyEventListener, Initializable{
             });
         });
     }
+
     @FXML private void missPressed() {
         if (!match.isOngoing()) {
             mc.startMatch();
@@ -82,6 +94,7 @@ public class MatchViewController implements NotifyEventListener, Initializable{
         duelLabel.setVisible(false);
         mc.recordMiss();
     }
+
     @FXML private void hitPressed(){
         if (!match.isOngoing()) {
             mc.startMatch();
@@ -92,6 +105,37 @@ public class MatchViewController implements NotifyEventListener, Initializable{
         mc.recordHit();
     }
 
+    @FXML private void saveResultPressed(){
+        System.out.println("Save result pressed");
+        eb.notify(MainView.SETSCENE_MAIN);
+        eb.notify(MainView.MATCH_REGISTERED);
+
+    }
+
+    @FXML private void startMatchPressed(){
+        if(setPlayer1Field.getText().isEmpty() || setPlayer2Field.getText().isEmpty()){
+        }else{
+            mc.setPlayer1(setPlayer1Field.getText());
+            mc.setPlayer2(setPlayer2Field.getText());
+            try {
+                p1Rank.setText("" + match.getPlayer(Match.Player.ONE).getRanking().getPoints());
+            } catch(NullPointerException e){
+                p1Rank.setVisible(false);
+            }
+            try{
+                p2Rank.setText("" + match.getPlayer(Match.Player.TWO).getRanking().getPoints());
+            } catch(NullPointerException e){
+                p2Rank.setVisible(false);
+            }
+            p1Name.setText(setPlayer1Field.getText());
+            p2Name.setText(setPlayer2Field.getText());
+            p1Pane.setVisible(true);
+            p2Pane.setVisible(true);
+            mainPane.setVisible(true);
+            preMatchPane.setVisible(false);
+        }
+
+    }
 
     @Override
     public void notify(String event) {
@@ -156,10 +200,16 @@ public class MatchViewController implements NotifyEventListener, Initializable{
         }
     }
     private void disableReg(){
-        mainPane.setVisible(true);
+        if(Match.Player.ONE.equals(match.getRoundWinner())){
+            winner = p1Name.getText();
+        } else {
+            winner = p2Name.getText();
+        }
+        winnerLabel.setText("The winner is: " + winner);
+        mainPane.setVisible(false);
         p1Pane.setBackground(inactiveBackground);
         p2Pane.setBackground(inactiveBackground);
-        p1Pane.setVisible(true);
+        p1Pane.setVisible(false);
         p2Pane.setVisible(true);
         matchOverPane.setVisible(true);
 

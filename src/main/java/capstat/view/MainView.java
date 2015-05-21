@@ -21,6 +21,7 @@ public class MainView extends Application implements NotifyEventListener{
     public static final String SETSCENE_MATCH = "/fxml/match.fxml";
     public static final String SETSCENE_REGISTER = "/fxml/register.fxml";
     public static final String SETSCENE_STATISTICS = "/fxml/statistics.fxml";
+    public static final String MATCH_REGISTERED = "Match registered";
     EventBus eb = EventBus.getInstance();
     Stage stage;
     Parent root;
@@ -45,7 +46,6 @@ public class MainView extends Application implements NotifyEventListener{
 
     @Override
     public void notify(String event) {
-        //If no other than scene eventbuses are needed no if-conditions are needed
         if(event.equals(SETSCENE_LOGIN)){
             changeScene(event);
         }
@@ -58,10 +58,9 @@ public class MainView extends Application implements NotifyEventListener{
         if(event.equals(SETSCENE_REGISTER)){
             changeScene(event);
         }
-        if(event.equals(SETSCENE_STATISTICS)){
+        if(event.equals(SETSCENE_STATISTICS)) {
             changeScene(event);
         }
-
     }
     private void changeScene(String rootPath){
         try{
