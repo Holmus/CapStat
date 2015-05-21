@@ -1,9 +1,6 @@
 package capstat.infrastructure;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -51,11 +48,14 @@ public class TextFileTaskQueue implements ITaskQueue {
     private void writeFile() throws IOException {
         FileWriter fw = new FileWriter(this.taskFile);
         BufferedWriter out = new BufferedWriter(fw);
-        for (String s : this.taskList) {
-            out.write(s);
-            out.newLine();
+        try {
+            for (String s : this.taskList) {
+                out.write(s);
+                out.newLine();
+            }
+        } finally {
+            out.close();
         }
-        out.close();
     }
 
     @Override
