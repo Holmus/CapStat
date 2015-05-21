@@ -17,14 +17,14 @@ import static org.junit.Assert.assertTrue;
 public class EventBusTest {
 
     private static EventBus bus;
-    private static boolean hasBeenNotified;
+    private  boolean hasBeenNotified;
     private static NotifyEventListener notifyListener;
     private static DataEventListener dataListener;
     private static Object dataSendObject, dataReceiveObject;
     private static final String NOTIFICATION_STRING = "Test";
 
-    @BeforeClass
-    public static void init() {
+    @Before
+    public void init() {
         //Get eventb bus
         bus = EventBus.getInstance();
         //Create a listener that will change the value of the boolean
@@ -92,11 +92,11 @@ public class EventBusTest {
         assertFalse(dataSendObject == dataReceiveObject);
     }
 
-    private static void hasBeenNotified() {
+    private void hasBeenNotified() {
         hasBeenNotified = true;
     }
 
-    private static void hasBeenNotified(final Object dataObject) {
+    private void hasBeenNotified(final Object dataObject) {
         hasBeenNotified();
         dataReceiveObject = dataObject;
     }
