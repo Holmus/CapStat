@@ -468,15 +468,15 @@ public class Match {
     public String toString() {
         String p1 = player1 == null ? "Not set" : player1.getNickname();
         String p2 = player2 == null ? "Not set" : player2.getNickname();
-        String gl = "  ";
+        StringBuffer gl = new StringBuffer("  ");
         for (int i = 0; i < this.glasses.length; i++) {
-            if (this.glasses[i].isActive) gl = gl + "O    ";
-            else gl = gl + "X     ";
+            if (this.glasses[i].isActive) gl = gl.append("O    ");
+            else gl = gl.append("X     ");
         }
         int spaces = gl.length() - (p1.length() + p2.length()) - 1;
-        String sp = "";
+        StringBuffer sp = new StringBuffer();
         for (int i = 0; i < spaces; i++) {
-            sp = sp + " ";
+            sp = sp.append(" ");
         }
         if (this.playerWhoseTurnItIs == Player.ONE) p1 = p1 + "*";
         else p2 = "*" + p2;
