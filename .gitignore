@@ -102,3 +102,6 @@ gradle-app.setting
 
 # Project specific
 Meeting Template
+report.html
+## Database
+src/main/java/org/jooq/
