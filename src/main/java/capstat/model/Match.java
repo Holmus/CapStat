@@ -423,20 +423,6 @@ public class Match {
         EventBus.getInstance().notify(event);
     }
 
-    private void addDataEventListener(final String event, final
-        DataEventListener listener) {
-        EventBus.getInstance().addDataEventListener(event, listener);
-    }
-
-    public void removeDataEventListener(final String event, final
-    DataEventListener listener) {
-        EventBus.getInstance().removeDataEventListener(event, listener);
-    }
-
-    private void dataNotifyListeners(final String event, final Object data) {
-        EventBus.getInstance().dataNotify(event, data);
-    }
-
     //Inner classes
 
     public static class MatchNotOverException extends Exception {
