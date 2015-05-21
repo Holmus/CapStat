@@ -37,4 +37,11 @@ public class LoginController {
     public void loginAsGuest() {
         this.capStat.setGuestLoggedIn();
     }
+
+    /**
+     * Method to logout the currently logged in user
+     */
+    public void logoutUser() {
+        loginAsGuest();
+    }
 }

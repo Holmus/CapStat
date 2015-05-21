@@ -23,13 +23,13 @@
       <Pane maxHeight="450.0" maxWidth="600.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="600.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
          <children>
             <Label layoutX="461.0" layoutY="-7.0" text="Logged in as:" textFill="#727272" />
-            <Label fx:id="userLabel" layoutX="548.0" layoutY="-6.0" text="USER" textFill="#727272" />
-            <Button fx:id="logoutButton" contentDisplay="CENTER" layoutX="525.0" layoutY="18.0" mnemonicParsing="false" onMouseClicked="#logoutPressed" prefHeight="0.0" prefWidth="59.0" text="Logout">
+            <Label layoutX="548.0" layoutY="-6.0" text="USER" textFill="#727272" />
+            <Button contentDisplay="CENTER" layoutX="525.0" layoutY="18.0" mnemonicParsing="false" prefHeight="0.0" prefWidth="59.0" text="Logout">
                <font>
                   <Font size="10.0" />
                </font>
             </Button>
-            <Button layoutX="337.0" layoutY="246.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="120.0" onMouseClicked="#playPressed" text="Play Match">
+            <Button layoutX="337.0" layoutY="246.0" mnemonicParsing="false" onMouseClicked="#playPressed" prefHeight="60.0" prefWidth="120.0" text="Play Match">
                <font>
                   <Font size="18.0" />
                </font>
@@ -39,7 +39,7 @@
                   <Font size="18.0" />
                </font>
             </Button>
-            <ImageView fitHeight="146.0" fitWidth="292.0" layoutX="143.0" layoutY="35.0">
+            <ImageView fitHeight="146.0" fitWidth="292.0" layoutX="140.0" layoutY="2.0">
                <image>
                   <Image url="@../images/capstat.png" />
                </image>
