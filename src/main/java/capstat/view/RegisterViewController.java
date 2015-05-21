@@ -89,9 +89,10 @@ public class RegisterViewController implements Initializable{
             birth = LocalDate.of(inputYear, inputMonth, inputDay);
             if(todayYear<inputYear){
                 updateBirth();
-            } else if(todayYear==inputYear && todayMonth<inputMonth){
+            } else if(todayYear.equals(inputYear) && todayMonth<inputMonth){
                 updateBirth();
-            } else if(todayYear==inputYear && todayMonth==inputMonth && todayDay<inputDay){
+            } else if(todayYear.equals(inputYear) && todayMonth.equals
+                    (inputMonth) && todayDay<inputDay){
                 updateBirth();
             }
         }
