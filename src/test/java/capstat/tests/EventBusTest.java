@@ -21,7 +21,7 @@ public class EventBusTest {
     private NotifyEventListener notifyListener;
     private DataEventListener dataListener;
     private Object dataSendObject, dataReceiveObject;
-    private final String NOTIFICATION_STRING = "Test";
+    private static final String NOTIFICATION_STRING = "Test";
 
     @Before
     public void init() {
