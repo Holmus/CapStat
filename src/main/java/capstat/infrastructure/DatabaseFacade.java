@@ -77,6 +77,11 @@ class DatabaseFacade implements UserDatabaseHelper {
         //TODO check if this is done or not.
     }
 
+    /**
+     * @param nickname the nickname of the user to be found
+     * @return user blueprint for the user with the given nickname, if that
+     * user exists in the databse. returns null otherwise.
+     */
     @Override
     public UserBlueprint getUserByNickname(final String nickname) {
         Result<Record> result = db.database.select().from(Users.USERS).where(Users.USERS.NICK.equal(nickname)).fetch();
