@@ -3,6 +3,7 @@ package capstat.view;
 import capstat.application.LoginController;
 import capstat.infrastructure.EventBus;
 import capstat.infrastructure.NotifyEventListener;
+import capstat.model.UserLedger;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
@@ -17,13 +18,16 @@ public class LoginViewController implements NotifyEventListener, Initializable{
     private Scene scene;
     EventBus eb = EventBus.getInstance();
     LoginController lc = new LoginController();
+    UserLedger ul = UserLedger.getInstance();
     @FXML PasswordField passField;
     @FXML TextField usernameField;
-    @FXML Label registeredLabel;
+    @FXML Label registeredLabel, passwordLabel, usernameLabel;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         eb.addNotifyEventListener(MainView.USER_REGISTERED, this);
         registeredLabel.setVisible(false);
+        passwordLabel.setVisible(false);
+        usernameLabel.setVisible(false);
     }
 
     @FXML private void loginPressed(){
@@ -31,8 +35,17 @@ public class LoginViewController implements NotifyEventListener, Initializable{
             //ToDo: Give visual feedback
             return;
         }
+        if(ul.doesUserExist(usernameField.getText())){
+            usernameLabel.setVisible(true);
+            return;
+        }
         if(lc.loginAsUser(usernameField.getText(), passField.getText())){
             eb.notify(MainView.SETSCENE_MAIN);
+        } else {
+            passwordLabel.setVisible(true);
+        }
+
+
         }
     }
     @FXML private void guestPressed(){
