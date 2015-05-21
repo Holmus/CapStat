@@ -33,7 +33,6 @@ public class LoginViewController implements NotifyEventListener, Initializable{
         }
         if(lc.loginAsUser(usernameField.getText(), passField.getText())){
             eb.notify(MainView.SETSCENE_MAIN);
-            //ToDo: Update active user in top-right corner
         }
     }
     @FXML private void guestPressed(){

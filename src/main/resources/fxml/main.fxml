@@ -34,7 +34,8 @@
                   <Font size="18.0" />
                </font>
             </Button>
-            <Button layoutX="110.0" layoutY="246.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="60.0" prefWidth="120.0" text="Statistics">
+            <Button layoutX="110.0" layoutY="246.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="60.0" prefWidth="120.0"
+                     onMouseClicked="#statisticsPressed" text="Statistics">
                <font>
                   <Font size="18.0" />
                </font>

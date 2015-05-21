@@ -34,6 +34,9 @@ public class MainViewController implements Initializable{
         lc.logoutUser();
         eb.notify(MainView.SETSCENE_LOGIN);
     }
+    @FXML private void statisticsPressed(){
+        eb.notify(MainView.SETSCENE_STATISTICS);
+    }
 
 
 }
