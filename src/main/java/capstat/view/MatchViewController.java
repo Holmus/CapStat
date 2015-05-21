@@ -3,6 +3,7 @@ import capstat.application.MatchController;
 import capstat.infrastructure.EventBus;
 import capstat.infrastructure.NotifyEventListener;
 import capstat.model.Match;
+import capstat.model.UserLedger;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -121,18 +122,29 @@ public class MatchViewController implements NotifyEventListener, Initializable{
     @FXML private void startMatchPressed(){
         if(setPlayer1Field.getText().isEmpty() || setPlayer2Field.getText().isEmpty()){
         }else{
-            mc.setPlayer1(setPlayer1Field.getText());
-            mc.setPlayer2(setPlayer2Field.getText());
-            try {
+            //Get strings inputted in text fields
+            String p1Nickname = setPlayer1Field.getText();
+            mc.setPlayer1(p1Nickname);
+            String p2Nickname = setPlayer2Field.getText();
+            mc.setPlayer2(p2Nickname);
+
+            //Only show ranking if user is registered.
+            boolean p1Exists = UserLedger.getInstance().doesUserExist
+                    (p1Nickname);
+            if (p1Exists) {
                 p1Rank.setText("" + match.getPlayer(Match.Player.ONE).getRanking().getPoints());
-            } catch(NullPointerException e){
-                p1Rank.setVisible(false);
+            } else {
+                p1Rank.setText("(Not registered)");
             }
-            try{
+
+            boolean p2Exists = UserLedger.getInstance().doesUserExist
+                    (p2Nickname);
+            if (p2Exists){
                 p2Rank.setText("" + match.getPlayer(Match.Player.TWO).getRanking().getPoints());
-            } catch(NullPointerException e){
-                p2Rank.setVisible(false);
+            } else {
+                p2Rank.setText("(Not registered)");
             }
+
             p1Name.setText(setPlayer1Field.getText());
             p2Name.setText(setPlayer2Field.getText());
             p1Pane.setVisible(true);

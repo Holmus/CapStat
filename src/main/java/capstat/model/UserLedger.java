@@ -129,14 +129,24 @@ public class UserLedger {
     //Utils
 
     /**
+     * Checks to see whether a user with the supplied nickname exists in the
+     * ledger.
+     * @param nickname
+     * @return true if the user exists, otherwise false.
+     */
+    public boolean doesUserExist(String nickname) {
+        if (this.users.containsKey(nickname)) {
+            return true;
+        }
+        return this.dbHelper.getUserByNickname(nickname) != null;
+    }
+
+    /**
      * Checks whether a given nickname is a valid nickname. A valid nickname is any nickname that is unique among other nicknames, and contains one or more of the characters A-Z, a-z, ÅÄÖ, åäö, 0-9, (), period, underscore, and space.
      * @return true if the nickname is valid; false otherwise
      */
     public boolean isNicknameValid(String nickname) {
-        UserDatabaseHelper udh = new DatabaseHelperFactory()
-                .createUserQueryHelper();
-        User user = this.getUserByNickname(nickname);
-        if (user != null ) {
+        if (this.doesUserExist(nickname)) {
             return false;
         }
         Stream<Boolean> conflicts = this.users.keySet().stream().map(u -> u
