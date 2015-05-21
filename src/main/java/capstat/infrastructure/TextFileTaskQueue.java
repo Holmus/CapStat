@@ -46,6 +46,8 @@ public class TextFileTaskQueue implements ITaskQueue {
     }
 
     private void writeFile() throws IOException {
+        //This assumes all files are in standard encoding, which is enough for
+        // the purposes of this project.
         FileWriter fw = new FileWriter(this.taskFile);
         BufferedWriter out = new BufferedWriter(fw);
         try {
