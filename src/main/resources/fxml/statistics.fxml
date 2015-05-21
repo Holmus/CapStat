@@ -41,10 +41,10 @@
                <children>
                   <LineChart fx:id="lineChart" layoutX="-4.0" layoutY="19.0" prefHeight="230.0" prefWidth="550.0">
                      <xAxis>
-                        <NumberAxis fx:id="xAxis" label="Values for X-Axis" lowerBound="0" upperBound="3" tickUnit="1"/>
+                        <NumberAxis label="Values for X-Axis" lowerBound="0" tickUnit="1" upperBound="3" fx:id="xAxis" />
                      </xAxis>
                      <yAxis>
-                        <NumberAxis fx:id="yAxis" label="Values for Y-Axis" lowerBound="0" upperBound="3" tickUnit="1"/>
+                        <NumberAxis fx:id="yAxis" label="Values for Y-Axis" lowerBound="0" tickUnit="1" upperBound="3" />
                      </yAxis>
                   </LineChart>
                   <Label layoutX="33.0" layoutY="6.0" prefHeight="16.0" prefWidth="42.0" text="X-Axis:" />
@@ -71,7 +71,7 @@
                </children>
             </Pane>
             <PieChart layoutX="14.0" layoutY="53.0" prefHeight="128.0" prefWidth="140.0" title="Accuracy" />
-            <Button fx:id="mainButton" layoutX="8.0" layoutY="20.0" mnemonicParsing="false" onAction="#returnToMain" prefHeight="16.0" prefWidth="49.0" text="Main">
+            <Button fx:id="mainButton" layoutX="8.0" layoutY="16.0" mnemonicParsing="false" onAction="#returnToMain" prefHeight="16.0" prefWidth="49.0" text="Main">
                <font>
                   <Font size="10.0" />
                </font>

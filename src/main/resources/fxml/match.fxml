@@ -110,6 +110,7 @@
                   <TextField fx:id="setPlayer1Field" layoutX="63.0" layoutY="199.0" />
                   <TextField fx:id="setPlayer2Field" layoutX="362.0" layoutY="199.0" />
                   <Button fx:id="startMatchButton" layoutX="239.0" layoutY="279.0" mnemonicParsing="false" onAction="#startMatchPressed" prefHeight="36.0" prefWidth="120.0" text="Start match" />
+                  <Button fx:id="menuButton" layoutX="6.0" layoutY="1.0" mnemonicParsing="false" onAction="#returnToMenu" text="Main" />
                </children>
             </Pane>
          </children>

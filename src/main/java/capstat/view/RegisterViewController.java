@@ -35,7 +35,7 @@ public class RegisterViewController implements Initializable{
     @FXML DatePicker birthDateInput;
     @FXML ComboBox attendYear, attendLP;
     @FXML Label wrongBirthdayLabel, wrongAttendLabel, passwordMatchLabel, usernameTakenLabel, nameLabel;
-    @FXML Button registerButton;
+    @FXML Button registerButton, loginButton;
     Date today;
     DateFormat dateYear, dateMonth, dateDay;
     Integer admittanceYear, lp, inputYear, inputMonth, inputDay, todayYear, todayMonth, todayDay;
@@ -57,19 +57,30 @@ public class RegisterViewController implements Initializable{
                 registerPressed();
             });
         });
-    }
+        Platform.runLater(() -> {
+            loginButton.getScene().getAccelerators().put(new KeyCodeCombination(KeyCode.ESCAPE), () -> {
+                goToLogin();
+            });
+        });
 
+    }
     @FXML private void registerPressed() throws NumberFormatException{
         if(checkInput()){
             return;
         }
         registerUser();
     }
+
+    @FXML private void goToLogin(){
+        eb.notify(MainView.SETSCENE_LOGIN);
+    }
+
     private void registerUser(){
         rc.registerNewUser(usernameInput.getText(), fullNameInput.getText(), passField.getText(), birth, admitTime.getYear(), admitTime.getReadingPeriod().ordinal() + 1);
         eb.notify(MainView.SETSCENE_LOGIN);
         eb.notify(MainView.USER_REGISTERED);
     }
+
     private boolean checkInput(){
         testFailed = false;
         today = new Date();
@@ -144,18 +155,22 @@ public class RegisterViewController implements Initializable{
         }
         return testFailed;
     }
+
     private void updateName(){
         nameLabel.setVisible(true);
         testFailed = true;
     }
+
     private void updateLP(){
         wrongAttendLabel.setVisible(true);
         testFailed = true;
     }
+
     private void updateBirth(){
         wrongBirthdayLabel.setVisible(true);
         testFailed = true;
     }
+
     private void updatePasswords(){
         passwordMatchLabel.setVisible(true);
         testFailed = true;
@@ -164,6 +179,7 @@ public class RegisterViewController implements Initializable{
         usernameTakenLabel.setVisible(true);
         testFailed = true;
     }
+
     private void checkUsernameValid(){
         if(ul.isNicknameValid(usernameInput.getText())){
             usernameTakenLabel.setVisible(false);
@@ -172,6 +188,7 @@ public class RegisterViewController implements Initializable{
         usernameTakenLabel.setText("That username is taken/invalid!");
         updateUsername();
     }
+
     private boolean passwordsMatch(){
         if(passField.getText().isEmpty() && passField1.getText().isEmpty()){
             passwordMatchLabel.setText("Enter a password!");
