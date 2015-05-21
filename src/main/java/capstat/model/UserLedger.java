@@ -133,6 +133,12 @@ public class UserLedger {
      * @return true if the nickname is valid; false otherwise
      */
     public boolean isNicknameValid(String nickname) {
+        UserDatabaseHelper udh = new DatabaseHelperFactory()
+                .createUserQueryHelper();
+        User user = this.getUserByNickname(nickname);
+        if (user != null ) {
+            return false;
+        }
         Stream<Boolean> conflicts = this.users.keySet().stream().map(u -> u
                 .equals(nickname));
         Predicate<Boolean> noConflict = conflict -> conflict == false;
