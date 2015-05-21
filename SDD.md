@@ -23,6 +23,7 @@ The references section contains definitions and rules for the caps game, which t
 * JavaFX, a framework for creating a GUI.
 * Match, a single match of caps.
 * Round, one round in the game, which can consist of several rounds.
+* Throw, a single throw in a match, which can be either a hit or miss.
 * MVC, a general principle for decoupling responsibilities in the application. See Layered architecture.
 * Layered architecture, a way of partitioning the application into four loosely coupled layers used for GUI, controlling the game, representing the domain and handling technical implementations, respectively.
 * Business domain, the problem that the application models and for which it provides tools.
@@ -37,6 +38,21 @@ The presentation layer will hold the GUI components, which are implemented with 
 
 #####2.1.1 The domain model
 The model's task is to model the world of caps, where there a matches being played, matches that have been played, and users playing and spectating matches. The model also models the statistics of players, such as their ranking, their accuracy, their wins and losses.
+
+#####2.1.2 Rules
+The rules of caps is very well defined, and not likely to change. However, the Match class could be subclassed if different behavior is needed.
+
+#####2.1.3 Matches
+A match is played until one player has won as many rounds as is needed. The number is decided at the outset of the match. The outcome of a match, as well as every play of the match, can be recreated at any time as long as the starting player and the full throw sequence is known. However, we have implemented the possibility for a match to have an incomplete throw sequence, without that making the statistics useless
+
+#####2.1.5 Throw sequences
+A throw sequence is a series of throws, which are either hits or misses. These are kept by the match they represent, and stored permanently once the game ends. If one has the full, unbroken throw sequence of a match, one could compute anything about the match. But, since the application relies on rapid user input, which could become incorrect at any time, a slightly modified approach to the full, perfect sequence has been chosen. The throw sequence of a match can be split up in several small sequences, each describing the game state at the exact point where it starts. Thus, if something goes wrong, a user can "start over" from a new starting point, while losing minimal amount of information, and without having to discard the whole sequence.  
+
+#####2.1.4 Statistics
+The part of the model that handles statistics uses a minimal data input. It uses only the throw sequences, and some simple information about the match. From that information, the statistics can deduce anything that is deducible about a game.
+
+#####2.1.5 Event handling
+During a match, a lot of events take place that other parts of a system want to be notified about. 
 
 2.2 Software decomposition
 
