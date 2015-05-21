@@ -27,7 +27,7 @@
          <children>
             <Label layoutX="461.0" layoutY="-7.0" text="Logged in as:" textFill="#727272" />
             <Label fx:id="currentUserLabel" layoutX="548.0" layoutY="-6.0" text="USER" textFill="#727272" />
-            <Button fx:id="logoutButton" contentDisplay="CENTER" layoutX="525.0" layoutY="18.0" mnemonicParsing="false" onMouseClicked="#logoutPressed" prefHeight="0.0" prefWidth="59.0" text="Logout">
+            <Button fx:id="logoutButton" contentDisplay="CENTER" layoutX="525.0" layoutY="18.0" mnemonicParsing="false" onAction="#logoutPressed" prefHeight="0.0" prefWidth="59.0" text="Logout">
                <font>
                   <Font size="10.0" />
                </font>
@@ -67,11 +67,11 @@
                      </FXCollections>
                   </items>
                   </ComboBox>
-                  <Button fx:id="plotButton" layoutX="488.0" layoutY="2.0" mnemonicParsing="false" onMouseClicked="#plotClicked" prefHeight="26.0" prefWidth="59.0" text="Plot!" />
+                  <Button fx:id="plotButton" layoutX="488.0" layoutY="2.0" mnemonicParsing="false" onAction="#plotClicked" prefHeight="26.0" prefWidth="59.0" text="Plot!" />
                </children>
             </Pane>
             <PieChart layoutX="14.0" layoutY="53.0" prefHeight="128.0" prefWidth="140.0" title="Accuracy" />
-            <Button fx:id="mainButton" layoutX="8.0" layoutY="20.0" mnemonicParsing="false" onMouseClicked="#returnToMain" prefHeight="16.0" prefWidth="49.0" text="Main">
+            <Button fx:id="mainButton" layoutX="8.0" layoutY="20.0" mnemonicParsing="false" onAction="#returnToMain" prefHeight="16.0" prefWidth="49.0" text="Main">
                <font>
                   <Font size="10.0" />
                </font>

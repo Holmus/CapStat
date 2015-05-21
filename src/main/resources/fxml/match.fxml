@@ -85,7 +85,7 @@
             </Pane>
             <Pane fx:id="matchOverPane" layoutX="155.0" prefHeight="460.0" prefWidth="281.0">
                <children>
-                  <Button fx:id="saveResultButton" layoutX="75.0" layoutY="276.0" mnemonicParsing="false" onMouseClicked="#saveResultPressed" prefHeight="60.0" prefWidth="131.0" text="Save Result" />
+                  <Button fx:id="saveResultButton" layoutX="75.0" layoutY="276.0" mnemonicParsing="false" onAction="#saveResultPressed" prefHeight="60.0" prefWidth="131.0" text="Save Result" />
                   <Label fx:id="winnerLabel" layoutX="41.0" layoutY="115.0" prefHeight="24.0" prefWidth="181.0" text="Winner is: ">
                      <font>
                         <Font name="System Bold" size="16.0" />
@@ -109,7 +109,7 @@
                   <Label layoutX="111.0" layoutY="170.0" text="Player one:" />
                   <TextField fx:id="setPlayer1Field" layoutX="63.0" layoutY="199.0" />
                   <TextField fx:id="setPlayer2Field" layoutX="362.0" layoutY="199.0" />
-                  <Button fx:id="startMatchButton" layoutX="239.0" layoutY="279.0" mnemonicParsing="false" onMouseClicked="#startMatchPressed" prefHeight="36.0" prefWidth="120.0" text="Start match" />
+                  <Button fx:id="startMatchButton" layoutX="239.0" layoutY="279.0" mnemonicParsing="false" onAction="#startMatchPressed" prefHeight="36.0" prefWidth="120.0" text="Start match" />
                </children>
             </Pane>
          </children>

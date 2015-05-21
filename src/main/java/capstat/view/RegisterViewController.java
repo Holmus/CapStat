@@ -4,10 +4,14 @@ import capstat.application.RegisterController;
 import capstat.infrastructure.EventBus;
 import capstat.model.Admittance;
 import capstat.model.UserLedger;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+
 import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -31,6 +35,7 @@ public class RegisterViewController implements Initializable{
     @FXML DatePicker birthDateInput;
     @FXML ComboBox attendYear, attendLP;
     @FXML Label wrongBirthdayLabel, wrongAttendLabel, passwordMatchLabel, usernameTakenLabel, nameLabel;
+    @FXML Button registerButton;
     Date today;
     DateFormat dateYear, dateMonth, dateDay;
     Integer admittanceYear, lp, inputYear, inputMonth, inputDay, todayYear, todayMonth, todayDay;
@@ -46,6 +51,12 @@ public class RegisterViewController implements Initializable{
         nameLabel.setVisible(false);
         birthDateInput.setValue(null);
         attendYear.setValue(null);
+
+        Platform.runLater(() -> {
+            registerButton.getScene().getAccelerators().put(new KeyCodeCombination(KeyCode.ENTER), () -> {
+                registerPressed();
+            });
+        });
     }
 
     @FXML private void registerPressed() throws NumberFormatException{
