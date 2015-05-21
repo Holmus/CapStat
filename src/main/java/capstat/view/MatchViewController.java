@@ -64,6 +64,7 @@ public class MatchViewController implements NotifyEventListener, Initializable{
         hitButton.setFocusTraversable(false);
         missButton.setFocusTraversable(false);
         preMatchPane.setVisible(true);
+        startMatchButton.setDisable(false);
         resetGlasses();
         updatePlayer();
         /*hitButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -80,6 +81,11 @@ public class MatchViewController implements NotifyEventListener, Initializable{
         Platform.runLater(() -> {
             hitButton.getScene().getAccelerators().put(new KeyCodeCombination(KeyCode.SPACE), () -> {
                 hitPressed();
+            });
+        });
+        Platform.runLater(() -> {
+            startMatchButton.getScene().getAccelerators().put(new KeyCodeCombination(KeyCode.ENTER), () -> {
+                startMatchPressed();
             });
         });
     }
@@ -143,6 +149,7 @@ public class MatchViewController implements NotifyEventListener, Initializable{
             p2Pane.setVisible(true);
             mainPane.setVisible(true);
             preMatchPane.setVisible(false);
+            startMatchButton.setDisable(true);
         }
 
     }

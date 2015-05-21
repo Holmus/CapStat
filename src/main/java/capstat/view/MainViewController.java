@@ -3,11 +3,15 @@ import capstat.application.LoginController;
 import capstat.infrastructure.EventBus;
 import capstat.infrastructure.NotifyEventListener;
 import capstat.model.CapStat;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -22,11 +26,22 @@ public class MainViewController implements Initializable, NotifyEventListener{
     private Scene scene;
     private Parent root;
     @FXML Label userLabel, matchRegisteredLabel;
+    @FXML Button playButton, statisticsButton;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         eb.addNotifyEventListener(MainView.MATCH_REGISTERED, this);
         userLabel.setText(cs.getLoggedInUser().getNickname());
         matchRegisteredLabel.setVisible(false);
+        Platform.runLater(() -> {
+            playButton.getScene().getAccelerators().put(new KeyCodeCombination(KeyCode.P), () -> {
+                playPressed();
+            });
+        });
+        Platform.runLater(() -> {
+            statisticsButton.getScene().getAccelerators().put(new KeyCodeCombination(KeyCode.S), () -> {
+                statisticsPressed();
+            });
+        });
     }
 
     @FXML private void playPressed(){
