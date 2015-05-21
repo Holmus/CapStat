@@ -8,10 +8,9 @@ import capstat.model.*;
  * Class to control the match in the model-layer
  *
  */
-public class MatchController {
-    Match match;
-    User p1, p2;
-    UserLedger ul = UserLedger.getInstance();
+
+    private Match match;
+    private UserLedger ul = UserLedger.getInstance();
 
     /**
      * Creates a new Match using the MatchFactory.
@@ -51,11 +50,11 @@ public class MatchController {
     }
 
     public void setPlayer1(String text) {
-        p1 = ul.getUserByNickname(text);
+        final User p1 = ul.getUserByNickname(text);
         match.setPlayer1(p1);
     }
     public void setPlayer2(String text) {
-        p2 = ul.getUserByNickname(text);
+        final User p2 = ul.getUserByNickname(text);
         match.setPlayer2(p2);
     }
 }
