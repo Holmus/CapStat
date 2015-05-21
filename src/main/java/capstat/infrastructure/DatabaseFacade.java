@@ -80,7 +80,9 @@ class DatabaseFacade implements UserDatabaseHelper {
     @Override
     public UserBlueprint getUserByNickname(final String nickname) {
         Result<Record> result = db.database.select().from(Users.USERS).where(Users.USERS.NICK.equal(nickname)).fetch();
-        return getUsersFromResult(result).iterator().next();
+        if (getUsersFromResult(result).iterator().hasNext())
+            return getUsersFromResult(result).iterator().next();
+        return null;
     }
     @Override
     public UserBlueprint getUserByName(final String name) {
