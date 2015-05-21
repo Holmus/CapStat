@@ -20,6 +20,8 @@ public class MainView extends Application implements NotifyEventListener{
     public static final String SETSCENE_MAIN = "/fxml/main.fxml";
     public static final String SETSCENE_MATCH = "/fxml/match.fxml";
     public static final String SETSCENE_REGISTER = "/fxml/register.fxml";
+    public static final String SETSCENE_STATISTICS = "/fxml/statistics.fxml";
+    public static final String MATCH_REGISTERED = "Match registered";
     EventBus eb = EventBus.getInstance();
     Stage stage;
     Parent root;
@@ -33,6 +35,7 @@ public class MainView extends Application implements NotifyEventListener{
         eb.addNotifyEventListener(SETSCENE_MAIN, this);
         eb.addNotifyEventListener(SETSCENE_MATCH, this);
         eb.addNotifyEventListener(SETSCENE_REGISTER, this);
+        eb.addNotifyEventListener(SETSCENE_STATISTICS, this);
         root = FXMLLoader.load(getClass().getResource("/fxml/login.fxml"));
         scene = new Scene(root, 600, 450);
         stage = primaryStage;
@@ -55,7 +58,9 @@ public class MainView extends Application implements NotifyEventListener{
         if(event.equals(SETSCENE_REGISTER)){
             changeScene(event);
         }
-
+        if(event.equals(SETSCENE_STATISTICS)) {
+            changeScene(event);
+        }
     }
     private void changeScene(String rootPath){
         try{

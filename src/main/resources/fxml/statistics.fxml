@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.collections.*?>
+<?import javafx.scene.chart.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
@@ -9,8 +11,9 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.collections.FXCollections?>
 
-<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="capstat.view.MainViewController">
+<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="capstat.view.StatisticsViewController">
    <columnConstraints>
       <ColumnConstraints />
       <ColumnConstraints />
@@ -23,27 +26,56 @@
       <Pane maxHeight="450.0" maxWidth="600.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="600.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
          <children>
             <Label layoutX="461.0" layoutY="-7.0" text="Logged in as:" textFill="#727272" />
-            <Label layoutX="548.0" layoutY="-6.0" text="USER" textFill="#727272" />
-            <Button contentDisplay="CENTER" layoutX="525.0" layoutY="18.0" mnemonicParsing="false" prefHeight="0.0" prefWidth="59.0" text="Logout">
+            <Label fx:id="currentUserLabel" layoutX="548.0" layoutY="-6.0" text="USER" textFill="#727272" />
+            <Button fx:id="logoutButton" contentDisplay="CENTER" layoutX="525.0" layoutY="18.0" mnemonicParsing="false" onMouseClicked="#logoutPressed" prefHeight="0.0" prefWidth="59.0" text="Logout">
                <font>
                   <Font size="10.0" />
                </font>
             </Button>
-            <Button layoutX="337.0" layoutY="246.0" mnemonicParsing="false" onMouseClicked="#playPressed" prefHeight="60.0" prefWidth="120.0" text="Play Match">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Button>
-            <Button layoutX="110.0" layoutY="246.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="60.0" prefWidth="120.0" text="Statistics">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Button>
-            <ImageView fitHeight="146.0" fitWidth="292.0" layoutX="140.0" layoutY="2.0">
+            <ImageView fitHeight="61.0" fitWidth="122.0" layoutX="239.0" layoutY="-2.0">
                <image>
                   <Image url="@../images/capstat.png" />
                </image>
             </ImageView>
+            <Pane layoutX="23.0" layoutY="209.0" prefHeight="231.0" prefWidth="550.0">
+               <children>
+                  <LineChart fx:id="lineChart" layoutX="-4.0" layoutY="19.0" prefHeight="230.0" prefWidth="550.0">
+                     <xAxis>
+                        <NumberAxis fx:id="xAxis" label="Values for X-Axis" lowerBound="0" upperBound="3" tickUnit="1"/>
+                     </xAxis>
+                     <yAxis>
+                        <NumberAxis fx:id="yAxis" label="Values for Y-Axis" lowerBound="0" upperBound="3" tickUnit="1"/>
+                     </yAxis>
+                  </LineChart>
+                  <Label layoutX="33.0" layoutY="6.0" prefHeight="16.0" prefWidth="42.0" text="X-Axis:" />
+                  <ComboBox fx:id="XComboBox" layoutX="83.0" layoutY="2.0" prefWidth="150.0" promptText="Plot on X-Axis">
+                  <items>
+                     <FXCollections fx:factory="observableArrayList">
+                        <String fx:value="Accuracy" />
+                        <String fx:value="Time" />
+                        <String fx:value="Number of Games" />
+                     </FXCollections>
+                  </items>
+                  </ComboBox>
+                  <Label layoutX="254.0" layoutY="6.0" text="Y-Axis:" />
+                  <ComboBox fx:id="YComboBox" layoutX="305.0" layoutY="2.0" prefWidth="150.0" promptText="Plot on X-Axis">
+                  <items>
+                     <FXCollections fx:factory="observableArrayList">
+                        <String fx:value="Accuracy" />
+                        <String fx:value="Time" />
+                        <String fx:value="Number of Games" />
+                     </FXCollections>
+                  </items>
+                  </ComboBox>
+                  <Button fx:id="plotButton" layoutX="488.0" layoutY="2.0" mnemonicParsing="false" onMouseClicked="#plotClicked" prefHeight="26.0" prefWidth="59.0" text="Plot!" />
+               </children>
+            </Pane>
+            <PieChart layoutX="14.0" layoutY="53.0" prefHeight="128.0" prefWidth="140.0" title="Accuracy" />
+            <Button fx:id="mainButton" layoutX="8.0" layoutY="20.0" mnemonicParsing="false" onMouseClicked="#returnToMain" prefHeight="16.0" prefWidth="49.0" text="Main">
+               <font>
+                  <Font size="10.0" />
+               </font>
+            </Button>
          </children>
       </Pane>
    </children>

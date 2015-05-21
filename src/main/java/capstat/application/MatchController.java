@@ -1,7 +1,6 @@
 package capstat.application;
 
-import capstat.model.Match;
-import capstat.model.MatchFactory;
+import capstat.model.*;
 
 /**
  * Created by Jakob on 20/05/15.
@@ -11,6 +10,8 @@ import capstat.model.MatchFactory;
  */
 public class MatchController {
     Match match;
+    User p1, p2;
+    UserLedger ul = UserLedger.getInstance();
 
     /**
      * Creates a new Match using the MatchFactory.
@@ -47,5 +48,14 @@ public class MatchController {
      */
     public void recordHit() {
         match.recordHit();
+    }
+
+    public void setPlayer1(String text) {
+        p1 = ul.getUserByNickname(text);
+        match.setPlayer1(p1);
+    }
+    public void setPlayer2(String text) {
+        p2 = ul.getUserByNickname(text);
+        match.setPlayer2(p2);
     }
 }
