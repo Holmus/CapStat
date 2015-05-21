@@ -37,7 +37,7 @@ public class MatchViewController implements NotifyEventListener, Initializable{
     @FXML Button hitButton, missButton,startMatchButton, menuButton;
     @FXML Circle glass1, glass2, glass3, glass4, glass5, glass6, glass7;
     @FXML Pane p1Pane, p2Pane, mainPane, matchOverPane, preMatchPane;
-    @FXML Label hitLabel, missLabel, duelLabel, p1Name, p2Name, p1Rank, p2Rank, p1Rounds, p2Rounds, winnerLabel;
+    @FXML Label hitLabel, missLabel, duelLabel, p1Name, p2Name, p1Rank, p2Rank, p1Rounds, p2Rounds, winnerLabel, nickname1Label, nickname2Label;
     @FXML TextField setPlayer1Field, setPlayer2Field;
     Background activeBackground = new Background(new BackgroundFill(Color.CORNFLOWERBLUE, CornerRadii.EMPTY, Insets.EMPTY));
     Background inactiveBackground = new Background(new BackgroundFill(Color.LIGHTGRAY, CornerRadii.EMPTY, Insets.EMPTY));
@@ -56,6 +56,8 @@ public class MatchViewController implements NotifyEventListener, Initializable{
         eb.addNotifyEventListener(Match.DUEL_ENDED, this);
         eb.addNotifyEventListener(Match.ROUND_ENDED, this);
         eb.addNotifyEventListener(Match.MATCH_ENDED, this);
+        nickname1Label.setVisible(false);
+        nickname2Label.setVisible(false);
         hitLabel.setVisible(false);
         missLabel.setVisible(false);
         duelLabel.setVisible(false);
@@ -69,12 +71,6 @@ public class MatchViewController implements NotifyEventListener, Initializable{
         startMatchButton.setDisable(false);
         resetGlasses();
         updatePlayer();
-        /*hitButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                hitPressed();
-            }
-        });*/
         Platform.runLater(() -> {
             missButton.getScene().getAccelerators().put(new KeyCodeCombination(KeyCode.G), () -> {
                 missPressed();
@@ -128,7 +124,16 @@ public class MatchViewController implements NotifyEventListener, Initializable{
     }
 
     @FXML private void startMatchPressed(){
+        nickname1Label.setVisible(false);
+        nickname2Label.setVisible(false);
         if(setPlayer1Field.getText().isEmpty() || setPlayer2Field.getText().isEmpty()){
+            if(setPlayer1Field.getText().isEmpty()){
+                nickname1Label.setVisible(true);
+            }
+            if(setPlayer2Field.getText().isEmpty()){
+                nickname2Label.setVisible(true);
+            }
+            return;
         }else{
             //Get strings inputted in text fields
             String p1Nickname = setPlayer1Field.getText();

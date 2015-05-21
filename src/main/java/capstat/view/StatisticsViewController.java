@@ -52,6 +52,11 @@ public class StatisticsViewController implements Initializable{
                 plotClicked();
             });
         });
+        Platform.runLater(() -> {
+            logoutButton.getScene().getAccelerators().put(new KeyCodeCombination(KeyCode.L), () -> {
+                logoutPressed();
+            });
+        });
     }
 
 
