@@ -11,12 +11,16 @@ import capstat.infrastructure.MatchResultBlueprint;
 import capstat.infrastructure.PartialSequenceBlueprint;
 import capstat.model.Match;
 import capstat.model.MatchResult;
+import capstat.model.PartialSequenceResult;
 import capstat.model.SingleMatchCalculator;
 
+/**
+ * @author Christian Persson
+ */
 public class SingleMatchCalculatorTest {
 
     @Test
-    public void accuracyTest() {
+    public void accuracy() {
         List<PartialSequenceBlueprint> psbs = new ArrayList<>();
         MatchResultBlueprint mrb;
         Instant start = Instant.now();
@@ -206,4 +210,143 @@ public class SingleMatchCalculatorTest {
         psbs.clear();
     }
 
+    @Test
+    public void splitDuels() {
+        List<PartialSequenceBlueprint> psbs = new ArrayList<>();
+        MatchResultBlueprint mrb;
+        Instant start = Instant.now();
+        Instant end = start.plusSeconds(637);
+        double player1Accuracy;
+        double player2Accuracy;
+        MatchResult mr;
+        SingleMatchCalculator smc;
+
+        // Duel 1
+        psbs.add(new PartialSequenceBlueprint(
+            new boolean[] { true, true, true, true, true, true, true },
+            1,
+            false,
+            new boolean[] { false, false, false, false, false, true, true, true, false }
+        ));
+
+        // Duel 2
+        psbs.add(new PartialSequenceBlueprint(
+            new boolean[] { false, true, true, true, true, true, true },
+            1,
+            false,
+            new boolean[] { false, true, true, true, false }
+        ));
+
+        // Duel 3
+        psbs.add(new PartialSequenceBlueprint(
+            new boolean[] { false, false, true, true, true, true, true },
+            1,
+            false,
+            new boolean[] { false, false, true, false }
+        ));
+
+        // Duel 4
+        psbs.add(new PartialSequenceBlueprint(
+            new boolean[] { false, false, true, true, true, true, false },
+            2,
+            false,
+            new boolean[] { false, true, true, true, true, false }
+        ));
+
+        // Duel 5
+        psbs.add(new PartialSequenceBlueprint(
+            new boolean[] { false, false, false, true, true, true, false },
+            1,
+            false,
+            new boolean[] { false, false, false, false, true, true, false }
+        ));
+
+        // Duel 6
+        psbs.add(new PartialSequenceBlueprint(
+            new boolean[] { true, true, true, true, true, true, true },
+            1,
+            false,
+            new boolean[] { false, true, true, true, true, true, false }
+        ));
+
+        // Duel 7
+        psbs.add(new PartialSequenceBlueprint(
+            new boolean[] { false, true, true, true, true, true, true },
+            1,
+            false,
+            new boolean[] { false, false, true, true, true, true, true, true, true, false }
+        ));
+
+        // Duel 8
+        psbs.add(new PartialSequenceBlueprint(
+            new boolean[] { false, true, true, true, true, true, false },
+            2,
+            false,
+            new boolean[] { true, true, true, true, false }
+        ));
+
+        // Duel 9
+        psbs.add(new PartialSequenceBlueprint(
+            new boolean[] { false, true, true, true, true, false, false },
+            2,
+            false,
+            new boolean[] { false, false, false, false, false, false, true, true, true, false }
+        ));
+
+        // Duel 10
+        psbs.add(new PartialSequenceBlueprint(
+            new boolean[] { false, false, true, true, true, false, false },
+            1,
+            false,
+            new boolean[] { false, true, true, true, false }
+        ));
+
+        // Duel 11
+        psbs.add(new PartialSequenceBlueprint(
+            new boolean[] { false, false, false, true, true, false, false },
+            1,
+            false,
+            new boolean[] { false, false, false, false, false, false, true, true, true, true, true, false }
+        ));
+
+        // Duel 12
+        psbs.add(new PartialSequenceBlueprint(
+            new boolean[] { false, false, false, true, false, false, false },
+            2,
+            false,
+            new boolean[] { false, false, true, true, true, true, true, true, true, false }
+        ));
+
+        List<PartialSequenceResult> expectedSequences = new ArrayList<>();
+        for (PartialSequenceBlueprint psb : psbs) {
+            expectedSequences.add(new PartialSequenceResult(psb));
+        }
+
+        psbs.clear();
+
+        psbs.add(new PartialSequenceBlueprint(
+            new boolean[] { true, true, true, true, true, true, true },
+            1,
+            false,
+            new boolean[] { false, false, false, false, false, true, true, true, false, false, true, true, true, false, false, false, true, false, false, true, true, true, true, false, false, false, false, false, true, true, false, false, true, true, true, true, true, false, false, false, true, true, true, true, true, true, true, false, true, true, true, true, false, false, false, false, false, false, false, true, true, true, false, false, true, true, true, false, false, false, false, false, false, false, true, true, true, true, true, false, false, false, true, true, true, true, true, true, true, false }
+        ));
+
+
+        mrb = new MatchResultBlueprint(
+            -1,
+            "Dummy 1",
+            "Dummy 2",
+            "Spectator",
+            0,
+            2,
+            start,
+            end,
+            psbs
+        );
+        mr = new MatchResult(mrb);
+
+        List<PartialSequenceResult> duelSequences = SingleMatchCalculator.getDuelSequences(mr.getSequences());
+
+        assertEquals("Splitting sequences into duels", expectedSequences, duelSequences);
+    }
 }
