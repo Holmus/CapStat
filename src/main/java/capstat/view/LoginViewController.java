@@ -44,7 +44,7 @@ public class LoginViewController implements NotifyEventListener, Initializable{
         eb.notify(MainView.SETSCENE_REGISTER);
     }
     @Override
-    public void notify(String event) {
+    public void notifyEvent(String event) {
         if(event.equals(MainView.USER_REGISTERED)){
             userRegistered();
         }

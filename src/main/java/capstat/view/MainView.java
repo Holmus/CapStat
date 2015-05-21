@@ -45,7 +45,7 @@ public class MainView extends Application implements NotifyEventListener{
     }
 
     @Override
-    public void notify(String event) {
+    public void notifyEvent(String event) {
         if(event.equals(SETSCENE_LOGIN)){
             changeScene(event);
         }

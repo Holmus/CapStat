@@ -16,12 +16,12 @@ import static org.junit.Assert.assertTrue;
  */
 public class EventBusTest {
 
-    private static EventBus bus;
-    private  boolean hasBeenNotified;
-    private static NotifyEventListener notifyListener;
-    private static DataEventListener dataListener;
-    private static Object dataSendObject, dataReceiveObject;
-    private static final String NOTIFICATION_STRING = "Test";
+    private EventBus bus;
+    private boolean hasBeenNotified;
+    private NotifyEventListener notifyListener;
+    private DataEventListener dataListener;
+    private Object dataSendObject, dataReceiveObject;
+    private final String NOTIFICATION_STRING = "Test";
 
     @Before
     public void init() {
@@ -31,7 +31,7 @@ public class EventBusTest {
         // hasBeenNotified
         notifyListener = new NotifyEventListener() {
             @Override
-            public void notify(final String event) {
+            public void notifyEvent(final String event) {
                 hasBeenNotified();
             }
         };

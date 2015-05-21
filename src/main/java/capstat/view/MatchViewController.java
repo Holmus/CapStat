@@ -150,7 +150,7 @@ public class MatchViewController implements NotifyEventListener, Initializable{
     }
 
     @Override
-    public void notify(String event) {
+    public void notifyEvent(String event) {
         switch (event) {
             case Match.MISS_RECORDED:
                 System.out.println("miss");
@@ -174,7 +174,8 @@ public class MatchViewController implements NotifyEventListener, Initializable{
                 System.out.println("Match over! Winner is: " + match.getRoundWinner().name());
                 disableReg();
                 break;
-
+            default:
+                //Do nothing
         }
     }
     private void updateGlasses(){

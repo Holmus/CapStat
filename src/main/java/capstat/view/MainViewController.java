@@ -42,7 +42,7 @@ public class MainViewController implements Initializable, NotifyEventListener{
 
 
     @Override
-    public void notify(String event) {
+    public void notifyEvent(String event) {
         if(event.equals(MainView.MATCH_REGISTERED)){
             matchRegisteredLabel.setVisible(true);
         }
