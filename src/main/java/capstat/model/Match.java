@@ -193,7 +193,7 @@ public class Match {
 
     /**
      *
-     * @return a deep clone of the ThrowSequence of this match.
+     * @return a deep getCopy of the ThrowSequence of this match.
      */
     public ThrowSequence getThrowSequence() {
         return new ThrowSequence(this.throwSequence);
