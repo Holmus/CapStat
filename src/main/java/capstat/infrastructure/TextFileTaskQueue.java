@@ -34,6 +34,8 @@ public class TextFileTaskQueue implements ITaskQueue {
     }
 
     private static void ensureFileExists(File file) throws IOException {
+        //Return value ignored, since it does not matter if file existed
+        // previously or not.
         file.createNewFile();
     }
     private static List<String> readAllLines(File file) throws IOException {
@@ -103,6 +105,8 @@ public class TextFileTaskQueue implements ITaskQueue {
 
     @Override
     public void delete() {
+        //Return value ignored, since it does not matter if the file existed
+        // or not. If the file can't be deleted, an exception will be thrown.
         this.taskFile.delete();
     }
 
