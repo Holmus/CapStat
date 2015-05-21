@@ -216,14 +216,11 @@ public class Match {
         return score;
     }
 
-    public int getPlayer1RoundsWon() {
-        return this.p1RoundsWon;
+    public int getPlayerRoundsWon(final Player player) {
+        int ret = player == Player.ONE ? this.p1RoundsWon : this.p2RoundsWon;
+        return ret;
     }
-
-    public int getPlayer2RoundsWon() {
-        return this.p2RoundsWon;
-    }
-
+    
     public Player getPlayerWhoseTurnItIs() {
         if (playerWhoseTurnItIs == Player.ONE) {
             return Player.ONE;
