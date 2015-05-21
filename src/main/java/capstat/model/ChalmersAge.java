@@ -77,4 +77,11 @@ public class ChalmersAge implements Comparable<ChalmersAge> {
 
         return true;
     }
+
+    @Override
+    public int hashCode() {
+        int result = birthday.hashCode();
+        result = 31 * result + admittance.hashCode();
+        return result;
+    }
 }

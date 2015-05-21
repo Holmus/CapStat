@@ -53,4 +53,9 @@ public class ELORanking {
         return true;
     }
 
+    @Override
+    public int hashCode() {
+        long hashing = Double.doubleToLongBits(points);
+        return (int) (hashing ^ (hashing >>> 32));
+    }
 }
