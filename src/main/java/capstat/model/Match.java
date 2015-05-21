@@ -439,14 +439,14 @@ public class Match {
 
     //Inner classes
 
-    public class MatchNotOverException extends Exception {
+    public static class MatchNotOverException extends Exception {
     }
 
     /**
      * Class representing the glasses in the match. A glass is either active
      * or inactive.
      */
-    public class Glass {
+    public static class Glass {
         private boolean isActive = true;
 
         public boolean isActive() {

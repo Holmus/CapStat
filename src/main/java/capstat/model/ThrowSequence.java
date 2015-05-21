@@ -205,6 +205,6 @@ public class ThrowSequence {
         }
     }
 
-    public class EmptySequenceException extends RuntimeException {
+    public static class EmptySequenceException extends RuntimeException {
     }
 }
