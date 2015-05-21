@@ -31,7 +31,12 @@ public class SingleMatchCalculatorTest {
             new boolean[] { true, true, true, true, true, true, true },
             1,
             false,
-            new boolean[] { false, false, false, false, false, true, true, true, false, false, true, true, true, false, false, false, true, false, false, true, true, true, true, false, false, false, false, false, true, true, false, false, true, true, true, true, true, false, false, false, true, true, true, true, true, true, true, false, true, true, true, true, false, false, false, false, false, false, false, true, true, true, false, false, true, true, true, false, false, false, false, false, false, false, true, true, true, true, true, false, false, false, true, true, true, true, true, true, true, false }
+            new boolean[] { false, false, false, false, false, true, true, true, false, false, true, true, true, false,
+                    false, false, true, false, false, true, true, true, true, false, false, false, false, false, true,
+                    true, false, false, true, true, true, true, true, false, false, false, true, true, true, true, true,
+                    true, true, false, true, true, true, true, false, false, false, false, false, false, false, true,
+                    true, true, false, false, true, true, true, false, false, false, false, false, false, false, true,
+                    true, true, true, true, false, false, false, true, true, true, true, true, true, true, false }
         ));
 
         mrb = new MatchResultBlueprint(
@@ -41,8 +46,8 @@ public class SingleMatchCalculatorTest {
             "Spectator",
             0,
             2,
-            start,
-            end,
+            start.getEpochSecond(),
+            end.getEpochSecond(),
             psbs
         );
         mr = new MatchResult(mrb);
@@ -98,7 +103,9 @@ public class SingleMatchCalculatorTest {
             new boolean[] { false, true, true, true, true, false, false },
             2,
             false,
-            new boolean[] { false, false, false, false, false, false, true, true, true, false, false, true, true, true, false, false, false, false, false, false, false, true, true, true, true, true, false, false, false, true, true, true, true, true, true, true, false }
+            new boolean[] { false, false, false, false, false, false, true, true, true, false, false, true, true, true,
+                    false, false, false, false, false, false, false, true, true, true, true, true, false, false, false,
+                    true, true, true, true, true, true, true, false }
         ));
 
         mrb = new MatchResultBlueprint(
@@ -108,8 +115,8 @@ public class SingleMatchCalculatorTest {
             "Spectator",
             0,
             2,
-            start,
-            end,
+            start.getEpochSecond(),
+            end.getEpochSecond(),
             psbs
         );
         mr = new MatchResult(mrb);
@@ -189,8 +196,8 @@ public class SingleMatchCalculatorTest {
             "Spectator",
             0,
             2,
-            start,
-            end,
+            start.getEpochSecond(),
+            end.getEpochSecond(),
             psbs
         );
         mr = new MatchResult(mrb);

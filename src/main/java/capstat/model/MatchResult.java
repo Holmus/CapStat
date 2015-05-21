@@ -28,8 +28,8 @@ public class MatchResult {
         this.spectator = userLedger.getUserByNickname(blueprint.spectatorNickname);
         this.player1score = blueprint.player1score;
         this.player2score = blueprint.player2score;
-        this.startTime = blueprint.startTime;
-        this.endTime = blueprint.endTime;
+        this.startTime = Instant.ofEpochSecond(blueprint.startTime);
+        this.endTime = Instant.ofEpochSecond(blueprint.endTime);
         this.sequences = convertToPartialSequences(blueprint.sequences);
     }
 

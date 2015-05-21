@@ -8,6 +8,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -19,7 +20,6 @@ public class MatchDatabaseFacadeTest {
 
 	private static MatchDatabaseHelper matchdb;
 	private MatchResultBlueprint dummyMatchResult1;
-	private ThrowSequenceBlueprint dummyThrowSequence1;
 
 	@BeforeClass
 	public static void init() {
@@ -29,6 +29,7 @@ public class MatchDatabaseFacadeTest {
 
 	@Before
 	public void addNewMatch() {
+		dummyMatchResult1 = getDummyMatchResultBlueprint1();
 
 	}
 
@@ -37,10 +38,6 @@ public class MatchDatabaseFacadeTest {
 		matchdb.removeMatch(1);
 	}
 
-	@Test
-	public void testAddMatch() throws Exception {
-
-	}
 
 	@Test
 	public void testAddMatchSet() throws Exception {
@@ -82,7 +79,7 @@ public class MatchDatabaseFacadeTest {
 
 	}
 
-	public MatchResultBlueprint getDummyMatchResult(MatchResult mr) {
+	public MatchResultBlueprint getDummyMatchResultBlueprint1() {
 /*		List<PartialSequenceBlueprint> psbs = new ArrayList<>();
 		List<PartialSequenceResult> sequences = mr.getSequences();
 		for (PartialSequenceResult psr : sequences) {
@@ -108,55 +105,21 @@ public class MatchDatabaseFacadeTest {
 			));
 		}*/
 
-
-		boolean[] sequence = new boolean[10];
-		sequence[0] = true;
-		sequence[1] = false;//1
-		sequence[2] = false;
-		sequence[3] = true;
-		sequence[4] = true;
-		sequence[5] = true;
-		sequence[6] = false;//1
-		sequence[7] = true;
-		sequence[8] = false;//2
-		sequence[9] = true;//p1
-
-		boolean[] glasses = new boolean[7];
-		glasses[0] = true;
-		glasses[1] = true;
-		glasses[2] = true;
-		glasses[3] = true;
-		glasses[4] = true;
-		glasses[5] = true;
-		glasses[6] = true;
-
-		PartialSequenceBlueprint psb = new PartialSequenceBlueprint(glasses, 1, false, sequence);
 		List<PartialSequenceBlueprint> psbs = new ArrayList<>();
+
+		PartialSequenceBlueprint psb = new PartialSequenceBlueprint(
+				new boolean[] { true, true, true, true, true, true, true }, 1, false,
+				new boolean[] { true, false, false, true, true, true, false, true, false, true } );
 		psbs.add(psb);
 
-		glasses[0] = false;
-		glasses[1] = true;
-		glasses[2] = true;
-		glasses[3] = true;
-		glasses[4] = true;
-		glasses[5] = false;
-		glasses[6] = false;
-
-		sequence = new boolean[6];
-		sequence[0] = true;
-		sequence[1] = true;
-		sequence[2] = false;
-		sequence[3] = true;
-		sequence[4] = true;
-		sequence[5] = false;
-
-		psb = new PartialSequenceBlueprint(glasses, 2, true, sequence);
-
+		psb = new PartialSequenceBlueprint(
+				new boolean[] { false, true, true, true, true, false, false }, 2, true,
+				new boolean[] { true, true, false, true, true, false });
 		psbs.add(psb);
 
 
-		return new MatchResultBlueprint(mr.getId(), mr.getPlayer1().getNickname(),
-				mr.getPlayer2().getNickname(), mr.getSpectator().getNickname(), mr.getPlayer1score(),
-				mr.getPlayer2score(), mr.getStartTime(), mr.getEndTime(), psbs);
+		return new MatchResultBlueprint(1, "DummyOne",
+				"DummmyTwo", "Guest", 4,
+				1, 1432060742, 1432061582, psbs);
 	}
 }

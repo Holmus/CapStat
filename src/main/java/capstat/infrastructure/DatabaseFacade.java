@@ -84,13 +84,15 @@ class DatabaseFacade implements UserDatabaseHelper, MatchDatabaseHelper {
     @Override
     public UserBlueprint getUserByNickname(final String nickname) {
         Result<Record> result = db.database.select().from(Users.USERS).where(Users.USERS.NICK.equal(nickname)).fetch();
-        return getUsersFromResult(result).iterator().next();
+	    Set<UserBlueprint> ub = getUsersFromResult(result);
+	    return ub.iterator().hasNext() ? ub.iterator().next() : null;
     }
     @Override
     public UserBlueprint getUserByName(final String name) {
         //TODO A user cannot be identified by name, this could result in more than one user entry. now only returns the first found.
         Result<Record> result = db.database.select().from(Users.USERS).where(Users.USERS.NAME.equal(name)).fetch();
-        return getUsersFromResult(result).iterator().next();
+	    Set<UserBlueprint> ub = getUsersFromResult(result);
+	    return ub.iterator().hasNext() ? ub.iterator().next() : null;
     }
 
     @Override
