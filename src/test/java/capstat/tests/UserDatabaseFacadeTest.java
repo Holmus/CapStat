@@ -117,6 +117,8 @@ public class UserDatabaseFacadeTest {
         );
         assertEquals(standardMessage + "Chalmers age", dummyUserChalmersAge,
                 userDBChalmersAge);
+        //Since ELORankings are not subject to arithmetical operations,
+        // unless a new one is created, this is a safe comparison.
         assertTrue(standardMessage + "ELORanking", user.ELORanking ==
                 userDB.ELORanking);
     }
