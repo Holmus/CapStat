@@ -31,23 +31,33 @@ public class LoginViewController implements NotifyEventListener, Initializable{
     }
 
     @FXML private void loginPressed(){
-        if(usernameField.getText().isEmpty() || passField.getText().isEmpty()){
-            //ToDo: Give visual feedback
+        usernameLabel.setVisible(false);
+        passwordLabel.setVisible(false);
+        usernameLabel.setText("No such user");
+        passwordLabel.setText("Wrong password!");
+        if(usernameField.getText().isEmpty()){
+            usernameLabel.setText("Enter a username!");
+            usernameLabel.setVisible(true);
+        }
+        if(passField.getText().isEmpty()){
+            passwordLabel.setText("Enter a password!");
+            passwordLabel.setVisible(true);
+        }
+        if(passField.getText().isEmpty() || usernameField.getText().isEmpty()){
             return;
         }
-        if(ul.doesUserExist(usernameField.getText())){
+        if(!ul.doesUserExist(usernameField.getText())){
             usernameLabel.setVisible(true);
             return;      
         }
         if(lc.loginAsUser(usernameField.getText(), passField.getText())){
             eb.notify(MainView.SETSCENE_MAIN);
         } else {
-            passwordLabel.setVisible(true);
+            if(!usernameLabel.isVisible()) {
+                passwordLabel.setVisible(true);
+            }
         }
-
-
         }
-    }
     @FXML private void guestPressed(){
         lc.loginAsGuest();
         eb.notify(MainView.SETSCENE_MAIN);
