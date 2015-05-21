@@ -156,15 +156,15 @@ public class UserLedger {
     }
 
     public String toString() {
-        String ret = "";
+        StringBuffer ret = new StringBuffer();
         for (User user : this.users.values()) {
-            ret.concat("Nickname: " + user.getNickname());
-            ret.concat("\n\nName: " + user.getName());
-            ret.concat("\nPassword (hashed): " + user.getHashedPassword());
-            ret.concat("\nAge: " + user.getChalmersAge());
-            ret.concat("\nRanking: " + user.getRanking());
-            ret.concat("\n");
+            ret.append("Nickname: " + user.getNickname());
+            ret.append("\nName: " + user.getName());
+            ret.append("\nPassword (hashed): " + user.getHashedPassword());
+            ret.append("\nAge: " + user.getChalmersAge());
+            ret.append("\nRanking: " + user.getRanking());
+            ret.append("\n");
         }
-        return ret;
+        return ret.toString();
     }
 }
