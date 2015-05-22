@@ -1,8 +1,9 @@
 package capstat.model;
 
 /**
- * @author Christian Persson
- * Immutable value object
+ * @author Christian Persson, reviewed by hjorthjort
+ * Immutable value object. A ranking is always kept to two decimal places,
+ * even if it is created more precisely.
  */
 public class ELORanking {
 
