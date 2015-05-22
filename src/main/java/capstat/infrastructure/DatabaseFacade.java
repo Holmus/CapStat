@@ -2,11 +2,12 @@ package capstat.infrastructure;
 
 import org.jooq.Record;
 import org.jooq.Result;
+import org.jooq.generated.db.capstat.tables.Matches;
+import org.jooq.generated.db.capstat.tables.Throwsequences;
 import org.jooq.generated.db.capstat.tables.Users;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -19,7 +20,7 @@ import java.util.Set;
 class DatabaseFacade implements UserDatabaseHelper, MatchDatabaseHelper {
 
     // Path and filename as string.
-    File dbQueue = new File("dbqueue.txt");
+    File dbUserQueue = new File("dbuserqueue.txt");
     DatabaseConnection db = new DatabaseConnection();
     ITaskQueue txtQ = null;
 
@@ -29,7 +30,7 @@ class DatabaseFacade implements UserDatabaseHelper, MatchDatabaseHelper {
     public void addUser(final UserBlueprint user) {
         // ADDS USER INSERTION TO QUEUE
         try {
-            txtQ = new TextFileTaskQueue(dbQueue);
+            txtQ = new TextFileTaskQueue(dbUserQueue);
             txtQ.add(userBlueprintToQueueEntry(user));
 
             //Start a new Thread that empties the task que and inserts users
@@ -38,7 +39,7 @@ class DatabaseFacade implements UserDatabaseHelper, MatchDatabaseHelper {
                 @Override
                 public void run() {
                     while (txtQ.hasElements()) {
-	                    addFromQueueToDatabase();
+	                    addUsersFromQueueToDatabase();
                     }
                     txtQ.delete();
                 }
@@ -48,7 +49,7 @@ class DatabaseFacade implements UserDatabaseHelper, MatchDatabaseHelper {
         }
     }
 
-    private void addFromQueueToDatabase() {
+    private void addUsersFromQueueToDatabase() {
         // INSERTS THE FIRST USER IN THE QUEUE TO THE DATABASE
         String[] parsed = queryStringParser(txtQ.peek());
 
@@ -154,7 +155,46 @@ class DatabaseFacade implements UserDatabaseHelper, MatchDatabaseHelper {
 
 	@Override
 	public void addMatch(MatchResultBlueprint match) {
+		// ADDS USER INSERTION TO QUEUE
+		try {
+			txtQ = new TextFileTaskQueue(dbUserQueue);
+			txtQ.add(userBlueprintToQueueEntry(user));
 
+			//Start a new Thread that empties the task que and inserts users
+			// from the que into the database.
+			new Thread(new Runnable() {
+				@Override
+				public void run() {
+					while (txtQ.hasElements()) {
+						addUsersFromQueueToDatabase();
+					}
+					txtQ.delete();
+				}
+			}).start();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void addMatchesFromQueueToDatabase() {
+		// INSERTS THE FIRST USER IN THE QUEUE TO THE DATABASE
+		String[] parsed = queryStringParser(txtQ.peek());
+
+		db.database.insertInto(Matches.MATCHES, Matches.MATCHES.P1, Matches.MATCHES.P2, Matches.MATCHES.P2, //TODO);
+		db.database.insertInto(Throwsequences.THROWSEQUENCES, Throwsequences.THROWSEQUENCES.SEQUENCE, //TODO);
+
+
+		// DELETE USER FROM QUEUE IF SUCCESSFUL INSERT INTO DATABASE
+
+		UserBlueprint insertedUser = getUserByNickname(parsed[0]);
+		if ( userBlueprintToQueueEntry(insertedUser).equals(txtQ.peek()) ) {
+			try {
+				txtQ.pop();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 	}
 
 	@Override
@@ -188,12 +228,12 @@ class DatabaseFacade implements UserDatabaseHelper, MatchDatabaseHelper {
 	}
 
 	@Override
-	public Set<MatchResultBlueprint> getMatchesInDateRange(Date from, Date to) {
+	public Set<MatchResultBlueprint> getMatchesInDateRange(long epochFrom, long epochTo) {
 		return null;
 	}
 
 	@Override
-	public Set<MatchResultBlueprint> getMatchForSpectator(String spectator) {
+	public Set<MatchResultBlueprint> getMatchesForSpectator(String spectator) {
 		return null;
 	}
 

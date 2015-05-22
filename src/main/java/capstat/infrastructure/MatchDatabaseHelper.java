@@ -16,7 +16,7 @@ public interface MatchDatabaseHelper {
 	Set<MatchResultBlueprint> getAllMatches();
 	Set<MatchResultBlueprint> getMatchesForUser(String player);
 	Set<MatchResultBlueprint> getMatchesForUsers(String p1, String p2);
-	Set<MatchResultBlueprint> getMatchesInDateRange(Date from, Date to);
-	Set<MatchResultBlueprint> getMatchForSpectator(String spectator);
+	Set<MatchResultBlueprint> getMatchesInDateRange(long epochFrom, long epochTo);
+	Set<MatchResultBlueprint> getMatchesForSpectator(String spectator);
 
 }
