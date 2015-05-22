@@ -1,11 +1,16 @@
 package capstat.tests;
 
 import capstat.infrastructure.*;
+import capstat.model.Admittance;
+import capstat.model.ELORanking;
+import capstat.model.User;
+import capstat.model.UserFactory;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.time.LocalDate;
 import java.util.*;
 
 import static org.junit.Assert.*;
@@ -17,29 +22,48 @@ import static org.junit.Assert.*;
 public class MatchDatabaseFacadeTest {
 
 	private static MatchDatabaseHelper matchdb;
-	private MatchResultBlueprint dummyMatchResult1;
-	private MatchResultBlueprint dummyMatchResult2;
+	private static UserDatabaseHelper userdb;
+	private MatchResultBlueprint dummyMatchResult1, dummyMatchResult2;
+	private UserBlueprint dummyRow1, dummyRow2, dummyRow3, dummyRow4, guestUser;
 
 
 
 	@BeforeClass
 	public static void init() {
 		DatabaseHelperFactory factory = new DatabaseHelperFactory();
+		userdb = factory.createUserQueryHelper();
 		matchdb = factory.createMatchQueryHelper();
 	}
 
 	@Before
 	public void addNewMatch() {
+		dummyRow1 = getDummyRow(UserFactory.createDummyUser1());
+		dummyRow2 = getDummyRow(UserFactory.createDummyUser2());
+		dummyRow3 = getDummyRow(UserFactory.createDummyUser3());
+		dummyRow4 = getDummyRow(UserFactory.createDummyUser4());
+		guestUser = getDummyRow(UserFactory.createGuestUser());
+
 		dummyMatchResult1 = getDummyMatchResultBlueprint1();
 		dummyMatchResult2 = getDummyMatchResultBlueprint2();
+		userdb.addUser(dummyRow1);
+		userdb.addUser(dummyRow2);
+		userdb.addUser(dummyRow3);
+		userdb.addUser(dummyRow4);
+		userdb.addUser(guestUser);
 		matchdb.addMatch(dummyMatchResult1);
 		matchdb.addMatch(dummyMatchResult2);
 	}
 
 	@After
 	public void removeNewMatches() {
+
 		matchdb.removeMatch(1);
 		matchdb.removeMatch(2);
+		userdb.removeUser(dummyRow1);
+		userdb.removeUser(dummyRow2);
+		userdb.removeUser(dummyRow3);
+		userdb.removeUser(dummyRow4);
+		userdb.removeUser(guestUser);
 	}
 
 
@@ -151,7 +175,7 @@ public class MatchDatabaseFacadeTest {
 
 
 		return new MatchResultBlueprint(1, "DummyOne",
-				"DummmyTwo", "Guest", 4,
+				"DummyTwo", "Guest", 4,
 				1, 1432060742, 1432061582, psbs);
 	}
 
@@ -170,8 +194,21 @@ public class MatchDatabaseFacadeTest {
 		psbs.add(psb);
 
 
-		return new MatchResultBlueprint(1, "DummyThree",
-				"DummmyFour", "DummyFive", 4,
-				2, 1412060742, 1431061982, psbs);
+		return new MatchResultBlueprint(2, "DummyThree",
+				"DummyFour", "DummyOne", 4,
+				1, 1412060742, 1431061982, psbs);
 	}
+
+	private UserBlueprint getDummyRow(User dummyUser) {
+		LocalDate bd = dummyUser.getChalmersAge().getBirthday();
+		Admittance ad = dummyUser.getChalmersAge().getAdmittance();
+		ELORanking elo = dummyUser.getRanking();
+		return new UserBlueprint(dummyUser.getNickname(), dummyUser.getName(),
+				dummyUser.getHashedPassword(),
+				bd.getYear(), bd.getMonthValue(), bd.getDayOfMonth(), ad.getYear()
+				.getValue(), ad
+				.getReadingPeriod().ordinal()+1, elo.getPoints()
+		);
+	}
+
 }

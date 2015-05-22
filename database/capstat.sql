@@ -45,9 +45,9 @@ CREATE TABLE Users (
 
 CREATE TABLE Matches (
   id            CHAR(4)       PRIMARY KEY,
-  p1            VARCHAR(30),
-  p2            VARCHAR(30),
-  spectator     VARCHAR(30),
+  p1            VARCHAR(30) REFERENCES Users(nick),
+  p2            VARCHAR(30) REFERENCES Users(nick),
+  spectator     VARCHAR(30) REFERENCES Users(nick),
   p1Score       INT,
   p2Score       INT,
   startTime     LONG,
