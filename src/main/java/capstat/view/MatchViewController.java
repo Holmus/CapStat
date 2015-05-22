@@ -5,11 +5,9 @@ import capstat.infrastructure.NotifyEventListener;
 import capstat.model.Match;
 import capstat.model.UserLedger;
 import javafx.application.Platform;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -166,8 +164,9 @@ public class MatchViewController implements NotifyEventListener, Initializable{
                 break;
             case Match.ROUND_ENDED:
                 System.out.println("Round winner is: " + match.getRoundWinner().name());
-                p1Rounds.setText("" + match.getPlayer1RoundsWon());
-                p2Rounds.setText("" + match.getPlayer2RoundsWon());
+                p1Rounds.setText("" + match.getPlayerRoundsWon(Match.Player.ONE));
+                p2Rounds.setText("" + match.getPlayerRoundsWon(Match.Player
+                        .TWO));
                 resetGlasses();
                 break;
             case Match.MATCH_ENDED:
