@@ -60,4 +60,27 @@ public class ELORankingTest {
                 (1001).hashCode());
     }
 
+    @Test
+    public void calculateNewRankingTest() {
+        ELORanking player1Ranking = new ELORanking(1613);
+        ELORanking player2Ranking = new ELORanking(1450);
+        double[] newScores = ELORanking.calculateNewRanking(player1Ranking,
+                player2Ranking, 2, 1);
+        assertTrue("Array is the right length", newScores.length == 2);
+        //Calculation used: http://www.wolframalpha.com/input/?i=1613+%2B+32*%282+-+3%2F%281%2B+10%5E%28%281450-1613%29%2F400%29%29+
+        assertTrue("Expected score: " + 1608.00 + "\nResult: "+
+                newScores[1], newScores[0] == 1608.00);
+        //Calculation used: http://www.wolframalpha.com/input/?i=1450+%2B+32*%281+-+3%2F%281%2B+10%5E%28%281613-1450%29%2F400%29%29+
+        assertTrue(newScores[1] == 1455.00);
+
+        //New scores, with very surprising outcome
+        newScores = ELORanking.calculateNewRanking(player2Ranking,
+                player1Ranking, 5, 0);
+        //Calculation used: http://www.wolframalpha.com/input/?i=1450+%2B+32*%285+-+5%2F%281%2B+10%5E%28%281613-1450%29%2F400%29%29+
+        assertTrue(newScores.length == 2);
+        assertTrue(newScores[0] == 1565.00);
+        //Calculation used: http://www.wolframalpha.com/input/?i=1613+%2B+32*%280+-+5%2F%281%2B+10%5E%28%281450-1613%29%2F400%29%29+
+        assertTrue("Expected score: " + 1498.00 + "\nResult: "+
+                newScores[1], newScores[1] == 1498.00);
+    }
 }
