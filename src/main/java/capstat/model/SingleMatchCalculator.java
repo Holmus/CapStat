@@ -73,7 +73,7 @@ public class SingleMatchCalculator {
             private boolean throwBeforeWasHit = psr.throwBeforeWasHit();
 
             @Override
-            public void notify(String event) {
+            public void notifyEvent(String event) {
                 PartialSequenceBlueprint psb = new PartialSequenceBlueprint(
                     glasses,
                     startingPlayer,
