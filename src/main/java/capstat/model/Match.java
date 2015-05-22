@@ -478,6 +478,21 @@ public class Match {
         public boolean isActive() {
             return isActive;
         }
+
+        public void setActive(boolean active) {
+            this.isActive = active;
+        }
+
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || this.getClass() != o.getClass()) return false;
+
+            Glass that = (Glass) o;
+
+            if (this.isActive != that.isActive) return false;
+
+            return true;
+        }
     }
 
     /**
