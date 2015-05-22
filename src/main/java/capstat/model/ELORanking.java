@@ -83,18 +83,14 @@ public class ELORanking {
      */
     public static double[] calculateNewRanking(final ELORanking winner, final
     ELORanking loser, int winnerRoundsWon, int loserRoundsWon) {
-
+        int totalRounds = winnerRoundsWon + loserRoundsWon;
         //Current point + 32 * (score - expectedScore)
-        double winnerNewRanking = winner.getPoints() + 32 *
-                        ((double) winnerRoundsWon / (double)
-                        loserRoundsWon -
-                                calculateExpectedScore(winner.getPoints(),
-                                loser.getPoints()));
-        double loserNewRanking =  loser.getPoints() + 32 *
-                ((double) loserRoundsWon / (double)
-                        winnerRoundsWon -
-                        calculateExpectedScore(loser.getPoints(),
-                                winner.getPoints()));
+        double winnerNewRanking = winner.getPoints() + 32 * (winnerRoundsWon -
+                calculateExpectedScore(winner.getPoints(), loser.getPoints(),
+                        totalRounds));
+        double loserNewRanking =  loser.getPoints() + 32 * (loserRoundsWon -
+                calculateExpectedScore(loser.getPoints(), winner.getPoints(),
+                        totalRounds));
 
         winnerNewRanking = round(winnerNewRanking);
         loserNewRanking = round(loserNewRanking);
@@ -102,10 +98,18 @@ public class ELORanking {
         return ret;
     }
 
+    /**
+     * Calculates expected score of a player in a number of matches, based on
+     * their rankings
+     * @param player the player to calculate expected score for
+     * @param opponent the opponent
+     * @param totalRounds the total number of rounds played
+     * @return
+     */
     private static double calculateExpectedScore(double player, double
-            opponent) {
-        double denominator = 1 + Math.pow(10, (player-opponent)/400);
-        return 1/denominator;
+            opponent, int totalRounds) {
+        double denominator = 1 + Math.pow(10, (opponent-player)/400);
+        return totalRounds/denominator;
     }
 
 
