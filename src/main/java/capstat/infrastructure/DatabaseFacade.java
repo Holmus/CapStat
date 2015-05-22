@@ -1,7 +1,10 @@
 package capstat.infrastructure;
 
+import capstat.model.ThrowSequence;
 import org.jooq.Record;
 import org.jooq.Result;
+import org.jooq.generated.db.capstat.tables.Matches;
+import org.jooq.generated.db.capstat.tables.Throwsequences;
 import org.jooq.generated.db.capstat.tables.Users;
 
 import java.io.File;
@@ -21,7 +24,7 @@ class DatabaseFacade implements UserDatabaseHelper, MatchDatabaseHelper {
 	// TODO Fix/Check what happens if the files already exists with content?
     File dbUserQueue = new File("dbuserqueue.txt");
 	File dbMatchResultQueue = new File("dbmatchqueue.txt");
-	File dbPartialSequenceQueue = new File("dbthrowsqueue.txt")
+	File dbPartialSequenceQueue = new File("dbthrowsqueue.txt");
 
     DatabaseConnection db = new DatabaseConnection();
     ITaskQueue txtUserQueue, txtMatchResultQueue, txtPartialSequenceQueue = null;
@@ -139,8 +142,6 @@ class DatabaseFacade implements UserDatabaseHelper, MatchDatabaseHelper {
     }
 
     private UserBlueprint dbEntryToUserBlueprint(String[] s) {
-        //TODO parse the database fetch to a userBlueprint
-        //TODO Should this return an object from the UserLedger instead of creating a new UserBlueprint-object?
         String[] date = s[3].split("-");
         return new UserBlueprint(s[0],s[1],s[2],Integer.parseInt(date[0]),Integer.parseInt(date[1]),
                 Integer.parseInt(date[2]),Integer.parseInt(s[4]),Integer.parseInt(s[5]),Double.parseDouble(s[6]));
@@ -158,10 +159,10 @@ class DatabaseFacade implements UserDatabaseHelper, MatchDatabaseHelper {
 		try {
 			txtMatchResultQueue = new TextFileTaskQueue(dbMatchResultQueue);
 			txtPartialSequenceQueue = new TextFileTaskQueue(dbPartialSequenceQueue);
-			txtMatchResultQueue.add(matchBlueprintToQueueEntry(match));
+			txtMatchResultQueue.add(matchResultBlueprintToQueueEntry(match));
 			if (!match.sequences.isEmpty()) {
-				for (PartialSequenceBlueprint psb : match.sequences) {
-					txtPartialSequenceQueue.add(partialSequenceBlueprintToQueueEntry(psb));
+				for (int i = 0 ; match.sequences.size() > i ; i++) {
+					txtPartialSequenceQueue.add(i + "," + match.sequences.get(i));
 				}
 			}
 
@@ -189,7 +190,10 @@ class DatabaseFacade implements UserDatabaseHelper, MatchDatabaseHelper {
 		String[] parsed = queryStringParser(txtMatchResultQueue.peek());
 
 
-		// TODO db.database.insertInto(Matches.MATCHES, Matches.MATCHES.P1, Matches.MATCHES.P2, Matches.MATCHES.P2, );
+		db.database.insertInto(Matches.MATCHES, Matches.MATCHES.ID, Matches.MATCHES.P1, Matches.MATCHES.P2, Matches.MATCHES.SPECTATOR,
+				Matches.MATCHES.P1SCORE, Matches.MATCHES.P2SCORE, Matches.MATCHES.STARTTIME, Matches.MATCHES.ENDTIME)
+				.values(parsed[0], parsed[1], parsed[2], parsed[3], Integer.parseInt(parsed[4]),
+						Integer.parseInt(parsed[5]), parsed[6], parsed[7]);
 		// DELETE MATCH RESULT FROM QUEUE IF SUCCESSFUL INSERT INTO DATABASE
 
 		MatchResultBlueprint insertedMatchResult = getMatchById(Long.parseLong(parsed[0]));
@@ -206,13 +210,17 @@ class DatabaseFacade implements UserDatabaseHelper, MatchDatabaseHelper {
 		// INSERTS THE FIRST PARTIAL THROW SEQUENCE IN THE QUEUE TO THE DATABASE
 		String[] parsed = queryStringParser(txtPartialSequenceQueue.peek());
 
-		// TODO db.database.insertInto(Throwsequences.THROWSEQUENCES, Throwsequences.THROWSEQUENCES.SEQUENCE, );
+		db.database.insertInto(Throwsequences.THROWSEQUENCES, Throwsequences.THROWSEQUENCES.MATCHID,
+				Throwsequences.THROWSEQUENCES.SEQUENCEINDEX, Throwsequences.THROWSEQUENCES.GLASSES,
+				Throwsequences.THROWSEQUENCES.STARTINGPLAYER, Throwsequences.THROWSEQUENCES.THROWBEFOREWASHIT,
+				Throwsequences.THROWSEQUENCES.SEQUENCE)
+		.values(parsed[1], Integer.parseInt(parsed[0]), parsed[2], parsed[3], Byte.parseByte(parsed[4]), parsed[5]);
 
 
 		// DELETE THROW SEQUENCE FROM QUEUE IF SUCCESSFUL INSERT INTO DATABASE
 
 		PartialSequenceBlueprint insertedPartialSequence = getMatchById(Long.parseLong(parsed[0])).sequences.get(Integer.parseInt(parsed[1]));
-		if ( partialSequenceBlueprintToQueueEntry(insertedPartialSequence).equals(txtMatchResultQueue.peek()) ) {
+		if ( partialSequenceBlueprintToQueueEntry(insertedPartialSequence).equals(txtPartialSequenceQueue.peek()) ) {
 			try {
 				txtUserQueue.pop();
 			} catch (IOException e) {
@@ -276,7 +284,7 @@ class DatabaseFacade implements UserDatabaseHelper, MatchDatabaseHelper {
 		return matchSet;
 	}
 
-	private String matchBlueprintToQueueEntry(MatchResultBlueprint mrb) {
+	private String matchResultBlueprintToQueueEntry(MatchResultBlueprint mrb) {
 		return String.format("%d,%s,%s,%s,%d,%d,%l,%l", mrb.id, mrb.player1Nickname, mrb.player2Nickname,
 				mrb.spectatorNickname, mrb.player1score, mrb.player2score, mrb.startTime, mrb.endTime);
 	}
