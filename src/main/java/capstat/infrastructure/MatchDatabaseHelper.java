@@ -12,7 +12,7 @@ public interface MatchDatabaseHelper {
 	void addMatch(MatchResultBlueprint match);
 	void addMatchSet(Set<MatchResultBlueprint> matches);
 	void removeMatch(long id);
-	MatchResultBlueprint getMatch(long id);
+	MatchResultBlueprint getMatchById(long id);
 	Set<MatchResultBlueprint> getAllMatches();
 	Set<MatchResultBlueprint> getMatchesForUser(String player);
 	Set<MatchResultBlueprint> getMatchesForUsers(String p1, String p2);

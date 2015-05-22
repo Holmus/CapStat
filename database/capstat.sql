@@ -58,9 +58,15 @@ CREATE TABLE Matches (
 );
 
 CREATE TABLE ThrowSequences (
-  MatchnId       CHAR(4)     PRIMARY KEY,
+  matchId       CHAR(4),
+  sequenceIndex INT,
+  glasses       CHAR(20),
+  startingPlayer  VARCHAR(30),
+  throwBeforeWasHit BOOLEAN,
   sequence      VARCHAR(1000),
-  FOREIGN KEY (MatchnId) REFERENCES Matches(id)
+
+  FOREIGN KEY (matchId) REFERENCES Matches(id),
+  PRIMARY KEY (matchId, sequenceIndex)
 );
 
 CREATE TABLE Attends(

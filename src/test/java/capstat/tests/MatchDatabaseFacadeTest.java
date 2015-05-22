@@ -1,7 +1,6 @@
 package capstat.tests;
 
 import capstat.infrastructure.*;
-import capstat.model.*;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -56,9 +55,9 @@ public class MatchDatabaseFacadeTest {
 	@Test
 	public void testGetMatch() throws Exception {
 
-		MatchResultBlueprint mrb = matchdb.getMatch(1);
+		MatchResultBlueprint mrb = matchdb.getMatchById(1);
 		testMatchesAreEqual(dummyMatchResult1, mrb);
-		mrb = matchdb.getMatch(2);
+		mrb = matchdb.getMatchById(2);
 		testMatchesAreEqual(dummyMatchResult2, mrb);
 
 	}

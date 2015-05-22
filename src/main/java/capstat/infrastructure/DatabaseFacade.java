@@ -2,8 +2,6 @@ package capstat.infrastructure;
 
 import org.jooq.Record;
 import org.jooq.Result;
-import org.jooq.generated.db.capstat.tables.Matches;
-import org.jooq.generated.db.capstat.tables.Throwsequences;
 import org.jooq.generated.db.capstat.tables.Users;
 
 import java.io.File;
@@ -20,9 +18,13 @@ import java.util.Set;
 class DatabaseFacade implements UserDatabaseHelper, MatchDatabaseHelper {
 
     // Path and filename as string.
+	// TODO Fix/Check what happens if the files already exists with content?
     File dbUserQueue = new File("dbuserqueue.txt");
+	File dbMatchResultQueue = new File("dbmatchqueue.txt");
+	File dbPartialSequenceQueue = new File("dbthrowsqueue.txt")
+
     DatabaseConnection db = new DatabaseConnection();
-    ITaskQueue txtQ = null;
+    ITaskQueue txtUserQueue, txtMatchResultQueue, txtPartialSequenceQueue = null;
 
 	// START USERS
 
@@ -30,19 +32,16 @@ class DatabaseFacade implements UserDatabaseHelper, MatchDatabaseHelper {
     public void addUser(final UserBlueprint user) {
         // ADDS USER INSERTION TO QUEUE
         try {
-            txtQ = new TextFileTaskQueue(dbUserQueue);
-            txtQ.add(userBlueprintToQueueEntry(user));
+            txtUserQueue = new TextFileTaskQueue(dbUserQueue);
+            txtUserQueue.add(userBlueprintToQueueEntry(user));
 
-            //Start a new Thread that empties the task que and inserts users
-            // from the que into the database.
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    while (txtQ.hasElements()) {
-	                    addUsersFromQueueToDatabase();
-                    }
-                    txtQ.delete();
+            //Start a new Thread that empties the task queue and inserts users
+            // from the queue into the database.
+            new Thread(() -> {
+                while (txtUserQueue.hasElements()) {
+	                addUsersFromQueueToDatabase();
                 }
+                txtUserQueue.delete();
             }).start();
         } catch (IOException e) {
             e.printStackTrace();
@@ -51,7 +50,7 @@ class DatabaseFacade implements UserDatabaseHelper, MatchDatabaseHelper {
 
     private void addUsersFromQueueToDatabase() {
         // INSERTS THE FIRST USER IN THE QUEUE TO THE DATABASE
-        String[] parsed = queryStringParser(txtQ.peek());
+        String[] parsed = queryStringParser(txtUserQueue.peek());
 
         db.database.insertInto(Users.USERS, Users.USERS.NICK, Users.USERS.NAME, Users.USERS.PASS, Users.USERS.BIRTHDAY,
                 Users.USERS.ADMITTANCEYEAR, Users.USERS.ADMITTANCEREADINGPERIOD, Users.USERS.ELORANK)
@@ -62,9 +61,9 @@ class DatabaseFacade implements UserDatabaseHelper, MatchDatabaseHelper {
         // DELETE USER FROM QUEUE IF SUCCESSFUL INSERT INTO DATABASE
 
         UserBlueprint insertedUser = getUserByNickname(parsed[0]);
-        if ( userBlueprintToQueueEntry(insertedUser).equals(txtQ.peek()) ) {
+        if ( userBlueprintToQueueEntry(insertedUser).equals(txtUserQueue.peek()) ) {
             try {
-                txtQ.pop();
+                txtUserQueue.pop();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -155,21 +154,30 @@ class DatabaseFacade implements UserDatabaseHelper, MatchDatabaseHelper {
 
 	@Override
 	public void addMatch(MatchResultBlueprint match) {
-		// ADDS USER INSERTION TO QUEUE
+		// ADDS MATCH INSERTION TO QUEUE
 		try {
-			txtQ = new TextFileTaskQueue(dbUserQueue);
-			txtQ.add(userBlueprintToQueueEntry(user));
-
-			//Start a new Thread that empties the task que and inserts users
-			// from the que into the database.
-			new Thread(new Runnable() {
-				@Override
-				public void run() {
-					while (txtQ.hasElements()) {
-						addUsersFromQueueToDatabase();
-					}
-					txtQ.delete();
+			txtMatchResultQueue = new TextFileTaskQueue(dbMatchResultQueue);
+			txtPartialSequenceQueue = new TextFileTaskQueue(dbPartialSequenceQueue);
+			txtMatchResultQueue.add(matchBlueprintToQueueEntry(match));
+			if (!match.sequences.isEmpty()) {
+				for (PartialSequenceBlueprint psb : match.sequences) {
+					txtPartialSequenceQueue.add(partialSequenceBlueprintToQueueEntry(psb));
 				}
+			}
+
+			// Start a new Thread that empties the task queue and inserts users
+			// from the queue into the database.
+			new Thread(() -> {
+				while (txtMatchResultQueue.hasElements()) {
+					addMatchesFromQueueToDatabase();
+				}
+				txtUserQueue.delete();
+			}).start();
+			new Thread(() -> {
+				while (txtPartialSequenceQueue.hasElements()) {
+					addPartialSequencesFromQueueToDatabase();
+				}
+				txtUserQueue.delete();
 			}).start();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -177,24 +185,42 @@ class DatabaseFacade implements UserDatabaseHelper, MatchDatabaseHelper {
 	}
 
 	private void addMatchesFromQueueToDatabase() {
-		// INSERTS THE FIRST USER IN THE QUEUE TO THE DATABASE
-		String[] parsed = queryStringParser(txtQ.peek());
-
-		db.database.insertInto(Matches.MATCHES, Matches.MATCHES.P1, Matches.MATCHES.P2, Matches.MATCHES.P2, //TODO);
-		db.database.insertInto(Throwsequences.THROWSEQUENCES, Throwsequences.THROWSEQUENCES.SEQUENCE, //TODO);
+		// INSERTS THE FIRST MATCH RESULT IN THE QUEUE TO THE DATABASE
+		String[] parsed = queryStringParser(txtMatchResultQueue.peek());
 
 
-		// DELETE USER FROM QUEUE IF SUCCESSFUL INSERT INTO DATABASE
+		// TODO db.database.insertInto(Matches.MATCHES, Matches.MATCHES.P1, Matches.MATCHES.P2, Matches.MATCHES.P2, );
+		// DELETE MATCH RESULT FROM QUEUE IF SUCCESSFUL INSERT INTO DATABASE
 
-		UserBlueprint insertedUser = getUserByNickname(parsed[0]);
-		if ( userBlueprintToQueueEntry(insertedUser).equals(txtQ.peek()) ) {
+		MatchResultBlueprint insertedMatchResult = getMatchById(Long.parseLong(parsed[0]));
+		if ( matchResultBlueprintToQueueEntry(insertedMatchResult).equals(txtMatchResultQueue.peek()) ) {
 			try {
-				txtQ.pop();
+				txtUserQueue.pop();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
 	}
+
+	private void addPartialSequencesFromQueueToDatabase() {
+		// INSERTS THE FIRST PARTIAL THROW SEQUENCE IN THE QUEUE TO THE DATABASE
+		String[] parsed = queryStringParser(txtPartialSequenceQueue.peek());
+
+		// TODO db.database.insertInto(Throwsequences.THROWSEQUENCES, Throwsequences.THROWSEQUENCES.SEQUENCE, );
+
+
+		// DELETE THROW SEQUENCE FROM QUEUE IF SUCCESSFUL INSERT INTO DATABASE
+
+		PartialSequenceBlueprint insertedPartialSequence = getMatchById(Long.parseLong(parsed[0])).sequences.get(Integer.parseInt(parsed[1]));
+		if ( partialSequenceBlueprintToQueueEntry(insertedPartialSequence).equals(txtMatchResultQueue.peek()) ) {
+			try {
+				txtUserQueue.pop();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+
+
 	}
 
 	@Override
@@ -208,7 +234,7 @@ class DatabaseFacade implements UserDatabaseHelper, MatchDatabaseHelper {
 	}
 
 	@Override
-	public MatchResultBlueprint getMatch(long id) {
+	public MatchResultBlueprint getMatchById(long id) {
 		return null;
 	}
 
@@ -256,7 +282,7 @@ class DatabaseFacade implements UserDatabaseHelper, MatchDatabaseHelper {
 	}
 
 
-	private String partialSequenceToQueueEntry(PartialSequenceBlueprint psb) {
+	private String partialSequenceBlueprintToQueueEntry(PartialSequenceBlueprint psb) {
 		// TODO implement psb to queue entry. Begin with matchID-ish!!!
 		return null;
 	}
