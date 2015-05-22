@@ -81,20 +81,20 @@ public class ELORanking {
      * representing the winners new score, and the second representing the
      * losers.
      */
-    public static double[] calculateNewRanking(final User winner, final User
-            loser, int winnerRoundsWon, int loserRoundsWon) {
+    public static double[] calculateNewRanking(final ELORanking winner, final
+    ELORanking loser, int winnerRoundsWon, int loserRoundsWon) {
 
         //Current point + 32 * (score - expectedScore)
-        double winnerNewRanking = winner.getRanking().getPoints() + 32 *
+        double winnerNewRanking = winner.getPoints() + 32 *
                         ((double) winnerRoundsWon / (double)
                         loserRoundsWon -
-                                calculateExpectedScore(winner.getRanking().getPoints(),
-                                loser.getRanking().getPoints()));
-        double loserNewRanking =  loser.getRanking().getPoints() + 32 *
+                                calculateExpectedScore(winner.getPoints(),
+                                loser.getPoints()));
+        double loserNewRanking =  loser.getPoints() + 32 *
                 ((double) loserRoundsWon / (double)
                         winnerRoundsWon -
-                        calculateExpectedScore(loser.getRanking().getPoints(),
-                                winner.getRanking().getPoints()));
+                        calculateExpectedScore(loser.getPoints(),
+                                winner.getPoints()));
 
         winnerNewRanking = round(winnerNewRanking);
         loserNewRanking = round(loserNewRanking);

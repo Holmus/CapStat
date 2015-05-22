@@ -106,8 +106,8 @@ public class MatchController implements NotifyEventListener {
             // winningPlayer has not been declared to somehting other than null.
             User winner = match.getPlayer(winningPlayer);
             User loser = match.getPlayer(losingPlayer);
-            double[] newRanking = ELORanking.calculateNewRanking(winner,
-                    loser, match.getPlayerRoundsWon(winningPlayer), match
+            double[] newRanking = ELORanking.calculateNewRanking(winner.getRanking(),
+                    loser.getRanking(), match.getPlayerRoundsWon(winningPlayer), match
                             .getPlayerRoundsWon(losingPlayer));
             winner.setRanking(newRanking[0]);
             loser.setRanking(newRanking[1]);
