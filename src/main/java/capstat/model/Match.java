@@ -292,9 +292,9 @@ public class Match {
     public void recordMiss() {
         if(isOngoing) {
             if (this.isDuelling()) {
-                this.notifyListeners(DUEL_ENDED);
                 this.removeGlass();
                 this.endRoundIfNecessary();
+                this.notifyListeners(DUEL_ENDED);
             } else {
                 //Only switch turns if the throw did not end a duel.
                 this.switchPlayerUpNext();
