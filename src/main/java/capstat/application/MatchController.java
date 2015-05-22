@@ -76,7 +76,7 @@ public class MatchController implements NotifyEventListener {
     /**
      * @author hjorthjort
      */
-    public static interface EndGameStrategy {
+    public interface EndGameStrategy {
         void endGame();
     }
 
