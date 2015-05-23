@@ -1,6 +1,7 @@
 package capstat.infrastructure;
 
 import capstat.model.Match;
+import capstat.model.MatchResult;
 import capstat.model.ThrowSequence;
 import org.jooq.Record;
 import org.jooq.Result;
@@ -10,7 +11,9 @@ import org.jooq.generated.db.capstat.tables.Users;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -255,13 +258,17 @@ class DatabaseFacade implements UserDatabaseHelper, MatchDatabaseHelper {
 
 	@Override
 	public void removeMatch(long id) {
+
+
 		db.database.deleteFrom(Throwsequences.THROWSEQUENCES).where(Throwsequences.THROWSEQUENCES.MATCHID.equal(String.valueOf(id))).execute();
 		db.database.deleteFrom(Matches.MATCHES).where(Matches.MATCHES.ID.equal(String.valueOf(id))).execute();
 	}
 
 	@Override
 	public MatchResultBlueprint getMatchById(long id) {
-		return null;
+		Result<Record> result = db.database.select().from(Matches.MATCHES).where(Matches.MATCHES.ID.equal(String.valueOf(id))).fetch();
+		Set<MatchResultBlueprint> mrbSet = getMatchesFromResult(result);
+		return mrbSet.iterator().hasNext() ? mrbSet.iterator().next() : null;
 	}
 
 	@Override
@@ -289,6 +296,29 @@ class DatabaseFacade implements UserDatabaseHelper, MatchDatabaseHelper {
 		return null;
 	}
 
+	public List<PartialSequenceBlueprint> getPartialSequencesByMatchId(long id) {
+		Result<Record> result = db.database.select().from(Throwsequences.THROWSEQUENCES).where(Throwsequences.THROWSEQUENCES.MATCHID.equal(String.valueOf(id))).fetch();
+		return getPartialSequencesFromResult(result);
+	}
+
+	private List<PartialSequenceBlueprint> getPartialSequencesFromResult(Result<Record> result) {
+		String resultString = result.formatCSV();
+		String[] rows = resultString.substring(resultString.indexOf(System.getProperty("line.separator")) + 1).split("\n");
+
+		List<PartialSequenceBlueprint> psbList = new ArrayList<>();
+		for (String s : rows) {
+			if (s.length() > 0) {
+				psbList.add(dbEntryToPartialSequenceBlueprint(queryStringParser(s)));
+			}
+		}
+		return psbList;
+	}
+
+	private PartialSequenceBlueprint dbEntryToPartialSequenceBlueprint(String[] s) {
+		return new PartialSequenceBlueprint(bitStringToBooleans(s[0]),
+				Integer.parseInt(s[1]), s[2].equals("1"), bitStringToBooleans(s[3]));
+	}
+
 	private Set<MatchResultBlueprint> getMatchesFromResult (Result<Record> result) {
 		Set<MatchResultBlueprint> matchSet = new HashSet<>();
 		String resultString = result.formatCSV();
@@ -296,7 +326,7 @@ class DatabaseFacade implements UserDatabaseHelper, MatchDatabaseHelper {
 
 		for (String s : rows) {
 			if (s.length() > 0) {
-				matchSet.add(dbEntryToMatchBlueprint(queryStringParser(s)));
+				MatchResultBlueprint mrb = dbEntryToMatchBlueprint(queryStringParser(s));
 			}
 		}
 		return matchSet;
@@ -316,12 +346,14 @@ class DatabaseFacade implements UserDatabaseHelper, MatchDatabaseHelper {
 	}
 
 
+
 	private MatchResultBlueprint dbEntryToMatchBlueprint(String[] s) {
 
-
 		//TODO parse the database fetch to a matchBlueprint
-		//TODO Should this return an object from the ResultLedger instead of creating a new MatchResultBlueprint-object?
-		return null;
+
+		return new MatchResultBlueprint(Long.parseLong(s[0]),s[1],s[2],s[3],Integer.parseInt(s[4]),
+				Integer.parseInt(s[5]), Long.parseLong(s[6]), Long.parseLong(s[7]),
+				getPartialSequencesByMatchId(Long.parseLong(s[0])));
 	}
 
 	// END MATCHES
