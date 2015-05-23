@@ -69,4 +69,19 @@ public class UserBlueprint {
                 // unless a new ranking is being created, this is safe.
                 && udbr.ELORanking == this.ELORanking;
     }
+
+    @Override
+    public String toString() {
+        return "UserBlueprint{" +
+                "nickname='" + nickname + '\'' +
+                ", name='" + name + '\'' +
+                ", hashedPassword='" + hashedPassword + '\'' +
+                ", birthdayYear=" + birthdayYear +
+                ", birthdayMonth=" + birthdayMonth +
+                ", birthdayDay=" + birthdayDay +
+                ", admittanceYear=" + admittanceYear +
+                ", admittanceReadingPeriod=" + admittanceReadingPeriod +
+                ", ELORanking=" + ELORanking +
+                '}';
+    }
 }
