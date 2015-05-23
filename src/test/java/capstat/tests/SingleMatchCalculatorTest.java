@@ -349,4 +349,41 @@ public class SingleMatchCalculatorTest {
 
         assertEquals("Splitting sequences into duels", expectedSequences, duelSequences);
     }
+
+    @Test
+    public void timeElapsed() {
+        List<PartialSequenceBlueprint> psbs = new ArrayList<>();
+        MatchResultBlueprint mrb;
+        Instant start = Instant.now();
+        Instant end = start.plusSeconds(637);
+        double player1Accuracy;
+        double player2Accuracy;
+        MatchResult mr;
+        SingleMatchCalculator smc;
+
+        // A test using a single partial sequence
+        psbs.add(new PartialSequenceBlueprint(
+            new boolean[] { true, true, true, true, true, true, true },
+            1,
+            false,
+            new boolean[] { false, false, false, false, false, true, true, true, false, false, true, true, true, false, false, false, true, false, false, true, true, true, true, false, false, false, false, false, true, true, false, false, true, true, true, true, true, false, false, false, true, true, true, true, true, true, true, false, true, true, true, true, false, false, false, false, false, false, false, true, true, true, false, false, true, true, true, false, false, false, false, false, false, false, true, true, true, true, true, false, false, false, true, true, true, true, true, true, true, false }
+        ));
+
+        mrb = new MatchResultBlueprint(
+            -1,
+            "Dummy 1",
+            "Dummy 2",
+            "Spectator",
+            0,
+            2,
+            start,
+            end,
+            psbs
+        );
+        mr = new MatchResult(mrb);
+
+        smc = new SingleMatchCalculator(mr);
+
+        assertEquals("From start to end", 637l, smc.getElapsedTime());
+    }
 }

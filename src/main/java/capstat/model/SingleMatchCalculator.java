@@ -61,9 +61,11 @@ public class SingleMatchCalculator {
         return getThrowsForPlayer(mr.getSequences(), player).size();
     }
 
-    // public static int getElapsedTime(MatchResult mr) {
-
-    // }
+    public long getElapsedTime() {
+        Instant start = mr.getStartTime();
+        Instant end = mr.getEndTime();
+        return start.until(end, ChronoUnit.SECONDS);
+    }
 
     /**
      * Takes an arbitrary list of {@link capstat.model.PartialSequenceResult} and "replays" them, giving back a new list of {@link capstat.model.PartialSequenceResult} with each instance containing the sequence from the throw after the last duel (or from the beginning of the match) up to and including the throw that ends the next duel.
