@@ -1,5 +1,11 @@
 package capstat.model;
 
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import capstat.infrastructure.EventBus;
 import capstat.infrastructure.NotifyEventListener;
 import capstat.infrastructure.PartialSequenceBlueprint;
@@ -8,10 +14,9 @@ import capstat.model.MatchFactory;
 import capstat.model.MatchResult;
 import capstat.model.PartialSequenceResult;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
+/**
+ * @author Christian Persson
+ */
 public class SingleMatchCalculator {
 
     private MatchResult mr;
@@ -38,10 +43,20 @@ public class SingleMatchCalculator {
         return (double) hits / (double) total;
     }
 
+    /**
+     * Returns the total number of throws for the entire match - that is, all
+     * throws made by player 1, plus all throws made by player 2.
+     * @return the number of throws
+     */
     public int getTotalNumberOfThrows() {
         return getThrowsFromSequences(mr.getSequences()).size();
     }
 
+    /**
+     * Returns the total number of throws made by either player 1 or player 2.
+     * @param player the {@link capstat.model.Match.Player} to get the number of throws for
+     * @return the number of throws made by the given player
+     */
     public int getTotalNumberOfThrows(Match.Player player) {
         return getThrowsForPlayer(mr.getSequences(), player).size();
     }
