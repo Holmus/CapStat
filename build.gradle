@@ -4,6 +4,7 @@ import org.jooq.util.GenerationTool
 
 apply plugin: "java"
 apply plugin: "application"
+apply plugin: "jacoco"
 
 mainClassName = "capstat.Main"
 
@@ -85,4 +86,9 @@ test {
     testLogging {
         exceptionFormat = "full"
     }
+}
+
+jacoco {
+    toolVersion = "0.7.4.201502262128"
+    reportsDir = file("$buildDir/jacocoReport")
 }
