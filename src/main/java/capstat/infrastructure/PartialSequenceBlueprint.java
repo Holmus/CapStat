@@ -55,6 +55,6 @@ public final class PartialSequenceBlueprint {
         return (Arrays.equals(psb.glasses, this.glasses)
                 && psb.startingPlayer == this.startingPlayer
                 && psb.throwBeforeWasHit == this.throwBeforeWasHit
-                && Arrays.equals(psb.sequence, this.sequence))
+                && Arrays.equals(psb.sequence, this.sequence));
     }
 }
