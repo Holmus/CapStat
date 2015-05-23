@@ -44,7 +44,7 @@ CREATE TABLE Users (
 );
 
 CREATE TABLE Matches (
-  id            CHAR(4)       PRIMARY KEY,
+  id            VARCHAR(10)       PRIMARY KEY,
   p1            VARCHAR(30) REFERENCES Users(nick),
   p2            VARCHAR(30) REFERENCES Users(nick),
   spectator     VARCHAR(30) REFERENCES Users(nick),
@@ -58,7 +58,7 @@ CREATE TABLE Matches (
 );
 
 CREATE TABLE ThrowSequences (
-  matchId       CHAR(4),
+  matchId       VARCHAR(10),
   sequenceIndex INT,
   glasses       CHAR(20),
   startingPlayer  VARCHAR(30),
@@ -71,7 +71,7 @@ CREATE TABLE ThrowSequences (
 
 CREATE TABLE Attends(
   userNick      VARCHAR(30),
-  MatchnId       CHAR(4),
+  MatchId       VARCHAR(10),
   FOREIGN KEY (userNick) REFERENCES Users(nick),
-  FOREIGN KEY (MatchnId) REFERENCES Matches(id)
+  FOREIGN KEY (MatchId) REFERENCES Matches(id)
 );

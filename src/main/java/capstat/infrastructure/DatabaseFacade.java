@@ -219,7 +219,7 @@ class DatabaseFacade implements UserDatabaseHelper, MatchDatabaseHelper {
 		MatchResultBlueprint insertedMatchResult = getMatchById(Long.parseLong(parsed[0]));
 		if ( matchResultBlueprintToQueueEntry(insertedMatchResult).equals(txtMatchResultQueue.peek()) ) {
 			try {
-				txtUserQueue.pop();
+				txtMatchResultQueue.pop();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -240,9 +240,9 @@ class DatabaseFacade implements UserDatabaseHelper, MatchDatabaseHelper {
 		// DELETE THROW SEQUENCE FROM QUEUE IF SUCCESSFUL INSERT INTO DATABASE
 
 		PartialSequenceBlueprint insertedPartialSequence = getMatchById(Long.parseLong(parsed[0])).sequences.get(Integer.parseInt(parsed[1]));
-		if ( partialSequenceBlueprintToQueueEntry(insertedPartialSequence).equals(txtPartialSequenceQueue.peek()) ) {
+		if ( (parsed[0] + "," + parsed[1] + "," + partialSequenceBlueprintToQueueEntry(insertedPartialSequence)).equals(txtPartialSequenceQueue.peek()) ) {
 			try {
-				txtUserQueue.pop();
+				txtPartialSequenceQueue.pop();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -315,8 +315,8 @@ class DatabaseFacade implements UserDatabaseHelper, MatchDatabaseHelper {
 	}
 
 	private PartialSequenceBlueprint dbEntryToPartialSequenceBlueprint(String[] s) {
-		return new PartialSequenceBlueprint(bitStringToBooleans(s[0]),
-				Integer.parseInt(s[1]), s[2].equals("1"), bitStringToBooleans(s[3]));
+		return new PartialSequenceBlueprint(bitStringToBooleans(s[2]),
+				Integer.parseInt(s[3]), s[4].equals("1"), bitStringToBooleans(s[5]));
 	}
 
 	private Set<MatchResultBlueprint> getMatchesFromResult (Result<Record> result) {
@@ -326,7 +326,7 @@ class DatabaseFacade implements UserDatabaseHelper, MatchDatabaseHelper {
 
 		for (String s : rows) {
 			if (s.length() > 0) {
-				MatchResultBlueprint mrb = dbEntryToMatchBlueprint(queryStringParser(s));
+				matchSet.add(dbEntryToMatchBlueprint(queryStringParser(s)));
 			}
 		}
 		return matchSet;

@@ -122,7 +122,7 @@ public class MatchDatabaseFacadeTest {
 	}
 
 	private void testMatchesAreEqual(final MatchResultBlueprint mrbLocal, final MatchResultBlueprint mrbDb) {
-		String standardMessage = "Make sure the stored users fields and the database " +
+		String standardMessage = "Make sure the stored Matches / ThrowSequences fields and the database " +
 				"fields contain the same information: ";
 		assertEquals(standardMessage, mrbLocal.player1Nickname, mrbDb.player1Nickname);
 		assertEquals(standardMessage, mrbLocal.player2Nickname, mrbDb.player2Nickname);
