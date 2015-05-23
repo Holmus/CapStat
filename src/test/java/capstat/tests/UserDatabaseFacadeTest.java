@@ -61,7 +61,9 @@ public class UserDatabaseFacadeTest {
         Set<UserBlueprint> matches = userdb.getUsersByNicknameMatch(dummyRow2
                 .nickname);
         //contains-method in Set uses equals, not ==.
-        assertTrue(matches.contains(dummyRow2));
+        assertTrue("\nExpected to see: \n" + dummyRow2 + " \nbut " +
+                "found: \n" + matches.iterator().next(), matches.contains
+                (dummyRow2));
         assertFalse(matches.contains(dummyRow1));
     }
 

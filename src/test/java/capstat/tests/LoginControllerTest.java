@@ -49,12 +49,12 @@ public class LoginControllerTest {
     public void testFailedLogin() {
         //Test with dummy 2
         User user = UserFactory.createDummyUser2();
-        ul.registerNewUser(user.getNickname(), user.getName(), "foobar", user
+        ul.registerNewUser(user.getNickname(), user.getName(), "boofaz", user
                 .getChalmersAge().getBirthday(), user.getChalmersAge()
                 .getAdmittance().getYear(), user.getChalmersAge()
                 .getAdmittance().getReadingPeriod().ordinal() + 1);
         //The password is hardcoded into the dummy user.
-        assertFalse(lc.loginAsUser(user.getNickname(), "not foobar"));
+        assertFalse(lc.loginAsUser(user.getNickname(), "not boofaz"));
         assertFalse("New user has not been logged in", cp.getLoggedInUser()
                 .equals(user));
     }
