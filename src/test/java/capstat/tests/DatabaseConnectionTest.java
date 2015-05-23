@@ -7,6 +7,7 @@ import org.jooq.Result;
 import org.jooq.generated.db.capstat.tables.Users;
 import org.jooq.generated.db.capstat.tables.records.UsersRecord;
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -34,15 +35,19 @@ public class DatabaseConnectionTest {
 	/**
 	 * Deletes all users.
 	 */
-	@Test
-	public void deleteAllUsers() {
-		db.deleteFrom(Users.USERS).execute();
+	@After
+	public void deleteDummyUsers() {
+		db.deleteFrom(Users.USERS).
+				where(Users.USERS.NICK.equal("lol2kpe"))
+				.or(Users.USERS.NICK.equal("user1"))
+				.or(Users.USERS.NICK.equal("user2"))
+				.execute();
 	}
 
 	/**
 	 * Inserts three users.
 	 */
-	@Test
+	@Before
 	public void insertUsers () {
 		db.insertInto(Users.USERS, Users.USERS.NICK, Users.USERS.NAME, Users.USERS.PASS, Users.USERS.BIRTHDAY,
 				Users.USERS.ADMITTANCEYEAR, Users.USERS.ADMITTANCEREADINGPERIOD, Users.USERS.ELORANK)
@@ -69,7 +74,6 @@ public class DatabaseConnectionTest {
 			System.out.print("\nPRINTING USER " + count + " VIA USERRECORD :\n" + userRecord + "\n");
 		}
 
-		System.out.println ( "\nPRINTING SECOND USERS NICK USING RESULT.GETVALUE: " + result.getValue(1,"nick") + "\n");
 		System.out.println ( "\nPRINTING SECOND USERS NICK USING RESULT.GETVALUE: " + result.formatCSV() + "\n");
 	}
 
@@ -103,14 +107,6 @@ public class DatabaseConnectionTest {
 	@Test
 	public void getAll() {
 		//TODO
-	}
-
-	/**
-	 * Closes the connection to the database.
-	 */
-	@After
-	public void closeConn() {
-		dbConn.disconnect();
 	}
 
 }

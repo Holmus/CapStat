@@ -27,7 +27,7 @@ CREATE USER 'capstat_user'@'localhost' IDENTIFIED BY '1234';
 CREATE DATABASE capstat;
 
 GRANT ALL ON capstat.* TO 'capstat_user'@'localhost';
-GRANT ALL PRIVILEGES ON proc.* TO 'capstat_user'@'localhost';
+GRANT ALL PRIVILEGES ON mysql.proc TO 'capstat_user'@'localhost';
  */
 
 
@@ -44,28 +44,34 @@ CREATE TABLE Users (
 );
 
 CREATE TABLE Matches (
-  id            CHAR(4)       PRIMARY KEY,
-  p1            VARCHAR(30),
-  p2            VARCHAR(30),
+  id            VARCHAR(10)       PRIMARY KEY,
+  p1            VARCHAR(30) REFERENCES Users(nick),
+  p2            VARCHAR(30) REFERENCES Users(nick),
+  spectator     VARCHAR(30) REFERENCES Users(nick),
   p1Score       INT,
   p2Score       INT,
-  spectator     VARCHAR(30),
-  dateTime      DATETIME,
-  elapsedTime   TIME,
+  startTime     LONG,
+  endTime       LONG,
   FOREIGN KEY (p1) REFERENCES Users(nick),
   FOREIGN KEY (p2) REFERENCES Users(nick),
   FOREIGN KEY (spectator) REFERENCES Users(nick)
 );
 
 CREATE TABLE ThrowSequences (
-  MatchnId       CHAR(4)     PRIMARY KEY,
+  matchId       VARCHAR(10),
+  sequenceIndex INT,
+  glasses       CHAR(20),
+  startingPlayer  VARCHAR(30),
+  throwBeforeWasHit BOOLEAN,
   sequence      VARCHAR(1000),
-  FOREIGN KEY (MatchnId) REFERENCES Matches(id)
+
+  FOREIGN KEY (matchId) REFERENCES Matches(id),
+  PRIMARY KEY (matchId, sequenceIndex)
 );
 
 CREATE TABLE Attends(
   userNick      VARCHAR(30),
-  MatchnId       CHAR(4),
+  MatchId       VARCHAR(10),
   FOREIGN KEY (userNick) REFERENCES Users(nick),
-  FOREIGN KEY (MatchnId) REFERENCES Matches(id)
+  FOREIGN KEY (MatchId) REFERENCES Matches(id)
 );

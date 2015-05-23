@@ -28,8 +28,8 @@ public class MatchResult {
         this.spectator = userLedger.getUserByNickname(blueprint.spectatorNickname);
         this.player1score = blueprint.player1score;
         this.player2score = blueprint.player2score;
-        this.startTime = blueprint.startTime;
-        this.endTime = blueprint.endTime;
+        this.startTime = Instant.ofEpochSecond(blueprint.startTime);
+        this.endTime = Instant.ofEpochSecond(blueprint.endTime);
         this.sequences = convertToPartialSequences(blueprint.sequences);
     }
 
@@ -50,6 +50,21 @@ public class MatchResult {
     public long getId() {
         return this.id;
     }
+
+	public User getPlayer1() {
+		return this.player1;
+	}
+	public User getPlayer2() {
+		return this.player2;
+	}
+
+	public int getPlayer1score() {
+		return this.player1score;
+	}
+
+	public int getPlayer2score() {
+		return this.player2score;
+	}
 
     public User getPlayer(Match.Player player) {
         if (player == Match.Player.ONE)

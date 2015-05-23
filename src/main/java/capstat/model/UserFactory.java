@@ -45,6 +45,40 @@ public abstract class UserFactory {
         return user;
     }
 
+	public static User createDummyUser3() {
+		String nickname = "DummyThree";
+		String name = "Dummy Player 3";
+		String password = "foobar3";
+		String hashedPassword = Security.hashPassword(password);
+
+		LocalDate birthday = LocalDate.of(1991, 2, 14);
+		Admittance admittance = new Admittance(Year.of(2013), Admittance
+				.Period.ONE);
+		ChalmersAge chalmersAge = new ChalmersAge(birthday, admittance);
+
+		ELORanking ranking = ELORanking.defaultRanking();
+
+		User user = new User(nickname, name, hashedPassword, chalmersAge, ranking);
+		return user;
+	}
+
+	public static User createDummyUser4() {
+		String nickname = "DummyFour";
+		String name = "Dummy Player 4";
+		String password = "boofaz4";
+		String hashedPassword = Security.hashPassword(password);
+
+		LocalDate birthday = LocalDate.of(1985, 8, 9);
+		Admittance admittance = new Admittance(Year.of(2001), Admittance
+				.Period.TWO);
+		ChalmersAge chalmersAge = new ChalmersAge(birthday, admittance);
+
+		ELORanking ranking = ELORanking.defaultRanking();
+
+		User user = new User(nickname, name, hashedPassword, chalmersAge, ranking);
+		return user;
+	}
+
     public static User createGuestUser() {
         String nickname = "Guest";
         String name = "Guest";

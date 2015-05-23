@@ -1,5 +1,7 @@
 package capstat.infrastructure;
 
+import java.util.Arrays;
+
 /**
  * A value object a throw sequence, as stored in a database table.
  * @author hjorthjort
@@ -31,5 +33,28 @@ public final class PartialSequenceBlueprint {
         this.startingPlayer = startingPlayer;
         this.throwBeforeWasHit = throwBeforeWasHit;
         this.sequence = sequence;
+    }
+
+    @Override
+    public int hashCode() {
+        int result;
+        result = Arrays.hashCode(glasses);
+        result = 31 * result + startingPlayer;
+        result = 31 * result + (throwBeforeWasHit ? 1 : 0);
+        result = 31 * result + Arrays.hashCode(sequence);
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+
+        if (o == null) return false;
+        if (!(o instanceof PartialSequenceBlueprint)) return false;
+
+        PartialSequenceBlueprint psb = (PartialSequenceBlueprint)o;
+        return (Arrays.equals(psb.glasses, this.glasses)
+                && psb.startingPlayer == this.startingPlayer
+                && psb.throwBeforeWasHit == this.throwBeforeWasHit
+                && Arrays.equals(psb.sequence, this.sequence));
     }
 }

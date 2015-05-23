@@ -10,9 +10,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.time.LocalDate;
-import java.time.Year;
 import java.util.Set;
-
 import static org.junit.Assert.*;
 
 /**
@@ -32,15 +30,15 @@ public class UserDatabaseFacadeTest {
     @Before
     public void addNewUser() {
         dummyRow1 = getDummyRow(UserFactory.createDummyUser1());
-        userdb.addUserToDatabase(dummyRow1);
         dummyRow2 = getDummyRow(UserFactory.createDummyUser2());
-        userdb.addUserToDatabase(dummyRow2);
+        userdb.addUser(dummyRow1);
+        userdb.addUser(dummyRow2);
     }
 
     @After
     public void removeNewUser() {
-        userdb.removeUserFromDatabase(dummyRow1);
-        userdb.removeUserFromDatabase(dummyRow2);
+        userdb.removeUser(dummyRow1);
+        userdb.removeUser(dummyRow2);
     }
 
     @Test
