@@ -11,10 +11,7 @@ import org.jooq.generated.db.capstat.tables.Users;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author hjorthjort
@@ -252,52 +249,74 @@ class DatabaseFacade implements UserDatabaseHelper, MatchDatabaseHelper {
 	}
 
 	@Override
-	public void addMatchSet(Set<MatchResultBlueprint> matches) {
-
+	public void addMatchSet(Set<MatchResultBlueprint> matchSet) {
+		matchSet.forEach(this::addMatch);
 	}
 
 	@Override
 	public void removeMatch(long id) {
-
-
-		db.database.deleteFrom(Throwsequences.THROWSEQUENCES).where(Throwsequences.THROWSEQUENCES.MATCHID.equal(String.valueOf(id))).execute();
-		db.database.deleteFrom(Matches.MATCHES).where(Matches.MATCHES.ID.equal(String.valueOf(id))).execute();
+		db.database.deleteFrom(Throwsequences.THROWSEQUENCES)
+				.where(Throwsequences.THROWSEQUENCES.MATCHID.equal(String.valueOf(id)))
+				.execute();
+		db.database.deleteFrom(Matches.MATCHES).where(Matches.MATCHES.ID.equal(String.valueOf(id)))
+				.execute();
 	}
 
 	@Override
 	public MatchResultBlueprint getMatchById(long id) {
-		Result<Record> result = db.database.select().from(Matches.MATCHES).where(Matches.MATCHES.ID.equal(String.valueOf(id))).fetch();
+		Result<Record> result = db.database.select().from(Matches.MATCHES)
+				.where(Matches.MATCHES.ID.equal(String.valueOf(id)))
+				.fetch();
 		Set<MatchResultBlueprint> mrbSet = getMatchesFromResult(result);
 		return mrbSet.iterator().hasNext() ? mrbSet.iterator().next() : null;
 	}
 
 	@Override
 	public Set<MatchResultBlueprint> getAllMatches() {
-		return null;
+		Result<Record> result = db.database.select().from(Matches.MATCHES)
+				.fetch();
+		return getMatchesFromResult(result);
 	}
 
 	@Override
 	public Set<MatchResultBlueprint> getMatchesForUser(String player) {
-		return null;
+		Result<Record> result = db.database.select().from(Matches.MATCHES)
+				.where(Matches.MATCHES.P1.equal(player)
+						.or(Matches.MATCHES.P2.equal(player)))
+				.fetch();
+		return getMatchesFromResult(result);
 	}
 
 	@Override
 	public Set<MatchResultBlueprint> getMatchesForUsers(String p1, String p2) {
-		return null;
+			Result<Record> result = db.database.select().from(Matches.MATCHES)
+					.where(Matches.MATCHES.P1.equal(p1)
+							.and(Matches.MATCHES.P2.equal(p2)))
+					.or(Matches.MATCHES.P1.equal(p2)
+							.and(Matches.MATCHES.P2.equal(p1)))
+					.fetch();
+			return getMatchesFromResult(result);
 	}
 
 	@Override
 	public Set<MatchResultBlueprint> getMatchesInDateRange(long epochFrom, long epochTo) {
-		return null;
+		Result<Record> result = db.database.select().from(Matches.MATCHES)
+				.where(Matches.MATCHES.ENDTIME.between(String.valueOf(epochFrom)).and(String.valueOf(epochTo)))
+						.fetch();
+		return getMatchesFromResult(result);
 	}
 
 	@Override
 	public Set<MatchResultBlueprint> getMatchesForSpectator(String spectator) {
-		return null;
+		Result<Record> result = db.database.select().from(Matches.MATCHES)
+				.where(Matches.MATCHES.SPECTATOR.equal(spectator))
+				.fetch();
+		return getMatchesFromResult(result);
 	}
 
 	public List<PartialSequenceBlueprint> getPartialSequencesByMatchId(long id) {
-		Result<Record> result = db.database.select().from(Throwsequences.THROWSEQUENCES).where(Throwsequences.THROWSEQUENCES.MATCHID.equal(String.valueOf(id))).fetch();
+		Result<Record> result = db.database.select().from(Throwsequences.THROWSEQUENCES)
+				.where(Throwsequences.THROWSEQUENCES.MATCHID.equal(String.valueOf(id))).fetch();
 		return getPartialSequencesFromResult(result);
 	}
 
@@ -306,6 +325,7 @@ class DatabaseFacade implements UserDatabaseHelper, MatchDatabaseHelper {
 		String[] rows = resultString.substring(resultString.indexOf(System.getProperty("line.separator")) + 1).split("\n");
 
 		List<PartialSequenceBlueprint> psbList = new ArrayList<>();
+		Arrays.sort(rows);
 		for (String s : rows) {
 			if (s.length() > 0) {
 				psbList.add(dbEntryToPartialSequenceBlueprint(queryStringParser(s)));

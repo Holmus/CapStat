@@ -35,8 +35,12 @@ public class DatabaseConnectionTest {
 	 * Deletes all users.
 	 */
 	@Test
-	public void deleteAllUsers() {
-		db.deleteFrom(Users.USERS).execute();
+	public void deleteDummyUsers() {
+		db.deleteFrom(Users.USERS).
+				where(Users.USERS.NICK.equal("lol2kpe"))
+				.or(Users.USERS.NICK.equal("user1"))
+				.or(Users.USERS.NICK.equal("user2"))
+				.execute();
 	}
 
 	/**
@@ -69,7 +73,6 @@ public class DatabaseConnectionTest {
 			System.out.print("\nPRINTING USER " + count + " VIA USERRECORD :\n" + userRecord + "\n");
 		}
 
-		System.out.println ( "\nPRINTING SECOND USERS NICK USING RESULT.GETVALUE: " + result.getValue(1,"nick") + "\n");
 		System.out.println ( "\nPRINTING SECOND USERS NICK USING RESULT.GETVALUE: " + result.formatCSV() + "\n");
 	}
 

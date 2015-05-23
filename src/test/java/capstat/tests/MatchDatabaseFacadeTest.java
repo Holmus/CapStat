@@ -69,7 +69,8 @@ public class MatchDatabaseFacadeTest {
 
 	@Test
 	public void testAddMatchSet() throws Exception {
-		removeNewMatches();
+		matchdb.removeMatch(1);
+		matchdb.removeMatch(2);
 		Set<MatchResultBlueprint> mrbs = new HashSet<>();
 		mrbs.add(dummyMatchResult1);
 		mrbs.add(dummyMatchResult2);
@@ -102,9 +103,9 @@ public class MatchDatabaseFacadeTest {
 
 	@Test
 	public void testGetMatchesForUsers() throws Exception {
-		Set<MatchResultBlueprint> mrbSet = matchdb.getMatchesForUsers(dummyMatchResult1.player2Nickname, dummyMatchResult2.player2Nickname);
+		Set<MatchResultBlueprint> mrbSet = matchdb.getMatchesForUsers(dummyMatchResult1.player2Nickname, dummyMatchResult1.player1Nickname);
 		assertTrue(mrbSet.contains(dummyMatchResult1));
-		assertTrue(mrbSet.contains(dummyMatchResult2));
+		assertFalse(mrbSet.contains(dummyMatchResult2));
 	}
 
 	@Test

@@ -38,10 +38,10 @@ public final class PartialSequenceBlueprint {
     @Override
     public int hashCode() {
         int result;
-        result = glasses.hashCode();
+        result = Arrays.hashCode(glasses);
         result = 31 * result + startingPlayer;
         result = 31 * result + (throwBeforeWasHit ? 1 : 0);
-        result = 31 * result + sequence.hashCode();
+        result = 31 * result + Arrays.hashCode(sequence);
         return result;
     }
 
