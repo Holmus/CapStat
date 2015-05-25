@@ -383,8 +383,8 @@ public class SingleMatchCalculatorTest {
             "Spectator",
             0,
             2,
-            start,
-            end,
+            start.getEpochSecond(),
+            end.getEpochSecond(),
             psbs
         );
         mr = new MatchResult(mrb);
@@ -422,8 +422,8 @@ public class SingleMatchCalculatorTest {
             "Spectator",
             0,
             2,
-            start,
-            end,
+            start.getEpochSecond(),
+            end.getEpochSecond(),
             psbs
         );
         mr = new MatchResult(mrb);
@@ -536,8 +536,8 @@ public class SingleMatchCalculatorTest {
             "Spectator",
             0,
             2,
-            start,
-            end,
+            start.getEpochSecond(),
+            end.getEpochSecond(),
             psbs
         );
         mr = new MatchResult(mrb);
@@ -580,8 +580,8 @@ public class SingleMatchCalculatorTest {
             "Spectator",
             0,
             2,
-            start,
-            end,
+            start.getEpochSecond(),
+            end.getEpochSecond(),
             psbs
         );
         mr = new MatchResult(mrb);
@@ -694,8 +694,8 @@ public class SingleMatchCalculatorTest {
             "Spectator",
             0,
             2,
-            start,
-            end,
+            start.getEpochSecond(),
+            end.getEpochSecond(),
             psbs
         );
         mr = new MatchResult(mrb);
