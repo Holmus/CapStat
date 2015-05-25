@@ -26,8 +26,12 @@ public class SingleMatchCalculator {
     }
 
     /**
-     * Calculates the accuracy for the given player. The accuracy is given as a double in the range [0, 1].
-     * @param player the Player to calculate the accuracy for (Match.Player.ONE or Match.Player.TWO)
+     * Calculates the accuracy for the given player. The accuracy is given as a
+     * double in the range [0, 1].
+     *
+     * @param player the Player to calculate the accuracy for (Match.Player.ONE
+     *               or Match.Player.TWO)
+     *
      * @return a double containing the accuracy
      */
     public double getAccuracy(Match.Player player) {
@@ -44,7 +48,10 @@ public class SingleMatchCalculator {
     }
 
     /**
-     * Returns the length of the longest duel of the game. All throws that are hits are counted as part of the duel; the miss that ends the duel is NOT counted as part of the duel.
+     * Returns the length of the longest duel of the game. All throws that are
+     * hits are counted as part of the duel; the miss that ends the duel is NOT
+     * counted as part of the duel.
+     *
      * @return the length of the longest duel
      */
     public int getLongestDuelLength() {
@@ -63,6 +70,7 @@ public class SingleMatchCalculator {
     /**
      * Returns the total number of throws for the entire match - that is, all
      * throws made by player 1, plus all throws made by player 2.
+     *
      * @return the number of throws
      */
     public int getTotalNumberOfThrows() {
@@ -71,7 +79,10 @@ public class SingleMatchCalculator {
 
     /**
      * Returns the total number of throws made by either player 1 or player 2.
-     * @param player the {@link capstat.model.Match.Player} to get the number of throws for
+     *
+     * @param player the {@link capstat.model.Match.Player} to get the number
+     *               of throws for
+     *
      * @return the number of throws made by the given player
      */
     public int getTotalNumberOfThrows(Match.Player player) {
@@ -80,6 +91,7 @@ public class SingleMatchCalculator {
 
     /**
      * Returns the length, in seconds, that the match went on for.
+     *
      * @return a <tt>long</tt> with the number of seconds
      */
     public long getElapsedTime() {
@@ -89,8 +101,14 @@ public class SingleMatchCalculator {
     }
 
     /**
-     * Takes an arbitrary list of {@link capstat.model.PartialSequenceResult} and "replays" them, giving back a new list of {@link capstat.model.PartialSequenceResult} with each instance containing the sequence from the throw after the last duel (or from the beginning of the match) up to and including the throw that ends the next duel.
+     * Takes an arbitrary list of {@link capstat.model.PartialSequenceResult}
+     * and "replays" them, giving back a new list of {@link capstat.model.PartialSequenceResult}
+     * with each instance containing the sequence from the throw after the last
+     * duel (or from the beginning of the match) up to and including the throw
+     * that ends the next duel.
+     *
      * @param sequences the arbitrary list of sequences
+     *
      * @return a {@link java.util.List} of {@link capstat.model.PartialSequenceResult}
      */
     public static List<PartialSequenceResult> getDuelSequences(List<PartialSequenceResult> sequences) {
