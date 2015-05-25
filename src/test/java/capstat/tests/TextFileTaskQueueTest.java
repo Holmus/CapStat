@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import capstat.infrastructure.ITaskQueue;
 import capstat.infrastructure.TextFileTaskQueue;
@@ -39,9 +40,32 @@ public class TextFileTaskQueueTest {
         tq.clear();
     }
 
+    //Atomic tests
+
+    @Test(expected = NoSuchElementException.class)
+    public void peekTest() throws IOException {
+        tq.add("Hello World");
+        assertTrue(tq.peek().equals("Hello World"));
+        tq.clear();
+        //Thow NoSuchElementException
+        tq.peek();
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void popTest() throws IOException {
+        tq.add("Foobar");
+        assertTrue(tq.pop().equals("Foobar"));
+        //Throw the exception
+        tq.pop();
+    }
+
+
+    //Large tests
+
     @Test
     public void addTen() throws IOException {
-        String[] tasks = new String[] {
+
+        String[] tasks = new String[]{
                 "task one",
                 "task two",
                 "task three",
@@ -56,7 +80,8 @@ public class TextFileTaskQueueTest {
 
         for (String task : tasks) {
             tq.add(task);
-            String desc1 = String.format("\"task one\" should be peeked after adding %s", task);
+            String desc1 = String.format("\"task one\" should be peeked after" +
+                    " adding %s", task);
             assertEquals(desc1, "task one", tq.peek());
         }
 
