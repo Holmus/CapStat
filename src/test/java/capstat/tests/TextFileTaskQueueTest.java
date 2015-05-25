@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import capstat.infrastructure.ITaskQueue;
 import capstat.infrastructure.TextFileTaskQueue;
@@ -38,6 +39,20 @@ public class TextFileTaskQueueTest {
     public void reset() throws IOException {
         tq.clear();
     }
+
+    //Atomic tests
+
+    @Test(expected = NoSuchElementException.class)
+    public void peekTest() throws IOException {
+        tq.add("Hello World");
+        assertTrue(tq.peek().equals("Hello World"));
+        tq.clear();
+        //Thow NoSuchElementException
+        tq.peek();
+    }
+
+
+    //Large tests
 
     @Test
     public void addTen() throws IOException {
