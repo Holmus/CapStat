@@ -61,6 +61,10 @@ public class SingleMatchCalculator {
         return getThrowsForPlayer(mr.getSequences(), player).size();
     }
 
+    /**
+     * Returns the length, in seconds, that the match went on for.
+     * @return a <tt>long</tt> with the number of seconds
+     */
     public long getElapsedTime() {
         Instant start = mr.getStartTime();
         Instant end = mr.getEndTime();
