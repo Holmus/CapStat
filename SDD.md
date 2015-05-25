@@ -40,7 +40,7 @@ The presentation layer will hold the GUI components, which are implemented with 
 The model's task is to model the world of caps, where there a matches being played, matches that have been played, and users playing and spectating matches. The model also models the statistics of players, such as their ranking, their accuracy, their wins and losses.
 
 #####2.1.2 Rules
-The rules of caps is very well defined, and not likely to change. However, the Match class could be subclassed if different behavior is needed.
+The rules of caps is very well defined, and not likely to change. However, the Match class could be subclassed if different behavior is needed. For a full definition of the rules of caps, see appendix.
 
 #####2.1.3 Matches
 A match is played until one player has won as many rounds as is needed. The number is decided at the outset of the match. The outcome of a match, as well as every play of the match, can be recreated at any time as long as the starting player and the full throw sequence is known. However, we have implemented the possibility for a match to have an incomplete throw sequence, without that making the statistics useless
@@ -54,9 +54,14 @@ The part of the model that handles statistics uses a minimal data input. It uses
 #####2.1.5 Event handling
 During a match, a lot of events take place that other parts of a system want to be notified about. Rather than making the Match class handle these publisher-subscriber relations, which might be many, it delegates this work to an event bus. The clients that want to be notified of changes subscribe using the string keys that the Match class provides, and the match notifies the event bus when a change relating to a specific key has taken place. For example, if a client want to get notified when a match ends, it may do so by registering with the event bus using the MATCH_ENDED String constant in match. This approach has the added benefit of being reusable – the event bus can be used for many types of event handling, by any other class. It is strongly recommended that future classes also use the event bus rather than implement another version of the publisher subscriber pattern.
 
-2.2 Software decomposition
+####2.2 Software decomposition
+#####2.2.1 General
+The software is decomposed into four main modules. See Figure X.
 
-2.2.1 General
+* **Presentation layer**, that handles drawing the GUI and taking user input. This is the view part of the MVC.
+* **Application layer**, that handles controlling and modifying the model, and coordinating the model and infrastructure layer. This is the controller part of the MVC.
+* **Model layer**, the core object model of the application, representing games of caps and handling statistics calculations.
+* **Infrastructure layer**, handles low level technical details, such as communicating with the database and managing the task queue that the database uses for intermediate storage. This layer also holds the event bus.
 
 2.2.2 Decomposition into subsystems
 
