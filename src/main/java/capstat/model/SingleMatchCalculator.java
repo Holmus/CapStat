@@ -44,6 +44,23 @@ public class SingleMatchCalculator {
     }
 
     /**
+     * Returns the length of the longest duel of the game. All throws that are hits are counted as part of the duel; the miss that ends the duel is NOT counted as part of the duel.
+     * @return the length of the longest duel
+     */
+    public int getLongestDuelLength() {
+        List<PartialSequenceResult> psrs = getDuelSequences(mr.getSequences());
+        int longest = 0;
+        for (PartialSequenceResult psr : psrs) {
+            int current = 0;
+            for (Match.Throw t : psr.getSequence()) {
+                if (t == Match.Throw.HIT) current++;
+            }
+            longest = current > longest ? current : longest;
+        }
+        return longest;
+    }
+
+    /**
      * Returns the total number of throws for the entire match - that is, all
      * throws made by player 1, plus all throws made by player 2.
      * @return the number of throws

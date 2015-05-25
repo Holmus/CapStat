@@ -544,4 +544,160 @@ public class SingleMatchCalculatorTest {
             assertEquals("A total of 90 throws", 90, calculcator.getTotalNumberOfThrows());
         }
     }
+
+    @Test
+    public void longestDuelLength() {
+        List<SingleMatchCalculator> smcList = new ArrayList<>();
+
+        List<PartialSequenceBlueprint> psbs = new ArrayList<>();
+        MatchResultBlueprint mrb;
+        Instant start = Instant.now();
+        Instant end = start.plusSeconds(637);
+        double player1Accuracy;
+        double player2Accuracy;
+        MatchResult mr;
+        SingleMatchCalculator smc;
+
+        // A test using a single partial sequence
+        psbs.add(new PartialSequenceBlueprint(
+            new boolean[] { true, true, true, true, true, true, true },
+            1,
+            false,
+            new boolean[] { false, false, false, false, false, true, true, true, false, false, true, true, true, false, false, false, true, false, false, true, true, true, true, false, false, false, false, false, true, true, false, false, true, true, true, true, true, false, false, false, true, true, true, true, true, true, true, false, true, true, true, true, false, false, false, false, false, false, false, true, true, true, false, false, true, true, true, false, false, false, false, false, false, false, true, true, true, true, true, false, false, false, true, true, true, true, true, true, true, false }
+        ));
+
+        mrb = new MatchResultBlueprint(
+            -1,
+            "Dummy 1",
+            "Dummy 2",
+            "Spectator",
+            0,
+            2,
+            start,
+            end,
+            psbs
+        );
+        mr = new MatchResult(mrb);
+
+        smc = new SingleMatchCalculator(mr);
+        smcList.add(smc);
+
+        psbs.clear();
+
+        // Duel 1
+        psbs.add(new PartialSequenceBlueprint(
+            new boolean[] { true, true, true, true, true, true, true },
+            1,
+            false,
+            new boolean[] { false, false, false, false, false, true, true, true, false }
+        ));
+
+        // Duel 2
+        psbs.add(new PartialSequenceBlueprint(
+            new boolean[] { false, true, true, true, true, true, true },
+            1,
+            false,
+            new boolean[] { false, true, true, true, false }
+        ));
+
+        // Duel 3
+        psbs.add(new PartialSequenceBlueprint(
+            new boolean[] { false, false, true, true, true, true, true },
+            1,
+            false,
+            new boolean[] { false, false, true, false }
+        ));
+
+        // Duel 4
+        psbs.add(new PartialSequenceBlueprint(
+            new boolean[] { false, false, true, true, true, true, false },
+            2,
+            false,
+            new boolean[] { false, true, true, true, true, false }
+        ));
+
+        // Duel 5
+        psbs.add(new PartialSequenceBlueprint(
+            new boolean[] { false, false, false, true, true, true, false },
+            1,
+            false,
+            new boolean[] { false, false, false, false, true, true, false }
+        ));
+
+        // Duel 6
+        psbs.add(new PartialSequenceBlueprint(
+            new boolean[] { true, true, true, true, true, true, true },
+            1,
+            false,
+            new boolean[] { false, true, true, true, true, true, false }
+        ));
+
+        // Duel 7
+        psbs.add(new PartialSequenceBlueprint(
+            new boolean[] { false, true, true, true, true, true, true },
+            1,
+            false,
+            new boolean[] { false, false, true, true, true, true, true, true, true, false }
+        ));
+
+        // Duel 8
+        psbs.add(new PartialSequenceBlueprint(
+            new boolean[] { false, true, true, true, true, true, false },
+            2,
+            false,
+            new boolean[] { true, true, true, true, false }
+        ));
+
+        // Duel 9
+        psbs.add(new PartialSequenceBlueprint(
+            new boolean[] { false, true, true, true, true, false, false },
+            2,
+            false,
+            new boolean[] { false, false, false, false, false, false, true, true, true, false }
+        ));
+
+        // Duel 10
+        psbs.add(new PartialSequenceBlueprint(
+            new boolean[] { false, false, true, true, true, false, false },
+            1,
+            false,
+            new boolean[] { false, true, true, true, false }
+        ));
+
+        // Duel 11
+        psbs.add(new PartialSequenceBlueprint(
+            new boolean[] { false, false, false, true, true, false, false },
+            1,
+            false,
+            new boolean[] { false, false, false, false, false, false, true, true, true, true, true, false }
+        ));
+
+        // Duel 12
+        psbs.add(new PartialSequenceBlueprint(
+            new boolean[] { false, false, false, true, false, false, false },
+            2,
+            false,
+            new boolean[] { false, false, true, true, true, true, true, true, true, false }
+        ));
+
+        mrb = new MatchResultBlueprint(
+            -1,
+            "Dummy 1",
+            "Dummy 2",
+            "Spectator",
+            0,
+            2,
+            start,
+            end,
+            psbs
+        );
+        mr = new MatchResult(mrb);
+
+        smc = new SingleMatchCalculator(mr);
+        smcList.add(smc);
+
+        for(SingleMatchCalculator calculcator : smcList) {
+            assertEquals("Longest duel should be 7", 7, smc.getLongestDuelLength());
+        }
+    }
 }
