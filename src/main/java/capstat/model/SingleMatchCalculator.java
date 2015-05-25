@@ -1,5 +1,11 @@
 package capstat.model;
 
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import capstat.infrastructure.EventBus;
 import capstat.infrastructure.NotifyEventListener;
 import capstat.infrastructure.PartialSequenceBlueprint;
@@ -8,10 +14,9 @@ import capstat.model.MatchFactory;
 import capstat.model.MatchResult;
 import capstat.model.PartialSequenceResult;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
+/**
+ * @author Christian Persson
+ */
 public class SingleMatchCalculator {
 
     private MatchResult mr;
@@ -21,8 +26,12 @@ public class SingleMatchCalculator {
     }
 
     /**
-     * Calculates the accuracy for the given player. The accuracy is given as a double in the range [0, 1].
-     * @param player the Player to calculate the accuracy for (Match.Player.ONE or Match.Player.TWO)
+     * Calculates the accuracy for the given player. The accuracy is given as a
+     * double in the range [0, 1].
+     *
+     * @param player the Player to calculate the accuracy for (Match.Player.ONE
+     *               or Match.Player.TWO)
+     *
      * @return a double containing the accuracy
      */
     public double getAccuracy(Match.Player player) {
@@ -38,21 +47,68 @@ public class SingleMatchCalculator {
         return (double) hits / (double) total;
     }
 
+    /**
+     * Returns the length of the longest duel of the game. All throws that are
+     * hits are counted as part of the duel; the miss that ends the duel is NOT
+     * counted as part of the duel.
+     *
+     * @return the length of the longest duel
+     */
+    public int getLongestDuelLength() {
+        List<PartialSequenceResult> psrs = getDuelSequences(mr.getSequences());
+        int longest = 0;
+        for (PartialSequenceResult psr : psrs) {
+            int current = 0;
+            for (Match.Throw t : psr.getSequence()) {
+                if (t == Match.Throw.HIT) current++;
+            }
+            longest = current > longest ? current : longest;
+        }
+        return longest;
+    }
+
+    /**
+     * Returns the total number of throws for the entire match - that is, all
+     * throws made by player 1, plus all throws made by player 2.
+     *
+     * @return the number of throws
+     */
     public int getTotalNumberOfThrows() {
         return getThrowsFromSequences(mr.getSequences()).size();
     }
 
+    /**
+     * Returns the total number of throws made by either player 1 or player 2.
+     *
+     * @param player the {@link capstat.model.Match.Player} to get the number
+     *               of throws for
+     *
+     * @return the number of throws made by the given player
+     */
     public int getTotalNumberOfThrows(Match.Player player) {
         return getThrowsForPlayer(mr.getSequences(), player).size();
     }
 
-    // public static int getElapsedTime(MatchResult mr) {
-
-    // }
+    /**
+     * Returns the length, in seconds, that the match went on for.
+     *
+     * @return a <tt>long</tt> with the number of seconds
+     */
+    public long getElapsedTime() {
+        Instant start = mr.getStartTime();
+        Instant end = mr.getEndTime();
+        return start.until(end, ChronoUnit.SECONDS);
+    }
 
     /**
-     * Takes an arbitrary list of {@link capstat.model.PartialSequenceResult} and "replays" them, giving back a new list of {@link capstat.model.PartialSequenceResult} with each instance containing the sequence from the throw after the last duel (or from the beginning of the match) up to and including the throw that ends the next duel.
+     * Takes an arbitrary list of {@link capstat.model.PartialSequenceResult}
+     * and "replays" them, giving back a new list of {@link capstat.model.PartialSequenceResult}
+     * with each instance containing the sequence from the throw after the last
+     * duel (or from the beginning of the match) up to and including the throw
+     * that ends the next duel.
+     *
      * @param sequences the arbitrary list of sequences
+     *
      * @return a {@link java.util.List} of {@link capstat.model.PartialSequenceResult}
      */
     public static List<PartialSequenceResult> getDuelSequences(List<PartialSequenceResult> sequences) {
