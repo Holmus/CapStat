@@ -16,6 +16,10 @@ public class MatchController implements NotifyEventListener {
     private UserLedger ul = UserLedger.getInstance();
     private EndGameStrategy endGameStrategy;
 
+    public final EndGameStrategy UNRANKED = new UnrankedStrategy();
+    public final EndGameStrategy RANKED = new RankedStrategy();
+
+
     /**
      * Creates a new Match using the MatchFactory.
      * @return default instance of a match, created in MatchFactory.
