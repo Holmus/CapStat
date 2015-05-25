@@ -51,12 +51,21 @@ public class TextFileTaskQueueTest {
         tq.peek();
     }
 
+    @Test(expected = NoSuchElementException.class)
+    public void popTest() throws IOException {
+        tq.add("Foobar");
+        assertTrue(tq.pop().equals("Foobar"));
+        //Throw the exception
+        tq.pop();
+    }
+
 
     //Large tests
 
     @Test
     public void addTen() throws IOException {
-        String[] tasks = new String[] {
+
+        String[] tasks = new String[]{
                 "task one",
                 "task two",
                 "task three",
@@ -71,7 +80,8 @@ public class TextFileTaskQueueTest {
 
         for (String task : tasks) {
             tq.add(task);
-            String desc1 = String.format("\"task one\" should be peeked after adding %s", task);
+            String desc1 = String.format("\"task one\" should be peeked after" +
+                    " adding %s", task);
             assertEquals(desc1, "task one", tq.peek());
         }
 
