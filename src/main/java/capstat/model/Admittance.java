@@ -40,11 +40,25 @@ public class Admittance implements Comparable<Admittance> {
     }
 
     /**
+     *
+     * @return the year of this admittance represented by an integer.
+     */
+    public int getYearValue() {
+        return this.year.getValue();
+    }
+
+    /**
      * Returns the admittance reading period.
      * @return the admittance reading period
      */
     public Admittance.Period getReadingPeriod() {
         return this.readingPeriod;
+    }
+
+    public int getReadingPeridoValue() {
+        //The reading periods go from 1 to 4, but are zero-indexed.
+        // Therefore, we add 1.
+        return this.readingPeriod.ordinal() + 1;
     }
 
     @Override
