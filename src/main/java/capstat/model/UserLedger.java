@@ -75,6 +75,16 @@ public class UserLedger {
         return user;
     }
 
+    public UserBlueprint createBlueprint(User user) {
+        ChalmersAge age = user.getChalmersAge();
+        return new UserBlueprint(user.getNickname(), user.getName(), user
+                .getHashedPassword(), age.getBirthday().getYear(), age
+                .getBirthday().getMonthValue(), age.getBirthday()
+                .getDayOfMonth(), age.getAdmittance().getYearValue(), age
+                .getAdmittance().getReadingPeridoValue(), user
+                .getRanking().getPoints());
+    }
+
     //Registration
 
     /**
