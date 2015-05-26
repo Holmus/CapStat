@@ -85,6 +85,17 @@ public class MatchController implements NotifyEventListener {
         this.match.forward();
     }
 
+    /**
+     * Convenience method for making a new match ranked
+     * @param ranked
+     */
+    public void makeRanked(boolean ranked) {
+        if (ranked)
+            this.setEndGameStrategy(RANKED);
+        else
+            this.setEndGameStrategy(UNRANKED);
+    }
+
     @Override
     public void notifyEvent(final String event) {
         if (event.equals(Match.MATCH_ENDED))
@@ -100,16 +111,30 @@ public class MatchController implements NotifyEventListener {
         void endGame();
     }
 
-    public class UnrankedStrategy implements EndGameStrategy {
+    private class UnrankedStrategy implements EndGameStrategy {
         @Override
         public void endGame() {
             //do nothing
         }
     }
 
-    public class RankedStrategy implements EndGameStrategy {
+    private class RankedStrategy implements EndGameStrategy {
         @Override
         public void endGame() {
+            //First make sure that updating ranking is even meaningful. If
+            // not, end method execution.
+            UserLedger ledger = UserLedger.getInstance();
+            String player1Nickname = match.getPlayer(Match.Player.ONE) ==
+                    null ? null : match.getPlayer(Match.Player.ONE)
+                    .getNickname();
+            String player2Nickname = match.getPlayer(Match.Player.TWO) ==
+                    null ? null : match.getPlayer(Match.Player.TWO)
+                    .getNickname();
+            if (!ledger.doesUserExist(player1Nickname) ||
+                    !ledger.doesUserExist(player2Nickname))
+                return ;
+
+            //Then, update rankings
             Match.Player winningPlayer = null;
             try {
                 if (!match.isOngoing()) {
