@@ -5,6 +5,7 @@ import capstat.infrastructure.EventBus;
 import capstat.infrastructure.NotifyEventListener;
 
 import java.time.Instant;
+import java.util.Random;
 
 /**
  * A class representing a match of caps. It encapsulates most behavior that
@@ -16,7 +17,9 @@ import java.time.Instant;
  *
  * A client that wishes to get notifications on events in this match must
  * implement {@link NotifyEventListener} and register to the event bus using
- * the String constant for the event it wishes to subscribe to. It may also
+ * the String constant for the event it wishes to subscribe to, to get
+ * updates from all matches when they update their state.
+ * To get notifications from a specific instance of a match only, the client may
  * use the methods implemented for subscription in the Match interface for
  * convenience.
  *
@@ -32,42 +35,33 @@ public class Match {
     // Constants
 
     /**
-     * The match will call the event bus with this key when it starts by a
+     * All matches will call the event bus with this key when it starts by a
      * call to startMatch.
      */
     public static final String MATCH_STARTED = "Match started";
     /**
-     * The match will call the event bus with this key when it ends.
+     * All matches will call the event bus with this key when it ends.
      */
     public static final String MATCH_ENDED = "Match ended";
     /**
-     * The match will call the event bus with this key when a new round starts.
-     */
-    public static final String ROUND_STARTED = "Round started";
-    /**
-     * The match will call the event bus with this key when a round ends.
+     * All matches will call the event bus with this key when a round ends.
      */
     public static final String ROUND_ENDED = "Round ended";
     /**
-     * The match will call the event bus with this key when a duel starts.
+     * All matches will call the event bus with this key when a duel starts.
      */
     public static final String DUEL_STARTED = "Duel started";
     /**
-     * The match will call the event bus with this key when a duel ends.
+     * All matches will call the event bus with this key when a duel ends.
      */
     public static final String DUEL_ENDED = "Duel ended";
     /**
-     * The match will call the event bus with this key when any new throw is
-     * recorded.
-     */
-    public static final String THROW_RECORDED = "Throw recorded";
-    /**
-     * The match will call the event bus with this key when a new hit is
+     * All matches will call the event bus with this key when a new hit is
      * recorded, by a call to recordHit.
      */
     public static final String HIT_RECORDED = "Hit recorded";
     /**
-     * The match will call the event bus with this key when a new hit is
+     * All matches will call the event bus with this key when a new hit is
      * recorded, by a call to recordMis.
      */
     public static final String MISS_RECORDED = "Miss recorded";
@@ -75,6 +69,8 @@ public class Match {
 
     //Instance fields
 
+    private static int globalEventId = 0;
+    private final int eventId;
     private boolean isOngoing;
     private ThrowSequence throwSequence;
     private Match.Glass[] glasses;
@@ -108,6 +104,10 @@ public class Match {
      * @throws IllegalArgumentException if
      */
     public Match(int numberOfGlasses, int roundsToWin) {
+        //Assigns a unique (almost guaranteed) event ID for this specific match.
+        this.eventId = globalEventId;
+        globalEventId++;
+
         if (numberOfGlasses < 3 || numberOfGlasses % 2 == 0)
             throw new IllegalArgumentException("Glasses must be an odd number" +
                     " larger than 1");
@@ -308,6 +308,7 @@ public class Match {
     public void startMatch() {
         this.startTime = Instant.now();
         this.isOngoing = true;
+        notifyListeners(MATCH_STARTED);
     }
 
 
@@ -449,7 +450,8 @@ public class Match {
     //Event Handling
 
     /**
-     * Add an observer that will be notified when the game is over.
+     * Add an observer that will be notified when this match instance is
+     * over.
      *
      * @param event the event string that should be listened for. By
      *              default Match uses only the predefined constants String
@@ -459,16 +461,27 @@ public class Match {
      */
     public void addNotificationEventListener(final String event, final
     NotifyEventListener listener) {
-        EventBus.getInstance().addNotifyEventListener(event, listener);
+        EventBus.getInstance().addNotifyEventListener(event + this.eventId,
+                listener);
     }
 
+    /**
+     * Make the specified listener stop listening to this specific matches
+     * notifications of the type specified by the String.
+     * @param event
+     * @param listener
+     */
     public void removeNotificationEventListener(final String event, final
                                            NotifyEventListener listener) {
-        EventBus.getInstance().removeNotifyEventListener(event, listener);
+        EventBus.getInstance().removeNotifyEventListener(event + this.eventId,
+                listener);
     }
 
     private void notifyListeners(final String event) {
+        //Notify listeners that listen to all events of all matches.
         EventBus.getInstance().notify(event);
+        //Notify listeners that listen to this specific match.
+        EventBus.getInstance().notify(event + this.eventId);
     }
 
     //Inner classes
