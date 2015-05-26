@@ -345,7 +345,18 @@ public class Match {
 
     public void manuallyChangeGameState(Match.Glass[] glasses, Player
             startingPlayer, boolean lastThrowWasHit) {
-        this.throwSequence.updateRecordState(glasses, startingPlayer, lastThrowWasHit);
+        this.throwSequence.updateRecordState(glasses, startingPlayer,
+                lastThrowWasHit);
+    }
+
+    public void rewind() {
+        if (this.throwSequence.canRewind())
+            this.throwSequence.rewind();
+    }
+
+    public void forward() {
+        if (this.throwSequence.canForward())
+            this.throwSequence.forward();
     }
 
     /**
