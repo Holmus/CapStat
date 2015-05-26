@@ -1,8 +1,5 @@
 package capstat.infrastructure;
 
-import capstat.model.Match;
-import capstat.model.MatchResult;
-import capstat.model.ThrowSequence;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.generated.db.capstat.tables.Matches;
