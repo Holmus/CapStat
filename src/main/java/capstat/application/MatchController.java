@@ -91,6 +91,8 @@ public class MatchController implements NotifyEventListener {
             this.endGameStrategy.endGame();
     }
 
+    //Inner classes
+
     /**
      * @author hjorthjort
      */
