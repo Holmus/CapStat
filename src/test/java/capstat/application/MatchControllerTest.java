@@ -32,7 +32,7 @@ public class MatchControllerTest {
         this.user2 = UserFactory.createDummyUser2();
         this.userDatabase.addUser(UserLedger.getInstance().createBlueprint
                 (user2));
-        Thread.sleep(1000);
+        Thread.sleep(200);
     }
 
     @After

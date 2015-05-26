@@ -32,6 +32,7 @@ public class DatabaseConnectionTest {
 		this.db = dbConn.database;
 	}
 
+
 	/**
 	 * Deletes all users.
 	 */

@@ -33,7 +33,7 @@ public class UserDatabaseFacadeTest {
         dummyRow2 = getDummyRow(UserFactory.createDummyUser2());
         userdb.addUser(dummyRow1);
         userdb.addUser(dummyRow2);
-        Thread.sleep(100);
+        Thread.sleep(200);
     }
 
     @After

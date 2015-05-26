@@ -55,14 +55,14 @@ public class MatchDatabaseFacadeTest {
 		userdb.addUser(dummyRow3);
 		userdb.addUser(dummyRow4);
 		userdb.addUser(guestUser);
-		Thread.sleep(100);
+		Thread.sleep(200);
 		matchdb.addMatch(dummyMatchResult1);
 		matchdb.addMatch(dummyMatchResult2);
-		Thread.sleep(100);
+		Thread.sleep(200);
 	}
 
 	@After
-	public void removeNewMatches() throws InterruptedException {
+	public void removeNewMatches() {
 
 		matchdb.removeMatch(1);
 		matchdb.removeMatch(2);
@@ -82,6 +82,7 @@ public class MatchDatabaseFacadeTest {
 		mrbs.add(dummyMatchResult1);
 		mrbs.add(dummyMatchResult2);
 		matchdb.addMatchSet(mrbs);
+		Thread.sleep(200);
 	}
 
 	@Test
