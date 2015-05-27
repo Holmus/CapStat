@@ -5,6 +5,7 @@ import capstat.model.*;
 
 /**
  * Created by Jakob on 20/05/15.
+ * @author hjorthjort
  *
  * Class to control the match in the model-layer
  *
@@ -30,6 +31,8 @@ public class MatchController implements NotifyEventListener {
         return MatchFactory.createDefaultMatch();
     }
 
+    //Creation
+
     /**
      * Creates a new MatchController with a match.
      * @param match
@@ -39,6 +42,8 @@ public class MatchController implements NotifyEventListener {
         this.match.addNotificationEventListener(Match.MATCH_ENDED, this);
         this.endGameStrategy = new UnrankedStrategy();
     }
+
+    //Gameplay
 
     /**
      * Starts the match in the Model-layer
@@ -61,12 +66,25 @@ public class MatchController implements NotifyEventListener {
         match.recordHit();
     }
 
-    public void setPlayer1(String text) {
-        final User p1 = ul.getUserByNickname(text);
+    //Match setup
+
+    /**
+     * Set which user is player 1. If the given nickname does not exist,
+     * player 1 will be set to null.
+     * @param nickname
+     */
+    public void setPlayer1(String nickname) {
+        final User p1 = userLedger.getUserByNickname(nickname);
         match.setPlayer1(p1);
     }
-    public void setPlayer2(String text) {
-        final User p2 = ul.getUserByNickname(text);
+
+    /**
+     * Set which user is player 2. If the given nickname does not exist,
+     * player 2 will be set to null.
+     * @param nickname
+     */
+    public void setPlayer2(String nickname) {
+        final User p2 = userLedger.getUserByNickname(nickname);
         match.setPlayer2(p2);
     }
 
@@ -74,20 +92,35 @@ public class MatchController implements NotifyEventListener {
         this.endGameStrategy = strategy;
     }
 
+    /**
+     * Make the match continue recording its sequence from this state.
+     * @param glasses the state of the glasses, active glass indicated by true
+     * @param startingPlayer which player has the next turn
+     * @param duelIsOngoing if there is a duel ongoing
+     */
     public void setNewGameState(Match.Glass[] glasses, Match.Player
             startingPlayer, boolean duelIsOngoing) {
         this.match.manuallyChangeGameState(glasses, startingPlayer,
                 duelIsOngoing);
     }
 
+    //Undo & Redo
+
+    /**
+     * Rewinds the throw sequence to previous state if possible.
+     */
     public void rewind() {
         this.match.rewind();
     }
 
+    /**
+     * Forwards throw sequnece to next state, if possible.
+     */
     public void forward() {
         this.match.forward();
     }
 
+    //Observer method
     @Override
     public void notifyEvent(final String event) {
         if (event.equals(Match.MATCH_ENDED))
