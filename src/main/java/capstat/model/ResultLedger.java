@@ -39,6 +39,31 @@ public class ResultLedger {
 //TODO:implemnet
 	}
 
+    private static PartialSequenceBlueprint createBlueprint(ThrowSequence.PartialSequence ps) {
+        boolean[] glasses;
+        int startingPlayer;
+        boolean throwBeforeWasHit;
+        boolean[] sequence;
+
+        Match.Glass[] glassObjs = ps.getGlasses();
+        glasses = new boolean[glassObjs.length];
+        for (int i = 0; i < glasses.length; i++) {
+            glasses[i] = glassObjs[i].isActive();
+        }
+
+        startingPlayer = ps.getStartingPlayer() == Match.Player.ONE ? 1 : 2;
+
+        throwBeforeWasHit = ps.throwBeforeWasHit();
+
+        List<Match.Throw> throwSequence = ps.getSequence();
+        sequence = new boolean[throwSequence.size()];
+        for (int i = 0; i < sequence.length; i++) {
+            sequence[i] = throwSequence.get(i) == Match.Throw.HIT;
+        }
+
+        return new PartialSequenceBlueprint(glasses, startingPlayer, throwBeforeWasHit, sequence);
+    }
+
 	public MatchResultBlueprint createBlueprint(MatchResult result) {
 		List<PartialSequenceBlueprint> sequenceBlueprintList = new
 				LinkedList<>();
