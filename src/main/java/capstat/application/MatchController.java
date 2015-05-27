@@ -13,12 +13,14 @@ import capstat.model.*;
 public class MatchController implements NotifyEventListener {
 
     private Match match;
-    private UserLedger ul = UserLedger.getInstance();
+    private UserLedger userLedger = UserLedger.getInstance();
+    private ResultLedger resultLedger = ResultLedger.getInstance();
     private EndGameStrategy endGameStrategy;
 
     public final EndGameStrategy UNRANKED = new UnrankedStrategy();
     public final EndGameStrategy RANKED = new RankedStrategy();
 
+    //Static methods
 
     /**
      * Creates a new Match using the MatchFactory.
@@ -93,8 +95,16 @@ public class MatchController implements NotifyEventListener {
             this.endGameStrategy.endGame();
     }
 
+    //Saving
+
+    /**
+     * Save this game.
+     * @throws IllegalStateException if the match is still ongoing.
+     */
     private void saveGame() {
-        ResultLedger resultLedger = ResultLedger
+        if (this.match.isOngoing())
+            throw new IllegalStateException("Match is not over");
+        this.resultLedger.registerResult(this.match);
     }
 
     //Inner classes
