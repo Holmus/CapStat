@@ -4,11 +4,16 @@ import capstat.infrastructure.DatabaseHelperFactory;
 import capstat.infrastructure.MatchDatabaseHelper;
 import capstat.infrastructure.MatchResultBlueprint;
 import capstat.infrastructure.PartialSequenceBlueprint;
+import capstat.model.ThrowSequence;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * A class representing a book or ledger where all matches are stored, and from
