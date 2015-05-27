@@ -5,10 +5,8 @@ import capstat.infrastructure.MatchDatabaseHelper;
 import capstat.infrastructure.MatchResultBlueprint;
 import capstat.infrastructure.PartialSequenceBlueprint;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Stream;
 
 /**
  * A class representing a book or ledger where all matches are stored, and from
@@ -37,6 +35,24 @@ public class ResultLedger {
 
 	public void registerResult(Match match) {
 //TODO:implemnet
+	}
+
+	public Set<MatchResult> getMatchesForUser(User user) {
+		Set<MatchResultBlueprint> blueprintSet = this.dbHelper
+				.getMatchesForUser(user
+				.getNickname());
+		Iterator<MatchResultBlueprint> iterator = blueprintSet.stream().
+				filter(b -> b.player1Nickname.equals(user.getNickname()) ||
+						b.player2Nickname.equals(user.getNickname())).iterator();
+		Set<MatchResult> ret = new HashSet<>();
+		while(iterator.hasNext()) {
+			ret.add(reconstituteFromBlueprint(iterator.next()));
+		}
+		return ret;
+	}
+
+	private MatchResult reconstituteFromBlueprint(MatchResultBlueprint blueprint) {
+		return new MatchResult(blueprint);
 	}
 
 	public MatchResultBlueprint createBlueprint(MatchResult result) {
