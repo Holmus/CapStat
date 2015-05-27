@@ -194,6 +194,7 @@ public class MatchController implements NotifyEventListener {
                             .getPlayerRoundsWon(losingPlayer));
             winner.setRanking(newRanking[0]);
             loser.setRanking(newRanking[1]);
+            ledger.save();
         }
     }
 }

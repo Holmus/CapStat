@@ -175,4 +175,10 @@ public class UserLedger {
         }
         return ret.toString();
     }
+
+    public void save() {
+        for (User user : this.users.values()) {
+            this.dbHelper.overwriteUser(this.createBlueprint(user));
+        }
+    }
 }
