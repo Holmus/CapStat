@@ -44,6 +44,7 @@ public class MatchViewController implements NotifyEventListener, Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources){
+        this.mc.setEndGameStrategy(this.mc.RANKED);
         mainPane.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
         //p1Name.setText(match.getPlayer(Match.Player.ONE).getName());
         //p2Name.setText(match.getPlayer(Match.Player.TWO).getName());
