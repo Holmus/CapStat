@@ -50,8 +50,9 @@ public class UserDatabaseFacadeTest {
 
     @Test
     public void getUserByNameTest() {
-        UserBlueprint userDBRow = userdb.getUsersByName(dummyRow1.name);
-        testUsersAreEqual(dummyRow1, userDBRow);
+        Set<UserBlueprint> userDBRows = userdb.getUsersByName(dummyRow1.name);
+        assertTrue(userDBRows.contains(dummyRow1));
+        assertFalse(userDBRows.contains(dummyRow2));
     }
 
     @Test
