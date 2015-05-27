@@ -36,7 +36,7 @@ public class MatchDatabaseFacadeTest {
 	}
 
 	@Before
-	public void addNewMatch() {
+	public void addNewMatch() throws InterruptedException {
 		dummyRow1 = getDummyRow(UserFactory.createDummyUser1());
 		dummyRow2 = getDummyRow(UserFactory.createDummyUser2());
 		dummyRow3 = getDummyRow(UserFactory.createDummyUser3());
@@ -45,18 +45,20 @@ public class MatchDatabaseFacadeTest {
 
 		dummyMatchResult1 = getDummyMatchResultBlueprint1();
 		dummyMatchResult2 = getDummyMatchResultBlueprint2();
-		userdb.removeUser(dummyRow1);
 		userdb.removeUser(dummyRow2);
 		userdb.removeUser(dummyRow3);
 		userdb.removeUser(dummyRow4);
+		userdb.removeUser(dummyRow1);
 		userdb.removeUser(guestUser);
 		userdb.addUser(dummyRow1);
 		userdb.addUser(dummyRow2);
 		userdb.addUser(dummyRow3);
 		userdb.addUser(dummyRow4);
 		userdb.addUser(guestUser);
+		Thread.sleep(200);
 		matchdb.addMatch(dummyMatchResult1);
 		matchdb.addMatch(dummyMatchResult2);
+		Thread.sleep(200);
 	}
 
 	@After
@@ -80,11 +82,11 @@ public class MatchDatabaseFacadeTest {
 		mrbs.add(dummyMatchResult1);
 		mrbs.add(dummyMatchResult2);
 		matchdb.addMatchSet(mrbs);
+		Thread.sleep(200);
 	}
 
 	@Test
 	public void testGetMatch() throws Exception {
-
 		MatchResultBlueprint mrb = matchdb.getMatchById(1);
 		testMatchesAreEqual(dummyMatchResult1, mrb);
 		mrb = matchdb.getMatchById(2);

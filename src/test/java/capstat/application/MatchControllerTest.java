@@ -32,10 +32,11 @@ public class MatchControllerTest {
         this.user2 = UserFactory.createDummyUser2();
         this.userDatabase.addUser(UserLedger.getInstance().createBlueprint
                 (user2));
+        Thread.sleep(200);
     }
 
     @After
-    public void tearDown() {
+    public void tearDown() throws InterruptedException {
         this.userDatabase.removeUser(UserLedger.getInstance().createBlueprint
                 (user1));
         this.userDatabase.removeUser(UserLedger.getInstance().createBlueprint

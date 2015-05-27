@@ -32,6 +32,7 @@ public class DatabaseConnectionTest {
 		this.db = dbConn.database;
 	}
 
+
 	/**
 	 * Deletes all users.
 	 */
@@ -75,38 +76,6 @@ public class DatabaseConnectionTest {
 		}
 
 		System.out.println ( "\nPRINTING SECOND USERS NICK USING RESULT.GETVALUE: " + result.formatCSV() + "\n");
-	}
-
-	/**
-	 * Inserts matches.
-	 */
-	@Test
-	public void insertMatches() {
-		// TODO
-	}
-
-	/**
-	 * Prints the matches.
-	 */
-	@Test
-	public void getMatches() {
-		// TODO
-	}
-
-	/**
-	 * Inserts throw sequences.
-	 */
-	@Test
-	public void insertThrowSequences() {
-		// TODO
-	}
-
-	/**
-	 * Prints everything currently in the database.
-	 */
-	@Test
-	public void getAll() {
-		//TODO
 	}
 
 }

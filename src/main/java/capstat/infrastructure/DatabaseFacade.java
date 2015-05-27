@@ -23,12 +23,13 @@ class DatabaseFacade implements UserDatabaseHelper, MatchDatabaseHelper {
 
     // Path and filename as string.
 	// TODO Fix/Check what happens if the files already exists with content?
-    File dbUserQueue = new File("dbuserqueue.txt");
-	File dbMatchResultQueue = new File("dbmatchqueue.txt");
-	File dbPartialSequenceQueue = new File("dbthrowsqueue.txt");
-
     DatabaseConnection db = new DatabaseConnection();
-    ITaskQueue txtUserQueue, txtMatchResultQueue, txtPartialSequenceQueue = null;
+    private File dbUserQueue = new File("dbuserqueue.txt");
+	private File dbMatchResultQueue = new File("dbmatchqueue.txt");
+	private File dbPartialSequenceQueue = new File("dbthrowsqueue.txt");
+	private ITaskQueue txtUserQueue, txtMatchResultQueue, txtPartialSequenceQueue = null;
+	private BackgroundThread backgroundThread;
+
 
 	// START USERS
 
@@ -36,23 +37,18 @@ class DatabaseFacade implements UserDatabaseHelper, MatchDatabaseHelper {
     public void addUser(final UserBlueprint user) {
         // ADDS USER INSERTION TO QUEUE
         try {
-            txtUserQueue = new TextFileTaskQueue(dbUserQueue);
-            txtUserQueue.add(userBlueprintToQueueEntry(user));
+	        if (txtUserQueue == null) {
+		        txtUserQueue = new TextFileTaskQueue(dbUserQueue);
+	        }
+	        txtUserQueue.add(userBlueprintToQueueEntry(user));
 
             //Start a new Thread that empties the task queue and inserts users
             // from the queue into the database.
-/*            new Thread(() -> {
-                while (txtUserQueue.hasElements()) {
-	                addUsersFromQueueToDatabase();
-                }
-                txtUserQueue.delete();
-            }).start();
-
-            */
-	        while (txtUserQueue.hasElements()) {
-		        addUsersFromQueueToDatabase();
+	        if (backgroundThread == null ) {
+		        backgroundThread = new BackgroundThread();
+	        } else if ( !backgroundThread.isAlive() ){
+		        backgroundThread.run();
 	        }
-	        txtUserQueue.delete();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -169,8 +165,12 @@ class DatabaseFacade implements UserDatabaseHelper, MatchDatabaseHelper {
 	public void addMatch(MatchResultBlueprint match) {
 		// ADDS MATCH INSERTION TO QUEUE
 		try {
-			txtMatchResultQueue = new TextFileTaskQueue(dbMatchResultQueue);
-			txtPartialSequenceQueue = new TextFileTaskQueue(dbPartialSequenceQueue);
+			if (txtMatchResultQueue == null) {
+				txtMatchResultQueue = new TextFileTaskQueue(dbMatchResultQueue);
+			}
+			if (txtPartialSequenceQueue == null) {
+				txtPartialSequenceQueue = new TextFileTaskQueue(dbPartialSequenceQueue);
+			}
 			txtMatchResultQueue.add(matchResultBlueprintToQueueEntry(match));
 			if (!match.sequences.isEmpty()) {
 				for (int i = 0 ; match.sequences.size() > i ; i++) {
@@ -180,28 +180,11 @@ class DatabaseFacade implements UserDatabaseHelper, MatchDatabaseHelper {
 
 			// Start a new Thread that empties the task queue and inserts users
 			// from the queue into the database.
-			/*new Thread(() -> {
-				while (txtMatchResultQueue.hasElements()) {
-					addMatchesFromQueueToDatabase();
-				}
-				txtMatchResultQueue.delete();
-			}).start();
-			*/
-			while (txtMatchResultQueue.hasElements()) {
-				addMatchesFromQueueToDatabase();
+			if (backgroundThread == null ) {
+				backgroundThread = new BackgroundThread();
+			} else if ( !backgroundThread.isAlive() ){
+				backgroundThread.run();
 			}
-			txtMatchResultQueue.delete();
-
-			/*new Thread(() -> {
-				while (txtPartialSequenceQueue.hasElements()) {
-					addPartialSequencesFromQueueToDatabase();
-				}
-				txtPartialSequenceQueue.delete();
-			}).start();*/
-			while (txtPartialSequenceQueue.hasElements()) {
-				addPartialSequencesFromQueueToDatabase();
-			}
-			txtPartialSequenceQueue.delete();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -408,6 +391,42 @@ class DatabaseFacade implements UserDatabaseHelper, MatchDatabaseHelper {
 
 	// END COMMON HELP METHODS
 
+
+	private class BackgroundThread extends Thread {
+
+		BackgroundThread() {
+			start();
+		}
+
+		public void run() {
+			boolean chores = true;
+			while(chores) {
+				chores = false;
+				if (txtUserQueue != null) {
+					while (txtUserQueue.hasElements()) {
+						chores = true;
+						addUsersFromQueueToDatabase();
+					}
+					txtUserQueue.delete();
+				}
+				if (txtMatchResultQueue != null) {
+					while (txtMatchResultQueue.hasElements()) {
+						chores = true;
+						addMatchesFromQueueToDatabase();
+					}
+					txtMatchResultQueue.delete();
+				}
+				if (txtPartialSequenceQueue != null) {
+					while (txtPartialSequenceQueue.hasElements()) {
+						chores = true;
+						addPartialSequencesFromQueueToDatabase();
+					}
+					txtPartialSequenceQueue.delete();
+				}
+
+			}
+		}
+	}
 }
 
 
