@@ -1,8 +1,5 @@
 package capstat.infrastructure;
 
-import capstat.model.Match;
-import capstat.model.MatchResult;
-import capstat.model.ThrowSequence;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.generated.db.capstat.tables.Matches;
@@ -81,6 +78,11 @@ class DatabaseFacade implements UserDatabaseHelper, MatchDatabaseHelper {
         userSet.forEach(this::addUser);
     }
 
+	public void overwriteUser(final UserBlueprint user) {
+		removeUser(user);
+		addUser(user);
+	}
+
     @Override
     public void removeUser(final UserBlueprint user) {
         db.database.deleteFrom(Users.USERS).where(Users.USERS.NICK.equal(user.nickname)).execute();
@@ -157,9 +159,8 @@ class DatabaseFacade implements UserDatabaseHelper, MatchDatabaseHelper {
 
 	// END USERS
 
+
 	// START MATCHES
-
-
 
 	@Override
 	public void addMatch(MatchResultBlueprint match) {

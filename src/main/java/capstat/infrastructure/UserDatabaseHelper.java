@@ -14,6 +14,7 @@ public interface UserDatabaseHelper {
      */
     void addUser(UserBlueprint user);
     void addUserSet(Set<UserBlueprint> userSet);
+    void overwriteUser(UserBlueprint user);
     void removeUser(UserBlueprint user);
     UserBlueprint getUserByNickname(String nickname);
     UserBlueprint getUserByName(String name);
