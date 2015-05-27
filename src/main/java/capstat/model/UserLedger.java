@@ -130,19 +130,7 @@ public class UserLedger {
             this.users.remove(user.getNickname());
         }
         this.users.put(user.getNickname(), user);
-        ChalmersAge chalmersAge = user.getChalmersAge();
-        LocalDate birthday = chalmersAge.getBirthday();
-        Admittance admittance = chalmersAge.getAdmittance();
-        UserBlueprint blueprint = new UserBlueprint(
-                user.getNickname(),
-                user.getName(),
-                user.getHashedPassword(),
-                birthday.getYear(),
-                birthday.getMonthValue(),
-                birthday.getDayOfMonth(),
-                admittance.getYear().getValue(),
-                admittance.getReadingPeriod().ordinal() + 1,
-                user.getRanking().getPoints());
+        UserBlueprint blueprint = createBlueprint(user);
         this.dbHelper.addUser(blueprint);
     }
 
