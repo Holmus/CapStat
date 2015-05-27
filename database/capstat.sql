@@ -51,10 +51,7 @@ CREATE TABLE Matches (
   p1Score       INT,
   p2Score       INT,
   startTime     LONG,
-  endTime       LONG,
-  FOREIGN KEY (p1) REFERENCES Users(nick),
-  FOREIGN KEY (p2) REFERENCES Users(nick),
-  FOREIGN KEY (spectator) REFERENCES Users(nick)
+  endTime       LONG
 );
 
 CREATE TABLE ThrowSequences (

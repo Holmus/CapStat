@@ -33,7 +33,7 @@ public class UserDatabaseFacadeTest {
         dummyRow2 = getDummyRow(UserFactory.createDummyUser2());
         userdb.addUser(dummyRow1);
         userdb.addUser(dummyRow2);
-        Thread.sleep(200);
+        Thread.sleep(300);
     }
 
     @After
@@ -50,7 +50,7 @@ public class UserDatabaseFacadeTest {
 
     @Test
     public void getUserByNameTest() {
-        UserBlueprint userDBRow = userdb.getUserByName(dummyRow1.name);
+        UserBlueprint userDBRow = userdb.getUsersByName(dummyRow1.name);
         testUsersAreEqual(dummyRow1, userDBRow);
     }
 

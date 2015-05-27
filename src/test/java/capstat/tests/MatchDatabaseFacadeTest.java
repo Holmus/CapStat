@@ -55,10 +55,10 @@ public class MatchDatabaseFacadeTest {
 		userdb.addUser(dummyRow3);
 		userdb.addUser(dummyRow4);
 		userdb.addUser(guestUser);
-		Thread.sleep(200);
+		Thread.sleep(300);
 		matchdb.addMatch(dummyMatchResult1);
 		matchdb.addMatch(dummyMatchResult2);
-		Thread.sleep(200);
+		Thread.sleep(300);
 	}
 
 	@After
@@ -82,7 +82,7 @@ public class MatchDatabaseFacadeTest {
 		mrbs.add(dummyMatchResult1);
 		mrbs.add(dummyMatchResult2);
 		matchdb.addMatchSet(mrbs);
-		Thread.sleep(200);
+		Thread.sleep(300);
 	}
 
 	@Test
