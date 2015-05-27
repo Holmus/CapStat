@@ -65,6 +65,7 @@ public class UserLedger {
     }
 
     private void overwriteUser(final User user) {
+        this.users.remove(user.getNickname());
         this.users.put(user.getNickname(), user);
         this.dbHelper.overwriteUser(this.createBlueprint(user));
     }
@@ -132,6 +133,17 @@ public class UserLedger {
         this.users.put(user.getNickname(), user);
         UserBlueprint blueprint = createBlueprint(user);
         this.dbHelper.addUser(blueprint);
+    }
+
+    public void removeUserFromLedger(User user) {
+        if (this.users.containsKey(user.getNickname())) {
+            this.users.remove(user.getNickname());
+        }
+        this.dbHelper.removeUser(createBlueprint(user));
+    }
+
+    public void clearCache() {
+        this.users.clear();
     }
 
     //Utils
