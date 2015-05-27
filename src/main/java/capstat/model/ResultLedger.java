@@ -39,6 +39,43 @@ public class ResultLedger {
 //TODO:implemnet
 	}
 
+    public MatchResultBlueprint createBlueprint(Match match) {
+        Instant endInstant = match.getEndTime();
+        LocalDateTime end = LocalDateTime.ofInstant(endInstant, ZoneId.systemDefault());
+        // Gives a string like YYYYMMDDHHMMSSXXX (second M = minute, X = millisecond)
+        String idString = String.format("%d%02d%02d%02d%02d%02d%d", end.getYear(), end.getMonthValue(), end.getDayOfMonth(), end.getHour(), end.getMinute(), end.getSecond(), endInstant.getNano() / 1000000);
+
+        long id = Long.parseLong(idString);
+        String player1Nickname = match.getPlayer(Match.Player.ONE).getNickname();
+        String player2Nickname = match.getPlayer(Match.Player.TWO).getNickname();
+        String spectatorNickname = match.getSpectator().getNickname();
+        int player1Score = match.getPlayer1Score();
+        int player2Score = match.getPlayer2Score();
+        long startTime = match.getStartTime().getEpochSecond();
+        long endTime = endInstant.getEpochSecond();
+
+        ThrowSequence sequence = match.getThrowSequence();
+        List<ThrowSequence.PartialSequence> sequences = sequence.getSequences();
+        List<PartialSequenceBlueprint> psbs = new LinkedList<>();
+        psbs = sequences
+            .stream()
+            .map(seq -> createBlueprint(seq))
+            .collect(Collectors.toList());
+
+        MatchResultBlueprint mrb = new MatchResultBlueprint(
+            id,
+            player1Nickname,
+            player2Nickname,
+            spectatorNickname,
+            player1Score,
+            player2Score,
+            startTime,
+            endTime,
+            psbs
+        );
+        return mrb;
+    }
+
     private static PartialSequenceBlueprint createBlueprint(ThrowSequence.PartialSequence ps) {
         boolean[] glasses;
         int startingPlayer;
