@@ -43,6 +43,7 @@ public class LoginControllerTest {
         //The password is hardcoded into the dummy user.
         assertTrue(lc.loginAsUser(user.getNickname(), "foobar"));
         assertTrue("New user is logged in", cp.getLoggedInUser().equals(user));
+        ul.removeUserFromLedger(user);
     }
 
     @Test
@@ -57,6 +58,7 @@ public class LoginControllerTest {
         assertFalse(lc.loginAsUser(user.getNickname(), "not boofaz"));
         assertFalse("New user has not been logged in", cp.getLoggedInUser()
                 .equals(user));
+        ul.removeUserFromLedger(user);
     }
 
 

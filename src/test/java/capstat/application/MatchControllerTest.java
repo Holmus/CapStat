@@ -41,6 +41,7 @@ public class MatchControllerTest {
                 (user1));
         this.userDatabase.removeUser(UserLedger.getInstance().createBlueprint
                 (user2));
+        UserLedger.getInstance().clearCache();
     }
 
     @Test
