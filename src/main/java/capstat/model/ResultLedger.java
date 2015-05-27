@@ -5,7 +5,6 @@ import capstat.infrastructure.MatchDatabaseHelper;
 import capstat.infrastructure.MatchResultBlueprint;
 import capstat.infrastructure.PartialSequenceBlueprint;
 
-import java.time.Instant;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -15,15 +14,25 @@ import java.util.Map;
  * A class representing a book or ledger where all matches are stored, and from
  * which matches can be retrieved. This class represents a repository in
  * the domain and delegates the issue of persistant sotrage of Match objects.
+ *
+ * This class is a Singleton, and a reference to the singleton object is
+ * obtained by calling getInstance.
  */
 public class ResultLedger {
-	private static UserLedger instance = UserLedger.getInstance();
+	private static ResultLedger instance;
 	private Map<String, User> users;
 	private MatchDatabaseHelper dbHelper;
 
 	private ResultLedger() {
 		this.users = new HashMap<>();
 		this.dbHelper = new DatabaseHelperFactory().createMatchQueryHelper();
+	}
+	
+	public static synchronized ResultLedger getInstance() {
+		if (instance == null)
+			instance = new ResultLedger();
+
+		return instance;
 	}
 
 	public void registerResult(Match match) {

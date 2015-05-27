@@ -74,7 +74,8 @@ public class MatchController implements NotifyEventListener {
 
     public void setNewGameState(Match.Glass[] glasses, Match.Player
             startingPlayer, boolean duelIsOngoing) {
-        this.match.manuallyChangeGameState(glasses, startingPlayer, duelIsOngoing);
+        this.match.manuallyChangeGameState(glasses, startingPlayer,
+                duelIsOngoing);
     }
 
     public void rewind() {
@@ -88,7 +89,12 @@ public class MatchController implements NotifyEventListener {
     @Override
     public void notifyEvent(final String event) {
         if (event.equals(Match.MATCH_ENDED))
+            this.saveGame();
             this.endGameStrategy.endGame();
+    }
+
+    private void saveGame() {
+        ResultLedger resultLedger = ResultLedger
     }
 
     //Inner classes
