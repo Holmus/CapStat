@@ -19,6 +19,9 @@ import java.util.stream.Stream;
 public class UserLedger {
 
     private static UserLedger instance;
+    //This map contains all active users in the system. This saves time, and
+    // also guarantees that there are no duplicate objects representing the
+    // same user.
     private Map<String, User> users;
     private UserDatabaseHelper dbHelper;
 
@@ -56,7 +59,14 @@ public class UserLedger {
         User user = blueprint == null ? null : this
                 .reconstituteUserFromBlueprint
                 (blueprint);
+        if (user != null)
+            this.overwriteUser(user);
         return user;
+    }
+
+    private void overwriteUser(final User user) {
+        this.users.put(user.getNickname(), user);
+        this.dbHelper.overwriteUser(this.createBlueprint(user));
     }
 
     private User reconstituteUserFromBlueprint(final UserBlueprint blueprint) {
@@ -120,19 +130,7 @@ public class UserLedger {
             this.users.remove(user.getNickname());
         }
         this.users.put(user.getNickname(), user);
-        ChalmersAge chalmersAge = user.getChalmersAge();
-        LocalDate birthday = chalmersAge.getBirthday();
-        Admittance admittance = chalmersAge.getAdmittance();
-        UserBlueprint blueprint = new UserBlueprint(
-                user.getNickname(),
-                user.getName(),
-                user.getHashedPassword(),
-                birthday.getYear(),
-                birthday.getMonthValue(),
-                birthday.getDayOfMonth(),
-                admittance.getYear().getValue(),
-                admittance.getReadingPeriod().ordinal() + 1,
-                user.getRanking().getPoints());
+        UserBlueprint blueprint = createBlueprint(user);
         this.dbHelper.addUser(blueprint);
     }
 

@@ -5,6 +5,7 @@ import capstat.model.*;
 
 /**
  * Created by Jakob on 20/05/15.
+ * @author hjorthjort
  *
  * Class to control the match in the model-layer
  *
@@ -13,12 +14,14 @@ import capstat.model.*;
 public class MatchController implements NotifyEventListener {
 
     private Match match;
-    private UserLedger ul = UserLedger.getInstance();
+    private UserLedger userLedger = UserLedger.getInstance();
+    private ResultLedger resultLedger = ResultLedger.getInstance();
     private EndGameStrategy endGameStrategy;
 
     public final EndGameStrategy UNRANKED = new UnrankedStrategy();
     public final EndGameStrategy RANKED = new RankedStrategy();
 
+    //Static methods
 
     /**
      * Creates a new Match using the MatchFactory.
@@ -27,6 +30,8 @@ public class MatchController implements NotifyEventListener {
     public static Match createNewMatch(){
         return MatchFactory.createDefaultMatch();
     }
+
+    //Creation
 
     /**
      * Creates a new MatchController with a match.
@@ -37,6 +42,8 @@ public class MatchController implements NotifyEventListener {
         this.match.addNotificationEventListener(Match.MATCH_ENDED, this);
         this.endGameStrategy = new UnrankedStrategy();
     }
+
+    //Gameplay
 
     /**
      * Starts the match in the Model-layer
@@ -59,12 +66,25 @@ public class MatchController implements NotifyEventListener {
         match.recordHit();
     }
 
-    public void setPlayer1(String text) {
-        final User p1 = ul.getUserByNickname(text);
+    //Match setup
+
+    /**
+     * Set which user is player 1. If the given nickname does not exist,
+     * player 1 will be set to null.
+     * @param nickname
+     */
+    public void setPlayer1(String nickname) {
+        final User p1 = userLedger.getUserByNickname(nickname);
         match.setPlayer1(p1);
     }
-    public void setPlayer2(String text) {
-        final User p2 = ul.getUserByNickname(text);
+
+    /**
+     * Set which user is player 2. If the given nickname does not exist,
+     * player 2 will be set to null.
+     * @param nickname
+     */
+    public void setPlayer2(String nickname) {
+        final User p2 = userLedger.getUserByNickname(nickname);
         match.setPlayer2(p2);
     }
 
@@ -72,11 +92,55 @@ public class MatchController implements NotifyEventListener {
         this.endGameStrategy = strategy;
     }
 
+    /**
+     * Make the match continue recording its sequence from this state.
+     * @param glasses the state of the glasses, active glass indicated by true
+     * @param startingPlayer which player has the next turn
+     * @param duelIsOngoing if there is a duel ongoing
+     */
+    public void setNewGameState(Match.Glass[] glasses, Match.Player
+            startingPlayer, boolean duelIsOngoing) {
+        this.match.manuallyChangeGameState(glasses, startingPlayer,
+                duelIsOngoing);
+    }
+
+    //Undo & Redo
+
+    /**
+     * Rewinds the throw sequence to previous state if possible.
+     */
+    public void rewind() {
+        this.match.rewind();
+    }
+
+    /**
+     * Forwards throw sequnece to next state, if possible.
+     */
+    public void forward() {
+        this.match.forward();
+    }
+
+    //Observer method
     @Override
     public void notifyEvent(final String event) {
         if (event.equals(Match.MATCH_ENDED))
+            this.saveGame();
             this.endGameStrategy.endGame();
     }
+
+    //Saving
+
+    /**
+     * Save this game.
+     * @throws IllegalStateException if the match is still ongoing.
+     */
+    private void saveGame() {
+        if (this.match.isOngoing())
+            throw new IllegalStateException("Match is not over");
+        this.resultLedger.registerResult(this.match);
+    }
+
+    //Inner classes
 
     /**
      * @author hjorthjort
@@ -85,16 +149,30 @@ public class MatchController implements NotifyEventListener {
         void endGame();
     }
 
-    public class UnrankedStrategy implements EndGameStrategy {
+    private class UnrankedStrategy implements EndGameStrategy {
         @Override
         public void endGame() {
             //do nothing
         }
     }
 
-    public class RankedStrategy implements EndGameStrategy {
+    private class RankedStrategy implements EndGameStrategy {
         @Override
         public void endGame() {
+            //First make sure that updating ranking is even meaningful. If
+            // not, end method execution.
+            UserLedger ledger = UserLedger.getInstance();
+            String player1Nickname = match.getPlayer(Match.Player.ONE) ==
+                    null ? null : match.getPlayer(Match.Player.ONE)
+                    .getNickname();
+            String player2Nickname = match.getPlayer(Match.Player.TWO) ==
+                    null ? null : match.getPlayer(Match.Player.TWO)
+                    .getNickname();
+            if (!ledger.doesUserExist(player1Nickname) ||
+                    !ledger.doesUserExist(player2Nickname))
+                return ;
+
+            //Then, update rankings
             Match.Player winningPlayer = null;
             try {
                 if (!match.isOngoing()) {
