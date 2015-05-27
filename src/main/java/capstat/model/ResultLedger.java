@@ -4,7 +4,11 @@ import capstat.infrastructure.database.DatabaseHelperFactory;
 import capstat.infrastructure.database.MatchDatabaseHelper;
 import capstat.infrastructure.database.MatchResultBlueprint;
 import capstat.infrastructure.database.PartialSequenceBlueprint;
+import capstat.model.ThrowSequence;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.*;
 
 /**
@@ -24,7 +28,7 @@ public class ResultLedger {
 		this.users = new HashMap<>();
 		this.dbHelper = new DatabaseHelperFactory().createMatchQueryHelper();
 	}
-	
+
 	public static synchronized ResultLedger getInstance() {
 		if (instance == null)
 			instance = new ResultLedger();
@@ -33,8 +37,71 @@ public class ResultLedger {
 	}
 
 	public void registerResult(Match match) {
-//TODO:implemnet
+        MatchResultBlueprint blueprint = createBlueprint(match);
+        this.dbHelper.addMatch(blueprint);
 	}
+
+    public MatchResultBlueprint createBlueprint(Match match) {
+        Instant endInstant = match.getEndTime();
+        LocalDateTime end = LocalDateTime.ofInstant(endInstant, ZoneId.systemDefault());
+        // Gives a string like YYYYMMDDHHMMSSXXX (second M = minute, X = millisecond)
+        String idString = String.format("%d%02d%02d%02d%02d%02d%d", end.getYear(), end.getMonthValue(), end.getDayOfMonth(), end.getHour(), end.getMinute(), end.getSecond(), endInstant.getNano() / 1000000);
+
+        long id = Long.parseLong(idString);
+        String player1Nickname = match.getPlayer(Match.Player.ONE).getNickname();
+        String player2Nickname = match.getPlayer(Match.Player.TWO).getNickname();
+        String spectatorNickname = match.getSpectator().getNickname();
+        int player1Score = match.getPlayer1Score();
+        int player2Score = match.getPlayer2Score();
+        long startTime = match.getStartTime().getEpochSecond();
+        long endTime = endInstant.getEpochSecond();
+
+        ThrowSequence sequence = match.getThrowSequence();
+        List<ThrowSequence.PartialSequence> sequences = sequence.getSequences();
+        List<PartialSequenceBlueprint> psbs = new LinkedList<>();
+        psbs = sequences
+            .stream()
+            .map(seq -> createBlueprint(seq))
+            .collect(Collectors.toList());
+
+        MatchResultBlueprint mrb = new MatchResultBlueprint(
+            id,
+            player1Nickname,
+            player2Nickname,
+            spectatorNickname,
+            player1Score,
+            player2Score,
+            startTime,
+            endTime,
+            psbs
+        );
+        return mrb;
+    }
+
+    private static PartialSequenceBlueprint createBlueprint(ThrowSequence.PartialSequence ps) {
+        boolean[] glasses;
+        int startingPlayer;
+        boolean throwBeforeWasHit;
+        boolean[] sequence;
+
+        Match.Glass[] glassObjs = ps.getGlasses();
+        glasses = new boolean[glassObjs.length];
+        for (int i = 0; i < glasses.length; i++) {
+            glasses[i] = glassObjs[i].isActive();
+        }
+
+        startingPlayer = ps.getStartingPlayer() == Match.Player.ONE ? 1 : 2;
+
+        throwBeforeWasHit = ps.throwBeforeWasHit();
+
+        List<Match.Throw> throwSequence = ps.getSequence();
+        sequence = new boolean[throwSequence.size()];
+        for (int i = 0; i < sequence.length; i++) {
+            sequence[i] = throwSequence.get(i) == Match.Throw.HIT;
+        }
+
+        return new PartialSequenceBlueprint(glasses, startingPlayer, throwBeforeWasHit, sequence);
+    }
 
 	public Set<MatchResult> getMatchesForUser(User user) {
 		Set<MatchResultBlueprint> blueprintSet = this.dbHelper
