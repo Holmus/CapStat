@@ -25,6 +25,10 @@ public class SingleMatchCalculator {
         this.mr = mr;
     }
 
+    public MatchResult getMatchResult() {
+        return mr;
+    }
+
     /**
      * Calculates the accuracy for the given player. The accuracy is given as a
      * double in the range [0, 1].
@@ -45,6 +49,27 @@ public class SingleMatchCalculator {
         total = getTotalNumberOfThrows(player);
 
         return (double) hits / (double) total;
+    }
+
+    /**
+     * Gets accuracy for this User. This can be helpful in cases where the
+     * client is unsure if the given User is player 1 or player 2.
+     * @param user
+     * @return the accuracy of this User
+     * @throws IllegalArgumentException if the User did not play this match
+     */
+    public double getAccuracy(User user) {
+        User p1 = this.mr.getPlayer1();
+        User p2 = this.mr.getPlayer2();
+        if (user.equals(p1)) {
+            return this.getAccuracy(Match.Player.ONE);
+        }
+        else if (user.equals(p2)) {
+            return this.getAccuracy(Match.Player.TWO);
+        } else {
+            throw new IllegalArgumentException("User is not in this match");
+        }
+
     }
 
     /**
