@@ -13,11 +13,12 @@ import java.io.IOException;
 import java.util.*;
 
 /**
- * @author hjorthjort
- *
- * Using CSV standard to store database data as strings
+ * A facade to be used for interaction to the database.
+ * This is divided into three major parts:
+ * * Interaction with the User table.
+ * * Interaction with the Match (and ThrowSequence) table.
+ * * Common methods, mostly conversions between formats.
  */
-//TODO Make class implement a MatchDatabaseHelper
 class DatabaseFacade implements UserDatabaseHelper, MatchDatabaseHelper {
 
     // Path and filename as string.
@@ -32,6 +33,9 @@ class DatabaseFacade implements UserDatabaseHelper, MatchDatabaseHelper {
 
 	// START USERS
 
+	/**
+	 * {@inheritDoc}
+	 */
     @Override
     public void addUser(final UserBlueprint user) {
         // ADDS USER INSERTION TO QUEUE
@@ -75,53 +79,73 @@ class DatabaseFacade implements UserDatabaseHelper, MatchDatabaseHelper {
         }
     }
 
+	/**
+	 * {@inheritDoc}
+	 */
     @Override
     public void addUserSet(final Set<UserBlueprint> userSet) {
         userSet.forEach(this::addUser);
     }
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public void overwriteUser(final UserBlueprint user) {
 		removeUser(user);
 		addUser(user);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
     @Override
     public void removeUser(final UserBlueprint user) {
         db.database.deleteFrom(Users.USERS).where(Users.USERS.NICK.equal(user.nickname)).execute();
         //TODO check if this is done or not.
     }
 
-    /**
-     * @param nickname the nickname of the user to be found
-     * @return user blueprint for the user with the given nickname, if that
-     * user exists in the databse. returns null otherwise.
-     */
+	/**
+	 * {@inheritDoc}
+	 */
     @Override
     public UserBlueprint getUserByNickname(final String nickname) {
         Result<Record> result = db.database.select().from(Users.USERS).where(Users.USERS.NICK.equal(nickname)).fetch();
 	    Set<UserBlueprint> ub = getUsersFromResult(result);
 	    return ub.iterator().hasNext() ? ub.iterator().next() : null;
     }
+
+	/**
+	 * {@inheritDoc}
+	 */
     @Override
-    public UserBlueprint getUserByName(final String name) {
+    public Set<UserBlueprint> getUsersByName(final String name) {
         //TODO A user cannot be identified by name, this could result in more than one user entry. now only returns the first found.
         Result<Record> result = db.database.select().from(Users.USERS).where(Users.USERS.NAME.equal(name)).fetch();
-	    Set<UserBlueprint> ub = getUsersFromResult(result);
-	    return ub.iterator().hasNext() ? ub.iterator().next() : null;
+	    return getUsersFromResult(result);
     }
 
+	/**
+	 * {@inheritDoc}
+	 */
     @Override
     public Set<UserBlueprint> getUsersByNicknameMatch(final String regex) {
         Result<Record> result = db.database.select().from(Users.USERS).where(Users.USERS.NICK.likeRegex("" + regex)).fetch();
         return getUsersFromResult(result);
     }
 
+	/**
+	 * {@inheritDoc}
+	 */
     @Override
     public Set<UserBlueprint> getUsersByNameMatch(final String regex) {
         Result<Record> result = db.database.select().from(Users.USERS).where(Users.USERS.NAME.likeRegex(regex)).fetch();
         return getUsersFromResult(result);
     }
 
+	/**
+	 * {@inheritDoc}
+	 */
     @Override
     public Set<UserBlueprint> getUsersInELORankRange(final double minELO, final double maxELO) {
         Result<Record> result = db.database.select().from(Users.USERS).where(Users.USERS.ELORANK.between(minELO).and(maxELO)).fetch();
@@ -141,6 +165,9 @@ class DatabaseFacade implements UserDatabaseHelper, MatchDatabaseHelper {
         return userSet;
     }
 
+	/*
+     * Using CSV standard to store database data as strings
+     */
     private String userBlueprintToQueueEntry(UserBlueprint ubp) {
         return ubp.nickname + "," +
                 ubp.name + "," +
@@ -164,6 +191,9 @@ class DatabaseFacade implements UserDatabaseHelper, MatchDatabaseHelper {
 
 	// START MATCHES
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void addMatch(MatchResultBlueprint match) {
 		// ADDS MATCH INSERTION TO QUEUE
@@ -239,11 +269,17 @@ class DatabaseFacade implements UserDatabaseHelper, MatchDatabaseHelper {
 
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void addMatchSet(Set<MatchResultBlueprint> matchSet) {
 		matchSet.forEach(this::addMatch);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void removeMatch(long id) {
 		db.database.deleteFrom(Throwsequences.THROWSEQUENCES)
@@ -253,6 +289,9 @@ class DatabaseFacade implements UserDatabaseHelper, MatchDatabaseHelper {
 				.execute();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public MatchResultBlueprint getMatchById(long id) {
 		Result<Record> result = db.database.select().from(Matches.MATCHES)
@@ -262,6 +301,9 @@ class DatabaseFacade implements UserDatabaseHelper, MatchDatabaseHelper {
 		return mrbSet.iterator().hasNext() ? mrbSet.iterator().next() : null;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Set<MatchResultBlueprint> getAllMatches() {
 		Result<Record> result = db.database.select().from(Matches.MATCHES)
@@ -269,6 +311,9 @@ class DatabaseFacade implements UserDatabaseHelper, MatchDatabaseHelper {
 		return getMatchesFromResult(result);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Set<MatchResultBlueprint> getMatchesForUser(String player) {
 		Result<Record> result = db.database.select().from(Matches.MATCHES)
@@ -278,6 +323,9 @@ class DatabaseFacade implements UserDatabaseHelper, MatchDatabaseHelper {
 		return getMatchesFromResult(result);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Set<MatchResultBlueprint> getMatchesForUsers(String p1, String p2) {
 			Result<Record> result = db.database.select().from(Matches.MATCHES)
@@ -289,6 +337,9 @@ class DatabaseFacade implements UserDatabaseHelper, MatchDatabaseHelper {
 			return getMatchesFromResult(result);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Set<MatchResultBlueprint> getMatchesInDateRange(long epochFrom, long epochTo) {
 		Result<Record> result = db.database.select().from(Matches.MATCHES)
@@ -297,6 +348,9 @@ class DatabaseFacade implements UserDatabaseHelper, MatchDatabaseHelper {
 		return getMatchesFromResult(result);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Set<MatchResultBlueprint> getMatchesForSpectator(String spectator) {
 		Result<Record> result = db.database.select().from(Matches.MATCHES)
@@ -305,7 +359,7 @@ class DatabaseFacade implements UserDatabaseHelper, MatchDatabaseHelper {
 		return getMatchesFromResult(result);
 	}
 
-	public List<PartialSequenceBlueprint> getPartialSequencesByMatchId(long id) {
+	private List<PartialSequenceBlueprint> getPartialSequencesByMatchId(long id) {
 		Result<Record> result = db.database.select().from(Throwsequences.THROWSEQUENCES)
 				.where(Throwsequences.THROWSEQUENCES.MATCHID.equal(String.valueOf(id))).fetch();
 		return getPartialSequencesFromResult(result);
@@ -343,12 +397,17 @@ class DatabaseFacade implements UserDatabaseHelper, MatchDatabaseHelper {
 		return matchSet;
 	}
 
+	/*
+	 * Using CSV standard to store database data as strings
+	 */
 	private String matchResultBlueprintToQueueEntry(MatchResultBlueprint mrb) {
 		return String.format("%d,%s,%s,%s,%d,%d,%d,%d", mrb.id, mrb.player1Nickname, mrb.player2Nickname,
 				mrb.spectatorNickname, mrb.player1score, mrb.player2score, mrb.startTime, mrb.endTime);
 	}
 
-
+	/*
+	 * Using CSV standard to store database data as strings
+	 */
 	private String partialSequenceBlueprintToQueueEntry(PartialSequenceBlueprint psb) {
 		return booleansTobitString(psb.glasses) + "," +
 				psb.startingPlayer + "," +
