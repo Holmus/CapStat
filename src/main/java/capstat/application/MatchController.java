@@ -85,17 +85,6 @@ public class MatchController implements NotifyEventListener {
         this.match.forward();
     }
 
-    /**
-     * Convenience method for making a new match ranked
-     * @param ranked
-     */
-    public void makeRanked(boolean ranked) {
-        if (ranked)
-            this.setEndGameStrategy(RANKED);
-        else
-            this.setEndGameStrategy(UNRANKED);
-    }
-
     @Override
     public void notifyEvent(final String event) {
         if (event.equals(Match.MATCH_ENDED))
