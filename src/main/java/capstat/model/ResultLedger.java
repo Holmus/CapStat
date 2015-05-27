@@ -32,7 +32,7 @@ public class ResultLedger {
 		this.users = new HashMap<>();
 		this.dbHelper = new DatabaseHelperFactory().createMatchQueryHelper();
 	}
-	
+
 	public static synchronized ResultLedger getInstance() {
 		if (instance == null)
 			instance = new ResultLedger();
@@ -41,7 +41,8 @@ public class ResultLedger {
 	}
 
 	public void registerResult(Match match) {
-//TODO:implemnet
+        MatchResultBlueprint blueprint = createBlueprint(match);
+        this.dbHelper.addMatch(blueprint);
 	}
 
     public MatchResultBlueprint createBlueprint(Match match) {
