@@ -1,6 +1,5 @@
-package capstat.infrastructure;
+package capstat.infrastructure.database;
 
-import java.util.Date;
 import java.util.Set;
 
 /**

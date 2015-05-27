@@ -1,7 +1,7 @@
 package capstat.model;
 
-import capstat.infrastructure.MatchResultBlueprint;
-import capstat.infrastructure.PartialSequenceBlueprint;
+import capstat.infrastructure.database.MatchResultBlueprint;
+import capstat.infrastructure.database.PartialSequenceBlueprint;
 
 import java.time.Instant;
 import java.util.LinkedList;

@@ -1,4 +1,4 @@
-package capstat.infrastructure;
+package capstat.infrastructure.database;
 
 import org.jooq.DSLContext;
 import org.jooq.SQLDialect;
@@ -15,7 +15,7 @@ import java.sql.SQLException;
  * directly, keep in mind that it might be deprecated at any moment without
  * notice.
  *
- * Instead use {@link capstat.infrastructure.DatabaseHelperFactory} to create
+ * Instead use {@link DatabaseHelperFactory} to create
  * the kind of database helper you need. This method for talking to the
  * database is recommended way, and the only one guaranteed to work will
  * later versions of the program.

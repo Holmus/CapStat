@@ -1,8 +1,8 @@
 package capstat.tests;
 
-import capstat.infrastructure.DatabaseHelperFactory;
-import capstat.infrastructure.UserBlueprint;
-import capstat.infrastructure.UserDatabaseHelper;
+import capstat.infrastructure.database.DatabaseHelperFactory;
+import capstat.infrastructure.database.UserBlueprint;
+import capstat.infrastructure.database.UserDatabaseHelper;
 import capstat.model.*;
 import org.junit.After;
 import org.junit.Before;

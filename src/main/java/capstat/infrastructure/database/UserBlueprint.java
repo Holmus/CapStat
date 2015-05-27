@@ -1,6 +1,4 @@
-package capstat.infrastructure;
-
-import capstat.model.Admittance;
+package capstat.infrastructure.database;
 
 import java.time.Year;
 

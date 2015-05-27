@@ -1,7 +1,7 @@
 package capstat.application;
 
-import capstat.infrastructure.DatabaseHelperFactory;
-import capstat.infrastructure.UserDatabaseHelper;
+import capstat.infrastructure.database.DatabaseHelperFactory;
+import capstat.infrastructure.database.UserDatabaseHelper;
 import capstat.model.*;
 import org.junit.After;
 import org.junit.Before;

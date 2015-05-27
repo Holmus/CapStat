@@ -1,6 +1,6 @@
 package capstat.application;
 
-import capstat.infrastructure.NotifyEventListener;
+import capstat.infrastructure.eventbus.NotifyEventListener;
 import capstat.model.*;
 
 /**

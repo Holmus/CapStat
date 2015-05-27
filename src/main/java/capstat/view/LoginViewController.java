@@ -1,8 +1,8 @@
 package capstat.view;
 
 import capstat.application.LoginController;
-import capstat.infrastructure.EventBus;
-import capstat.infrastructure.NotifyEventListener;
+import capstat.infrastructure.eventbus.EventBus;
+import capstat.infrastructure.eventbus.NotifyEventListener;
 import capstat.model.UserLedger;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;

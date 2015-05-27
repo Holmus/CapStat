@@ -1,12 +1,11 @@
 package capstat.model;
 
-import capstat.infrastructure.DatabaseHelperFactory;
-import capstat.infrastructure.MatchDatabaseHelper;
-import capstat.infrastructure.MatchResultBlueprint;
-import capstat.infrastructure.PartialSequenceBlueprint;
+import capstat.infrastructure.database.DatabaseHelperFactory;
+import capstat.infrastructure.database.MatchDatabaseHelper;
+import capstat.infrastructure.database.MatchResultBlueprint;
+import capstat.infrastructure.database.PartialSequenceBlueprint;
 
 import java.util.*;
-import java.util.stream.Stream;
 
 /**
  * A class representing a book or ledger where all matches are stored, and from

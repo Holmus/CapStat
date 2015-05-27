@@ -1,7 +1,7 @@
 package capstat.view;
 
 import capstat.application.RegisterController;
-import capstat.infrastructure.EventBus;
+import capstat.infrastructure.eventbus.EventBus;
 import capstat.model.Admittance;
 import capstat.model.UserLedger;
 import javafx.application.Platform;

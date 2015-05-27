@@ -1,7 +1,7 @@
 package capstat.view;
 import capstat.application.MatchController;
-import capstat.infrastructure.EventBus;
-import capstat.infrastructure.NotifyEventListener;
+import capstat.infrastructure.eventbus.EventBus;
+import capstat.infrastructure.eventbus.NotifyEventListener;
 import capstat.model.Match;
 import capstat.model.UserLedger;
 import javafx.application.Platform;

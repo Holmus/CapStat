@@ -1,4 +1,4 @@
-package capstat.infrastructure;
+package capstat.infrastructure.eventbus;
 
 import java.util.HashMap;
 import java.util.HashSet;

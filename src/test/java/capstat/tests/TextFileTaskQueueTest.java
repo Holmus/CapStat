@@ -11,12 +11,10 @@ import org.junit.Test;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.NoSuchElementException;
 
-import capstat.infrastructure.ITaskQueue;
-import capstat.infrastructure.TextFileTaskQueue;
+import capstat.infrastructure.taskqueue.ITaskQueue;
+import capstat.infrastructure.taskqueue.TextFileTaskQueue;
 
 public class TextFileTaskQueueTest {
 

@@ -1,11 +1,9 @@
 package capstat.model;
 
-import capstat.infrastructure.DataEventListener;
-import capstat.infrastructure.EventBus;
-import capstat.infrastructure.NotifyEventListener;
+import capstat.infrastructure.eventbus.EventBus;
+import capstat.infrastructure.eventbus.NotifyEventListener;
 
 import java.time.Instant;
-import java.util.Random;
 
 /**
  * A class representing a match of caps. It encapsulates most behavior that

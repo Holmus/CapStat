@@ -1,4 +1,4 @@
-package capstat.infrastructure;
+package capstat.infrastructure.eventbus;
 
 /**
  * To register for notification events on the event bus, a client must

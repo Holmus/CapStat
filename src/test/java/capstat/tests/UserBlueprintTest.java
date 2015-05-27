@@ -1,6 +1,6 @@
 package capstat.tests;
 
-import capstat.infrastructure.UserBlueprint;
+import capstat.infrastructure.database.UserBlueprint;
 import capstat.model.ChalmersAge;
 import capstat.model.User;
 import capstat.model.UserFactory;

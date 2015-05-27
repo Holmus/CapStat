@@ -1,11 +1,10 @@
 package capstat.tests;
 
-import capstat.infrastructure.DataEventListener;
-import capstat.infrastructure.EventBus;
-import capstat.infrastructure.NotifyEventListener;
+import capstat.infrastructure.eventbus.DataEventListener;
+import capstat.infrastructure.eventbus.EventBus;
+import capstat.infrastructure.eventbus.NotifyEventListener;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import static org.junit.Assert.assertFalse;

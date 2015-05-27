@@ -1,6 +1,6 @@
 package capstat.tests;
 
-import capstat.infrastructure.NotifyEventListener;
+import capstat.infrastructure.eventbus.NotifyEventListener;
 import capstat.model.Match;
 import capstat.model.User;
 import capstat.model.MatchFactory;

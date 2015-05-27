@@ -1,13 +1,12 @@
 package capstat.tests;
 
-import capstat.infrastructure.DatabaseConnection;
+import capstat.infrastructure.database.DatabaseConnection;
 import org.jooq.DSLContext;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.generated.db.capstat.tables.Users;
 import org.jooq.generated.db.capstat.tables.records.UsersRecord;
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
 

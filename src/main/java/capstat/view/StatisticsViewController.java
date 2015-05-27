@@ -2,7 +2,7 @@ package capstat.view;
 
 import capstat.application.LoginController;
 import capstat.application.StatisticsController;
-import capstat.infrastructure.EventBus;
+import capstat.infrastructure.eventbus.EventBus;
 import capstat.model.CapStat;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -89,7 +89,8 @@ public class StatisticsViewController implements Initializable{
         }
     }
     public Double[] getXArray(){
-            return sc.getData(XComboBox.getSelectionModel().getSelectedItem().toString(), cs.getLoggedInUser());
+            return sc.getData(XComboBox.getSelectionModel().getSelectedItem()
+                    .toString(), cs.getLoggedInUser());
 
     }
     public Double[] getYArray(){

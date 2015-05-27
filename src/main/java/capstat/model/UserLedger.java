@@ -1,8 +1,8 @@
 package capstat.model;
 
-import capstat.infrastructure.DatabaseHelperFactory;
-import capstat.infrastructure.UserBlueprint;
-import capstat.infrastructure.UserDatabaseHelper;
+import capstat.infrastructure.database.DatabaseHelperFactory;
+import capstat.infrastructure.database.UserBlueprint;
+import capstat.infrastructure.database.UserDatabaseHelper;
 
 import java.time.LocalDate;
 import java.time.Year;

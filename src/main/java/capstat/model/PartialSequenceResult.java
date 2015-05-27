@@ -2,8 +2,7 @@ package capstat.model;
 
 import java.util.Arrays;
 
-import capstat.infrastructure.PartialSequenceBlueprint;
-import capstat.model.Match;
+import capstat.infrastructure.database.PartialSequenceBlueprint;
 
 /**
  * An immutable value class representing a partial sequence. To preserve the

@@ -7,8 +7,8 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
-import capstat.infrastructure.MatchResultBlueprint;
-import capstat.infrastructure.PartialSequenceBlueprint;
+import capstat.infrastructure.database.MatchResultBlueprint;
+import capstat.infrastructure.database.PartialSequenceBlueprint;
 import capstat.model.Match;
 import capstat.model.MatchResult;
 import capstat.model.PartialSequenceResult;

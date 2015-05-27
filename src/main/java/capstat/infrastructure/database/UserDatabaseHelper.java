@@ -1,4 +1,4 @@
-package capstat.infrastructure;
+package capstat.infrastructure.database;
 
 import java.util.Set;
 

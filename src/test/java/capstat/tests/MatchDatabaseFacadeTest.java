@@ -1,6 +1,6 @@
 package capstat.tests;
 
-import capstat.infrastructure.*;
+import capstat.infrastructure.database.*;
 import capstat.model.Admittance;
 import capstat.model.ELORanking;
 import capstat.model.User;

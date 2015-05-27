@@ -1,4 +1,4 @@
-package capstat.infrastructure;
+package capstat.infrastructure.taskqueue;
 
 import java.io.IOException;
 import java.util.NoSuchElementException;

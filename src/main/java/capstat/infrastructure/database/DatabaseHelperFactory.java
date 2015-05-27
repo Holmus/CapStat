@@ -1,4 +1,4 @@
-package capstat.infrastructure;
+package capstat.infrastructure.database;
 
 /**
  * A class for dependency injection of the facades for interacting with the

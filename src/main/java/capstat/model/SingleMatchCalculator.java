@@ -6,13 +6,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import capstat.infrastructure.EventBus;
-import capstat.infrastructure.NotifyEventListener;
-import capstat.infrastructure.PartialSequenceBlueprint;
-import capstat.model.Match;
-import capstat.model.MatchFactory;
-import capstat.model.MatchResult;
-import capstat.model.PartialSequenceResult;
+import capstat.infrastructure.eventbus.EventBus;
+import capstat.infrastructure.eventbus.NotifyEventListener;
+import capstat.infrastructure.database.PartialSequenceBlueprint;
 
 /**
  * @author Christian Persson

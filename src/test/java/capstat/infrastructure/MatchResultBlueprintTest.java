@@ -1,5 +1,6 @@
 package capstat.infrastructure;
 
+import capstat.infrastructure.database.MatchResultBlueprint;
 import org.junit.Before;
 import org.junit.Test;
 

@@ -1,5 +1,7 @@
-package capstat.infrastructure;
+package capstat.infrastructure.database;
 
+import capstat.infrastructure.taskqueue.ITaskQueue;
+import capstat.infrastructure.taskqueue.TextFileTaskQueue;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.generated.db.capstat.tables.Matches;
