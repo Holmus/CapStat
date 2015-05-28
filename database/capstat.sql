@@ -36,7 +36,7 @@ GRANT ALL PRIVILEGES ON mysql.proc TO 'capstat_user'@'localhost';
 CREATE TABLE Users (
   nick          VARCHAR(30)   PRIMARY KEY,
   name          VARCHAR(30),
-  pass          VARCHAR(300),
+  pass          VARCHAR(100),
   birthday      DATE,
   admittanceYear  INT,
   admittanceReadingPeriod INT,
@@ -44,7 +44,7 @@ CREATE TABLE Users (
 );
 
 CREATE TABLE Matches (
-  id            VARCHAR(10)       PRIMARY KEY,
+  id            VARCHAR(30)       PRIMARY KEY,
   p1            VARCHAR(30) REFERENCES Users(nick),
   p2            VARCHAR(30) REFERENCES Users(nick),
   spectator     VARCHAR(30) REFERENCES Users(nick),
@@ -55,7 +55,7 @@ CREATE TABLE Matches (
 );
 
 CREATE TABLE ThrowSequences (
-  matchId       VARCHAR(10),
+  matchId       VARCHAR(30),
   sequenceIndex INT,
   glasses       CHAR(20),
   startingPlayer  VARCHAR(30),
@@ -68,7 +68,7 @@ CREATE TABLE ThrowSequences (
 
 CREATE TABLE Attends(
   userNick      VARCHAR(30),
-  MatchId       VARCHAR(10),
+  MatchId       VARCHAR(30),
   FOREIGN KEY (userNick) REFERENCES Users(nick),
   FOREIGN KEY (MatchId) REFERENCES Matches(id)
 );
