@@ -20,7 +20,10 @@ import java.time.Instant;
  * updates from all matches when they update their state.
  * To get notifications from a specific instance of a match only, the client may
  * use the methods implemented for subscription in the Match interface for
- * convenience.
+ * convenience. It will then receive notifications with an event string
+ * consisting of the constant for the event, e.g. MATCH_ENDED, and the
+ * eventId for this match. A match will send both a general MATCH_ENDED
+ * event, as well as one with the string MATCH_ENDED + getEventId().
  *
  * @author hjorthjort
  * @reviewed by holmus
