@@ -1,9 +1,9 @@
 package capstat.application;
 
 import capstat.model.CapStat;
-import capstat.model.Security;
-import capstat.model.User;
-import capstat.model.UserLedger;
+import capstat.model.user.Security;
+import capstat.model.user.User;
+import capstat.model.user.UserLedger;
 
 /**
  * Created by Jakob on 20/05/15.

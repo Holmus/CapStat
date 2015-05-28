@@ -1,4 +1,4 @@
-package capstat.model;
+package capstat.model.user;
 
 import capstat.infrastructure.database.DatabaseHelperFactory;
 import capstat.infrastructure.database.UserBlueprint;

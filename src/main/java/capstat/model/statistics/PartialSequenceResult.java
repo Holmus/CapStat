@@ -1,12 +1,14 @@
-package capstat.model;
+package capstat.model.statistics;
 
 import java.util.Arrays;
 
 import capstat.infrastructure.database.PartialSequenceBlueprint;
+import capstat.model.match.Match;
+import capstat.model.match.ThrowSequence;
 
 /**
  * An immutable value class representing a partial sequence. To preserve the
- * immutability of {@link capstat.model.ThrowSequence.PartialSequence} and
+ * immutability of {@link ThrowSequence.PartialSequence} and
  * make sure that no extra functionality needs to be added to the {@link
  * PartialSequenceBlueprint} class if it is needed in the domain layer. This
  * class may be extended for added funcionality in the domain layer.

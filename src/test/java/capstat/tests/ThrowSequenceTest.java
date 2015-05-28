@@ -1,10 +1,9 @@
 package capstat.tests;
 
-import capstat.model.*;
+import capstat.model.match.Match;
+import capstat.model.match.ThrowSequence;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.util.Random;
 
 import static org.junit.Assert.*;
 

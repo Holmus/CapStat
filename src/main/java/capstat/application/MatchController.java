@@ -1,7 +1,12 @@
 package capstat.application;
 
 import capstat.infrastructure.eventbus.NotifyEventListener;
-import capstat.model.*;
+import capstat.model.match.Match;
+import capstat.model.match.MatchFactory;
+import capstat.model.statistics.ResultLedger;
+import capstat.model.user.ELORanking;
+import capstat.model.user.User;
+import capstat.model.user.UserLedger;
 
 /**
  * Created by Jakob on 20/05/15.
@@ -188,8 +193,10 @@ public class MatchController implements NotifyEventListener {
             // winningPlayer has not been declared to somehting other than null.
             User winner = match.getPlayer(winningPlayer);
             User loser = match.getPlayer(losingPlayer);
-            double[] newRanking = ELORanking.calculateNewRanking(winner.getRanking(),
-                    loser.getRanking(), match.getPlayerRoundsWon(winningPlayer), match
+            double[] newRanking = ELORanking.calculateNewRanking(winner
+                            .getRanking(),
+                    loser.getRanking(), match.getPlayerRoundsWon
+                            (winningPlayer), match
                             .getPlayerRoundsWon(losingPlayer));
             winner.setRanking(newRanking[0]);
             loser.setRanking(newRanking[1]);

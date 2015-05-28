@@ -1,4 +1,4 @@
-package capstat.model;
+package capstat.model.user;
 
 import java.time.LocalDate;
 

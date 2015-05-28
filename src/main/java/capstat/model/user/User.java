@@ -1,4 +1,4 @@
-package capstat.model;
+package capstat.model.user;
 
 /**
  * A User is the root of an aggregate containing among other things a ranking

@@ -3,7 +3,7 @@ package capstat.view;
 import capstat.application.LoginController;
 import capstat.infrastructure.eventbus.EventBus;
 import capstat.infrastructure.eventbus.NotifyEventListener;
-import capstat.model.UserLedger;
+import capstat.model.user.UserLedger;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;

@@ -1,7 +1,6 @@
-package capstat.model;
+package capstat.model.user;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.Year;
 
 /**

@@ -1,4 +1,4 @@
-package capstat.model;
+package capstat.model.match;
 
 import java.util.LinkedList;
 import java.util.List;

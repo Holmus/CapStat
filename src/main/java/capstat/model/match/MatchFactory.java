@@ -1,6 +1,6 @@
-package capstat.model;
+package capstat.model.match;
 
-import capstat.model.Match;
+import capstat.model.CapStat;
 
 /**
  * A class with factory method for creating matches of different kinds.

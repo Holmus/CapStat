@@ -1,7 +1,8 @@
-package capstat.model;
+package capstat.model.match;
 
 import capstat.infrastructure.eventbus.EventBus;
 import capstat.infrastructure.eventbus.NotifyEventListener;
+import capstat.model.user.User;
 
 import java.time.Instant;
 

@@ -3,7 +3,7 @@ package capstat.tests;
 import capstat.infrastructure.database.DatabaseHelperFactory;
 import capstat.infrastructure.database.UserBlueprint;
 import capstat.infrastructure.database.UserDatabaseHelper;
-import capstat.model.*;
+import capstat.model.user.*;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;

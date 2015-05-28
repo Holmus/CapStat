@@ -2,9 +2,9 @@ package capstat.tests;
 
 import capstat.application.LoginController;
 import capstat.model.CapStat;
-import capstat.model.User;
-import capstat.model.UserFactory;
-import capstat.model.UserLedger;
+import capstat.model.user.User;
+import capstat.model.user.UserFactory;
+import capstat.model.user.UserLedger;
 import org.junit.Test;
 
 import static org.junit.Assert.assertFalse;

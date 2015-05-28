@@ -1,7 +1,10 @@
-package capstat.model;
+package capstat.model.statistics;
 
 import capstat.infrastructure.database.MatchResultBlueprint;
 import capstat.infrastructure.database.PartialSequenceBlueprint;
+import capstat.model.match.Match;
+import capstat.model.user.User;
+import capstat.model.user.UserLedger;
 
 import java.time.Instant;
 import java.util.LinkedList;

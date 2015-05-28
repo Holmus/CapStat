@@ -1,4 +1,4 @@
-package capstat.model;
+package capstat.model.user;
 
 /**
  * @author Christian Persson, reviewed by hjorthjort

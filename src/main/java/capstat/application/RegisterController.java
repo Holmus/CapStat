@@ -1,6 +1,6 @@
 package capstat.application;
 
-import capstat.model.UserLedger;
+import capstat.model.user.UserLedger;
 
 import java.time.LocalDate;
 import java.time.Year;

@@ -1,4 +1,4 @@
-package capstat.model;
+package capstat.model.statistics;
 
 /**
  * @author hjorthjort

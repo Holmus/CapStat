@@ -1,4 +1,4 @@
-package capstat.model;
+package capstat.model.user;
 
 import org.apache.commons.codec.digest.DigestUtils;
 

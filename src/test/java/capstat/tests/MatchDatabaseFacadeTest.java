@@ -1,10 +1,10 @@
 package capstat.tests;
 
 import capstat.infrastructure.database.*;
-import capstat.model.Admittance;
-import capstat.model.ELORanking;
-import capstat.model.User;
-import capstat.model.UserFactory;
+import capstat.model.user.Admittance;
+import capstat.model.user.ELORanking;
+import capstat.model.user.User;
+import capstat.model.user.UserFactory;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;

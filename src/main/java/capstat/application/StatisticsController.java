@@ -1,6 +1,6 @@
 package capstat.application;
 
-import capstat.model.User;
+import capstat.model.user.User;
 
 /**
  * Created by Jakob on 21/05/15.

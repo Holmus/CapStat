@@ -1,6 +1,8 @@
 package capstat.model;
 
-import java.time.LocalDate;
+import capstat.model.user.User;
+import capstat.model.user.UserFactory;
+import capstat.model.user.UserLedger;
 
 /**
  * @author Christian Persson

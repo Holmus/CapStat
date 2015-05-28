@@ -9,10 +9,10 @@ import java.util.List;
 
 import capstat.infrastructure.database.MatchResultBlueprint;
 import capstat.infrastructure.database.PartialSequenceBlueprint;
-import capstat.model.Match;
-import capstat.model.MatchResult;
-import capstat.model.PartialSequenceResult;
-import capstat.model.SingleMatchCalculator;
+import capstat.model.match.Match;
+import capstat.model.statistics.MatchResult;
+import capstat.model.statistics.PartialSequenceResult;
+import capstat.model.statistics.SingleMatchCalculator;
 
 /**
  * @author Christian Persson

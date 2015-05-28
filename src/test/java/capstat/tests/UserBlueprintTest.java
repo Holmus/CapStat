@@ -1,10 +1,10 @@
 package capstat.tests;
 
 import capstat.infrastructure.database.UserBlueprint;
-import capstat.model.ChalmersAge;
-import capstat.model.User;
-import capstat.model.UserFactory;
-import capstat.model.UserLedger;
+import capstat.model.user.ChalmersAge;
+import capstat.model.user.User;
+import capstat.model.user.UserFactory;
+import capstat.model.user.UserLedger;
 import org.junit.Before;
 import org.junit.Test;
 

@@ -1,4 +1,4 @@
-package capstat.model;
+package capstat.model.statistics;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
@@ -9,6 +9,9 @@ import java.util.List;
 import capstat.infrastructure.eventbus.EventBus;
 import capstat.infrastructure.eventbus.NotifyEventListener;
 import capstat.infrastructure.database.PartialSequenceBlueprint;
+import capstat.model.match.Match;
+import capstat.model.match.MatchFactory;
+import capstat.model.user.User;
 
 /**
  * @author Christian Persson
@@ -101,7 +104,7 @@ public class SingleMatchCalculator {
     /**
      * Returns the total number of throws made by either player 1 or player 2.
      *
-     * @param player the {@link capstat.model.Match.Player} to get the number
+     * @param player the {@link Match.Player} to get the number
      *               of throws for
      *
      * @return the number of throws made by the given player
@@ -122,15 +125,15 @@ public class SingleMatchCalculator {
     }
 
     /**
-     * Takes an arbitrary list of {@link capstat.model.PartialSequenceResult}
-     * and "replays" them, giving back a new list of {@link capstat.model.PartialSequenceResult}
+     * Takes an arbitrary list of {@link PartialSequenceResult}
+     * and "replays" them, giving back a new list of {@link PartialSequenceResult}
      * with each instance containing the sequence from the throw after the last
      * duel (or from the beginning of the match) up to and including the throw
      * that ends the next duel.
      *
      * @param sequences the arbitrary list of sequences
      *
-     * @return a {@link java.util.List} of {@link capstat.model.PartialSequenceResult}
+     * @return a {@link java.util.List} of {@link PartialSequenceResult}
      */
     public static List<PartialSequenceResult> getDuelSequences(List<PartialSequenceResult> sequences) {
         List<PartialSequenceResult> duels = new ArrayList<>();

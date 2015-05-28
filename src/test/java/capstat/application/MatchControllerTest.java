@@ -2,7 +2,11 @@ package capstat.application;
 
 import capstat.infrastructure.database.DatabaseHelperFactory;
 import capstat.infrastructure.database.UserDatabaseHelper;
-import capstat.model.*;
+import capstat.model.match.Match;
+import capstat.model.match.MatchFactory;
+import capstat.model.user.User;
+import capstat.model.user.UserFactory;
+import capstat.model.user.UserLedger;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

@@ -1,7 +1,6 @@
 package capstat.tests;
 
-import capstat.model.ELORanking;
-import capstat.model.User;
+import capstat.model.user.ELORanking;
 import org.junit.Test;
 
 import static org.junit.Assert.assertFalse;
