@@ -116,7 +116,6 @@ public class MatchViewController implements NotifyEventListener, Initializable{
     }
 
     @FXML private void saveResultPressed(){
-        //System.out.println("Save result pressed");
         this.mc.saveGame();
         eb.notify(MainView.SETSCENE_MAIN);
         eb.notify(MainView.MATCH_REGISTERED);
@@ -176,15 +175,12 @@ public class MatchViewController implements NotifyEventListener, Initializable{
     public void notifyEvent(String event) {
         switch (event) {
             case Match.MISS_RECORDED:
-                System.out.println("miss");
                 updatePlayer();
                 break;
             case Match.HIT_RECORDED:
-                System.out.println("hit");
                 updatePlayer();
                 break;
             case Match.DUEL_ENDED:
-                System.out.println("duel ended");
                 updateGlasses();
                 break;
             case Match.ROUND_ENDED:
@@ -194,7 +190,6 @@ public class MatchViewController implements NotifyEventListener, Initializable{
                 resetGlasses();
                 break;
             case Match.MATCH_ENDED:
-                System.out.println("Match over! Winner is: " + match.getRoundWinner().name());
                 disableReg();
                 break;
             default:
