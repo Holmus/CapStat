@@ -3,6 +3,7 @@ import capstat.application.MatchController;
 import capstat.infrastructure.eventbus.EventBus;
 import capstat.infrastructure.eventbus.NotifyEventListener;
 import capstat.model.Match;
+import capstat.model.UserFactory;
 import capstat.model.UserLedger;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -146,6 +147,7 @@ public class MatchViewController implements NotifyEventListener, Initializable{
                 p1Rank.setText("" + match.getPlayer(Match.Player.ONE).getRanking().getPoints());
             } else {
                 p1Rank.setText("(Not registered)");
+                match.setPlayer1(UserFactory.createGuestUser());
             }
 
             boolean p2Exists = UserLedger.getInstance().doesUserExist
@@ -154,6 +156,7 @@ public class MatchViewController implements NotifyEventListener, Initializable{
                 p2Rank.setText("" + match.getPlayer(Match.Player.TWO).getRanking().getPoints());
             } else {
                 p2Rank.setText("(Not registered)");
+                match.setPlayer2(UserFactory.createGuestUser());
             }
 
             p1Name.setText(setPlayer1Field.getText());
