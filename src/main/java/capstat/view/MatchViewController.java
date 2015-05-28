@@ -47,10 +47,11 @@ public class MatchViewController implements NotifyEventListener, Initializable{
     public void initialize(URL location, ResourceBundle resources){
         this.mc.setEndGameStrategy(this.mc.RANKED);
         mainPane.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
-        //p1Name.setText(match.getPlayer(Match.Player.ONE).getName());
-        //p2Name.setText(match.getPlayer(Match.Player.TWO).getName());
-        //p1Rank.setText("" + match.getPlayer(Match.Player.ONE).getRanking().getPoints());
-        //p2Rank.setText("" + match.getPlayer(Match.Player.TWO).getRanking().getPoints());
+	    eb.removeNotifyEventListenersByEvent(Match.HIT_RECORDED);
+	    eb.removeNotifyEventListenersByEvent(Match.MISS_RECORDED);
+	    eb.removeNotifyEventListenersByEvent(Match.DUEL_ENDED);
+	    eb.removeNotifyEventListenersByEvent(Match.ROUND_ENDED);
+	    eb.removeNotifyEventListenersByEvent(Match.MATCH_ENDED);
         eb.addNotifyEventListener(Match.HIT_RECORDED, this);
         eb.addNotifyEventListener(Match.MISS_RECORDED,this);
         eb.addNotifyEventListener(Match.DUEL_ENDED, this);
