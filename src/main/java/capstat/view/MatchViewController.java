@@ -96,23 +96,21 @@ public class MatchViewController implements NotifyEventListener, Initializable{
     }
 
     @FXML private void missPressed() {
-        if (!match.isOngoing()) {
-            mc.startMatch();
+        if(match.isOngoing()) {
+            hitLabel.setVisible(false);
+            missLabel.setVisible(true);
+            duelLabel.setVisible(false);
+            mc.recordMiss();
         }
-        hitLabel.setVisible(false);
-        missLabel.setVisible(true);
-        duelLabel.setVisible(false);
-        mc.recordMiss();
     }
 
     @FXML private void hitPressed(){
-        if (!match.isOngoing()) {
-            mc.startMatch();
+        if(match.isOngoing()) {
+            missLabel.setVisible(false);
+            hitLabel.setVisible(true);
+            duelLabel.setVisible(true);
+            mc.recordHit();
         }
-        missLabel.setVisible(false);
-        hitLabel.setVisible(true);
-        duelLabel.setVisible(true);
-        mc.recordHit();
     }
 
     @FXML private void saveResultPressed(){
@@ -165,6 +163,7 @@ public class MatchViewController implements NotifyEventListener, Initializable{
             mainPane.setVisible(true);
             preMatchPane.setVisible(false);
             startMatchButton.setDisable(true);
+            mc.startMatch();
         }
 
     }
@@ -185,7 +184,6 @@ public class MatchViewController implements NotifyEventListener, Initializable{
                 updateGlasses();
                 break;
             case Match.ROUND_ENDED:
-                System.out.println("Round winner is: " + match.getRoundWinner().name());
                 p1Rounds.setText("" + match.getPlayerRoundsWon(Match.Player.ONE));
                 p2Rounds.setText("" + match.getPlayerRoundsWon(Match.Player
                         .TWO));

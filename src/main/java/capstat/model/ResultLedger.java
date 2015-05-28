@@ -52,8 +52,8 @@ public class ResultLedger {
         String player1Nickname = match.getPlayer(Match.Player.ONE).getNickname();
         String player2Nickname = match.getPlayer(Match.Player.TWO).getNickname();
         String spectatorNickname = match.getSpectator().getNickname();
-        int player1Score = match.getPlayer1Score();
-        int player2Score = match.getPlayer2Score();
+        int player1Score = match.getPlayerRoundsWon(Match.Player.ONE);
+        int player2Score = match.getPlayerRoundsWon(Match.Player.TWO);
         long startTime = match.getStartTime().getEpochSecond();
         long endTime = endInstant.getEpochSecond();
 
