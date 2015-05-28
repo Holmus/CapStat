@@ -447,6 +447,10 @@ public class Match {
 
     //Event Handling
 
+    public int getEventId() {
+        return eventId;
+    }
+
     /**
      * Add an observer that will be notified when this match instance is
      * over.

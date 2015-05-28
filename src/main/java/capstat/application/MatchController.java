@@ -123,8 +123,7 @@ public class MatchController implements NotifyEventListener {
     //Observer method
     @Override
     public void notifyEvent(final String event) {
-        if (event.equals(Match.MATCH_ENDED))
-            this.saveGame();
+        if (event.equals(Match.MATCH_ENDED + this.match.getEventId()))
             this.endGameStrategy.endGame();
     }
 
