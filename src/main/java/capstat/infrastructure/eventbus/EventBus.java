@@ -57,6 +57,13 @@ public class EventBus {
         }
     }
 
+	public void removeNotifyEventListenersByEvent(final String event) {
+		System.out.println(dataListenersMap.toString());
+		if (this.notifyListenersMap != null) {
+			this.notifyListenersMap.remove(event);
+		}
+	}
+
     public void notify(final String event) {
         Set<NotifyEventListener> set = this.notifyListenersMap.get(event);
         if (set != null) {
