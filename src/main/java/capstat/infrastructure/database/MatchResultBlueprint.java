@@ -3,9 +3,10 @@ package capstat.infrastructure.database;
 import java.util.List;
 
 /**
- * @author hjorthjort
+ * Immutable value object class representing a database row for a single matchResult.
  */
 public final class MatchResultBlueprint {
+
     public final long id;
     public final String player1Nickname, player2Nickname, spectatorNickname;
     public final int player1score, player2score;
