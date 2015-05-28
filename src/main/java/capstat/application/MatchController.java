@@ -123,8 +123,7 @@ public class MatchController implements NotifyEventListener {
     //Observer method
     @Override
     public void notifyEvent(final String event) {
-        if (event.equals(Match.MATCH_ENDED))
-            this.saveGame();
+        if (event.equals(Match.MATCH_ENDED + this.match.getEventId()))
             this.endGameStrategy.endGame();
     }
 
@@ -134,7 +133,7 @@ public class MatchController implements NotifyEventListener {
      * Save this game.
      * @throws IllegalStateException if the match is still ongoing.
      */
-    private void saveGame() {
+    public void saveGame() {
         if (this.match.isOngoing())
             throw new IllegalStateException("Match is not over");
         this.resultLedger.registerResult(this.match);
