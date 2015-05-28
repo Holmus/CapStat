@@ -89,7 +89,7 @@ public class MatchControllerTest {
         this.controller.setEndGameStrategy(this.controller.UNRANKED);
         this.match.setPlayer1(user1);
         this.match.setPlayer2(user2);
-	   Thread.sleep(300);
+	    Thread.sleep(300);
         //Play through the game, withut hte controller.
         while (this.match.isOngoing()) {
             this.match.recordHit();

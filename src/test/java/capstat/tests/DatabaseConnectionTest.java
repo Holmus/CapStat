@@ -31,14 +31,13 @@ public class DatabaseConnectionTest {
 		this.db = dbConn.database;
 	}
 
-
 	/**
-	 * Deletes all users.
+	 * Deletes all users for this test.
 	 */
 	@After
 	public void deleteDummyUsers() {
 		db.deleteFrom(Users.USERS).
-				where(Users.USERS.NICK.equal("lol2kpe"))
+				where(Users.USERS.NICK.equal("lol2kpe2"))
 				.or(Users.USERS.NICK.equal("user1"))
 				.or(Users.USERS.NICK.equal("user2"))
 				.execute();
@@ -51,7 +50,7 @@ public class DatabaseConnectionTest {
 	public void insertUsers () {
 		db.insertInto(Users.USERS, Users.USERS.NICK, Users.USERS.NAME, Users.USERS.PASS, Users.USERS.BIRTHDAY,
 				Users.USERS.ADMITTANCEYEAR, Users.USERS.ADMITTANCEREADINGPERIOD, Users.USERS.ELORANK)
-				.values("lol2kpe", "Johan Andersson", "lol", new java.sql.Date(1988-1900, 02-1, 29), 2012, 1, 1337.0 ).execute();
+				.values("lol2kpe2", "Johan Andersson", "lol", new java.sql.Date(1988-1900, 02-1, 29), 2012, 1, 1337.0 ).execute();
 		db.insertInto(Users.USERS, Users.USERS.NICK, Users.USERS.NAME, Users.USERS.PASS, Users.USERS.BIRTHDAY,
 				Users.USERS.ADMITTANCEYEAR, Users.USERS.ADMITTANCEREADINGPERIOD, Users.USERS.ELORANK)
 				.values("user1", "Arne Ranta", "lol2", new java.sql.Date(1942-1900, 12-1, 30), 1971, 3, 123.4).execute();
