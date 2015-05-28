@@ -116,7 +116,8 @@ public class MatchViewController implements NotifyEventListener, Initializable{
     }
 
     @FXML private void saveResultPressed(){
-        System.out.println("Save result pressed");
+        //System.out.println("Save result pressed");
+        this.mc.saveGame();
         eb.notify(MainView.SETSCENE_MAIN);
         eb.notify(MainView.MATCH_REGISTERED);
 
