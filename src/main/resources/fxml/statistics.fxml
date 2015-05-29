@@ -37,10 +37,10 @@
                <children>
                   <LineChart fx:id="lineChart" layoutX="-4.0" layoutY="19.0" prefHeight="230.0" prefWidth="550.0">
                      <xAxis>
-                        <NumberAxis label="Values for X-Axis" lowerBound="0" tickUnit="1" upperBound="3" fx:id="xAxis" />
+                        <CategoryAxis label="Values for X-Axis"  fx:id="xAxis" />
                      </xAxis>
                      <yAxis>
-                        <NumberAxis fx:id="yAxis" label="Values for Y-Axis" lowerBound="0" tickUnit="1" upperBound="3" />
+                        <NumberAxis fx:id="yAxis" label="Values for Y-Axis"/>
                      </yAxis>
                   </LineChart>
                   <Label layoutX="33.0" layoutY="6.0" prefHeight="16.0" prefWidth="42.0" text="X-Axis:" />

@@ -8,6 +8,7 @@ import capstat.model.statistics.Plottable;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
@@ -36,7 +37,8 @@ public class StatisticsViewController implements Initializable{
     int length;
     @FXML ComboBox XComboBox, YComboBox;
     @FXML private LineChart<Double, Double> lineChart;
-    @FXML NumberAxis xAxis, yAxis;
+    @FXML NumberAxis yAxis;
+    @FXML CategoryAxis xAxis;
     @FXML Label currentUserLabel;
     @FXML Button logoutButton, plotButton, mainButton;
     @Override
@@ -88,7 +90,8 @@ public class StatisticsViewController implements Initializable{
             length = getXArray().length;
         }
         for(int i = 0; i<length; i++){
-            series.getData().add(new XYChart.Data(getXArray()[i].getValue(), getYArray
+            series.getData().add(new XYChart.Data(getXArray()[i].getLabel(),
+                    getYArray
                     ()[i].getValue()));
         }
     }
@@ -119,6 +122,8 @@ public class StatisticsViewController implements Initializable{
         switch (string) {
             case ("Accuracy"):
                 return StatisticsController.ACCURACY;
+            case ("Time"):
+                return StatisticsController.TIME;
         }
         return null;
 
