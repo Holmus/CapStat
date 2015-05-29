@@ -15,11 +15,17 @@ public abstract class MatchFactory {
     }
 
     public static Match createMatch(int glassesPerPlayer, int roundsToWin) {
-        return null;
+        Match match = new Match(glassesPerPlayer*2 + 1, roundsToWin);
+        match.setSpectator(CapStat.getInstance().getLoggedInUser());
+        return match;
     }
 
     public static Match createMatch(int glassesPerPlayer, int roundsToWin, User
             player1, User player2) {
-        return null;
+        Match match = new Match(glassesPerPlayer*2 + 1, roundsToWin);
+        match.setPlayer1(player1);
+        match.setPlayer2(player2);
+        match.setSpectator(CapStat.getInstance().getLoggedInUser());
+        return match;
     }
 }
