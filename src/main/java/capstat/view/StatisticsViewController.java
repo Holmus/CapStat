@@ -4,6 +4,7 @@ import capstat.application.LoginController;
 import capstat.application.StatisticsController;
 import capstat.infrastructure.eventbus.EventBus;
 import capstat.model.CapStat;
+import capstat.model.statistics.Plottable;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -17,6 +18,8 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 
 import java.net.URL;
+import java.util.Arrays;
+import java.util.List;
 import java.util.ResourceBundle;
 
 /**
@@ -85,15 +88,39 @@ public class StatisticsViewController implements Initializable{
             length = getXArray().length;
         }
         for(int i = 0; i<length; i++){
-            series.getData().add(new XYChart.Data(getXArray()[i], getYArray()[i]));
+            series.getData().add(new XYChart.Data(getXArray()[i].getValue(), getYArray
+                    ()[i].getValue()));
         }
     }
-    public Double[] getXArray(){
-            return sc.getData(XComboBox.getSelectionModel().getSelectedItem()
-                    .toString(), cs.getLoggedInUser());
+    public Plottable[] getXArray(){
+        String statisticType = XComboBox.getSelectionModel().getSelectedItem()
+                        .toString();
+        StatisticsController.Statistic statisticStrategy =
+                getStatisticTypeForString(statisticType);
+        List<Plottable> plottablesList = sc.getData(statisticStrategy, cs
+                .getLoggedInUser());
+
+        return plottablesList.toArray(new Plottable[0]);
 
     }
-    public Double[] getYArray(){
-            return sc.getData(YComboBox.getSelectionModel().getSelectedItem().toString(), cs.getLoggedInUser());
+    public Plottable[] getYArray(){
+        String statisticType = YComboBox.getSelectionModel().getSelectedItem()
+                .toString();
+        StatisticsController.Statistic statisticStrategy =
+                getStatisticTypeForString(statisticType);
+        List<Plottable> plottablesList = sc.getData(statisticStrategy, cs
+                .getLoggedInUser());
+
+        return plottablesList.toArray(new Plottable[0]);
+    }
+
+    private StatisticsController.Statistic getStatisticTypeForString(String
+                                                                             string) {
+        switch (string) {
+            case ("Accuracy"):
+                return StatisticsController.ACCURACY;
+        }
+        return null;
+
     }
 }
