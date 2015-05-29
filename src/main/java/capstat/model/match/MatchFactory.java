@@ -22,6 +22,7 @@ public abstract class MatchFactory {
         match.setPlayer1(player1);
         match.setPlayer2(player2);
         match.setSpectator(CapStat.getInstance().getLoggedInUser());
+        match.setCurrentPlayer(match.calculateStartingPlayer());
         return match;
     }
 }
