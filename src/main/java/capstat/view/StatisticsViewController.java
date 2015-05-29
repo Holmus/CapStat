@@ -1,7 +1,7 @@
 package capstat.view;
 
 import capstat.application.LoginController;
-import capstat.application.statistics.Statistic;
+import capstat.model.statistics.Statistic;
 import capstat.application.StatisticsController;
 import capstat.infrastructure.eventbus.EventBus;
 import capstat.model.CapStat;

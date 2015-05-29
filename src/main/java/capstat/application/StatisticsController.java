@@ -1,9 +1,9 @@
 package capstat.application;
 
-import capstat.application.statistics.Accuracy;
-import capstat.application.statistics.MatchCount;
-import capstat.application.statistics.Statistic;
-import capstat.application.statistics.Time;
+import capstat.model.statistics.Accuracy;
+import capstat.model.statistics.MatchCount;
+import capstat.model.statistics.Statistic;
+import capstat.model.statistics.Time;
 import capstat.model.statistics.MatchResult;
 import capstat.model.statistics.Plottable;
 import capstat.model.statistics.ResultLedger;

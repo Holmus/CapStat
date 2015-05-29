@@ -1,8 +1,5 @@
-package capstat.application.statistics;
+package capstat.model.statistics;
 
-import capstat.model.statistics.MatchResult;
-import capstat.model.statistics.Plottable;
-import capstat.model.statistics.SingleMatchCalculator;
 import capstat.model.user.User;
 
 import java.util.LinkedList;
