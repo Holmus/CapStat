@@ -18,6 +18,7 @@ import java.util.ResourceBundle;
 
 /**
  * Created by Jakob on 14/05/15.
+ * Class to control and initialize the Main-view of the application
  */
 public class MainViewController implements Initializable, NotifyEventListener{
     private LoginController lc = new LoginController();
@@ -26,7 +27,13 @@ public class MainViewController implements Initializable, NotifyEventListener{
     private Scene scene;
     private Parent root;
     @FXML Label userLabel, matchRegisteredLabel;
-    @FXML Button playButton, statisticsButton, logoutButton;
+    @FXML Button playButton, statisticsButton,
+
+    /**
+     * Sets the default behaviour and display of elements initializing the view.
+     * @param location
+     * @param resources
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         eb.addNotifyEventListener(MainView.MATCH_REGISTERED, this);
@@ -54,18 +61,30 @@ public class MainViewController implements Initializable, NotifyEventListener{
         });
     }
 
+    /**
+     * Triggered when the playbutton is pressed, sends a notification to the EventBus
+     */
     @FXML private void playPressed(){
         eb.notify(MainView.SETSCENE_MATCH);
     }
+    /**
+     * Triggered when the logoutbutton is pressed, sends a notification to the EventBus
+     */
     @FXML private void logoutPressed(){
         lc.logoutUser();
         eb.notify(MainView.SETSCENE_LOGIN);
     }
+    /**
+     * Triggered when the statisticsbutton is pressed, sends a notification to the EventBus
+     */
     @FXML private void statisticsPressed(){
         eb.notify(MainView.SETSCENE_STATISTICS);
     }
 
-
+     /**
+     * Deals with incoming events from the EventBus, then takes proper action depending on event.
+     * @param event the key of the event that occured
+     */
     @Override
     public void notifyEvent(String event) {
         if(event.equals(MainView.MATCH_REGISTERED)){
