@@ -48,6 +48,7 @@ public class StatisticsViewController implements Initializable{
     @FXML Button logoutButton, plotButton, mainButton;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        userTextField.setText(cs.getLoggedInUser().getNickname());
         invalidUserLabel.setVisible(false);
         ratingLabel.setText("Your rating: " + cs.getLoggedInUser().getRanking().getPoints());
         XComboBox.getSelectionModel().select(0);
