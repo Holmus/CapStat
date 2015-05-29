@@ -137,8 +137,7 @@ public class StatisticsViewController implements Initializable{
         return plottablesList.toArray(new Plottable[0]);
     }
 
-    private Statistic getStatisticTypeForString(String
-                                                                             string) {
+    private Statistic getStatisticTypeForString(String string) {
         switch (string) {
             case ("Accuracy"):
                 return StatisticsController.ACCURACY;
@@ -146,6 +145,8 @@ public class StatisticsViewController implements Initializable{
                 return StatisticsController.TIME;
             case ("Number of Games"):
                 return StatisticsController.MATCH_COUNT;
+            case ("Longest Duel"):
+                return StatisticsController.LONGEST_DUEL;
         }
         return null;
 

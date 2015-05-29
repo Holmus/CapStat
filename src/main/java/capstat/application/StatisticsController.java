@@ -1,12 +1,6 @@
 package capstat.application;
 
-import capstat.model.statistics.Accuracy;
-import capstat.model.statistics.MatchCount;
-import capstat.model.statistics.Statistic;
-import capstat.model.statistics.Time;
-import capstat.model.statistics.MatchResult;
-import capstat.model.statistics.Plottable;
-import capstat.model.statistics.ResultLedger;
+import capstat.model.statistics.*;
 import capstat.model.user.User;
 
 
@@ -21,6 +15,7 @@ public class StatisticsController {
     public static final Statistic ACCURACY = new Accuracy();
     public static final Statistic TIME = new Time();
     public static final Statistic MATCH_COUNT = new MatchCount();
+    public static final Statistic LONGEST_DUEL = new LongestDuel();
 
     public List<Plottable> getData(Statistic dataType, User user) {
         Set<MatchResult> matches = ResultLedger.getInstance()
