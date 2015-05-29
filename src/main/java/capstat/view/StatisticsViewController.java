@@ -144,6 +144,8 @@ public class StatisticsViewController implements Initializable{
                 return StatisticsController.ACCURACY;
             case ("Time"):
                 return StatisticsController.TIME;
+            case ("Number of Games"):
+                return StatisticsController.MATCH_COUNT;
         }
         return null;
 

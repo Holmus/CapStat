@@ -23,7 +23,7 @@ import java.util.Set;
 public class StatisticsController {
     public static final Statistic ACCURACY = new Accuracy();
     public static final Statistic TIME = new Time();
-    public final Statistic MATCH_COUNT = null;
+    public static final Statistic MATCH_COUNT = new MatchCount();
 
     public List<Plottable> getData(Statistic dataType, User user) {
         Set<MatchResult> matches = ResultLedger.getInstance()
@@ -94,6 +94,28 @@ public class StatisticsController {
                                 .ISO_LOCAL_DATE) + System.lineSeparator() +
                                 dateTime.format(DateTimeFormatter
                                         .ofLocalizedTime(FormatStyle.SHORT));
+                    }
+                });
+            }
+            return ret;
+        }
+    }
+
+    public static class MatchCount implements Statistic {
+
+        @Override
+        public List<Plottable> getStatistics(final List<MatchResult> matches, final User user) {
+            List<Plottable> ret = new LinkedList<>();
+            for (MatchResult matchResult : matches) {
+                ret.add(new Plottable() {
+                    @Override
+                    public double getValue() {
+                        return matches.indexOf(matchResult);
+                    }
+
+                    @Override
+                    public String getLabel() {
+                        return Double.toString(getValue());
                     }
                 });
             }
