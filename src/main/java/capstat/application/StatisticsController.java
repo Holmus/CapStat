@@ -7,6 +7,11 @@ import capstat.model.statistics.SingleMatchCalculator;
 import capstat.model.user.User;
 
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
@@ -17,7 +22,7 @@ import java.util.Set;
  */
 public class StatisticsController {
     public static final Statistic ACCURACY = new Accuracy();
-    public final Statistic TIME = null;
+    public static final Statistic TIME = new Time();
     public final Statistic MATCH_COUNT = null;
 
     public List<Plottable> getData(Statistic dataType, User user) {
@@ -59,6 +64,33 @@ public class StatisticsController {
                     @Override
                     public String getLabel() {
                         return String.valueOf(accuracy);
+                    }
+                });
+            }
+            return ret;
+        }
+    }
+
+    public static class Time implements Statistic {
+
+        @Override
+        public List<Plottable> getStatistics(final List<MatchResult> matches, final User user) {
+            List<Plottable> ret = new LinkedList<>();
+            for (MatchResult matchResult : matches) {
+                ret.add(new Plottable() {
+                    @Override
+                    public double getValue() {
+                        return matchResult.getEndTime().getEpochSecond();
+                    }
+
+                    @Override
+                    public String getLabel() {
+                        ZonedDateTime dateTime = matchResult.getEndTime()
+                                .atZone(ZoneId.systemDefault());
+                        return dateTime.format(DateTimeFormatter
+                                .ISO_LOCAL_DATE) + System.lineSeparator() +
+                                dateTime.format(DateTimeFormatter
+                                        .ofLocalizedTime(FormatStyle.SHORT));
                     }
                 });
             }
