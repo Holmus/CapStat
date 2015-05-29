@@ -9,15 +9,11 @@ import capstat.model.user.User;
  */
 public abstract class MatchFactory {
     public static Match createDefaultMatch() {
-        Match match = new Match(7, 2);
-        match.setSpectator(CapStat.getInstance().getLoggedInUser());
-        return match;
+        return createMatch(3,2);
     }
 
     public static Match createMatch(int glassesPerPlayer, int roundsToWin) {
-        Match match = new Match(glassesPerPlayer*2 + 1, roundsToWin);
-        match.setSpectator(CapStat.getInstance().getLoggedInUser());
-        return match;
+        return createMatch(glassesPerPlayer, roundsToWin, null, null);
     }
 
     public static Match createMatch(int glassesPerPlayer, int roundsToWin, User
