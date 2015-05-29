@@ -63,7 +63,6 @@
                         <Font size="25.0" />
                      </font>
                   </Label>
-                  <Label layoutX="167.0" layoutY="308.0" prefHeight="16.0" prefWidth="258.0" text="THROWSEQUENCE" textAlignment="CENTER" />
                   <Label fx:id="hitLabel" layoutX="283.0" layoutY="189.0" text="Hit!" textFill="#02bc02" />
                   <Label fx:id="missLabel" layoutX="279.0" layoutY="189.0" text="Miss!" textFill="RED" />
                   <Label fx:id="duelLabel" layoutX="277.0" layoutY="142.0" text="Duel!">
