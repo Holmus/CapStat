@@ -1,1 +1,3 @@
 CapStat woohoo!
+
+# DATABASE SETUP YEEHAOW
