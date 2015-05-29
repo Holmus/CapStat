@@ -16,6 +16,7 @@ public class StatisticsController {
     public static final Statistic TIME = new Time();
     public static final Statistic MATCH_COUNT = new MatchCount();
     public static final Statistic LONGEST_DUEL = new LongestDuel();
+    public static final Statistic NUMBER_OF_THROWS = new NumberOfThrows();
 
     public List<Plottable> getData(Statistic dataType, User user) {
         Set<MatchResult> matches = ResultLedger.getInstance()

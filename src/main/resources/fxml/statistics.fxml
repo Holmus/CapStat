@@ -54,6 +54,7 @@
                         <String fx:value="Accuracy" />
                         <String fx:value="Longest Duel" />
                         <String fx:value="Number of Games" />
+                        <String fx:value="Total Number of Throws" />
                      </FXCollections>
                   </items>
                   </ComboBox>

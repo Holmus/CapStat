@@ -147,6 +147,8 @@ public class StatisticsViewController implements Initializable{
                 return StatisticsController.MATCH_COUNT;
             case ("Longest Duel"):
                 return StatisticsController.LONGEST_DUEL;
+            case ("Total Number of Throws"):
+                return StatisticsController.NUMBER_OF_THROWS;
         }
         return null;
 
