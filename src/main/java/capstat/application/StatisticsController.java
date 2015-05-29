@@ -71,6 +71,9 @@ public class StatisticsController {
         }
     }
 
+    /**
+     * A class for creating plottables representing end times for matches.
+     */
     public static class Time implements Statistic {
 
         @Override
