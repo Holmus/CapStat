@@ -9,7 +9,17 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Created by Jakob on 21/05/15.
+ * @author hjorthjort
+ *
+ * A class for getting a selection of statistics for all matches of a user.
+ *
+ * This class has a number of constants, representing implementations of
+ * Statistic for some common statistic. A client may also use their own
+ * implementation of Statistic to obtain a list of Plottables for a set of
+ * Matches. The getData method requests Plottables from the Statistic it gets
+ * passed as parameter with a list of all the given user's matches, sorted by
+ * their end time, from the earliest to the latest.
+ *
  */
 public class StatisticsController {
     public static final Statistic ACCURACY = new Accuracy();
