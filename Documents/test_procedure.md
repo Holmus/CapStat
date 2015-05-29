@@ -144,7 +144,6 @@
         2. Click on the login button
 
 ### Play match
-
 * Play match as guest.
 	* Using player one as the guest user.
 		* Using player two as a registered user.
@@ -187,8 +186,80 @@
     win a round each. And p2 wins the last round.
     
     
-
-
 ### Show statistics
 
-// TODO
+Click plot at least three times on each setting to 
+ensure that it can re-plot the same value.
+
+* Guest User
+	* X-Axis: **Accuracy**
+		* Y-Axis: **Accuracy**
+		* Y-Axis: **Number of games**
+		* Y-Axis: **Time**
+	* X-Axis: **Number of games**.
+		* Y-Axis: **Accuracy**
+        * Y-Axis: **Number of games**
+        * Y-Axis: **Time**
+	* X-Axis: **Time**.
+		* Y-Axis: **Accuracy**
+        * Y-Axis: **Number of games**
+        * Y-Axis: **Time**
+
+* User with no records.
+	* X-Axis: **Accuracy**
+		* Y-Axis: **Accuracy**
+		* Y-Axis: **Number of games**
+		* Y-Axis: **Time**
+	* X-Axis: **Number of games**.
+		* Y-Axis: **Accuracy**
+        * Y-Axis: **Number of games**
+        * Y-Axis: **Time**
+	* X-Axis: **Time**.
+		* Y-Axis: **Accuracy**
+        * Y-Axis: **Number of games**
+        * Y-Axis: **Time**
+
+* User with one record only.
+	* X-Axis: **Accuracy**
+		* Y-Axis: **Accuracy**
+		* Y-Axis: **Number of games**
+		* Y-Axis: **Time**
+	* X-Axis: **Number of games**.
+		* Y-Axis: **Accuracy**
+        * Y-Axis: **Number of games**
+        * Y-Axis: **Time**
+	* X-Axis: **Time**.
+		* Y-Axis: **Accuracy**
+        * Y-Axis: **Number of games**
+        * Y-Axis: **Time**
+
+* User with two records only.
+	* X-Axis: **Accuracy**
+		* Y-Axis: **Accuracy**
+		* Y-Axis: **Number of games**
+		* Y-Axis: **Time**
+	* X-Axis: **Number of games**.
+		* Y-Axis: **Accuracy**
+        * Y-Axis: **Number of games**
+        * Y-Axis: **Time**
+	* X-Axis: **Time**.
+		* Y-Axis: **Accuracy**
+        * Y-Axis: **Number of games**
+        * Y-Axis: **Time**
+
+* User with more than two records.
+	* X-Axis: **Accuracy**
+		* Y-Axis: **Accuracy**
+		* Y-Axis: **Number of games**
+		* Y-Axis: **Time**
+	* X-Axis: **Number of games**.
+		* Y-Axis: **Accuracy**
+        * Y-Axis: **Number of games**
+        * Y-Axis: **Time**
+	* X-Axis: **Time**.
+		* Y-Axis: **Accuracy**
+        * Y-Axis: **Number of games**
+        * Y-Axis: **Time**
+
+// TODO what SHOULD happen in these respective cases?
+// TODO specify what user to use for the different cases to minimize human thinking while testing.
