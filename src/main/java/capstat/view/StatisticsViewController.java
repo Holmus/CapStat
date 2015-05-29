@@ -1,6 +1,7 @@
 package capstat.view;
 
 import capstat.application.LoginController;
+import capstat.application.statistics.Statistic;
 import capstat.application.StatisticsController;
 import capstat.infrastructure.eventbus.EventBus;
 import capstat.model.CapStat;
@@ -22,7 +23,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 
 import java.net.URL;
-import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -120,7 +120,7 @@ public class StatisticsViewController implements Initializable{
     public Plottable[] getXArray(User user){
         String statisticType = XComboBox.getSelectionModel().getSelectedItem()
                         .toString();
-        StatisticsController.Statistic statisticStrategy =
+        Statistic statisticStrategy =
                 getStatisticTypeForString(statisticType);
         List<Plottable> plottablesList = sc.getData(statisticStrategy, user);
 
@@ -130,14 +130,14 @@ public class StatisticsViewController implements Initializable{
     public Plottable[] getYArray(User user){
         String statisticType = YComboBox.getSelectionModel().getSelectedItem()
                 .toString();
-        StatisticsController.Statistic statisticStrategy =
+        Statistic statisticStrategy =
                 getStatisticTypeForString(statisticType);
         List<Plottable> plottablesList = sc.getData(statisticStrategy, user);
 
         return plottablesList.toArray(new Plottable[0]);
     }
 
-    private StatisticsController.Statistic getStatisticTypeForString(String
+    private Statistic getStatisticTypeForString(String
                                                                              string) {
         switch (string) {
             case ("Accuracy"):
