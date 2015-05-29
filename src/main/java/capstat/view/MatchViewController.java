@@ -144,7 +144,6 @@ public class MatchViewController implements NotifyEventListener, Initializable{
      */
     @FXML private void startUnrankedMatchPressed(){
         this.mc.setEndGameStrategy(this.mc.UNRANKED);
-        System.out.println("unranked");
         startRankedMatchPressed();
     }
     /**
@@ -152,7 +151,6 @@ public class MatchViewController implements NotifyEventListener, Initializable{
      * Triggers when start ranked match is pressed.
      */
     @FXML private void startRankedMatchPressed(){
-        System.out.println("ranked");
         nickname1Label.setVisible(false);
         nickname2Label.setVisible(false);
         if(setPlayer1Field.getText().isEmpty() || setPlayer2Field.getText().isEmpty()){
