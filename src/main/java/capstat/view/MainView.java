@@ -12,6 +12,8 @@ import java.io.IOException;
 
 /**
  * Created by Jakob on 14/05/15.
+ *
+ * The MainView which launches the entire application and initializes the launchview
  */
 public class MainView extends Application implements NotifyEventListener{
     public static final String USER_REGISTERED = "New user registered";
@@ -25,6 +27,11 @@ public class MainView extends Application implements NotifyEventListener{
     Stage stage;
     Parent root;
     Scene scene;
+
+    /**
+     * Method which launches the entire application
+     * @param args
+     */
     public static void start(String [] args){
         launch(args);
     }
@@ -43,6 +50,10 @@ public class MainView extends Application implements NotifyEventListener{
         stage.show();
     }
 
+    /**
+     * Deals with incoming events from the EventBus, then takes proper action depending on event.
+     * @param event the key of the event that occured
+     */
     @Override
     public void notifyEvent(String event) {
         if(event.equals(SETSCENE_LOGIN)){
@@ -61,6 +72,11 @@ public class MainView extends Application implements NotifyEventListener{
             changeScene(event);
         }
     }
+
+    /**
+     * Method which controllers use to change the active view
+     * @param rootPath the path to the .fxml-file wanted to display
+     */
     private void changeScene(String rootPath){
         try{
             scene = new Scene(FXMLLoader.load(getClass().getResource(rootPath)), 600, 450);
