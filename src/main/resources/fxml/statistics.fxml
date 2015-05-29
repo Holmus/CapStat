@@ -35,16 +35,24 @@
             </ImageView>
             <Pane layoutX="23.0" layoutY="209.0" prefHeight="231.0" prefWidth="550.0">
                <children>
-                  <LineChart fx:id="lineChart" layoutX="-4.0" layoutY="19.0" prefHeight="230.0" prefWidth="550.0">
+                  <LineChart fx:id="lineChart" layoutX="-4.0" layoutY="-7.0" prefHeight="256.0" prefWidth="550.0">
                      <xAxis>
-                        <CategoryAxis label="Values for X-Axis"  fx:id="xAxis" />
+                        <CategoryAxis label="Values for X-Axis" fx:id="xAxis" />
                      </xAxis>
                      <yAxis>
-                        <NumberAxis fx:id="yAxis" label="Values for Y-Axis"/>
+                        <NumberAxis fx:id="yAxis" label="Values for Y-Axis" />
                      </yAxis>
                   </LineChart>
-                  <Label layoutX="33.0" layoutY="6.0" prefHeight="16.0" prefWidth="42.0" text="X-Axis:" />
-                  <ComboBox fx:id="XComboBox" layoutX="83.0" layoutY="2.0" prefWidth="150.0" promptText="Plot on X-Axis">
+                  <Label layoutX="33.0" layoutY="-34.0" prefHeight="16.0" prefWidth="42.0" text="X-Axis:" />
+                  <ComboBox fx:id="XComboBox" layoutX="83.0" layoutY="-38.0" prefWidth="150.0" promptText="Plot on X-Axis">
+                  <items>
+                     <FXCollections fx:factory="observableArrayList">
+                        <String fx:value="Time" />
+                     </FXCollections>
+                  </items>
+                  </ComboBox>
+                  <Label layoutX="254.0" layoutY="-34.0" text="Y-Axis:" />
+                  <ComboBox fx:id="YComboBox" layoutX="305.0" layoutY="-38.0" prefWidth="150.0" promptText="Plot on X-Axis">
                   <items>
                      <FXCollections fx:factory="observableArrayList">
                         <String fx:value="Accuracy" />
@@ -53,20 +61,9 @@
                      </FXCollections>
                   </items>
                   </ComboBox>
-                  <Label layoutX="254.0" layoutY="6.0" text="Y-Axis:" />
-                  <ComboBox fx:id="YComboBox" layoutX="305.0" layoutY="2.0" prefWidth="150.0" promptText="Plot on X-Axis">
-                  <items>
-                     <FXCollections fx:factory="observableArrayList">
-                        <String fx:value="Accuracy" />
-                        <String fx:value="Time" />
-                        <String fx:value="Number of Games" />
-                     </FXCollections>
-                  </items>
-                  </ComboBox>
-                  <Button fx:id="plotButton" layoutX="488.0" layoutY="2.0" mnemonicParsing="false" onAction="#plotClicked" prefHeight="26.0" prefWidth="59.0" text="Plot!" />
+                  <Button fx:id="plotButton" layoutX="488.0" layoutY="-38.0" mnemonicParsing="false" onAction="#plotClicked" prefHeight="26.0" prefWidth="59.0" text="Plot!" />
                </children>
             </Pane>
-            <PieChart layoutX="14.0" layoutY="53.0" prefHeight="128.0" prefWidth="140.0" title="Accuracy" />
             <Button fx:id="mainButton" layoutX="8.0" layoutY="16.0" mnemonicParsing="false" onAction="#returnToMain" prefHeight="16.0" prefWidth="49.0" text="Main">
                <font>
                   <Font size="10.0" />
@@ -77,6 +74,22 @@
                   <Font size="10.0" />
                </font>
             </Button>
+            <Label fx:id="ratingLabel" layoutX="186.0" layoutY="130.0" prefHeight="16.0" prefWidth="175.0" text="Your rating: ">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Label fx:id="statViewLabel" layoutX="180.0" layoutY="74.0" text="View stats for: ">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <TextField fx:id="userTextField" layoutX="282.0" layoutY="73.0" prefHeight="16.0" prefWidth="143.0" />
+            <Label fx:id="invalidUserLabel" layoutX="431.0" layoutY="79.0" text="No such user!" textFill="#ff2b2b">
+               <font>
+                  <Font size="9.0" />
+               </font>
+            </Label>
          </children>
       </Pane>
    </children>

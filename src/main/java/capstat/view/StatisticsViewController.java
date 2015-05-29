@@ -5,6 +5,8 @@ import capstat.application.StatisticsController;
 import capstat.infrastructure.eventbus.EventBus;
 import capstat.model.CapStat;
 import capstat.model.statistics.Plottable;
+import capstat.model.user.User;
+import capstat.model.user.UserLedger;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -15,6 +17,7 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 
@@ -33,17 +36,21 @@ public class StatisticsViewController implements Initializable{
     CapStat cs = CapStat.getInstance();
     LoginController lc = new LoginController();
     StatisticsController sc = new StatisticsController();
+    UserLedger ul = UserLedger.getInstance();
     EventBus eb = EventBus.getInstance();
     int length;
     @FXML ComboBox XComboBox, YComboBox;
     @FXML private LineChart<Double, Double> lineChart;
     @FXML NumberAxis yAxis;
     @FXML CategoryAxis xAxis;
-    @FXML Label currentUserLabel;
+    @FXML Label currentUserLabel, ratingLabel, statViewLabel, invalidUserLabel;
+    @FXML TextField userTextField;
     @FXML Button logoutButton, plotButton, mainButton;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        XComboBox.getSelectionModel().select(1);
+        invalidUserLabel.setVisible(false);
+        ratingLabel.setText("Your rating: " + cs.getLoggedInUser().getRanking().getPoints());
+        XComboBox.getSelectionModel().select(0);
         YComboBox.getSelectionModel().select(0);
         currentUserLabel.setText(cs.getLoggedInUser().getNickname());
 
@@ -75,44 +82,56 @@ public class StatisticsViewController implements Initializable{
     }
 
     @FXML public void plotClicked(){
+        User user;
+        if(userTextField.getText().isEmpty()){
+            invalidUserLabel.setVisible(true);
+            return;
+        } else{
+            if(ul.doesUserExist(userTextField.getText())){
+                invalidUserLabel.setVisible(false);
+                user = ul.getUserByNickname(userTextField.getText());
+                ratingLabel.setText(user.getNickname() + " rating: " + user.getRanking().getPoints());
+            } else{
+                invalidUserLabel.setVisible(true);
+                return;
+            }
+        }
         lineChart.getData().remove(series);
         series = new XYChart.Series();
-        addPlotData();
+        addPlotData(user);
         xAxis.setLabel(XComboBox.getSelectionModel().getSelectedItem().toString());
         yAxis.setLabel(YComboBox.getSelectionModel().getSelectedItem().toString());
         lineChart.getData().add(series);
     }
 
-    public void addPlotData(){
-        if(getXArray().length>=getYArray().length){
-            length = getYArray().length;
+    public void addPlotData(User user){
+        if(getXArray(user).length>=getYArray(user).length){
+            length = getYArray(user).length;
         } else{
-            length = getXArray().length;
+            length = getXArray(user).length;
         }
         for(int i = 0; i<length; i++){
-            series.getData().add(new XYChart.Data(getXArray()[i].getLabel(),
+            series.getData().add(new XYChart.Data(getXArray(user)[i].getLabel(),
                     getYArray
-                    ()[i].getValue()));
+                    (user)[i].getValue()));
         }
     }
-    public Plottable[] getXArray(){
+    public Plottable[] getXArray(User user){
         String statisticType = XComboBox.getSelectionModel().getSelectedItem()
                         .toString();
         StatisticsController.Statistic statisticStrategy =
                 getStatisticTypeForString(statisticType);
-        List<Plottable> plottablesList = sc.getData(statisticStrategy, cs
-                .getLoggedInUser());
+        List<Plottable> plottablesList = sc.getData(statisticStrategy, user);
 
         return plottablesList.toArray(new Plottable[0]);
 
     }
-    public Plottable[] getYArray(){
+    public Plottable[] getYArray(User user){
         String statisticType = YComboBox.getSelectionModel().getSelectedItem()
                 .toString();
         StatisticsController.Statistic statisticStrategy =
                 getStatisticTypeForString(statisticType);
-        List<Plottable> plottablesList = sc.getData(statisticStrategy, cs
-                .getLoggedInUser());
+        List<Plottable> plottablesList = sc.getData(statisticStrategy, user);
 
         return plottablesList.toArray(new Plottable[0]);
     }
