@@ -9,6 +9,8 @@ import java.util.List;
 
 /**
  * @author hjorthjort
+ * A class for getting plottables which gives the number of games played as a
+ * value. The first match in the list will get value 1, the second 2, etc.
  */
 public class MatchCount implements Statistic {
 
