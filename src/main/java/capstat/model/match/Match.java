@@ -79,7 +79,7 @@ public class Match {
     private Instant startTime, endTime;
 
 
-    private boolean checkInvariants() {
+    boolean checkInvariants() {
         if (isOngoing && startTime == null) return false;
         if (glasses.length % 2 == 0) return false;
         if (p1RoundsWon + p2RoundsWon > 0 && roundWinner == null) return false;
@@ -102,7 +102,7 @@ public class Match {
      *                    the game.
      * @throws IllegalArgumentException if
      */
-    public Match(int numberOfGlasses, int roundsToWin) {
+     Match(int numberOfGlasses, int roundsToWin) {
         //Assigns a unique (almost guaranteed) event ID for this specific match.
         this.eventId = globalEventId;
         globalEventId++;

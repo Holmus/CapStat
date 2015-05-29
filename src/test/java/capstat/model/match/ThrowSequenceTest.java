@@ -1,4 +1,4 @@
-package capstat.tests;
+package capstat.model.match;
 
 import capstat.model.match.Match;
 import capstat.model.match.ThrowSequence;
