@@ -33,7 +33,7 @@ public class MatchViewController implements NotifyEventListener, Initializable{
     Match match = MatchController.createNewMatch();
     MatchController mc = new MatchController(match);
     String winner = "";
-    @FXML Button hitButton, missButton,startMatchButton, menuButton;
+    @FXML Button hitButton, missButton,startRankedMatchButton, startUnrankedMatchButton, menuButton;
     @FXML Circle glass1, glass2, glass3, glass4, glass5, glass6, glass7;
     @FXML Pane p1Pane, p2Pane, mainPane, matchOverPane, preMatchPane;
     @FXML Label hitLabel, missLabel, duelLabel, p1Name, p2Name, p1Rank, p2Rank, p1Rounds, p2Rounds, winnerLabel, nickname1Label, nickname2Label;
@@ -69,7 +69,8 @@ public class MatchViewController implements NotifyEventListener, Initializable{
         hitButton.setFocusTraversable(false);
         missButton.setFocusTraversable(false);
         preMatchPane.setVisible(true);
-        startMatchButton.setDisable(false);
+        startRankedMatchButton.setDisable(false);
+        startUnrankedMatchButton.setDisable(false);
         resetGlasses();
         updatePlayer();
         Platform.runLater(() -> {
@@ -80,11 +81,6 @@ public class MatchViewController implements NotifyEventListener, Initializable{
         Platform.runLater(() -> {
             hitButton.getScene().getAccelerators().put(new KeyCodeCombination(KeyCode.SPACE), () -> {
                 hitPressed();
-            });
-        });
-        Platform.runLater(() -> {
-            startMatchButton.getScene().getAccelerators().put(new KeyCodeCombination(KeyCode.ENTER), () -> {
-                startMatchPressed();
             });
         });
         Platform.runLater(() -> {
@@ -121,8 +117,14 @@ public class MatchViewController implements NotifyEventListener, Initializable{
         eb.notify(MainView.MATCH_REGISTERED);
 
     }
+    @FXML private void startUnrankedMatchPressed(){
+        this.mc.setEndGameStrategy(this.mc.UNRANKED);
+        System.out.println("unranked");
+        startRankedMatchPressed();
+    }
 
-    @FXML private void startMatchPressed(){
+    @FXML private void startRankedMatchPressed(){
+        System.out.println("ranked");
         nickname1Label.setVisible(false);
         nickname2Label.setVisible(false);
         if(setPlayer1Field.getText().isEmpty() || setPlayer2Field.getText().isEmpty()){
@@ -165,7 +167,8 @@ public class MatchViewController implements NotifyEventListener, Initializable{
             p2Pane.setVisible(true);
             mainPane.setVisible(true);
             preMatchPane.setVisible(false);
-            startMatchButton.setDisable(true);
+            startRankedMatchButton.setDisable(true);
+            startUnrankedMatchButton.setDisable(true);
             mc.startMatch();
         }
 

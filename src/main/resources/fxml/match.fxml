@@ -109,7 +109,7 @@
                   <Label layoutX="111.0" layoutY="170.0" text="Player one:" />
                   <TextField fx:id="setPlayer1Field" layoutX="63.0" layoutY="199.0" />
                   <TextField fx:id="setPlayer2Field" layoutX="362.0" layoutY="199.0" />
-                  <Button fx:id="startMatchButton" layoutX="239.0" layoutY="279.0" mnemonicParsing="false" onAction="#startMatchPressed" prefHeight="36.0" prefWidth="120.0" text="Start match" />
+                  <Button fx:id="startUnrankedMatchButton" layoutX="105.0" layoutY="281.0" mnemonicParsing="false" onAction="#startUnrankedMatchPressed" prefHeight="36.0" prefWidth="120.0" text="Start unranked" />
                   <Button fx:id="menuButton" layoutX="6.0" layoutY="1.0" mnemonicParsing="false" onAction="#returnToMenu" text="Main" />
                   <Label fx:id="nickname1Label" layoutX="105.0" layoutY="206.0" text="Enter a nickname" textFill="#ff4444">
                      <font>
@@ -121,6 +121,7 @@
                         <Font size="10.0" />
                      </font>
                   </Label>
+                  <Button fx:id="startRankedMatchButton" layoutX="365.0" layoutY="279.0" mnemonicParsing="false" onAction="#startRankedMatchPressed" prefHeight="36.0" prefWidth="120.0" text="Start ranked" />
                </children>
             </Pane>
          </children>
