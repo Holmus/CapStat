@@ -7,6 +7,7 @@ import capstat.model.statistics.SingleMatchCalculator;
 import capstat.model.user.User;
 
 
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
@@ -15,26 +16,17 @@ import java.util.Set;
  * Created by Jakob on 21/05/15.
  */
 public class StatisticsController {
-    public final Statistic ACCURACY = new Accuracy();
+    public static final Statistic ACCURACY = new Accuracy();
     public final Statistic TIME = null;
     public final Statistic MATCH_COUNT = null;
 
-    Double[] test = new Double[]{
-      4.3, 3.5, 7.8, 6.3, 8.0
-    };
-    Double[] test2 = new Double[]{
-            2.1, 0.3, 8.1, 4.2, 10.8, 9.23, 8.56
-    };
-    public List<Plottable> getData(String dataType, User user) {
+    public List<Plottable> getData(Statistic dataType, User user) {
         Set<MatchResult> matches = ResultLedger.getInstance()
                 .getMatchesForUser(user);
-
-        //TODO Finish up
-
-        if (dataType.equals("Accuracy")) {
-        } else {
-        }
-        return null;
+        List<MatchResult> newList = new LinkedList<>(matches);
+        newList.sort((match1, match2) -> match1.getEndTime().compareTo(match2
+                .getEndTime()));
+        return dataType.getStatistics(newList, user);
     }
 
     public interface Statistic {
