@@ -8,8 +8,9 @@ import java.util.List;
 
 /**
  * @author hjorthjort
+ * A class creating plottables representing the duration of a match.
  */
-public class ElapsedTime implements Statistic {
+public class MatchDuration implements Statistic {
 
     @Override
     public List<Plottable> getStatistics(final List<MatchResult> matches, final User user) {

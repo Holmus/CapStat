@@ -44,7 +44,7 @@
                   <items>
                      <FXCollections fx:factory="observableArrayList">
                         <String fx:value="Time" />
-                        <String fx:value="Elapsed Time" />
+                        <String fx:value="Match Duration" />
                      </FXCollections>
                   </items>
                   </ComboBox>

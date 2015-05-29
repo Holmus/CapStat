@@ -149,7 +149,7 @@ public class StatisticsViewController implements Initializable{
                 return StatisticsController.LONGEST_DUEL;
             case ("Total Number of Throws"):
                 return StatisticsController.NUMBER_OF_THROWS;
-            case ("Elapsed Time"):
+            case ("Match Duration"):
                 return StatisticsController.ELAPSED_TIME;
         }
         return null;
