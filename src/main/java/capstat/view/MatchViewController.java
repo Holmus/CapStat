@@ -26,7 +26,7 @@ import java.util.ResourceBundle;
 /**
  * Created by Jakob on 18/05/15.
  *
- * Class to update the MatchView
+ * Class to update and initialize the MatchView
  */
 public class MatchViewController implements NotifyEventListener, Initializable{
     EventBus eb = EventBus.getInstance();
@@ -40,9 +40,12 @@ public class MatchViewController implements NotifyEventListener, Initializable{
     @FXML TextField setPlayer1Field, setPlayer2Field;
     Background activeBackground = new Background(new BackgroundFill(Color.CORNFLOWERBLUE, CornerRadii.EMPTY, Insets.EMPTY));
     Background inactiveBackground = new Background(new BackgroundFill(Color.LIGHTGRAY, CornerRadii.EMPTY, Insets.EMPTY));
-    //ToDo: matchOverPane should have a button to not save the result
-    //ToDo: add functionality for saving result
 
+    /**
+     * Sets the default behaviour and display of elements initializing the view.
+     * @param location
+     * @param resources
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources){
         this.mc.setEndGameStrategy(this.mc.RANKED);
@@ -89,10 +92,19 @@ public class MatchViewController implements NotifyEventListener, Initializable{
             });
         });
     }
+
+    /**
+     * Sends a notification the EventBus when the Menu-Button is pressed.
+     *
+     */
     @FXML private void returnToMenu(){
         eb.notify(MainView.SETSCENE_MAIN);
     }
 
+    /**
+     * Tells the match to register a miss when the Miss-button is pressed, using the MatchController.
+     * Also sets the correct labels to display
+     */
     @FXML private void missPressed() {
         if(match.isOngoing()) {
             hitLabel.setVisible(false);
@@ -102,6 +114,10 @@ public class MatchViewController implements NotifyEventListener, Initializable{
         }
     }
 
+    /**
+     * Tells the match to register a hit when the Hit-button is pressed, using the MatchController.
+     * Also sets the correct labels to display
+     */
     @FXML private void hitPressed(){
         if(match.isOngoing()) {
             missLabel.setVisible(false);
@@ -111,18 +127,30 @@ public class MatchViewController implements NotifyEventListener, Initializable{
         }
     }
 
+    /**
+     * Tells the MatchController to save the game when the save result-button is pressed.
+     * Sends notifications to the EventBus
+     */
     @FXML private void saveResultPressed(){
         this.mc.saveGame();
         eb.notify(MainView.SETSCENE_MAIN);
         eb.notify(MainView.MATCH_REGISTERED);
 
     }
+
+    /**
+     * Starts a unranked match using the MatchController. Sets view to "match-mode", displaying correct elements.
+     * Triggers when start unranked match is pressed.
+     */
     @FXML private void startUnrankedMatchPressed(){
         this.mc.setEndGameStrategy(this.mc.UNRANKED);
         System.out.println("unranked");
         startRankedMatchPressed();
     }
-
+    /**
+     * Starts a ranked match using the MatchController. Sets view to "match-mode", displaying correct elements.
+     * Triggers when start ranked match is pressed.
+     */
     @FXML private void startRankedMatchPressed(){
         System.out.println("ranked");
         nickname1Label.setVisible(false);
@@ -174,6 +202,11 @@ public class MatchViewController implements NotifyEventListener, Initializable{
 
     }
 
+    /**
+     * Deals with incoming events from the EventBus, then takes proper action depending on event.
+     * @param event the key of the event that occured
+     */
+
     @Override
     public void notifyEvent(String event) {
         switch (event) {
@@ -199,8 +232,13 @@ public class MatchViewController implements NotifyEventListener, Initializable{
                 //Do nothing
         }
     }
+
+    /**
+     * Horrible way to update glasses according to matchstate.
+     * Called when a duel is over
+     */
+
     private void updateGlasses(){
-        //ToDo: Find nice solution?
         Match.Glass[] glasses = match.getGlasses();
         if(!glasses[0].isActive()){
             glass1.setFill(Color.LIGHTGRAY);
@@ -224,6 +262,11 @@ public class MatchViewController implements NotifyEventListener, Initializable{
             glass7.setFill(Color.LIGHTGRAY);
         }
     }
+
+    /**
+     * Changes the background color to properly display whose turn it is to Throw.
+     *
+     */
     private void updatePlayer(){
         if(match.getPlayerWhoseTurnItIs().equals(Match.Player.ONE)){
             p1Pane.setBackground(activeBackground);
@@ -233,6 +276,11 @@ public class MatchViewController implements NotifyEventListener, Initializable{
             p2Pane.setBackground(activeBackground);
         }
     }
+
+    /**
+     * Disables registration of new hits/misses, activates the "match over"-view
+     *
+     */
     private void disableReg(){
         if(Match.Player.ONE.equals(match.getRoundWinner())){
             winner = p1Name.getText();
@@ -248,6 +296,11 @@ public class MatchViewController implements NotifyEventListener, Initializable{
         matchOverPane.setVisible(true);
 
     }
+
+    /**
+     * Displays all glasses as active
+     *
+     */
     private void resetGlasses(){
         glass1.setFill(Color.ORANGE);
         glass2.setFill(Color.ORANGE);
