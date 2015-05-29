@@ -300,6 +300,8 @@ public class Match {
         // Only change the starting player if player 1 is "older" than player
         // 2. If player 1 is older, the comparison should return a value
         // larger than.
+        if (player1 == null || player2 == null)
+            return Player.ONE;
         return this.player1.getChalmersAge().compareTo(this.player2
                 .getChalmersAge()) >= 0 ? Player.ONE : Player.TWO;
     }

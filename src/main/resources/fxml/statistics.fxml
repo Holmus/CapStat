@@ -44,6 +44,7 @@
                   <items>
                      <FXCollections fx:factory="observableArrayList">
                         <String fx:value="Time" />
+                        <String fx:value="Match Duration" />
                      </FXCollections>
                   </items>
                   </ComboBox>
@@ -52,8 +53,9 @@
                   <items>
                      <FXCollections fx:factory="observableArrayList">
                         <String fx:value="Accuracy" />
-                        <String fx:value="Time" />
+                        <String fx:value="Longest Duel" />
                         <String fx:value="Number of Games" />
+                        <String fx:value="Total Number of Throws" />
                      </FXCollections>
                   </items>
                   </ComboBox>

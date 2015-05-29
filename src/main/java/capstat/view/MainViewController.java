@@ -27,7 +27,7 @@ public class MainViewController implements Initializable, NotifyEventListener{
     private Scene scene;
     private Parent root;
     @FXML Label userLabel, matchRegisteredLabel;
-    @FXML Button playButton, statisticsButton,
+    @FXML Button playButton, statisticsButton, logoutButton;
 
     /**
      * Sets the default behaviour and display of elements initializing the view.
