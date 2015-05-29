@@ -58,17 +58,7 @@ public class SingleMatchCalculator {
      * @throws IllegalArgumentException if the User did not play this match
      */
     public double getAccuracy(User user) {
-        User p1 = this.mr.getPlayer1();
-        User p2 = this.mr.getPlayer2();
-        if (user.equals(p1)) {
-            return this.getAccuracy(Match.Player.ONE);
-        }
-        else if (user.equals(p2)) {
-            return this.getAccuracy(Match.Player.TWO);
-        } else {
-            throw new IllegalArgumentException("User is not in this match");
-        }
-
+        return this.getAccuracy(decideWhichPlayerUserIs(user));
     }
 
     /**
@@ -111,6 +101,16 @@ public class SingleMatchCalculator {
      */
     public int getTotalNumberOfThrows(Match.Player player) {
         return getThrowsForPlayer(mr.getSequences(), player).size();
+    }
+
+    /**
+     * Convenience method for getting number of throws for a user in the
+     * match, without figuring out which player that user is.
+     * @param user the user who's throws is to be returned
+     * @return number of throws the user made during match
+     */
+    public int getTotalNumberOfThrows(User user) {
+        return this.getTotalNumberOfThrows(this.decideWhichPlayerUserIs(user));
     }
 
     /**
@@ -252,6 +252,27 @@ public class SingleMatchCalculator {
         }
 
         return playerThrows;
+    }
+
+
+    /**
+     * Method for deciding which player in a match the given user is
+     * @param user the user to find
+     * @return Match.Player.ONE if user is player 1, Match.Player.TWO if user
+     * is player 2.
+     * @throws IllegalArgumentException if user did not play this match
+     */
+    private Match.Player decideWhichPlayerUserIs(User user) {
+        User p1 = this.mr.getPlayer1();
+        User p2 = this.mr.getPlayer2();
+        if (user.equals(p1)) {
+            return Match.Player.ONE;
+        }
+        else if (user.equals(p2)) {
+            return Match.Player.TWO;
+        } else {
+            throw new IllegalArgumentException("User is not in this match");
+        }
     }
 
 }
