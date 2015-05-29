@@ -1,7 +1,7 @@
 package capstat.model.statistics;
 
 import capstat.infrastructure.database.DatabaseHelperFactory;
-import capstat.infrastructure.database.MatchDatabaseHelper;
+import capstat.infrastructure.database.ResultDatabaseHelper;
 import capstat.infrastructure.database.MatchResultBlueprint;
 import capstat.infrastructure.database.PartialSequenceBlueprint;
 import capstat.model.match.Match;
@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 public class ResultLedger {
 	private static ResultLedger instance;
 	private Map<String, User> users;
-	private MatchDatabaseHelper dbHelper;
+	private ResultDatabaseHelper dbHelper;
 
 	private ResultLedger() {
 		this.users = new HashMap<>();

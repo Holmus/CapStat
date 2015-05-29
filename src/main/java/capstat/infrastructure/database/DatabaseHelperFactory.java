@@ -17,7 +17,7 @@ public class DatabaseHelperFactory {
         return new DatabaseFacade();
     }
 
-    public MatchDatabaseHelper createMatchQueryHelper() {
+    public ResultDatabaseHelper createMatchQueryHelper() {
         return new DatabaseFacade();
     }
 }

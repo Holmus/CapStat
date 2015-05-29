@@ -21,7 +21,7 @@ import static org.junit.Assert.*;
  */
 public class MatchDatabaseFacadeTest {
 
-	private static MatchDatabaseHelper matchdb;
+	private static ResultDatabaseHelper matchdb;
 	private static UserDatabaseHelper userdb;
 	private MatchResultBlueprint dummyMatchResult1, dummyMatchResult2;
 	private UserBlueprint dummyRow1, dummyRow2, dummyRow3, dummyRow4, guestUser;

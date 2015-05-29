@@ -19,7 +19,7 @@ import java.util.*;
  * * Interaction with the Match (and ThrowSequence) table.
  * * Common methods, mostly conversions between formats.
  */
-class DatabaseFacade implements UserDatabaseHelper, MatchDatabaseHelper {
+class DatabaseFacade implements UserDatabaseHelper, ResultDatabaseHelper {
 
     // Path and filename as string.
 	// TODO Fix/Check what happens if the files already exists with content?

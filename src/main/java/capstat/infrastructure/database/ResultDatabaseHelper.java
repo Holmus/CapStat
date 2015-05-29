@@ -6,7 +6,7 @@ import java.util.Set;
  * @author jibbs
  * An interface for a Facade used to get and add matches from the database.
  */
-public interface MatchDatabaseHelper {
+public interface ResultDatabaseHelper {
 
 	/**
 	 * Stores a match in the database.
