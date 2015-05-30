@@ -22,6 +22,8 @@ import java.util.Set;
  * * Interaction with the User table.
  * * Interaction with the Match (and ThrowSequence) table.
  * * Common methods, mostly conversions between formats.
+ * @Author Johan Andersson
+ * @Author Rikard Hjort
  */
 class DatabaseFacade implements UserDatabaseHelper, ResultDatabaseHelper {
 
@@ -37,9 +39,6 @@ class DatabaseFacade implements UserDatabaseHelper, ResultDatabaseHelper {
 
 	// START USERS
 
-	/**
-	 * {@inheritDoc}
-	 */
     @Override
     public void addUser(final UserBlueprint user) {
         // ADDS USER INSERTION TO QUEUE
@@ -86,26 +85,17 @@ class DatabaseFacade implements UserDatabaseHelper, ResultDatabaseHelper {
         }
     }
 
-	/**
-	 * {@inheritDoc}
-	 */
     @Override
     public void addUserSet(final Set<UserBlueprint> userSet) {
         userSet.forEach(this::addUser);
     }
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	public void overwriteUser(final UserBlueprint user) {
 		removeUser(user);
 		addUser(user);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
     @Override
     public void removeUser(final UserBlueprint user) {
 	    waitForQueueToFinish();
@@ -113,9 +103,6 @@ class DatabaseFacade implements UserDatabaseHelper, ResultDatabaseHelper {
         //TODO check if this is done or not.
     }
 
-	/**
-	 * {@inheritDoc}
-	 */
     @Override
     public UserBlueprint getUserByNickname(final String nickname) {
 	    waitForQueueToFinish();
@@ -124,9 +111,6 @@ class DatabaseFacade implements UserDatabaseHelper, ResultDatabaseHelper {
 	    return ub.iterator().hasNext() ? ub.iterator().next() : null;
     }
 
-	/**
-	 * {@inheritDoc}
-	 */
     @Override
     public Set<UserBlueprint> getUsersByName(final String name) {
 	    waitForQueueToFinish();
@@ -135,9 +119,6 @@ class DatabaseFacade implements UserDatabaseHelper, ResultDatabaseHelper {
 	    return getUsersFromResult(result);
     }
 
-	/**
-	 * {@inheritDoc}
-	 */
     @Override
     public Set<UserBlueprint> getUsersByNicknameMatch(final String regex) {
 	    waitForQueueToFinish();
@@ -145,9 +126,6 @@ class DatabaseFacade implements UserDatabaseHelper, ResultDatabaseHelper {
         return getUsersFromResult(result);
     }
 
-	/**
-	 * {@inheritDoc}
-	 */
     @Override
     public Set<UserBlueprint> getUsersByNameMatch(final String regex) {
 	    waitForQueueToFinish();
@@ -155,9 +133,6 @@ class DatabaseFacade implements UserDatabaseHelper, ResultDatabaseHelper {
         return getUsersFromResult(result);
     }
 
-	/**
-	 * {@inheritDoc}
-	 */
     @Override
     public Set<UserBlueprint> getUsersInELORankRange(final double minELO, final double maxELO) {
 	    waitForQueueToFinish();
@@ -208,9 +183,6 @@ class DatabaseFacade implements UserDatabaseHelper, ResultDatabaseHelper {
 
 	// START MATCHES
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	public void addMatch(MatchResultBlueprint match) {
 		// ADDS MATCH INSERTION TO QUEUE
@@ -291,17 +263,11 @@ class DatabaseFacade implements UserDatabaseHelper, ResultDatabaseHelper {
 		}
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	public void addMatchSet(Set<MatchResultBlueprint> matchSet) {
 		matchSet.forEach(this::addMatch);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	public void removeMatch(long id) {
 		waitForQueueToFinish();
@@ -312,9 +278,6 @@ class DatabaseFacade implements UserDatabaseHelper, ResultDatabaseHelper {
 				.execute();
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	public MatchResultBlueprint getMatchById(long id) {
 		waitForQueueToFinish();
@@ -325,9 +288,6 @@ class DatabaseFacade implements UserDatabaseHelper, ResultDatabaseHelper {
 		return mrbSet.iterator().hasNext() ? mrbSet.iterator().next() : null;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	public Set<MatchResultBlueprint> getAllMatches() {
 		waitForQueueToFinish();
@@ -336,9 +296,6 @@ class DatabaseFacade implements UserDatabaseHelper, ResultDatabaseHelper {
 		return getMatchesFromResult(result);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	public Set<MatchResultBlueprint> getMatchesForUser(String player) {
 		waitForQueueToFinish();
@@ -349,9 +306,6 @@ class DatabaseFacade implements UserDatabaseHelper, ResultDatabaseHelper {
 		return getMatchesFromResult(result);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	public Set<MatchResultBlueprint> getMatchesForUsers(String p1, String p2) {
 		waitForQueueToFinish();
@@ -364,9 +318,6 @@ class DatabaseFacade implements UserDatabaseHelper, ResultDatabaseHelper {
 		return getMatchesFromResult(result);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	public Set<MatchResultBlueprint> getMatchesInDateRange(long epochFrom, long epochTo) {
 		waitForQueueToFinish();
@@ -376,9 +327,6 @@ class DatabaseFacade implements UserDatabaseHelper, ResultDatabaseHelper {
 		return getMatchesFromResult(result);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	public Set<MatchResultBlueprint> getMatchesForSpectator(String spectator) {
 		waitForQueueToFinish();

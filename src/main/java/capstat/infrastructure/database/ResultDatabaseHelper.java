@@ -3,8 +3,8 @@ package capstat.infrastructure.database;
 import java.util.Set;
 
 /**
- * @author jibbs
  * An interface for a Facade used to get and add matches from the database.
+ * @author Johan Andersson
  */
 public interface ResultDatabaseHelper {
 
