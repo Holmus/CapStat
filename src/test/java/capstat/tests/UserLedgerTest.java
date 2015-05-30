@@ -10,17 +10,17 @@ public class UserLedgerTest {
     @Test
     public void testNicknameValidation() {
         CapStat cs = CapStat.getInstance();
-        String[] validNicknames = new String[] {"Saser",
-                                                "Holmus",
-                                                "HJORT",
-                                                "Kruken",
-                                                "bäski",
-                                                "Tandlös",
-                                                "Öhrnie",
-                                                "Jühan",
-                                                "Lam(m)",
-                                                "Big Tuna",
-                                                "_us"};
+        String[] validNicknames = new String[] {"Saser2",
+                                                "Holmus2",
+                                                "HJORT2",
+                                                "Kruken2",
+                                                "bäski2",
+                                                "Tandlös2",
+                                                "Öhrnie2",
+                                                "Jühan2",
+                                                "Lam(m)2",
+                                                "Big Tuna2",
+                                                "_us2"};
         for (String validNickname : validNicknames) {
             assertEquals("Testing valid nickname: " + validNickname,
                          true,

@@ -1,9 +1,11 @@
 package capstat.tests;
 
-import capstat.model.MatchOverObserver;
-import capstat.model.Match;
-import capstat.model.RankedMatch;
-import capstat.utils.GameFactory;
+import capstat.infrastructure.eventbus.NotifyEventListener;
+import capstat.model.match.Match;
+import capstat.model.user.User;
+import capstat.model.match.MatchFactory;
+import capstat.model.user.UserFactory;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -13,15 +15,18 @@ import static org.junit.Assert.assertFalse;
 /**
  * @author hjorthjort
  */
-public class RecordMatchTest implements MatchOverObserver {
+public class RecordMatchTest implements NotifyEventListener {
 
     private Match match;
-    private GameFactory gf = new GameFactory();
     private boolean gameIsOver;
 
     @Before
     public void newMatch( ) {
-        match = gf.createDefaultMatch();
+        match = MatchFactory.createDefaultMatch();
+        User dummy1 = UserFactory.createDummyUser1();
+        User dummy2 = UserFactory.createDummyUser2();
+        match.setPlayer1(dummy1);
+        match.setPlayer2(dummy2);
         match.startMatch();
         gameIsOver = false;
     }
@@ -31,7 +36,6 @@ public class RecordMatchTest implements MatchOverObserver {
         /*
         make sure a ranked match is created by default
          */
-        assertEquals("Is ranked match: ", true, match instanceof RankedMatch);
         assertEquals("Is ranked match: ", true, match.isOngoing());
     }
 
@@ -70,7 +74,7 @@ public class RecordMatchTest implements MatchOverObserver {
 
         assertEquals("Player 1 score is 1: ", 1, match.getPlayer1Score());
         assertEquals("Player 2 score is 0: ", 0, match.getPlayer2Score());
-        assertEquals("Player 2's turn: ", match.getPlayer2(), match
+        assertEquals("Player 2's turn: ", Match.Player.TWO, match
                 .getPlayerWhoseTurnItIs());
 
         /*
@@ -93,7 +97,7 @@ public class RecordMatchTest implements MatchOverObserver {
 
     @Test
     public void winGameTest() {
-        match.addMatchOverObserver(this);
+        match.addNotificationEventListener(Match.MATCH_ENDED, this);
         /*
         Make player 2 win as fast as possible;
          */
@@ -101,11 +105,10 @@ public class RecordMatchTest implements MatchOverObserver {
             match.recordMiss();
             match.recordHit();
         }
-        assertFalse("Match is over after 1 thousand duels: ", match.isOngoing
-                ());
+        assertFalse("Match is over after 1 thousand duels: ", match.isOngoing());
         try {
-            assertEquals("Player 2 is winner: ", match.getPlayer2(), match.getWinner
-                    ());
+            assertEquals("Player 2 is winner:", Match.Player.TWO, match
+                    .getWinner());
         } catch (Match.MatchNotOverException e) {
             System.out.println("Match should have been over, but " +
                     "MatchNotOverException was thrown when getWinner was " +
@@ -118,4 +121,8 @@ public class RecordMatchTest implements MatchOverObserver {
         gameIsOver = true;
     }
 
+    @Override
+    public void notifyEvent(final String event) {
+        matchOver();
+    }
 }
