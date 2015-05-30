@@ -1,6 +1,6 @@
 package capstat.model.match;
 
-import capstat.model.CapStat;
+import capstat.model.LoggedInUser;
 import capstat.model.user.UserFactory;
 import org.junit.Test;
 
@@ -18,7 +18,7 @@ public class MatchFactoryTest {
         assertTrue(match.getPlayer(Match.Player.TWO)==null);
         assertFalse(match.isDuelling());
         assertFalse(match.isOngoing());
-        assertTrue(match.getSpectator() == CapStat.getInstance()
+        assertTrue(match.getSpectator() == LoggedInUser.getInstance()
                 .getLoggedInUser());
         assertTrue(match.checkInvariants());
     }
@@ -31,7 +31,7 @@ public class MatchFactoryTest {
         assertTrue(match.getGlasses().length == 39);
         assertFalse(match.isDuelling());
         assertFalse(match.isOngoing());
-        assertTrue(match.getSpectator() == CapStat.getInstance()
+        assertTrue(match.getSpectator() == LoggedInUser.getInstance()
                 .getLoggedInUser());
         assertTrue(match.checkInvariants());
     }
@@ -47,7 +47,7 @@ public class MatchFactoryTest {
         assertTrue(match.getGlasses().length == 23);
         assertFalse(match.isDuelling());
         assertFalse(match.isOngoing());
-        assertTrue(match.getSpectator() == CapStat.getInstance()
+        assertTrue(match.getSpectator() == LoggedInUser.getInstance()
                 .getLoggedInUser());
         assertTrue(match.checkInvariants());
     }

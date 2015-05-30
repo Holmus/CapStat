@@ -7,26 +7,26 @@ import capstat.model.user.UserLedger;
 /**
  * @author Christian Persson
  */
-public class CapStat {
+public class LoggedInUser {
 
-    private static CapStat instance;
+    private static LoggedInUser instance;
     private UserLedger userLedger;
     private User loggedInUser;
     private final User guestUser;
 
-    private CapStat() {
+    private LoggedInUser() {
         this.userLedger = UserLedger.getInstance();
         this.guestUser = UserFactory.createGuestUser();
         this.loggedInUser = guestUser;
     }
 
     /**
-     * Returns the only instance of CapStat.
-     * @return the only instance of CapStat
+     * Returns the only instance of LoggedInUser.
+     * @return the only instance of LoggedInUser
      */
-    public synchronized static CapStat getInstance() {
+    public synchronized static LoggedInUser getInstance() {
         if (instance == null) {
-            instance = new CapStat();
+            instance = new LoggedInUser();
         }
         return instance;
     }

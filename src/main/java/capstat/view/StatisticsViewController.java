@@ -1,10 +1,10 @@
 package capstat.view;
 
 import capstat.application.LoginController;
+import capstat.model.LoggedInUser;
 import capstat.model.statistics.Statistic;
 import capstat.application.StatisticsController;
 import capstat.infrastructure.eventbus.EventBus;
-import capstat.model.CapStat;
 import capstat.model.statistics.Plottable;
 import capstat.model.user.User;
 import capstat.model.user.UserLedger;
@@ -32,7 +32,7 @@ import java.util.*;
  */
 public class StatisticsViewController implements Initializable{
     XYChart.Series series = new XYChart.Series();
-    CapStat cs = CapStat.getInstance();
+    LoggedInUser cs = LoggedInUser.getInstance();
     LoginController lc = new LoginController();
     StatisticsController sc = new StatisticsController();
     UserLedger ul = UserLedger.getInstance();
