@@ -8,7 +8,7 @@ import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 /**
- * @author hjorthjort
+ * @author hjorthjort, Jakob
  *
  * A class for getting a selection of statistics for all matches of a user.
  *
