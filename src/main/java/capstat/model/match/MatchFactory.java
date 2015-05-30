@@ -1,6 +1,6 @@
 package capstat.model.match;
 
-import capstat.model.CapStat;
+import capstat.model.user.LoggedInUser;
 import capstat.model.user.User;
 
 /**
@@ -21,7 +21,7 @@ public abstract class MatchFactory {
         Match match = new Match(glassesPerPlayer*2 + 1, roundsToWin);
         match.setPlayer1(player1);
         match.setPlayer2(player2);
-        match.setSpectator(CapStat.getInstance().getLoggedInUser());
+        match.setSpectator(LoggedInUser.getInstance().getLoggedInUser());
         match.setCurrentPlayer(match.calculateStartingPlayer());
         return match;
     }

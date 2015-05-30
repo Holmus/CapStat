@@ -1,6 +1,6 @@
 package capstat.application;
 
-import capstat.model.CapStat;
+import capstat.model.user.LoggedInUser;
 import capstat.model.user.Security;
 import capstat.model.user.User;
 import capstat.model.user.UserLedger;
@@ -13,7 +13,7 @@ import capstat.model.user.UserLedger;
  */
 public class LoginController {
 
-    private CapStat capStat = CapStat.getInstance();
+    private LoggedInUser loggedInUser = LoggedInUser.getInstance();
     UserLedger userLedger = UserLedger.getInstance();
 
     /**
@@ -29,7 +29,7 @@ public class LoginController {
         String hashedPassword = Security.hashPassword(password);
         if(userLedger.doesUserExist(username)) {
             if (hashedPassword.equals(user.getHashedPassword())) {
-                this.capStat.setLoggedInUser(user);
+                this.loggedInUser.setLoggedInUser(user);
                 return true;
             }
             else {
@@ -42,7 +42,7 @@ public class LoginController {
      * Should set the logged in user to a guest-user
      */
     public void loginAsGuest() {
-        this.capStat.setGuestLoggedIn();
+        this.loggedInUser.setGuestLoggedIn();
     }
 
     /**

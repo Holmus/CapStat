@@ -1,7 +1,7 @@
 package capstat.tests;
 
 import capstat.application.LoginController;
-import capstat.model.CapStat;
+import capstat.model.user.LoggedInUser;
 import capstat.model.user.User;
 import capstat.model.user.UserFactory;
 import capstat.model.user.UserLedger;
@@ -16,7 +16,7 @@ import static org.junit.Assert.assertTrue;
 public class LoginControllerTest {
 
     LoginController lc = new LoginController();
-    CapStat cp = CapStat.getInstance();
+    LoggedInUser cp = LoggedInUser.getInstance();
     UserLedger ul = UserLedger.getInstance();
 
     /**

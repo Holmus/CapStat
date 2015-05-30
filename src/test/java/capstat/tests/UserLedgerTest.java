@@ -3,13 +3,13 @@ package capstat.tests;
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
-import capstat.model.CapStat;
+import capstat.model.user.LoggedInUser;
 
 public class UserLedgerTest {
 
     @Test
     public void testNicknameValidation() {
-        CapStat cs = CapStat.getInstance();
+        LoggedInUser cs = LoggedInUser.getInstance();
         String[] validNicknames = new String[] {"Saser2",
                                                 "Holmus2",
                                                 "HJORT2",
