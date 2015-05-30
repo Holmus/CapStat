@@ -75,22 +75,28 @@ public class MatchController implements NotifyEventListener {
 
     /**
      * Set which user is player 1. If the given nickname does not exist,
-     * player 1 will be set to null.
-     * @param nickname
+     * player 1 will be set to null. If the given user is set as player 2,
+     * this method call has no effect
+     * @param nickname nickname of the player which should be set as player 1
      */
     public void setPlayer1(String nickname) {
         final User p1 = userLedger.getUserByNickname(nickname);
-        match.setPlayer1(p1);
+        User p2 = match.getPlayer(Match.Player.TWO);
+        if (p2 == null || !p2.equals(p1))
+            match.setPlayer1(p1);
     }
 
     /**
      * Set which user is player 2. If the given nickname does not exist,
-     * player 2 will be set to null.
-     * @param nickname
+     * player 2 will be set to null. If the given user is set as player 1,
+     * this method call has no effect
+     * @param nickname nickname of the player which should be set as player 2
      */
     public void setPlayer2(String nickname) {
         final User p2 = userLedger.getUserByNickname(nickname);
-        match.setPlayer2(p2);
+        User p1 = match.getPlayer(Match.Player.ONE);
+        if (p1 == null || !p1.equals(p2))
+            match.setPlayer2(p2);
     }
 
     public void setEndGameStrategy(EndGameStrategy strategy) {

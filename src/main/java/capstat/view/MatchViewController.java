@@ -163,9 +163,9 @@ public class MatchViewController implements NotifyEventListener, Initializable{
             return;
         }else{
             //Get strings inputted in text fields
-            String p1Nickname = setPlayer1Field.getText();
+            String p1Nickname = setPlayer1Field.getText().toLowerCase();
             mc.setPlayer1(p1Nickname);
-            String p2Nickname = setPlayer2Field.getText();
+            String p2Nickname = setPlayer2Field.getText().toLowerCase();
             mc.setPlayer2(p2Nickname);
 
             //Only show ranking if user is registered.
@@ -179,7 +179,7 @@ public class MatchViewController implements NotifyEventListener, Initializable{
             }
 
             boolean p2Exists = UserLedger.getInstance().doesUserExist
-                    (p2Nickname);
+                    (p2Nickname) && !p1Nickname.equals(p2Nickname);
             if (p2Exists){
                 p2Rank.setText("" + match.getPlayer(Match.Player.TWO).getRanking().getPoints());
             } else {
@@ -187,8 +187,8 @@ public class MatchViewController implements NotifyEventListener, Initializable{
                 match.setPlayer2(UserFactory.createGuestUser());
             }
 
-            p1Name.setText(setPlayer1Field.getText());
-            p2Name.setText(setPlayer2Field.getText());
+            p1Name.setText(match.getPlayer(Match.Player.ONE).getNickname());
+            p2Name.setText(match.getPlayer(Match.Player.TWO).getNickname());
             p1Pane.setVisible(true);
             p2Pane.setVisible(true);
             mainPane.setVisible(true);
