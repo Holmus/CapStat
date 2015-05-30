@@ -7,7 +7,7 @@ import capstat.model.user.UserLedger;
 
 /**
  * Created by Jakob on 20/05/15.
- *
+ * @author Jakob
  * Class to verify login credentials with the model and login.
  *
  */

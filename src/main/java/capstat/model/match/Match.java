@@ -127,6 +127,10 @@ public class Match {
                 .playerWhoseTurnItIs, false);
     }
 
+    /**
+     * Creates the glasses the match will be using
+     *
+     */
     private void createGlasses() {
         this.glasses = new Glass[this.numberOfGlasses];
         for (int i = 0; i < this.numberOfGlasses; i++) {
@@ -196,10 +200,18 @@ public class Match {
         }
     }
 
+    /**
+     * Method which gets the spectator for the match
+     * @return The User who started the match (the logged in user), not necessarily one of the players.
+     */
     public User getSpectator() {
         return spectator;
     }
 
+    /**
+     * Method to get player1: s score
+     * @return player1:s score as an int
+     */
     public int getPlayer1Score() {
         int score = 0;
         for (int i = this.glasses.length - 1; i >= this.glasses.length / 2; i--) {
@@ -208,7 +220,10 @@ public class Match {
         }
         return score;
     }
-
+    /**
+     * Method to get player2: s score
+     * @return player2:s score as an int
+     */
     public int getPlayer2Score() {
         int score = 0;
         for (int i = 0; i <= this.glasses.length / 2; i++) {
@@ -218,11 +233,20 @@ public class Match {
         return score;
     }
 
+    /**
+     * Method to get rounds won for desired player,
+     * @param player enum for player one or player two
+     * @return the number of rounds won for the player selected as param
+     */
     public int getPlayerRoundsWon(final Player player) {
         int ret = player == Player.ONE ? this.p1RoundsWon : this.p2RoundsWon;
         return ret;
     }
 
+    /**
+     * Returns which player whose turn it is
+     * @return the player who should do the next Throw
+     */
     public Player getPlayerWhoseTurnItIs() {
         if (playerWhoseTurnItIs == Player.ONE) {
             return Player.ONE;
@@ -348,6 +372,12 @@ public class Match {
         this.notifyListeners(MISS_RECORDED);
     }
 
+    /**
+     * Allows the spectator to change the state of the game, if registration goes wrong
+     * @param glasses an array of glasses telling desired state of glasses
+     * @param startingPlayer whose turn it is
+     * @param lastThrowWasHit true if last throw  was a hit, used to know if a duel is active
+     */
     public void manuallyChangeGameState(Match.Glass[] glasses, Player
             startingPlayer, boolean lastThrowWasHit) {
         this.glasses = glasses;
@@ -387,10 +417,16 @@ public class Match {
         if (roundWinner == Player.TWO) p2RoundsWon++;
     }
 
+    /**
+     * Checks if match should end, and ends it in that case.
+     */
     private void endMatchIfNecessary() {
         if (p1RoundsWon == this.roundsToWin || p2RoundsWon == this.roundsToWin) endMatch();
     }
 
+    /**
+     * Ends the match closing registration of new Throws, called by endMatchIfNecessary
+     */
     private void endMatch() {
         this.endTime = Instant.now();
         this.isOngoing = false;
@@ -401,6 +437,9 @@ public class Match {
         this.notifyListeners(MATCH_ENDED);
     }
 
+    /**
+     * Method to remove the furthest out, currently active glass for the player who just lost a duel
+     */
     private void removeGlass() {
         if (this.playerWhoseTurnItIs == Player.ONE) {
             this.removeNextGlassPlayer1();
@@ -446,6 +485,10 @@ public class Match {
 
     //Event Handling
 
+    /**
+     * Method to get the EventId of this specific match
+     * @return this matchs specific EventId.
+     */
     public int getEventId() {
         return eventId;
     }
@@ -478,6 +521,10 @@ public class Match {
                 listener);
     }
 
+    /**
+     * Sends a notification of a certain event, using the EventBus.
+     * @param event the event to notify, as a String
+     */
     private void notifyListeners(final String event) {
         //Notify listeners that listen to all events of all matches.
         EventBus.getInstance().notify(event);
