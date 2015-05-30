@@ -1,3 +1,32 @@
-CapStat woohoo!
+CapStat
+=======
 
-# DATABASE SETUP YEEHAOW
+CapStat is a Java application designed for tracking statistics and players of the drinking game caps. It focuses on providing a stable backend to build frontends upon, with the provided GUI acting as an eample for how a frontend might look like. The provided GUI focuses on keyboard-driven input during recording of matches, and providing some examples of statistics available to extract from matches.
+
+## Getting Started
+*   Clone the repository. The latest stable version is available in the `master` branch, while newer additions and ongoing development can be found in the `develop` branch.
+*   For the purpose of this project, CapStat currently uses [MySQL Community Edition](https://www.mysql.com/products/community/) as database to store information. Download and install MySQL Community Edition, and start the MySQL server **prior** to building or running the application. For example, installing MySQL can be done on a Mac OS X system with [Homebrew](http://brew.sh/) with the following commands:
+
+    ```
+    brew update
+    brew install mysql
+    ```
+
+    Then, start the server:
+
+    ```
+    mysql.server start
+    ```
+*   CapStat is using [gradle](http://gradle.org/) as build system, but gradle does not need be installed in order to build and run the application. Instead, use the provided [gradle wrapper](https://docs.gradle.org/current/userguide/gradle_wrapper.html). On a \*NIX system, from the root directory of the project, issue the following commands to build, test, and run respectively (use `gradlew.bat` on Windows systems):
+
+    *   ```
+        ./gradlew build
+        ```
+
+    *   ```
+        ./gradlew test
+        ```
+
+    *   ```
+        ./gradlew run
+        ```
