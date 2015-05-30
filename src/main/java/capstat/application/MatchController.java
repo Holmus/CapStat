@@ -115,22 +115,6 @@ public class MatchController implements NotifyEventListener {
                 duelIsOngoing);
     }
 
-    //Undo & Redo
-
-    /**
-     * Rewinds the throw sequence to previous state if possible.
-     */
-    public void rewind() {
-        this.match.rewind();
-    }
-
-    /**
-     * Forwards throw sequnece to next state, if possible.
-     */
-    public void forward() {
-        this.match.forward();
-    }
-
     //Observer method
     @Override
     public void notifyEvent(final String event) {
