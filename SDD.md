@@ -56,19 +56,39 @@ During a match, a lot of events take place that other parts of a system want to 
 
 ####2.2 Software decomposition
 #####2.2.1 General
-The software is decomposed into four main modules. Two of these have submodules. See Figure X.
+The software is decomposed into four main modules, or "layers". Two of these have submodules. See Figure X. The modules are ordered hierarchically, meaning that no module may know about another module of higher order. The following list orders modules from higher to lowest. This means that tha presentation layer may know about all other layers, while the infrastructure layer may only know about itself. See figure X for a diagram of the relationship between layers.
 
 * **Presentation layer**, that handles drawing the GUI and taking user input. This is the view part of the MVC.
 * **Application layer**, that handles controlling and modifying the model, and coordinating the model and infrastructure layer. This is the controller part of the MVC.
 * **Model layer**, the core object model of the application, representing games of caps, users and handling statistics calculations.
-  * **Match package**, the module that contains the match factory, matches and the throw sequences. This submodule represents the "live" match, that can be played and listened to by observers.
-  * **User package** contains elements of the User aggregate, means to create it, and a repository for storing and retrieving users.
-  * **Statistics package** contains a class for representing a match that has been played and saved, a repository for storing and saving matches, and means of creating plottable statistics for played games.
 * **Infrastructure layer**, handles low level technical details, such as communicating with the database and managing the task queue that the database uses for intermediate storage. This layer also holds the event bus.
 
-2.2.2 Decomposition into subsystems
+![Figure X. The relationships between layers](./images/top_layer_modules.png)
 
-2.2.3 Layering
+*Figure X. The reltionship between layers. Note that the top layer, called only "capstat", contains only one class, Main, with the single main method that starts the program, and nothing else It is therefore not mentioned int the list of layers.**
+
+#####2.2.2 Decomposition into subsystems
+The model layer and the infrastructure layer consists of submodules. The hierarchical philosophy applies here as well: a lower ordered package may not be aware of a higher ordered one. See figure X and X for a diagram of realtionships between packages.
+
+The model layer consists of the following subsystems:
+* **Statistics package** contains a class for representing a match that has been played and saved, a repository for storing and saving matches, and means of creating plottable statistics for played games.
+* **Match package**, the module that contains the match factory, matches and the throw sequences. This submodule represents the "live" match, that can be played and listened to by observers.
+* **User package** contains elements of the User aggregate, means to create it, a class for keeping track of and setting which user is currently logged in, and a repository for storing and retrieving users.
+
+![Figure X, the model package](./images/model_package.png)
+
+*Figure X. The relationship between submodules in the model layer.*
+
+The infrastructure layer consists of the following subsystems:
+* **Database package**, manages connection to the database, both modifying and querying. This package contains value objects, called "blueprints", representing what can be stored to or fetched from the database.
+* **Taskqueue package**, handles local intermittent storage while objects are added to the database, to prevent dataloss.
+* **Eventbus package**, contains the event bus and the interfaces that listeners need to implement to register with it.
+
+![Figure X. the infrastructure layer](./images/infrastructure_package.png)
+
+*Figure X. The relationships between subsystems in the infrastructure layer.*
+
+#####2.2.3 Layering
 
 2.2.4 Dependency analysis
 
