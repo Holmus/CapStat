@@ -57,6 +57,11 @@ public class ThrowSequence {
         this.undoStack = (Stack<Match.Throw>)ts.undoStack.clone();
     }
 
+    /**
+     * Adds a new throw to the throwsequence
+     * @param newThrow either a hit or a miss
+     */
+
     public void add(Match.Throw newThrow) {
         this.currentSequence.add(newThrow);
     }
@@ -102,10 +107,18 @@ public class ThrowSequence {
         this.currentSequence.add(this.undoStack.pop());
     }
 
+    /**
+     * Method to check if the throwsequence is rewindable
+     * @return true if it is rewindable, otherwise false
+     */
     public boolean canRewind() {
         return !this.currentSequence.isEmpty();
     }
 
+    /**
+     * method to check if the throwsequence is forwardable
+     * @return true if it is forwardable, otherwise false
+     */
     public boolean canForward() {
         return !this.undoStack.empty();
     }
@@ -177,26 +190,50 @@ public class ThrowSequence {
             return ret;
         }
 
+        /**
+         * Adds a throw to the partialsequence
+         * @param newThrow a hit or a miss
+         */
         private void add(Match.Throw newThrow) {
             this.sequence.add(newThrow);
         }
 
+        /**
+         * Checks if the partialsequence is empty
+         * @return true if it is empty, otherwise false
+         */
         private boolean isEmpty() {
             return sequence.isEmpty();
         }
 
+        /**
+         * Returns the latest registered throw
+         * @return a hit or a miss
+         */
         private Match.Throw popLast() {
             return this.sequence.removeLast();
         }
 
+        /**
+         * Returns the current glass-state in the match
+         * @return the glass-state as an array of glasses
+         */
         public Match.Glass[] getGlasses() {
             return glasses.clone();
         }
 
+        /**
+         *
+         * @return the player who begins/began throwing
+         */
         public Match.Player getStartingPlayer() {
             return startingPlayer;
         }
 
+        /**
+         * Method to check if last throw before this partialsequence was a hit
+         * @return true if last throw before this sequence was a hit, otherwise false
+         */
         public boolean throwBeforeWasHit() {
             return throwBeforeWasHit;
         }
