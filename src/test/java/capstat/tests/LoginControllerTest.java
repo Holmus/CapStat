@@ -1,7 +1,7 @@
 package capstat.tests;
 
 import capstat.application.LoginController;
-import capstat.model.LoggedInUser;
+import capstat.model.user.LoggedInUser;
 import capstat.model.user.User;
 import capstat.model.user.UserFactory;
 import capstat.model.user.UserLedger;

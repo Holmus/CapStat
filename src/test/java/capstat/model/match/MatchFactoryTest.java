@@ -1,6 +1,6 @@
 package capstat.model.match;
 
-import capstat.model.LoggedInUser;
+import capstat.model.user.LoggedInUser;
 import capstat.model.user.UserFactory;
 import org.junit.Test;
 

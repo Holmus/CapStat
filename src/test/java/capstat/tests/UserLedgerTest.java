@@ -3,7 +3,7 @@ package capstat.tests;
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
-import capstat.model.LoggedInUser;
+import capstat.model.user.LoggedInUser;
 
 public class UserLedgerTest {
 

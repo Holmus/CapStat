@@ -1,8 +1,4 @@
-package capstat.model;
-
-import capstat.model.user.User;
-import capstat.model.user.UserFactory;
-import capstat.model.user.UserLedger;
+package capstat.model.user;
 
 /**
  * @author Christian Persson

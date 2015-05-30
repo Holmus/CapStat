@@ -1,6 +1,6 @@
 package capstat.application;
 
-import capstat.model.LoggedInUser;
+import capstat.model.user.LoggedInUser;
 import capstat.model.user.Security;
 import capstat.model.user.User;
 import capstat.model.user.UserLedger;
