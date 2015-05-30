@@ -25,7 +25,7 @@ The references section contains definitions and rules for the caps game, which t
 * Round, one round in the game, which can consist of several rounds.
 * Throw, a single throw in a match, which can be either a hit or miss.
 * MVC, a general principle for decoupling responsibilities in the application. See Layered architecture.
-* Layered architecture, a way of partitioning the application into four loosely coupled layers used for GUI, controlling the game, representing the domain and handling technical implementations, respectively.
+* Layered architecture, a way of partitioning the application into four loosely coupled layers used for GUI, controlling the game, representing the domain and handling technical implementations, respectively. For further details see Evans (2004, p. 68-75).
 * Business domain, the problem that the application models and for which it provides tools.
 * Event bus, an object which handles firing events and adding event listeners in the application.
 
@@ -110,9 +110,11 @@ All persistent data will be stored in a MySQL database hosted locally. (However,
 
 *Figure X. Diagram over the database*
 
-2.5 Access control and security
+####2.5 Access control and security
+The database for persistent storage is hosted locally, and requires that the user is on localhost to connect to. In addition to this, it has a password. However, this password is shown in plain text in the source code, and thus not very secret. Even a closed-source distribution would not be secure, since it would be easy to decompile the code and get access to both the username and password needed to access the database. Therefore, the application in its current form could not point to a shared, remotely hosted database in a way that would be safe. To address this problem and ensure that CapStat could use a shared database for all users running the program in the future, all connections to the database are made through a Facade (Gamma, Helm, Johnson and Vlissides, 1995, p. 185-194). If the persistent storage would be migrated to a more secure implementation, e.g. a web API, only this class would need to change. Therefore, CapStat has been written in preparation for a future migration to a public, safe persistent storage.
 
-2.6 Boundary conditions
+####2.6 Boundary conditions
+For CapStat to compile and run, a local MySQL database must first be created. This is done using the steps described in the README file. Most of the setup process is handled by a .sql-file, but the initial setup requires the user to execute a set of commands as root user for the database.
 
 3 References
 
