@@ -56,11 +56,14 @@ During a match, a lot of events take place that other parts of a system want to 
 
 ####2.2 Software decomposition
 #####2.2.1 General
-The software is decomposed into four main modules. See Figure X.
+The software is decomposed into four main modules. Two of these have submodules. See Figure X.
 
 * **Presentation layer**, that handles drawing the GUI and taking user input. This is the view part of the MVC.
 * **Application layer**, that handles controlling and modifying the model, and coordinating the model and infrastructure layer. This is the controller part of the MVC.
-* **Model layer**, the core object model of the application, representing games of caps and handling statistics calculations.
+* **Model layer**, the core object model of the application, representing games of caps, users and handling statistics calculations.
+  * **Match package**, the module that contains the match factory, matches and the throw sequences. This submodule represents the "live" match, that can be played and listened to by observers.
+  * **User package** contains elements of the User aggregate, means to create it, and a repository for storing and retrieving users.
+  * **Statistics package** contains a class for representing a match that has been played and saved, a repository for storing and saving matches, and means of creating plottable statistics for played games.
 * **Infrastructure layer**, handles low level technical details, such as communicating with the database and managing the task queue that the database uses for intermediate storage. This layer also holds the event bus.
 
 2.2.2 Decomposition into subsystems
