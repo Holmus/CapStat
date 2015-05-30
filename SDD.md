@@ -89,6 +89,7 @@ The infrastructure layer consists of the following subsystems:
 *Figure X. The relationships between subsystems in the infrastructure layer.*
 
 #####2.2.3 Layering
+The layering follows the pattern of the modules described under 2.2.1. Figure X describes this layering. Higher ordered layers are higher in the figure.
 
 2.2.4 Dependency analysis
 
