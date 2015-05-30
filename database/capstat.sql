@@ -1,38 +1,9 @@
-/* --- WIPE DATABASE (Oracle syntax) --- */
 /*
-begin
-for c in (select table_name from user_tables) loop
-execute immediate ('drop table '||c.table_name||' cascade constraints');
-end loop;
-end;
-/
-begin
-for c in (select * from user_objects) loop
-execute immediate ('drop '||c.object_type||' '||c.object_name);
-end loop;
-end;
-/
-*/
-/* END WIPE DATABASE */
-
-
-
-/* --- RUN THESE ON YOUR LOCAL DATABASE FIRST TO SET IT UP --- */
-
-/*
-DROP DATABASE capstat;
-DROP USER 'capstat_user'@'localhost';
-
-CREATE USER 'capstat_user'@'localhost' IDENTIFIED BY '1234';
-CREATE DATABASE capstat;
-
-GRANT ALL ON capstat.* TO 'capstat_user'@'localhost';
-GRANT ALL PRIVILEGES ON mysql.proc TO 'capstat_user'@'localhost';
+Run init.sql prior to running this file, in order to set up the actual
+database. If you need to delete the database for some reason, run wipe.sql,
+then init.sql, then this file.
  */
 
-
-
-/* --- CREATING TABLES --- */
 CREATE TABLE Users (
   nick          VARCHAR(30)   PRIMARY KEY,
   name          VARCHAR(30),
