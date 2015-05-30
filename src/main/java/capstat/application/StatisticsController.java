@@ -10,7 +10,7 @@ import java.util.logging.Filter;
 import java.util.stream.Stream;
 
 /**
- * @author hjorthjort
+ * @author hjorthjort, Jakob
  *
  * A class for getting a selection of statistics for all matches of a user.
  *
