@@ -117,5 +117,23 @@ The database for persistent storage is hosted locally, and requires that the use
 For CapStat to compile and run, a local MySQL database must first be created. This is done using the steps described in the README file. Most of the setup process is handled by a .sql-file, but the initial setup requires the user to execute a set of commands as root user for the database.
 
 3 References
+1. Layered Architecture: Evans, E. (2004). Domain-Driven Design: Tackling Complexity in the Heart of Software. Prentice Hall.
+2. Design patterns: Gamma, E., Helm, R., Johnson, R. och Vlissides, J. (1995). Design Patterns: Elements of Reusable Object-Oriented Software. Addison-Wesley.
 
-  APPENDIX
+###APPENDIX
+
+####Class diagrams for the packages
+#####The model layer and its submodules
+![Model package](./images/model_classes.png)
+
+* TODO: ADD DESCRIPTIONS OF ALL CLASSES. EXPLAIN DESIGN PATTERNS.
+
+#####The infrastructure layer and its submodules
+![Infrastructure layer](./images/infrastructure_classes.png)
+
+* TODO: ADD DESCRIPTIONS OF ALL CLASSES
+
+#####The view and application layers
+![View and application layers](./images/application_view_classes.png)
+
+* TODO: ADD DESCRIPTIONS OF ALL CLASSES
