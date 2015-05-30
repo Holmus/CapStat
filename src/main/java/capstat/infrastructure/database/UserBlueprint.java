@@ -3,8 +3,9 @@ package capstat.infrastructure.database;
 import java.time.Year;
 
 /**
- * @author hjorthjort
  * Immutable value object class representing a database row for a single user.
+ * @author Rikard Hjort
+ * @Author Johan Andersson
  */
 public class UserBlueprint {
     public final String nickname;
@@ -15,6 +16,18 @@ public class UserBlueprint {
     public final int admittanceReadingPeriod;
     public final double ELORanking;
 
+    /**
+     * The main constructor of this class. Creates a new UserBlueprint object.
+     * @param nickname The nickname of the user.
+     * @param name The full name of the user.
+     * @param hashedPassword The user's password in its hashed form (sha256).
+     * @param birthdayYear The user's year of birth.
+     * @param birthdayMonth The user's month of birth.
+     * @param birthdayDay The user's day of birth.
+     * @param admittanceYear The year that the user started studying at the university.
+     * @param admittanceReadingPeriod The reading period that the user started studying at the university.
+     * @param ELORanking The current ELO-ranking of the user.
+     */
     public UserBlueprint(String nickname, String name, String hashedPassword,
                          int birthdayYear,
                          int birthdayMonth,

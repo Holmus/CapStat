@@ -9,7 +9,6 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 /**
- * Created by jibbs on 07/05/15.
  * This class should not be called directly to connect to the database,
  * unless very specific queries need to be sent. If this class is used
  * directly, keep in mind that it might be deprecated at any moment without
@@ -17,8 +16,9 @@ import java.sql.SQLException;
  *
  * Instead use {@link DatabaseHelperFactory} to create
  * the kind of database helper you need. This method for talking to the
- * database is recommended way, and the only one guaranteed to work will
+ * database is recommended way, and the only one guaranteed to work with
  * later versions of the program.
+ * @Author Johan Andersson
  */
 public class DatabaseConnection {
 

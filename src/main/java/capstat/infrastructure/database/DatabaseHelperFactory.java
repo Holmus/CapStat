@@ -9,7 +9,7 @@ package capstat.infrastructure.database;
  * from the database implementation, which may thus be migrated, as long as
  * the interface is satisfied.
  *
- * @author hjorthjort
+ * @author Rikard Hjort
  */
 public class DatabaseHelperFactory {
 

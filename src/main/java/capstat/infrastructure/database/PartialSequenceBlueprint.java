@@ -4,7 +4,8 @@ import java.util.Arrays;
 
 /**
  * A value object a throw sequence, as stored in a database table.
- * @author hjorthjort
+ * @author Rikard Hjort
+ * @Author Johan Andersson
  */
 public final class PartialSequenceBlueprint {
     /**
@@ -18,14 +19,27 @@ public final class PartialSequenceBlueprint {
      */
     public final int startingPlayer;
 
+    /**
+     * True if the hit before the current one was a hit, false if not.
+     */
     public final boolean throwBeforeWasHit;
 
     /**
-     * An array representing the throws. True indicates hit, false indictes
-     * miss
+     * An array representing the throws. True indicates hit, false indicates
+     * miss.
      */
     public final boolean[] sequence;
 
+    /**
+     * The main constructor for this class. Creates a new PartialSequenceBlueprint.
+     * @param glasses An array of booleans representing all glasses on the field.
+     *                True is an active glass, false is an inactive glass.
+     * @param startingPlayer The player starting player for this partial sequence.
+     *                       Should be one or two.
+     * @param throwBeforeWasHit Boolean telling if the hit before this sequence was a hit or not.
+     *                          True if hit, false if miss.
+     * @param sequence An array representing the throws. True indicates hit, false indicates miss.
+     */
     public PartialSequenceBlueprint(final boolean[] glasses, final int
             startingPlayer, final boolean throwBeforeWasHit, final boolean[]
                                             sequence) {
