@@ -534,6 +534,9 @@ public class Match {
 
     //Inner classes
 
+    /**
+     * An exception signalizing the match isn't over, when the model expects it to be
+     */
     public static class MatchNotOverException extends Exception {
     }
 
@@ -544,14 +547,27 @@ public class Match {
     public static class Glass {
         private boolean isActive = true;
 
+        /**
+         * Method to see if a glass is active
+         * @return true if the glass is Active, false if not
+         */
         public boolean isActive() {
             return isActive;
         }
 
+        /**
+         * Method to set a glass to active/inactive.
+         * @param active boolean used to set glass to active if true/inactive if false
+         */
         public void setActive(boolean active) {
             this.isActive = active;
         }
 
+        /**
+         * Method to check if the glass object is the same as object o
+         * @param o Object to compare with the glass used to call the method.
+         * @return true if o is the same object as the glass used to call the method, otherwise false
+         */
         public boolean equals(Object o) {
             if (this == o) return true;
             if (o == null || this.getClass() != o.getClass()) return false;
