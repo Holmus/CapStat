@@ -65,10 +65,10 @@ The software is decomposed into four main modules, or "layers". Two of these hav
 
 ![Figure X. The relationships between layers](./images/top_layer_modules.png)
 
-*Figure X. The reltionship between layers. Note that the top layer, called only "capstat", contains only one class, Main, with the single main method that starts the program, and nothing else It is therefore not mentioned int the list of layers.**
+*Figure X. The relationship between layers. Note that the top layer, called only "capstat", contains only one class, Main, with the single main method that starts the program, and nothing else It is therefore not mentioned int the list of layers.**
 
 #####2.2.2 Decomposition into subsystems
-The model layer and the infrastructure layer consists of submodules. The hierarchical philosophy applies here as well: a lower ordered package may not be aware of a higher ordered one. See figure X and X for a diagram of realtionships between packages.
+The model layer and the infrastructure layer consists of submodules. The hierarchical philosophy applies here as well: a lower ordered package may not be aware of a higher ordered one. See figure X and X for a diagram of relationships between packages.
 
 The model layer consists of the following subsystems:
 * **Statistics package** contains a class for representing a match that has been played and saved, a repository for storing and saving matches, and means of creating plottable statistics for played games.
@@ -94,12 +94,21 @@ The layering follows the pattern of the modules described under 2.2.1. Figure X 
 #####2.2.4 Dependency analysis
 There are no circular dependencies in CapStat. For a dependency analysis, see figure X.
 
-#####2.3 Concurrency issues
+####2.3 Concurrency issues
 The program is run by a single thread, with one exception: before sending post requests to the database, the requests are stored in full locally, and a separate thread is started to send these to the database. This is to ensure no data is lost if the connection to the database is lost, e.g. if it is on a remote server and there is not internet access.
 
 This means that if a client asks the database subsystem to save a user or as result, and immediately tries to retrieve it, it might not yet have been saved to the database and might not be retrieved. During normal use this is not an issue, since there is no reason to fetch immediately after storing, but it means that some unit tests, which do just that, may have to wait for the process to finish.
 
-2.4 Persistent data management
+####2.4 Persistent data management
+All persistent data will be stored in a MySQL database hosted locally. (However, the use of a facade and a separate class for database connection the database package means this may be migrated fairly easily. For an example of migration to a server to slow for production purposes, checkout the "remote-database" branch and run the application from there). The database consists of four tables. For a diagram over the database, see figure X. The four tables are:
+* **Users** which holds a user's nickname, full name, a hashed version of the user's password, their birthday, their admittance year, the reading period of their admittance, and their current ELO ranking.
+* **Matches** which holds match results, stored with a unique id, the nickname of both players, the nickname of the user who registered the game, the final scores of both players, the start time of the match and the end time (as seconds elapsed since 00:00 AM, January 1, 1970).
+* **ThrowSequences** which holds all registered throw sequences, divided into partial sequences. Every sequence has a match id and an index of it's order in all the sequences of the match, since one match may have several. A sequence also stores the state of the glasses when it begun, which player's turn it was, whether the last throw was a hit or miss (which is needed to see if the game was in a duel or not) and the sequence of hits and misses that the partial sequence represents.
+* **Attends** is a relation between the Users table and Matches table, which is used to indicate which player attended a certain match.
+
+![Figure X. Diagram over the database](./images/database.png)
+
+*Figure X. Diagram over the database*
 
 2.5 Access control and security
 
