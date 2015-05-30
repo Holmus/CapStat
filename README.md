@@ -18,7 +18,7 @@ CapStat is a Java application designed for tracking statistics and players of th
 
     For other systems, please see MySQLs installation and usage instructions.
 
-3.  CapStat uses [gradle](http://gradle.org/) as build system, but `gradle` does not need be installed in order to build and run the application. Instead, use the provided [gradle wrapper](https://docs.gradle.org/current/userguide/gradle_wrapper.html). From the root directory of the project, issue the following commands (use `gradlew.bat` on Windows systems):
+3.  CapStat uses [gradle](http://gradle.org/) as build system, but `gradle` does not need be installed in order to build and run the application. Instead, use the provided [gradle wrapper](https://docs.gradle.org/current/userguide/gradle_wrapper.html). From the root directory of the project, issue the following commands (use `gradlew.bat` instead of `./gradlew` on Windows systems):
 
     *   Building:
         
