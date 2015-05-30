@@ -91,9 +91,13 @@ The infrastructure layer consists of the following subsystems:
 #####2.2.3 Layering
 The layering follows the pattern of the modules described under 2.2.1. Figure X describes this layering. Higher ordered layers are higher in the figure.
 
-2.2.4 Dependency analysis
+#####2.2.4 Dependency analysis
+There are no circular dependencies in CapStat. For a dependency analysis, see figure X.
 
-2.3 Concurrency issues
+#####2.3 Concurrency issues
+The program is run by a single thread, with one exception: before sending post requests to the database, the requests are stored in full locally, and a separate thread is started to send these to the database. This is to ensure no data is lost if the connection to the database is lost, e.g. if it is on a remote server and there is not internet access.
+
+This means that if a client asks the database subsystem to save a user or as result, and immediately tries to retrieve it, it might not yet have been saved to the database and might not be retrieved. During normal use this is not an issue, since there is no reason to fetch immediately after storing, but it means that some unit tests, which do just that, may have to wait for the process to finish.
 
 2.4 Persistent data management
 
