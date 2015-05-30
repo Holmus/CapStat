@@ -80,4 +80,9 @@ public class StatisticsController {
         }
         return dataType.getStatistics(newList, user);
     }
+
+    public List<Plottable> getData(Statistic dataType, User user,
+                                   List<MatchResult> results) {
+        return dataType.getStatistics(results, user);
+    }
 }

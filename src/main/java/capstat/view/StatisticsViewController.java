@@ -23,8 +23,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 
 import java.net.URL;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 /**
  * Created by Jakob on 21/05/15.
@@ -111,12 +110,37 @@ public class StatisticsViewController implements Initializable{
         } else{
             length = getXArray(user).length;
         }
+        List<Plottable> xList = Arrays.asList(getXArray(user));
+        List<Plottable> yList = Arrays.asList(getYArray(user));
+
+        SortedMap<Plottable, List<Plottable>> map = sortTogether(xList,
+                yList, (p1, p2) -> p1.getLabel().compareTo(p2.getLabel()));
+        xList.sort((p1, p2) -> p1.getLabel().compareTo(p2.getLabel()));
+        yList = new LinkedList<>();
+        for (List<Plottable> list : map.values()) {
+            for (Plottable p : list) {
+                yList.add(p);
+            }
+        }
         for(int i = 0; i<length; i++){
-            series.getData().add(new XYChart.Data(getXArray(user)[i].getLabel(),
-                    getYArray
-                    (user)[i].getValue()));
+            series.getData().add(new XYChart.Data(xList.get(i).getLabel(),
+                    yList.get(i).getValue()));
         }
     }
+
+    private SortedMap<Plottable, List<Plottable>> sortTogether(final
+                                                          List<Plottable> xList,
+                                               final
+    List<Plottable> yList, Comparator<Plottable> comparator) {
+        SortedMap<Plottable, List<Plottable>> map = new TreeMap<>(comparator);
+        for (int i = 0; i < xList.size(); i++) {
+            if (!map.containsKey(xList.get(i)))
+                map.put(xList.get(i), new LinkedList<>());
+            map.get(xList.get(i)).add(yList.get(i));
+        }
+        return map;
+    }
+
     public Plottable[] getXArray(User user){
         String statisticType = XComboBox.getSelectionModel().getSelectedItem()
                         .toString();
@@ -124,7 +148,7 @@ public class StatisticsViewController implements Initializable{
                 getStatisticTypeForString(statisticType);
         List<Plottable> plottablesList = sc.getData(statisticStrategy, user);
 
-        return plottablesList.toArray(new Plottable[0]);
+        return plottablesList.toArray(new Plottable[plottablesList.size()]);
 
     }
     public Plottable[] getYArray(User user){
@@ -134,7 +158,7 @@ public class StatisticsViewController implements Initializable{
                 getStatisticTypeForString(statisticType);
         List<Plottable> plottablesList = sc.getData(statisticStrategy, user);
 
-        return plottablesList.toArray(new Plottable[0]);
+        return plottablesList.toArray(new Plottable[plottablesList.size()]);
     }
 
     private Statistic getStatisticTypeForString(String string) {

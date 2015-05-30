@@ -28,9 +28,12 @@ public class MatchDuration implements Statistic {
                 public String getLabel() {
                     Duration duration = Duration.ofSeconds(calculator
                             .getElapsedTime());
-
+                    String seconds = "" + (duration.toMillis()/1000)%60;
+                    if (seconds.length() == 1) {
+                        seconds = 0 + seconds;
+                    }
                     return duration.toMinutes() + " min " +
-                            (duration.toMillis()/1000)%60;
+                            seconds + " s";
                 }
             });
         }
