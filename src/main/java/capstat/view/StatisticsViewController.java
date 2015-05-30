@@ -124,7 +124,7 @@ public class StatisticsViewController implements Initializable{
                 getStatisticTypeForString(statisticType);
         List<Plottable> plottablesList = sc.getData(statisticStrategy, user);
 
-        return plottablesList.toArray(new Plottable[0]);
+        return plottablesList.toArray(new Plottable[plottablesList.size()]);
 
     }
     public Plottable[] getYArray(User user){
@@ -134,7 +134,7 @@ public class StatisticsViewController implements Initializable{
                 getStatisticTypeForString(statisticType);
         List<Plottable> plottablesList = sc.getData(statisticStrategy, user);
 
-        return plottablesList.toArray(new Plottable[0]);
+        return plottablesList.toArray(new Plottable[plottablesList.size()]);
     }
 
     private Statistic getStatisticTypeForString(String string) {
