@@ -12,7 +12,7 @@ import java.io.IOException;
 
 /**
  * Created by Jakob on 14/05/15.
- *
+ * @author Jakob
  * The MainView which launches the entire application and initializes the launchview
  */
 public class MainView extends Application implements NotifyEventListener{

@@ -22,6 +22,8 @@ import java.util.ResourceBundle;
 
 /**
  * Created by Jakob on 16/05/15.
+ * @author Jakob
+ * Class to control and initialize the register-view.
  */
 //ToDo: UPDATE from row 123, lp behaves differently now
 public class RegisterViewController implements Initializable{
@@ -42,6 +44,12 @@ public class RegisterViewController implements Initializable{
     LocalDate birth;
     Admittance admitTime;
     Boolean testFailed = false;
+
+    /**
+     * Method to set default values and behaviour when the view is "launched"
+     * @param location
+     * @param resources
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         wrongAttendLabel.setVisible(false);
@@ -64,6 +72,11 @@ public class RegisterViewController implements Initializable{
         });
 
     }
+
+    /**
+     * Method to register a user when the register-butto is pressed, given valid input
+     * @throws NumberFormatException if invalid format of values are entered
+     */
     @FXML private void registerPressed() throws NumberFormatException{
         if(checkInput()){
             return;
@@ -71,16 +84,27 @@ public class RegisterViewController implements Initializable{
         registerUser();
     }
 
+    /**
+     * Method to change to loginView using the EventBus
+     */
     @FXML private void goToLogin(){
         eb.notify(MainView.SETSCENE_LOGIN);
     }
 
+    /**
+     * The actual registration of the user, called by registerPressed(), notifies a new user using the EventBus
+     */
     private void registerUser(){
         rc.registerNewUser(usernameInput.getText(), fullNameInput.getText(), passField.getText(), birth, admitTime.getYear(), admitTime.getReadingPeriod().ordinal() + 1);
         eb.notify(MainView.SETSCENE_LOGIN);
         eb.notify(MainView.USER_REGISTERED);
     }
 
+    /**
+     *
+     * Method to check if data-input is valid.
+     * @return true if input on all fields is of correct format and allowed, otherwise false
+     */
     private boolean checkInput(){
         testFailed = false;
         today = new Date();
@@ -156,30 +180,50 @@ public class RegisterViewController implements Initializable{
         return testFailed;
     }
 
+    /**
+     * If the name-input was wrong displays the label next to username, also sets testFailed to true,
+     * making sure registration doesn't go through
+     */
     private void updateName(){
         nameLabel.setVisible(true);
         testFailed = true;
     }
-
+    /**
+     * If the Attend-input was wrong displays the label next to attend, also sets testFailed to true,
+     * making sure registration doesn't go through
+     */
     private void updateLP(){
         wrongAttendLabel.setVisible(true);
         testFailed = true;
     }
-
+    /**
+     * If the birth-input was wrong displays the label next to birth, also sets testFailed to true,
+     * making sure registration doesn't go through
+     */
     private void updateBirth(){
         wrongBirthdayLabel.setVisible(true);
         testFailed = true;
     }
-
+    /**
+     * If the passwords don't match, displays the label next to password, also sets testFailed to true,
+     * making sure registration doesn't go through
+     */
     private void updatePasswords(){
         passwordMatchLabel.setVisible(true);
         testFailed = true;
     }
+    /**
+     * If the username was taken displays the label next to username, also sets testFailed to true,
+     * making sure registration doesn't go through
+     */
     private void updateUsername(){
         usernameTakenLabel.setVisible(true);
         testFailed = true;
     }
-
+    /**
+     * If the username is invalid sets the usernamelabel to visible and updates it.
+     * Also sets testFailed to true, making sure registration doesn't go through
+     */
     private void checkUsernameValid(){
         if(ul.isNicknameValid(usernameInput.getText())){
             usernameTakenLabel.setVisible(false);
@@ -189,6 +233,10 @@ public class RegisterViewController implements Initializable{
         updateUsername();
     }
 
+    /**
+     * Method to check if password-inputs match
+     * @return true if passwords are equal and not empty, otherwise false
+     */
     private boolean passwordsMatch(){
         if(passField.getText().isEmpty() && passField1.getText().isEmpty()){
             passwordMatchLabel.setText("Enter a password!");

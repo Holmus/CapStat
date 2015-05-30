@@ -25,7 +25,7 @@ import java.util.ResourceBundle;
 
 /**
  * Created by Jakob on 18/05/15.
- *
+ * @author Jakob
  * Class to update and initialize the MatchView
  */
 public class MatchViewController implements NotifyEventListener, Initializable{

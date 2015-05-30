@@ -19,6 +19,7 @@ import java.util.ResourceBundle;
 /**
  * Created by Jakob on 14/05/15.
  * Class to control and initialize the Main-view of the application
+ * @author Jakob
  */
 public class MainViewController implements Initializable, NotifyEventListener{
     private LoginController lc = new LoginController();

@@ -7,7 +7,7 @@ import java.time.Year;
 
 /**
  * Created by Jakob on 20/05/15.
- *
+ * @author Jakob
  * Class to control Registration in the Model-layer.
  */
 public class RegisterController {

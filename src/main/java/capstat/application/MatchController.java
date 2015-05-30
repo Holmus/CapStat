@@ -10,7 +10,7 @@ import capstat.model.user.UserLedger;
 
 /**
  * Created by Jakob on 20/05/15.
- * @author hjorthjort
+ * @author hjorthjort, Jakob
  *
  * Class to control the match in the model-layer
  *
