@@ -99,6 +99,10 @@ public class MatchController implements NotifyEventListener {
             match.setPlayer2(p2);
     }
 
+    /**
+     * Method to set whether the match should be ranked or unranked
+     * @param strategy either ranked or unranked
+     */
     public void setEndGameStrategy(EndGameStrategy strategy) {
         this.endGameStrategy = strategy;
     }
@@ -115,7 +119,10 @@ public class MatchController implements NotifyEventListener {
                 duelIsOngoing);
     }
 
-    //Observer method
+    /**
+     * Recieves event from EventBus and takes different actions depnding on event
+     * @param event the key of the event that occured
+     */
     @Override
     public void notifyEvent(final String event) {
         if (event.equals(Match.MATCH_ENDED + this.match.getEventId()))
@@ -138,11 +145,16 @@ public class MatchController implements NotifyEventListener {
 
     /**
      * @author hjorthjort
+     * Interface which requires the implementer to handle how to end a match
+     * Uses the strategy pattern
      */
     public interface EndGameStrategy {
         void endGame();
     }
 
+    /**
+     * A class which implements the EndGameStrategy
+     */
     private class UnrankedStrategy implements EndGameStrategy {
         @Override
         public void endGame() {
@@ -150,6 +162,9 @@ public class MatchController implements NotifyEventListener {
         }
     }
 
+    /**
+     * A class which implements the EndGameStrategy
+     */
     private class RankedStrategy implements EndGameStrategy {
         @Override
         public void endGame() {
