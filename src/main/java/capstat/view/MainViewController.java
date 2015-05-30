@@ -2,7 +2,7 @@ package capstat.view;
 import capstat.application.LoginController;
 import capstat.infrastructure.eventbus.EventBus;
 import capstat.infrastructure.eventbus.NotifyEventListener;
-import capstat.model.CapStat;
+import capstat.model.user.LoggedInUser;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -22,7 +22,7 @@ import java.util.ResourceBundle;
  */
 public class MainViewController implements Initializable, NotifyEventListener{
     private LoginController lc = new LoginController();
-    private CapStat cs = CapStat.getInstance();
+    private LoggedInUser cs = LoggedInUser.getInstance();
     private EventBus eb = EventBus.getInstance();
     private Scene scene;
     private Parent root;

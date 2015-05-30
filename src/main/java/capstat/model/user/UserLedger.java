@@ -33,8 +33,7 @@ public class UserLedger {
     }
 
     /**
-     * Returns the only instance of CapStat.
-     * @return the only instance of CapStat
+     * @return the only instance of UserLedger
      */
     public synchronized static UserLedger getInstance() {
         if (instance == null) {
