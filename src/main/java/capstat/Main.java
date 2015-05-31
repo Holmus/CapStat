@@ -1,8 +1,10 @@
 package capstat;
 
+import capstat.view.TopWindow;
+
 public class Main {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        TopWindow.start(args);
     }
 }
