@@ -1,4 +1,7 @@
 # Meeting YYYY-MM-DD
+> Meeting quote.
+>
+> - <cite>Quoted person</cite>
 
 Date: YYYY-MM-DD
 
