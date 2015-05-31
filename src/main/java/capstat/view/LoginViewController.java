@@ -36,7 +36,7 @@ public class LoginViewController implements NotifyEventListener, Initializable{
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        eb.addNotifyEventListener(MainView.USER_REGISTERED, this);
+        eb.addNotifyEventListener(TopWindow.USER_REGISTERED, this);
         registeredLabel.setVisible(false);
         passwordLabel.setVisible(false);
         usernameLabel.setVisible(false);
@@ -67,7 +67,7 @@ public class LoginViewController implements NotifyEventListener, Initializable{
             return;
         }
         if(lc.loginAsUser(usernameField.getText(), passField.getText())){
-            eb.notify(MainView.SETSCENE_MAIN);
+            eb.notify(TopWindow.SETSCENE_MAIN);
         } else {
             if(!usernameLabel.isVisible()) {
                 passwordLabel.setVisible(true);
@@ -80,7 +80,7 @@ public class LoginViewController implements NotifyEventListener, Initializable{
      */
     @FXML private void guestPressed(){
         lc.loginAsGuest();
-        eb.notify(MainView.SETSCENE_MAIN);
+        eb.notify(TopWindow.SETSCENE_MAIN);
 
     }
 
@@ -89,7 +89,7 @@ public class LoginViewController implements NotifyEventListener, Initializable{
      *
      */
     @FXML private void registerPressed(){
-        eb.notify(MainView.SETSCENE_REGISTER);
+        eb.notify(TopWindow.SETSCENE_REGISTER);
     }
 
     /**
@@ -98,7 +98,7 @@ public class LoginViewController implements NotifyEventListener, Initializable{
      */
     @Override
     public void notifyEvent(String event) {
-        if(event.equals(MainView.USER_REGISTERED)){
+        if(event.equals(TopWindow.USER_REGISTERED)){
             userRegistered();
         }
     }

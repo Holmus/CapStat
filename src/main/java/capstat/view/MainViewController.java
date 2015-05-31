@@ -37,7 +37,7 @@ public class MainViewController implements Initializable, NotifyEventListener{
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        eb.addNotifyEventListener(MainView.MATCH_REGISTERED, this);
+        eb.addNotifyEventListener(TopWindow.MATCH_REGISTERED, this);
         userLabel.setText(cs.getLoggedInUser().getNickname());
         matchRegisteredLabel.setVisible(false);
         Platform.runLater(() -> {
@@ -66,20 +66,20 @@ public class MainViewController implements Initializable, NotifyEventListener{
      * Triggered when the playbutton is pressed, sends a notification to the EventBus
      */
     @FXML private void playPressed(){
-        eb.notify(MainView.SETSCENE_MATCH);
+        eb.notify(TopWindow.SETSCENE_MATCH);
     }
     /**
      * Triggered when the logoutbutton is pressed, sends a notification to the EventBus
      */
     @FXML private void logoutPressed(){
         lc.logoutUser();
-        eb.notify(MainView.SETSCENE_LOGIN);
+        eb.notify(TopWindow.SETSCENE_LOGIN);
     }
     /**
      * Triggered when the statisticsbutton is pressed, sends a notification to the EventBus
      */
     @FXML private void statisticsPressed(){
-        eb.notify(MainView.SETSCENE_STATISTICS);
+        eb.notify(TopWindow.SETSCENE_STATISTICS);
     }
 
      /**
@@ -88,7 +88,7 @@ public class MainViewController implements Initializable, NotifyEventListener{
      */
     @Override
     public void notifyEvent(String event) {
-        if(event.equals(MainView.MATCH_REGISTERED)){
+        if(event.equals(TopWindow.MATCH_REGISTERED)){
             matchRegisteredLabel.setVisible(true);
         }
 

@@ -74,11 +74,11 @@ public class StatisticsViewController implements Initializable{
 
     @FXML public void logoutPressed(){
         lc.logoutUser();
-        eb.notify(MainView.SETSCENE_LOGIN);
+        eb.notify(TopWindow.SETSCENE_LOGIN);
     }
 
     @FXML public void returnToMain(){
-        eb.notify(MainView.SETSCENE_MAIN);
+        eb.notify(TopWindow.SETSCENE_MAIN);
     }
 
     @FXML public void plotClicked(){

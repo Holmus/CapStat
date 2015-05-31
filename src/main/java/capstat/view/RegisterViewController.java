@@ -88,7 +88,7 @@ public class RegisterViewController implements Initializable{
      * Method to change to loginView using the EventBus
      */
     @FXML private void goToLogin(){
-        eb.notify(MainView.SETSCENE_LOGIN);
+        eb.notify(TopWindow.SETSCENE_LOGIN);
     }
 
     /**
@@ -96,8 +96,8 @@ public class RegisterViewController implements Initializable{
      */
     private void registerUser(){
         rc.registerNewUser(usernameInput.getText(), fullNameInput.getText(), passField.getText(), birth, admitTime.getYear(), admitTime.getReadingPeriod().ordinal() + 1);
-        eb.notify(MainView.SETSCENE_LOGIN);
-        eb.notify(MainView.USER_REGISTERED);
+        eb.notify(TopWindow.SETSCENE_LOGIN);
+        eb.notify(TopWindow.USER_REGISTERED);
     }
 
     /**

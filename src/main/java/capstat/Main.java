@@ -1,10 +1,10 @@
 package capstat;
 
-import capstat.view.MainView;
+import capstat.view.TopWindow;
 
 public class Main {
 
     public static void main(String[] args) {
-        MainView.start(args);
+        TopWindow.start(args);
     }
 }
