@@ -2,6 +2,7 @@ package capstat.model.user;
 
 /**
  * @author Christian Persson
+ * rewieved by hjorthjort
  */
 public class LoggedInUser {
 
@@ -12,7 +13,7 @@ public class LoggedInUser {
 
     private LoggedInUser() {
         this.userLedger = UserLedger.getInstance();
-        this.guestUser = UserFactory.createGuestUser();
+        this.guestUser = UserLedger.getGuestUser();
         this.loggedInUser = guestUser;
     }
 
@@ -54,11 +55,5 @@ public class LoggedInUser {
 
     public User getLoggedInUser() {
         return loggedInUser;
-    }
-
-    //Users in system Operations
-
-    public void printUsers() {
-        System.out.println(this.userLedger.toString());
     }
 }
