@@ -28,7 +28,7 @@ import java.util.ResourceBundle;
  * @author Jakob
  * Class to update and initialize the MatchView
  */
-public class MatchViewController implements NotifyEventListener, Initializable{
+public class MatchViewController implements NotifyEventListener, Initializable {
     EventBus eb = EventBus.getInstance();
     Match match = MatchController.createNewMatch();
     MatchController mc = new MatchController(match);
@@ -48,13 +48,8 @@ public class MatchViewController implements NotifyEventListener, Initializable{
      */
     @Override
     public void initialize(URL location, ResourceBundle resources){
-        this.mc.setEndGameStrategy(this.mc.RANKED);
-        mainPane.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
-	    eb.removeNotifyEventListenersByEvent(Match.HIT_RECORDED);
-	    eb.removeNotifyEventListenersByEvent(Match.MISS_RECORDED);
-	    eb.removeNotifyEventListenersByEvent(Match.DUEL_ENDED);
-	    eb.removeNotifyEventListenersByEvent(Match.ROUND_ENDED);
-	    eb.removeNotifyEventListenersByEvent(Match.MATCH_ENDED);
+        mainPane.setBackground(new Background(new BackgroundFill(Color
+                .LIGHTGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
         eb.addNotifyEventListener(Match.HIT_RECORDED, this);
         eb.addNotifyEventListener(Match.MISS_RECORDED,this);
         eb.addNotifyEventListener(Match.DUEL_ENDED, this);
@@ -98,6 +93,7 @@ public class MatchViewController implements NotifyEventListener, Initializable{
      *
      */
     @FXML private void returnToMenu(){
+        this.tearDown();
         eb.notify(MainView.SETSCENE_MAIN);
     }
 
@@ -295,6 +291,15 @@ public class MatchViewController implements NotifyEventListener, Initializable{
 
     }
 
+
+    private void tearDown() {
+        eb.removeNotifyEventListener(Match.HIT_RECORDED, this);
+        eb.removeNotifyEventListener(Match.MISS_RECORDED, this);
+        eb.removeNotifyEventListener(Match.DUEL_ENDED, this);
+        eb.removeNotifyEventListener(Match.ROUND_ENDED, this);
+        eb.removeNotifyEventListener(Match.MATCH_ENDED, this);
+    }
+
     /**
      * Displays all glasses as active
      *
@@ -308,4 +313,5 @@ public class MatchViewController implements NotifyEventListener, Initializable{
         glass6.setFill(Color.ORANGE);
         glass7.setFill(Color.ORANGE);
     }
+
 }
