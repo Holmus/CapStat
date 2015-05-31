@@ -19,7 +19,7 @@ public class MatchCount implements Statistic {
             ret.add(new Plottable() {
                 @Override
                 public double getValue() {
-                    return matches.indexOf(matchResult);
+                    return (matches.indexOf(matchResult) +1.0);
                 }
 
                 @Override
