@@ -55,15 +55,12 @@ public class MatchDatabaseFacadeTest {
 		userdb.addUser(dummyRow3);
 		userdb.addUser(dummyRow4);
 		userdb.addUser(guestUser);
-		Thread.sleep(300);
 		matchdb.addMatch(dummyMatchResult1);
 		matchdb.addMatch(dummyMatchResult2);
-		Thread.sleep(300);
 	}
 
 	@After
 	public void removeNewMatches() {
-
 		matchdb.removeMatch(1);
 		matchdb.removeMatch(2);
 		userdb.removeUser(dummyRow1);
@@ -82,7 +79,6 @@ public class MatchDatabaseFacadeTest {
 		mrbs.add(dummyMatchResult1);
 		mrbs.add(dummyMatchResult2);
 		matchdb.addMatchSet(mrbs);
-		Thread.sleep(300);
 	}
 
 	@Test
@@ -218,5 +214,4 @@ public class MatchDatabaseFacadeTest {
 				.getReadingPeriod().ordinal()+1, elo.getPoints()
 		);
 	}
-
 }

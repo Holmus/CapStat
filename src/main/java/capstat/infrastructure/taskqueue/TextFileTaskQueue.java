@@ -2,6 +2,7 @@ package capstat.infrastructure.taskqueue;
 
 import java.io.*;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.LinkedList;
@@ -36,13 +37,7 @@ public class TextFileTaskQueue implements ITaskQueue {
         file.createNewFile();
     }
     private static List<String> readAllLines(File file) throws IOException {
-        List<String> ret = new LinkedList<>();
-
-        Path path = file.toPath();
-        Stream<String> lines = Files.lines(path, UTF8_CHARSET);
-
-        lines.map(line -> ret.add(line));
-        return ret;
+        return Files.readAllLines(file.toPath(), UTF8_CHARSET);
     }
 
     private void writeFile() throws IOException {

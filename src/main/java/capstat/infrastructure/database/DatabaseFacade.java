@@ -4,6 +4,7 @@ import capstat.infrastructure.taskqueue.ITaskQueue;
 import capstat.infrastructure.taskqueue.TextFileTaskQueue;
 import org.jooq.Record;
 import org.jooq.Result;
+import org.jooq.exception.DataAccessException;
 import org.jooq.generated.db.capstat.tables.Matches;
 import org.jooq.generated.db.capstat.tables.Throwsequences;
 import org.jooq.generated.db.capstat.tables.Users;
@@ -61,21 +62,24 @@ class DatabaseFacade implements UserDatabaseHelper, ResultDatabaseHelper {
         // INSERTS THE FIRST USER IN THE QUEUE TO THE DATABASE
         String[] parsed = queryStringParser(txtUserQueue.peek());
 
-        db.database.insertInto(Users.USERS, Users.USERS.NICK, Users.USERS.NAME, Users.USERS.PASS, Users.USERS.BIRTHDAY,
-                Users.USERS.ADMITTANCEYEAR, Users.USERS.ADMITTANCEREADINGPERIOD, Users.USERS.ELORANK)
-                .values(parsed[0], parsed[1], parsed[2],
-                        new java.sql.Date(Integer.parseInt(parsed[3]) - 1900, Integer.parseInt(parsed[4]) - 1, Integer.parseInt(parsed[5])),
-                        Integer.parseInt(parsed[6]), Integer.parseInt(parsed[7]), Double.parseDouble(parsed[8])).execute();
-
+	    try {
+		    db.database.insertInto(Users.USERS, Users.USERS.NICK, Users.USERS.NAME, Users.USERS.PASS, Users.USERS.BIRTHDAY,
+				    Users.USERS.ADMITTANCEYEAR, Users.USERS.ADMITTANCEREADINGPERIOD, Users.USERS.ELORANK)
+				    .values(parsed[0], parsed[1], parsed[2],
+						    new java.sql.Date(Integer.parseInt(parsed[3]) - 1900, Integer.parseInt(parsed[4]) - 1, Integer.parseInt(parsed[5])),
+						    Integer.parseInt(parsed[6]), Integer.parseInt(parsed[7]), Double.parseDouble(parsed[8])).execute();
+	    } catch (DataAccessException e) {
+		    e.printStackTrace();
+	    }
         // DELETE USER FROM QUEUE IF SUCCESSFUL INSERT INTO DATABASE
 
-        UserBlueprint insertedUser = getUserByNickname(parsed[0]);
-        if ( userBlueprintToQueueEntry(insertedUser).equals(txtUserQueue.peek()) ) {
-            try {
+        UserBlueprint insertedUser = getUserByNickname((queryStringParser(txtUserQueue.peek())[0]));
+        try {
+            if (userBlueprintToQueueEntry(insertedUser).equals(txtUserQueue.peek()) ) {
                 txtUserQueue.pop();
-            } catch (IOException e) {
-                e.printStackTrace();
             }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -101,6 +105,7 @@ class DatabaseFacade implements UserDatabaseHelper, ResultDatabaseHelper {
 	 */
     @Override
     public void removeUser(final UserBlueprint user) {
+	    waitForQueueToFinish();
         db.database.deleteFrom(Users.USERS).where(Users.USERS.NICK.equal(user.nickname)).execute();
         //TODO check if this is done or not.
     }
@@ -110,6 +115,7 @@ class DatabaseFacade implements UserDatabaseHelper, ResultDatabaseHelper {
 	 */
     @Override
     public UserBlueprint getUserByNickname(final String nickname) {
+	    waitForQueueToFinish();
         Result<Record> result = db.database.select().from(Users.USERS).where(Users.USERS.NICK.equal(nickname)).fetch();
 	    Set<UserBlueprint> ub = getUsersFromResult(result);
 	    return ub.iterator().hasNext() ? ub.iterator().next() : null;
@@ -120,6 +126,7 @@ class DatabaseFacade implements UserDatabaseHelper, ResultDatabaseHelper {
 	 */
     @Override
     public Set<UserBlueprint> getUsersByName(final String name) {
+	    waitForQueueToFinish();
         //TODO A user cannot be identified by name, this could result in more than one user entry. now only returns the first found.
         Result<Record> result = db.database.select().from(Users.USERS).where(Users.USERS.NAME.equal(name)).fetch();
 	    return getUsersFromResult(result);
@@ -130,6 +137,7 @@ class DatabaseFacade implements UserDatabaseHelper, ResultDatabaseHelper {
 	 */
     @Override
     public Set<UserBlueprint> getUsersByNicknameMatch(final String regex) {
+	    waitForQueueToFinish();
         Result<Record> result = db.database.select().from(Users.USERS).where(Users.USERS.NICK.likeRegex("" + regex)).fetch();
         return getUsersFromResult(result);
     }
@@ -139,6 +147,7 @@ class DatabaseFacade implements UserDatabaseHelper, ResultDatabaseHelper {
 	 */
     @Override
     public Set<UserBlueprint> getUsersByNameMatch(final String regex) {
+	    waitForQueueToFinish();
         Result<Record> result = db.database.select().from(Users.USERS).where(Users.USERS.NAME.likeRegex(regex)).fetch();
         return getUsersFromResult(result);
     }
@@ -148,11 +157,13 @@ class DatabaseFacade implements UserDatabaseHelper, ResultDatabaseHelper {
 	 */
     @Override
     public Set<UserBlueprint> getUsersInELORankRange(final double minELO, final double maxELO) {
+	    waitForQueueToFinish();
         Result<Record> result = db.database.select().from(Users.USERS).where(Users.USERS.ELORANK.between(minELO).and(maxELO)).fetch();
         return getUsersFromResult(result);
     }
 
     private Set<UserBlueprint> getUsersFromResult (Result<Record> result) {
+
         Set<UserBlueprint> userSet = new HashSet<>();
         String resultString = result.formatCSV();
         String[] rows = resultString.substring(resultString.indexOf(System.getProperty("line.separator")) + 1).split("\n");
@@ -169,15 +180,18 @@ class DatabaseFacade implements UserDatabaseHelper, ResultDatabaseHelper {
      * Using CSV standard to store database data as strings
      */
     private String userBlueprintToQueueEntry(UserBlueprint ubp) {
-        return ubp.nickname + "," +
-                ubp.name + "," +
-                ubp.hashedPassword + "," +
-                ubp.birthdayYear + "," +
-                ubp.birthdayMonth + "," +
-                ubp.birthdayDay + "," +
-                ubp.admittanceYear + "," +
-                ubp.admittanceReadingPeriod + "," +
-                ubp.ELORanking;
+	    if (ubp != null) {
+		    return ubp.nickname + "," +
+				    ubp.name + "," +
+				    ubp.hashedPassword + "," +
+				    ubp.birthdayYear + "," +
+				    ubp.birthdayMonth + "," +
+				    ubp.birthdayDay + "," +
+				    ubp.admittanceYear + "," +
+				    ubp.admittanceReadingPeriod + "," +
+				    ubp.ELORanking;
+	    }
+	    return null;
     }
 
     private UserBlueprint dbEntryToUserBlueprint(String[] s) {
@@ -211,7 +225,7 @@ class DatabaseFacade implements UserDatabaseHelper, ResultDatabaseHelper {
 				}
 			}
 
-			// Start a new Thread that empties the task queue and inserts users
+			// Start a new Thread that empties the task queue and inserts matches
 			// from the queue into the database.
 			if (backgroundThread == null ) {
 				backgroundThread = new BackgroundThread();
@@ -227,11 +241,15 @@ class DatabaseFacade implements UserDatabaseHelper, ResultDatabaseHelper {
 		// INSERTS THE FIRST MATCH RESULT IN THE QUEUE TO THE DATABASE
 		String[] parsed = queryStringParser(txtMatchResultQueue.peek());
 
-
+		try {
 		db.database.insertInto(Matches.MATCHES, Matches.MATCHES.ID, Matches.MATCHES.P1, Matches.MATCHES.P2, Matches.MATCHES.SPECTATOR,
 				Matches.MATCHES.P1SCORE, Matches.MATCHES.P2SCORE, Matches.MATCHES.STARTTIME, Matches.MATCHES.ENDTIME)
 				.values(parsed[0], parsed[1], parsed[2], parsed[3], Integer.parseInt(parsed[4]),
 						Integer.parseInt(parsed[5]), parsed[6], parsed[7]).execute();
+		} catch (DataAccessException e) {
+			e.printStackTrace();
+		}
+
 		// DELETE MATCH RESULT FROM QUEUE IF SUCCESSFUL INSERT INTO DATABASE
 
 		MatchResultBlueprint insertedMatchResult = getMatchById(Long.parseLong(parsed[0]));
@@ -248,25 +266,26 @@ class DatabaseFacade implements UserDatabaseHelper, ResultDatabaseHelper {
 		// INSERTS THE FIRST PARTIAL THROW SEQUENCE IN THE QUEUE TO THE DATABASE
 		String[] parsed = queryStringParser(txtPartialSequenceQueue.peek());
 
-		db.database.insertInto(Throwsequences.THROWSEQUENCES, Throwsequences.THROWSEQUENCES.MATCHID,
-				Throwsequences.THROWSEQUENCES.SEQUENCEINDEX, Throwsequences.THROWSEQUENCES.GLASSES,
-				Throwsequences.THROWSEQUENCES.STARTINGPLAYER, Throwsequences.THROWSEQUENCES.THROWBEFOREWASHIT,
-				Throwsequences.THROWSEQUENCES.SEQUENCE)
-		.values(parsed[0], Integer.parseInt(parsed[1]), parsed[2], parsed[3], Byte.parseByte(parsed[4]), parsed[5]).execute();
-
-
-		// DELETE THROW SEQUENCE FROM QUEUE IF SUCCESSFUL INSERT INTO DATABASE
-
-		PartialSequenceBlueprint insertedPartialSequence = getMatchById(Long.parseLong(parsed[0])).sequences.get(Integer.parseInt(parsed[1]));
-		if ( (parsed[0] + "," + parsed[1] + "," + partialSequenceBlueprintToQueueEntry(insertedPartialSequence)).equals(txtPartialSequenceQueue.peek()) ) {
-			try {
-				txtPartialSequenceQueue.pop();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+		try {
+			db.database.insertInto(Throwsequences.THROWSEQUENCES, Throwsequences.THROWSEQUENCES.MATCHID,
+					Throwsequences.THROWSEQUENCES.SEQUENCEINDEX, Throwsequences.THROWSEQUENCES.GLASSES,
+					Throwsequences.THROWSEQUENCES.STARTINGPLAYER, Throwsequences.THROWSEQUENCES.THROWBEFOREWASHIT,
+					Throwsequences.THROWSEQUENCES.SEQUENCE)
+					.values(parsed[0], Integer.parseInt(parsed[1]), parsed[2], parsed[3], Byte.parseByte(parsed[4]), parsed[5]).execute();
+		} catch (DataAccessException e) {
+			e.printStackTrace();
 		}
 
-
+		// DELETE THROW SEQUENCE FROM QUEUE IF SUCCESSFUL INSERT INTO DATABASE
+		PartialSequenceBlueprint insertedPartialSequence =
+				getMatchById(Long.parseLong(parsed[0])).sequences.get(Integer.parseInt(parsed[1]));
+		try {
+			if ((parsed[0] + "," + parsed[1] + "," + partialSequenceBlueprintToQueueEntry(insertedPartialSequence)).equals(txtPartialSequenceQueue.peek())) {
+				txtPartialSequenceQueue.pop();
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -282,6 +301,7 @@ class DatabaseFacade implements UserDatabaseHelper, ResultDatabaseHelper {
 	 */
 	@Override
 	public void removeMatch(long id) {
+		waitForQueueToFinish();
 		db.database.deleteFrom(Throwsequences.THROWSEQUENCES)
 				.where(Throwsequences.THROWSEQUENCES.MATCHID.equal(String.valueOf(id)))
 				.execute();
@@ -294,6 +314,7 @@ class DatabaseFacade implements UserDatabaseHelper, ResultDatabaseHelper {
 	 */
 	@Override
 	public MatchResultBlueprint getMatchById(long id) {
+		waitForQueueToFinish();
 		Result<Record> result = db.database.select().from(Matches.MATCHES)
 				.where(Matches.MATCHES.ID.equal(String.valueOf(id)))
 				.fetch();
@@ -306,6 +327,7 @@ class DatabaseFacade implements UserDatabaseHelper, ResultDatabaseHelper {
 	 */
 	@Override
 	public Set<MatchResultBlueprint> getAllMatches() {
+		waitForQueueToFinish();
 		Result<Record> result = db.database.select().from(Matches.MATCHES)
 				.fetch();
 		return getMatchesFromResult(result);
@@ -316,6 +338,7 @@ class DatabaseFacade implements UserDatabaseHelper, ResultDatabaseHelper {
 	 */
 	@Override
 	public Set<MatchResultBlueprint> getMatchesForUser(String player) {
+		waitForQueueToFinish();
 		Result<Record> result = db.database.select().from(Matches.MATCHES)
 				.where(Matches.MATCHES.P1.equal(player)
 						.or(Matches.MATCHES.P2.equal(player)))
@@ -328,13 +351,14 @@ class DatabaseFacade implements UserDatabaseHelper, ResultDatabaseHelper {
 	 */
 	@Override
 	public Set<MatchResultBlueprint> getMatchesForUsers(String p1, String p2) {
-			Result<Record> result = db.database.select().from(Matches.MATCHES)
-					.where(Matches.MATCHES.P1.equal(p1)
-							.and(Matches.MATCHES.P2.equal(p2)))
-					.or(Matches.MATCHES.P1.equal(p2)
-							.and(Matches.MATCHES.P2.equal(p1)))
-					.fetch();
-			return getMatchesFromResult(result);
+		waitForQueueToFinish();
+		Result<Record> result = db.database.select().from(Matches.MATCHES)
+				.where(Matches.MATCHES.P1.equal(p1)
+						.and(Matches.MATCHES.P2.equal(p2)))
+				.or(Matches.MATCHES.P1.equal(p2)
+						.and(Matches.MATCHES.P2.equal(p1)))
+				.fetch();
+		return getMatchesFromResult(result);
 	}
 
 	/**
@@ -342,6 +366,7 @@ class DatabaseFacade implements UserDatabaseHelper, ResultDatabaseHelper {
 	 */
 	@Override
 	public Set<MatchResultBlueprint> getMatchesInDateRange(long epochFrom, long epochTo) {
+		waitForQueueToFinish();
 		Result<Record> result = db.database.select().from(Matches.MATCHES)
 				.where(Matches.MATCHES.ENDTIME.between(String.valueOf(epochFrom)).and(String.valueOf(epochTo)))
 						.fetch();
@@ -353,6 +378,7 @@ class DatabaseFacade implements UserDatabaseHelper, ResultDatabaseHelper {
 	 */
 	@Override
 	public Set<MatchResultBlueprint> getMatchesForSpectator(String spectator) {
+		waitForQueueToFinish();
 		Result<Record> result = db.database.select().from(Matches.MATCHES)
 				.where(Matches.MATCHES.SPECTATOR.equal(spectator))
 				.fetch();
@@ -370,7 +396,7 @@ class DatabaseFacade implements UserDatabaseHelper, ResultDatabaseHelper {
 		String[] rows = resultString.substring(resultString.indexOf(System.getProperty("line.separator")) + 1).split("\n");
 
 		List<PartialSequenceBlueprint> psbList = new ArrayList<>();
-		Arrays.sort(rows);
+		//Arrays.sort(rows);
 		for (String s : rows) {
 			if (s.length() > 0) {
 				psbList.add(dbEntryToPartialSequenceBlueprint(queryStringParser(s)));
@@ -391,11 +417,12 @@ class DatabaseFacade implements UserDatabaseHelper, ResultDatabaseHelper {
 
 		for (String s : rows) {
 			if (s.length() > 0) {
-				matchSet.add(dbEntryToMatchBlueprint(queryStringParser(s)));
+				matchSet.add(dbEntryToMatchResultBlueprint(queryStringParser(s)));
 			}
 		}
 		return matchSet;
 	}
+
 
 	/*
 	 * Using CSV standard to store database data as strings
@@ -417,7 +444,7 @@ class DatabaseFacade implements UserDatabaseHelper, ResultDatabaseHelper {
 
 
 
-	private MatchResultBlueprint dbEntryToMatchBlueprint(String[] s) {
+	private MatchResultBlueprint dbEntryToMatchResultBlueprint(String[] s) {
 
 		//TODO parse the database fetch to a matchBlueprint
 
@@ -449,6 +476,25 @@ class DatabaseFacade implements UserDatabaseHelper, ResultDatabaseHelper {
 			b[i] = str.equals("1");
 		}
 		return b;
+	}
+
+
+	private void waitForQueueToFinish() {
+		if (backgroundThread != null) {
+			if (!Thread.currentThread().equals(backgroundThread)) {
+				try {
+					backgroundThread.join(10000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		} else {
+			try {
+				Thread.sleep(300);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	// END COMMON HELP METHODS

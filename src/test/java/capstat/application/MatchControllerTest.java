@@ -36,7 +36,6 @@ public class MatchControllerTest {
         this.user2 = UserFactory.createDummyUser2();
         this.userDatabase.addUser(UserLedger.getInstance().createBlueprint
                 (user2));
-       Thread.sleep(300);
     }
 
     @After
@@ -71,17 +70,20 @@ public class MatchControllerTest {
         assertTrue(this.match.isDuelling());
     }
 
+
     @Test
     public void testSetPlayer1() throws Exception {
-        this.controller.setPlayer1(this.user1.getNickname());
-	   Thread.sleep(300);
+	    Thread.sleep(300); // This is due to a join problem in the database facade, caused by a bug in the thread join between different instances of it.
+	    this.controller.setPlayer1(this.user1.getNickname());
+	    Thread.sleep(300); // This is due to a join problem in the database facade, caused by a bug in the thread join between different instances of it.
         assertTrue(this.match.getPlayer(Match.Player.ONE).equals(this.user1));
     }
 
     @Test
     public void testSetPlayer2() throws Exception {
+	    Thread.sleep(300); // This is due to a join problem in the database facade, caused by a bug in the thread join between different instances of it.
         this.controller.setPlayer2(this.user2.getNickname());
-	   Thread.sleep(300);
+	    Thread.sleep(300); // This is due to a join problem in the database facade, caused by a bug in the thread join between different instances of it.
         assertTrue(this.match.getPlayer(Match.Player.TWO).equals(this.user2));
     }
 
@@ -93,8 +95,8 @@ public class MatchControllerTest {
         this.controller.setEndGameStrategy(this.controller.UNRANKED);
         this.match.setPlayer1(user1);
         this.match.setPlayer2(user2);
-	    Thread.sleep(300);
-        //Play through the game, withut hte controller.
+
+        //Play through the game, without hte controller.
         while (this.match.isOngoing()) {
             this.match.recordHit();
             this.match.recordMiss();
@@ -112,7 +114,6 @@ public class MatchControllerTest {
         this.controller.setEndGameStrategy(this.controller.RANKED);
         this.match.setPlayer1(user1);
         this.match.setPlayer2(user2);
-	   Thread.sleep(300);
         while (this.match.isOngoing()) {
             this.match.recordHit();
             this.match.recordMiss();

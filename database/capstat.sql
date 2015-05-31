@@ -39,7 +39,8 @@ CREATE TABLE ThrowSequences (
 
 CREATE TABLE Attends(
   userNick      VARCHAR(30),
-  MatchId       VARCHAR(30),
+  matchId       VARCHAR(30),
   FOREIGN KEY (userNick) REFERENCES Users(nick),
-  FOREIGN KEY (MatchId) REFERENCES Matches(id)
+  FOREIGN KEY (matchId) REFERENCES Matches(id),
+  UNIQUE (userNick, matchId)
 );
