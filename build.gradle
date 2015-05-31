@@ -72,7 +72,7 @@ GenerationTool.main(
 
 jar {
     baseName = "capstat"
-    version = "0.2"
+    version = "0.2.1"
     from {
         configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
     }
