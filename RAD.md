@@ -86,7 +86,7 @@ The application should include automated tests, for testing different scenarios 
 The application will be developed in Java, meaning that all devices that run the application need to have JRE installed and configured. The application does not need to be installed on the device, but instead will be run independently. Since networking is not supported, an Internet connection is not required.
 
 #### 2.2.6 Packaging and installation
-The application will be delivered as zip archive, containing a runnable Java file with the code for the application, as well as scripts for running the application on different platforms.
+The application will be delivered as a zip archive, containing a runnable Java file with the code for the application, as well as scripts for running the application on different platforms.
 
 #### 2.2.7 Legal
 N/A
