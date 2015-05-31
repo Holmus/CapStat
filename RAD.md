@@ -126,7 +126,7 @@ Appendix
 ## Use cases
 Overview:
 
-asdl;kfjkla;sdfjkl;asjdf picture here
+![Overview of use cases](usecaseoverview.jpg "Overview of use cases")
 
 ## Use case texts
 
