@@ -10,7 +10,7 @@ This version overrides all previous versions.
 ## 1 Introduction
 
 ### 1.1 Purpose of application
-CapStat is a statistics, tracking and ranking tool for the drinking game “caps”. It is intended to be used over a larger period of time in order to build up a good statistic significance, and to possibly uncover previously unknown patterns and correlations in a caps players performance. For definitions, terms, and rules of the application, see references.
+CapStat is a statistics, tracking and ranking tool for the drinking game "caps". It is intended to be used over a larger period of time in order to build up a good statistic significance, and to possibly uncover previously unknown patterns and correlations in a caps players performance. For definitions, terms, and rules of the application, see references.
 
 ### 1.2 General characteristics of application
 CapStat is a standalone desktop application. It tracks player achievements, statistics and results. It does this through user input of each throw made in a match – hit or miss. The end result is a database of player rankings and performance, which can be viewed within the application.
@@ -21,7 +21,7 @@ CapStat saves data to a local database on the machine on which CapStat is run, m
 ### 1.4 Objectives and success criteria of the project
 CapStat is intended to be used for quick and correct input of game results, and focuses on speed and effectiveness of data input. Therefore the following criteria are relevant:
 
-1.  It should be possible to start recording results for a game of caps (with default rules) with only one key press.
+1.  It should be possible to start recording results for a game of caps (with default rules) with only two button presses.
 2.  A spectator should be able to initiate and record the results of a game of caps in CapStat using only the keyboard.
 3.  CapStat should be able to deduce the state of a game of caps correctly, assuming correct input has been given from the start of the game.
 4.  CapStat should be able to give a brief, graphical overview of the current state of the game.
