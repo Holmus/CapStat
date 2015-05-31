@@ -138,8 +138,6 @@ For CapStat to compile and run, a local MySQL database must first be created. Th
 
 * *Match package*
 
-
-
 #####The infrastructure layer and its submodules
 ![Infrastructure layer](./images/infrastructure_classes.png)
 
