@@ -139,13 +139,18 @@ public class MatchViewController implements NotifyEventListener, Initializable {
      */
     @FXML private void startUnrankedMatchPressed(){
         this.mc.setEndGameStrategy(this.mc.UNRANKED);
-        startRankedMatchPressed();
+        startMatch();
     }
     /**
      * Starts a ranked match using the MatchController. Sets view to "match-mode", displaying correct elements.
      * Triggers when start ranked match is pressed.
      */
     @FXML private void startRankedMatchPressed(){
+        this.mc.setEndGameStrategy(this.mc.RANKED);
+        startMatch();
+    }
+
+    private void startMatch() {
         nickname1Label.setVisible(false);
         nickname2Label.setVisible(false);
         if(setPlayer1Field.getText().isEmpty() || setPlayer2Field.getText().isEmpty()){
@@ -195,7 +200,6 @@ public class MatchViewController implements NotifyEventListener, Initializable {
             startUnrankedMatchButton.setDisable(true);
             mc.startMatch();
         }
-
     }
 
     /**
