@@ -25,7 +25,6 @@ CapStat is intended to be used for quick and correct input of game results, and 
 2.  A spectator should be able to initiate and record the results of a game of caps in CapStat using only the keyboard.
 3.  CapStat should be able to deduce the state of a game of caps correctly, assuming correct input has been given from the start of the game.
 4.  CapStat should be able to give a brief, graphical overview of the current state of the game.
-5.  A spectator should be able to revise and reverse the results of the current game of caps if some input is wrong.
 
 In addition to these, the following general criteria should also be fulfilled:
 
