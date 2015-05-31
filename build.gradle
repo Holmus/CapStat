@@ -73,6 +73,9 @@ GenerationTool.main(
 jar {
     baseName = "capstat"
     version = "0.2"
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    }
     manifest {
         attributes "Main-Class": "$mainClassName"
     }
