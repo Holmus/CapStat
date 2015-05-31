@@ -140,10 +140,10 @@ This UC describes how to exit the application.
 Low
 
 ### Extends
--
+N/A
 
 ### Includes
--
+N/A
 
 ### Participants
 User
@@ -165,10 +165,10 @@ This UC describes the behaviour of the application when the user tries to log in
 Medium
 
 ### Extends
--
+N/A
 
 ### Includes
--
+N/A
 
 ### Participants
 Not logged-in user
@@ -199,10 +199,10 @@ This UC describes the behaviour of the application whenever the user tries to lo
 Low
 
 ### Extends
--
+N/A
 
 ### Includes
--
+N/A
 
 ### Participants
 Logged-in user
@@ -224,10 +224,10 @@ This UC describes the behaviour of the application when the user wants to displa
 Medium
 
 ### Extends
--
+N/A
 
 ### Includes
--
+N/A
 
 ### Participants
 User
@@ -252,10 +252,10 @@ This UC describes the behaviour of the application when the user wants to displa
 Medium
 
 ### Extends
--
+N/A
 
 ### Includes
--
+N/A
 
 ### Participants
 User
@@ -283,7 +283,7 @@ High
 RecordThrow
 
 ### Includes
--
+N/A
 
 ### Participants
 Spectator
@@ -305,7 +305,7 @@ This UC describes the very abstract, high-level description of what happens when
 High
 
 ### Extends
--
+N/A
 
 ### Includes
 * StartMatch
@@ -337,7 +337,7 @@ High
 RecordThrow
 
 ### Includes
--
+N/A
 
 ### Participants
 Spectator
@@ -370,10 +370,10 @@ A match is made up of a series of rounds, which is made up of plays, which are i
 High
 
 ### Extends
--
+N/A
 
 ### Includes
--
+N/A
 
 ### Participants
 Spectator
@@ -397,10 +397,10 @@ This UC describes the process of registering a new User in the system, allowing 
 High
 
 ### Extends
--
+N/A
 
 ### Includes
--
+N/A
 
 ### Participants
 A person that is not currently registered in the system
@@ -434,10 +434,10 @@ This UC describes the behaviour of the application when a match is finished and 
 High
 
 ### Extends
--
+N/A
 
 ### Includes
--
+N/A
 
 ### Participants
 Specatator
@@ -459,10 +459,10 @@ This UC describes the overarching behaviour of the application when the user wan
 Medium
 
 ### Extends
--
+N/A
 
 ### Includes
--
+N/A
 
 ### Participants
 User (does not have to be logged in)
@@ -486,10 +486,10 @@ The application focuses on letting the user quickly start recording results, and
 High
 
 ### Extends
--
+N/A
 
 ### Includes
--
+N/A
 
 ### Participants
 A User that is logged in to the system
