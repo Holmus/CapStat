@@ -1,14 +1,13 @@
 System design document for CapStat (SDD)
 =======
 
-
-
->Version: 1.0
+>Version: 0.2
 
 >Date: May 29, 2015
 
 >Author: Johan Andersson, Rikard Hjort, Jakob Holmgren, Christian Persson
 
+###Contents
 
 
 This version overrides all previous versions.
@@ -58,43 +57,43 @@ During a match, a lot of events take place that other parts of a system want to 
 
 ####2.2 Software decomposition
 #####2.2.1 General
-The software is decomposed into four main modules, or "layers". Two of these have submodules. See Figure X. The modules are ordered hierarchically, meaning that no module may know about another module of higher order. The following list orders modules from higher to lowest. This means that tha presentation layer may know about all other layers, while the infrastructure layer may only know about itself. See figure X for a diagram of the relationship between layers.
+The software is decomposed into four main modules, or "layers". Two of these have submodules. The modules are ordered hierarchically, meaning that no module may know about another module of higher order. The following list orders modules from higher to lowest. This means that the presentation layer may know about all other layers, while the infrastructure layer may only know about itself. See figure 1 for a diagram of the relationship between layers.
 
 * **Presentation layer**, that handles drawing the GUI and taking user input. This is the view part of the MVC.
 * **Application layer**, that handles controlling and modifying the model, and coordinating the model and infrastructure layer. This is the controller part of the MVC.
 * **Model layer**, the core object model of the application, representing games of caps, users and handling statistics calculations.
 * **Infrastructure layer**, handles low level technical details, such as communicating with the database and managing the task queue that the database uses for intermediate storage. This layer also holds the event bus.
 
-![Figure X. The relationships between layers](./images/top_layer_modules.png)
+![Figure 1. The relationships between layers](./images/top_layer_modules.png)
 
-*Figure X. The relationship between layers. Note that the top layer, called only "capstat", contains only one class, Main, with the single main method that starts the program, and nothing else It is therefore not mentioned int the list of layers.**
+*Figure 1. The relationship between layers. Note that the top layer, called only "capstat", contains only one class, Main, with the single main method that starts the program, and nothing else It is therefore not mentioned int the list of layers.**
 
 #####2.2.2 Decomposition into subsystems
-The model layer and the infrastructure layer consists of submodules. The hierarchical philosophy applies here as well: a lower ordered package may not be aware of a higher ordered one. See figure X and X for a diagram of relationships between packages.
+The model layer and the infrastructure layer consists of submodules. The hierarchical philosophy applies here as well: a lower ordered package may not be aware of a higher ordered one. See figures 2 and 3 for a diagram of relationships between packages.
 
 The model layer consists of the following subsystems:
 * **Statistics package** contains a class for representing a match that has been played and saved, a repository for storing and saving matches, and means of creating plottable statistics for played games.
 * **Match package**, the module that contains the match factory, matches and the throw sequences. This submodule represents the "live" match, that can be played and listened to by observers.
 * **User package** contains elements of the User aggregate, means to create it, a class for keeping track of and setting which user is currently logged in, and a repository for storing and retrieving users.
 
-![Figure X, the model package](./images/model_package.png)
+![Figure 2, the model package](./images/model_package.png)
 
-*Figure X. The relationship between submodules in the model layer.*
+*Figure 2. The relationship between submodules in the model layer.*
 
 The infrastructure layer consists of the following subsystems:
 * **Database package**, manages connection to the database, both modifying and querying. This package contains value objects, called "blueprints", representing what can be stored to or fetched from the database.
 * **Taskqueue package**, handles local intermittent storage while objects are added to the database, to prevent dataloss.
 * **Eventbus package**, contains the event bus and the interfaces that listeners need to implement to register with it.
 
-![Figure X. the infrastructure layer](./images/infrastructure_package.png)
+![Figure 3. the infrastructure layer](./images/infrastructure_package.png)
 
-*Figure X. The relationships between subsystems in the infrastructure layer.*
+*Figure 3. The relationships between subsystems in the infrastructure layer.*
 
 #####2.2.3 Layering
-The layering follows the pattern of the modules described under 2.2.1. Figure X describes this layering. Higher ordered layers are higher in the figure.
+The layering follows the pattern of the modules described under 2.2.1. Figure 1 describes this layering. Higher ordered layers are higher in the figure.
 
 #####2.2.4 Dependency analysis
-There are no circular dependencies in CapStat. For a dependency analysis, see figure X.
+There are no circular dependencies between modules, except for between the Match and ThrowSequences classes, which are very tightly coupled. For a dependency analysis, see figures 1, 2 and 3. For a more detailed analysis, see the images in the UML directory.
 
 ####2.3 Concurrency issues
 The program is run by a single thread, with one exception: before sending post requests to the database, the requests are stored in full locally, and a separate thread is started to send these to the database. This is to ensure no data is lost if the connection to the database is lost, e.g. if it is on a remote server and there is not internet access.
@@ -102,15 +101,15 @@ The program is run by a single thread, with one exception: before sending post r
 This means that if a client asks the database subsystem to save a user or as result, and immediately tries to retrieve it, it might not yet have been saved to the database and might not be retrieved. During normal use this is not an issue, since there is no reason to fetch immediately after storing, but it means that some unit tests, which do just that, may have to wait for the process to finish.
 
 ####2.4 Persistent data management
-All persistent data will be stored in a MySQL database hosted locally. (However, the use of a facade and a separate class for database connection the database package means this may be migrated fairly easily. For an example of migration to a server to slow for production purposes, checkout the "remote-database" branch and run the application from there). The database consists of four tables. For a diagram over the database, see figure X. The four tables are:
+All persistent data will be stored in a MySQL database hosted locally. (However, the use of a facade and a separate class for database connection the database package means this may be migrated fairly easily. For an example of migration to a server to slow for production purposes, checkout the "remote-database" branch and run the application from there). The database consists of four tables. For a diagram over the database, see figure 4. The four tables are:
 * **Users** which holds a user's nickname, full name, a hashed version of the user's password, their birthday, their admittance year, the reading period of their admittance, and their current ELO ranking.
 * **Matches** which holds match results, stored with a unique id, the nickname of both players, the nickname of the user who registered the game, the final scores of both players, the start time of the match and the end time (as seconds elapsed since 00:00 AM, January 1, 1970).
 * **ThrowSequences** which holds all registered throw sequences, divided into partial sequences. Every sequence has a match id and an index of it's order in all the sequences of the match, since one match may have several. A sequence also stores the state of the glasses when it begun, which player's turn it was, whether the last throw was a hit or miss (which is needed to see if the game was in a duel or not) and the sequence of hits and misses that the partial sequence represents.
 * **Attends** is a relation between the Users table and Matches table, which is used to indicate which player attended a certain match.
 
-![Figure X. Diagram over the database](./images/database.png)
+![Figure 4. Diagram over the database](./images/database.png)
 
-*Figure X. Diagram over the database*
+*Figure 4. Diagram over the database*
 
 ####2.5 Access control and security
 The database for persistent storage is hosted locally, and requires that the user is on localhost to connect to. In addition to this, it has a password. However, this password is shown in plain text in the source code, and thus not very secret. Even a closed-source distribution would not be secure, since it would be easy to decompile the code and get access to both the username and password needed to access the database. Therefore, the application in its current form could not point to a shared, remotely hosted database in a way that would be safe. To address this problem and ensure that CapStat could use a shared database for all users running the program in the future, all connections to the database are made through a Facade (Gamma, Helm, Johnson and Vlissides, 1995, p. 185-194). If the persistent storage would be migrated to a more secure implementation, e.g. a web API, only this class would need to change. Therefore, CapStat has been written in preparation for a future migration to a public, safe persistent storage.
@@ -118,9 +117,11 @@ The database for persistent storage is hosted locally, and requires that the use
 ####2.6 Boundary conditions
 For CapStat to compile and run, a local MySQL database must first be created. This is done using the steps described in the README file. Most of the setup process is handled by a .sql-file, but the initial setup requires the user to execute a set of commands as root user for the database.
 
-3 References
+###3 References
 1. Layered Architecture: Evans, E. (2004). Domain-Driven Design: Tackling Complexity in the Heart of Software. Prentice Hall.
 2. Design patterns: Gamma, E., Helm, R., Johnson, R. och Vlissides, J. (1995). Design Patterns: Elements of Reusable Object-Oriented Software. Addison-Wesley.
+3. [UML diagrams over packages](./UML).
+4. [Rules of caps](./Documents/rulesofCaps.md)
 
 ###APPENDIX
 
@@ -181,5 +182,6 @@ For CapStat to compile and run, a local MySQL database must first be created. Th
   * *RegisterController* helps with registering new users.
   * *MathController* helps playing matches and performing appropriate tasks afterwards, like saving matches and updating rankings.
 * **View layer**
-  * *MainView* is the main window, and the JavaFX Apllication. It listens to the event bus to set its scenes.
-  * 
+  * *TopWindow* is the main window, and the JavaFX Application. It listens to the event bus to set its scenes.
+  * *MainViewController* represents the main panel in the application, where the user goes either to the statistics view or to the view for recording a match.
+  * *StatisticsController, LoginViewController, RegisterViewController* and *MatchViewController* controls their respective views.
