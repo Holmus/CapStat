@@ -195,75 +195,57 @@
 Click plot at least three times on each setting to 
 ensure that it can re-plot the same value.
 
-* Guest User
-	* X-Axis: **Accuracy**
-		* Y-Axis: **Accuracy**
-		* Y-Axis: **Number of games**
-		* Y-Axis: **Time**
-	* X-Axis: **Number of games**.
-		* Y-Axis: **Accuracy**
-        * Y-Axis: **Number of games**
-        * Y-Axis: **Time**
-	* X-Axis: **Time**.
-		* Y-Axis: **Accuracy**
-        * Y-Axis: **Number of games**
-        * Y-Axis: **Time**
+* Guest User (OUTCOME: FAIL, "No such user")
+<br>
+<br>
 
 * User with no records.
-	* X-Axis: **Accuracy**
+	* X-Axis: **Time**
 		* Y-Axis: **Accuracy**
+		* Y-Axis: **Longest dual**
 		* Y-Axis: **Number of games**
-		* Y-Axis: **Time**
-	* X-Axis: **Number of games**.
+		* Y-Axis: **Total number of throws**
+	* X-Axis: **Match duration**.
 		* Y-Axis: **Accuracy**
-        * Y-Axis: **Number of games**
-        * Y-Axis: **Time**
-	* X-Axis: **Time**.
-		* Y-Axis: **Accuracy**
-        * Y-Axis: **Number of games**
-        * Y-Axis: **Time**
+		* Y-Axis: **Longest dual**
+		* Y-Axis: **Number of games**
+		* Y-Axis: **Total number of throws**
 
 * User with one record only.
-	* X-Axis: **Accuracy**
+	* X-Axis: **Time**
 		* Y-Axis: **Accuracy**
+		* Y-Axis: **Longest dual**
 		* Y-Axis: **Number of games**
-		* Y-Axis: **Time**
-	* X-Axis: **Number of games**.
+		* Y-Axis: **Total number of throws**
+	* X-Axis: **Match duration**.
 		* Y-Axis: **Accuracy**
-        * Y-Axis: **Number of games**
-        * Y-Axis: **Time**
-	* X-Axis: **Time**.
-		* Y-Axis: **Accuracy**
-        * Y-Axis: **Number of games**
-        * Y-Axis: **Time**
+		* Y-Axis: **Longest dual**
+		* Y-Axis: **Number of games**
+		* Y-Axis: **Total number of throws**
 
 * User with two records only.
-	* X-Axis: **Accuracy**
+	* X-Axis: **Time**
 		* Y-Axis: **Accuracy**
+		* Y-Axis: **Longest dual**
 		* Y-Axis: **Number of games**
-		* Y-Axis: **Time**
-	* X-Axis: **Number of games**.
+		* Y-Axis: **Total number of throws**
+	* X-Axis: **Match duration**.
 		* Y-Axis: **Accuracy**
-        * Y-Axis: **Number of games**
-        * Y-Axis: **Time**
-	* X-Axis: **Time**.
-		* Y-Axis: **Accuracy**
-        * Y-Axis: **Number of games**
-        * Y-Axis: **Time**
+		* Y-Axis: **Longest dual**
+		* Y-Axis: **Number of games**
+		* Y-Axis: **Total number of throws**
 
 * User with more than two records.
-	* X-Axis: **Accuracy**
+	* X-Axis: **Time**
 		* Y-Axis: **Accuracy**
+		* Y-Axis: **Longest dual**
 		* Y-Axis: **Number of games**
-		* Y-Axis: **Time**
-	* X-Axis: **Number of games**.
+		* Y-Axis: **Total number of throws**
+	* X-Axis: **Match duration**.
 		* Y-Axis: **Accuracy**
-        * Y-Axis: **Number of games**
-        * Y-Axis: **Time**
-	* X-Axis: **Time**.
-		* Y-Axis: **Accuracy**
-        * Y-Axis: **Number of games**
-        * Y-Axis: **Time**
+		* Y-Axis: **Longest dual**
+		* Y-Axis: **Number of games**
+		* Y-Axis: **Total number of throws**
 
 // TODO what SHOULD happen in these respective cases?
 // TODO specify what user to use for the different cases to minimize human thinking while testing.
