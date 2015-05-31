@@ -42,6 +42,10 @@ public class UserLedger {
         return instance;
     }
 
+    public static User getGuestUser() {
+        return UserFactory.createGuestUser();
+    }
+
     //Retrieval
 
     /**
