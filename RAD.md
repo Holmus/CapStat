@@ -16,7 +16,7 @@ CapStat is a statistics, tracking and ranking tool for the drinking game "caps".
 CapStat is a standalone desktop application. It tracks player achievements, statistics and results. It does this through user input of each throw made in a match – hit or miss. The end result is a database of player rankings and performance, which can be viewed within the application.
 
 ### 1.3 Scope of application
-CapStat saves data to a local database on the machine on which CapStat is run, meaning that only a single match can be recorded simultaneously, and the recorded results will not be automatically shared between machines. The application requires manual input of data. The application does not provide support for automatically recognizing and recording hits or misses.
+CapStat saves data to a local database on the machine on which CapStat is run, meaning that only a single match can be recorded simultaneously, and the recorded results will not be automatically shared between different machines running CapStat. The application requires manual input of data. The application does not provide support for automatically recognizing and recording hits or misses.
 
 ### 1.4 Objectives and success criteria of the project
 CapStat is intended to be used for quick and correct input of game results, and focuses on speed and effectiveness of data input. Therefore the following criteria are relevant:
@@ -51,23 +51,21 @@ The user should be able to:
 1.  Register as user.
 2.  Start a match.
     a.  Choose participating players.
-    b.  Choose match format (number of glasses and number of rounds). If no format is chosen, a default format is used (7 glasses, best-of-3 rounds).
+    b.  Choose whether to play a ranked or an unranked match.
 3.  Records the hits and misses throughout the game.
 4.  Save the results of the game.
 
 The user should also be able to:
 
-1.  Select a set of results based on some conditions (participating players, time period, etc).
-2.  Plot different aspects of the results, such as accuracy, win-loss-ratio, ranking over time or other relevant aspects. The user should also be able to pick and pot values as they like and plot these against each other.
+1.  Select a user to get all match results for.
+2.  Plot different aspects of the results, such as accuracy, longest duel, throws performed, against each other, or against date of match.
 
 ### 2.2 Non-functional requirements
 
 #### 2.2.1 Usability
-The user should be able to both quickly input data through the keyboard and undo input. Immediately it should be obvious how to start a game, and how to register hits and misses. The user should also be able to update the state of the game manually if, for some reason, the state of the actual game does not match that displayed in CapStat. The state of the game in the program should thus have a very clear and unambiguous mapping to the real game, and it should be readable at a glance.
+The user should be able to both quickly input data through the keyboard. Immediately it should be obvious how to start a game, and how to register hits and misses. The state of the game in the program should have a very clear and unambiguous mapping to the real game, and it should be readable at a glance.
 
-The user should be able to both:
-1.  quickly get an nice and structured overview of the most popular and important statistics, such as leaderboards, their arch enemy, their victim, their ranking, their accuracy over time, their number of played games over time, etc.
-2.  personally decide what statistics to display, and how to display it, without interference from the program – even if this means making plots and comparisons that don’t make sense. The user is put in charge.
+The user should be able to personally decide what statistics to display, and how to display it, without interference from the program – even if this means making plots and comparisons that don’t make sense. The user is put in charge.
 
 #### 2.2.2 Reliability
 The software should never crash or freeze during the recording of a game. Some instability is permissible in the statistics view, but on the game recording side, this is not acceptable.
