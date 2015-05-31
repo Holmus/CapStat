@@ -18,18 +18,19 @@ A person that is not currently registered in the system
 ### Normal flow of events
 Registration proceeds without complications
 
-| # | Actor                                                                      | System                                                                   |
-|---|----------------------------------------------------------------------------|--------------------------------------------------------------------------|
-| 1 | Clicks Register button from main view                                      | Displays the Register view and focuses the nickname textbox              |
-| 2 | Enters information (nickname, password, date of birth, year of admittance) | Displays positive indicate next to each input field to indicate OK input |
-| 3 |                                                                            | Enables Register button                                                  |
-| 4 | Clicks Register button in Register view                                    | Shows confirmation screen with button back to main view                  |
-| 5 | Clicks button in confirmation screen                                       | Displays the main view with the user now logged in                       |
+| # | Actor                                                                      | System                                                  |
+|---|----------------------------------------------------------------------------|---------------------------------------------------------|
+| 1 | Clicks Register button from main view                                      |                                                         |
+| 2 |                                                                            | Displays the Register view and focuses the name textbox |
+| 3 | Enters information (nickname, password, date of birth, year of admittance) |                                                         |
+| 6 | Clicks Register button in Register view                                    |                                                         |
+| 7 |                                                                            | Shows main view confirmation that registering wen well  |
 
 ### Alternative flow of events
-#### Flow 2.1
-User enters information that is not valid for registering, e.g. illegal characters in nickname och nickname already taken
+#### Flow 3.1
+User enters information that is not valid for registering (illegal characters in nickname and/or nickname already taken)
 
-| #     | Actor                      | System                                                           |
-|-------|----------------------------|------------------------------------------------------------------|
-| 2.1.1 | Enters illegal information | Displays a red checkmark next to the input field that is invalid |
+| #     | Actor                      | System                                                         |
+|-------|----------------------------|----------------------------------------------------------------|
+| 3.1.1 | Enters illegal information |                                                                |
+| 3.1.2 |                            | Displays a red text next to nickname input field stating error |
