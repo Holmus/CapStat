@@ -115,7 +115,7 @@ The persistent objects are
 *   UserLedger
 
 #### 2.3.4 User interface
-CapStat will use a fixed (non skinnable, non themable) GUI. The GUI will be scalable in size, down to 800 x 400 pixels. The GUI will consist of two main panels, one for game recording, and one for statistics viewing. The panel for game recording will have large objects and clear colors to ensure sure that the game state can be understood at a glance, and will allow very little user modification. The panel for statistics viewing will consist of several customizable tabs for the user to create their own diagrams.
+CapStat will use a fixed (non skinnable, non themable) GUI. The GUI will have a fixed size. The GUI will consist of two main panels, one for game recording, and one for statistics viewing. The panel for game recording will have large objects and clear colors to ensure sure that the game state can be understood at a glance, and will allow very little user modification. The panel for statistics viewing will be fairly simple, providing a text field for entering a user name, and a line graph to plot different statistics.
 
 ### 2.4 References
 See Rules of Caps.
