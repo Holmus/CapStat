@@ -119,3 +119,385 @@ CapStat will use a fixed (non skinnable, non themable) GUI. The GUI will have a 
 
 ### 2.4 References
 See Rules of Caps.
+
+Appendix
+========
+
+## Use cases
+Overview:
+
+asdl;kfjkla;sdfjkl;asjdf picture here
+
+## Use case texts
+
+### UC Exit
+
+
+### Summary
+This UC describes how to exit the application.
+
+### Priority
+Low
+
+### Extends
+-
+
+### Includes
+-
+
+### Participants
+User
+
+### Normal flow of events
+This is a very straight-forward UC; almost nothing extra-ordinary happens.
+
+| # | Actor               | System                                           |
+|---|---------------------|--------------------------------------------------|
+| 1 | Presses exit button |                                                  |
+| 2 |                     | Aborts any ongoing activity, immediately closing |
+
+### UC Login
+
+### Summary
+This UC describes the behaviour of the application when the user tries to log in to the system. Alternative entry point of the application.
+
+### Priority
+Medium
+
+### Extends
+-
+
+### Includes
+-
+
+### Participants
+Not logged-in user
+
+### Normal flow of events
+The login view is the main view that is shown when starting the application.
+
+| # | Actor                        | System                                                                   |
+|---|------------------------------|--------------------------------------------------------------------------|
+| 1 | Enters nickname and password |                                                                          |
+| 2 | Presses login button         |                                                                          |
+| 3 |                              | Validates nickname with password, moves to main view for logged-in users |
+
+### Exceptional flow of events
+#### Flow 3.1: login credentials invalid
+A user with the given nickname doesn't exist, or the password is wrong.
+
+| #   | Actor | System                                    |
+|-----|-------|-------------------------------------------|
+| 3.1 |       | Displays error text next to failing field |
+
+### UC Logout
+
+### Summary
+This UC describes the behaviour of the application whenever the user tries to logout.
+
+### Priority
+Low
+
+### Extends
+-
+
+### Includes
+-
+
+### Participants
+Logged-in user
+
+### Normal flow of events
+Fairly straight-forward. The logout button is not available while recording a match.
+
+| # | Actor                                       | System                                              |
+|---|---------------------------------------------|-----------------------------------------------------|
+| 1 | Presses logout button in upper right corner |                                                     |
+| 2 |                                             | Exits current activity, moves to user to login view |
+
+### UC PlotAccuracy
+
+### Summary
+This UC describes the behaviour of the application when the user wants to display a plot for a users accuracy over time.
+
+### Priority
+Medium
+
+### Extends
+-
+
+### Includes
+-
+
+### Participants
+User
+
+### Normal flow of events
+This is done from the statistics view.
+
+| # | Actor                                          | System                                                   |
+|---|------------------------------------------------|----------------------------------------------------------|
+| 1 | Enters nickname of user to show statistics for |                                                          |
+| 2 | Chooses accuracy and time, respectively        |                                                          |
+| 3 | Presses Plot button                            |                                                          |
+| 4 |                                                | Gathers data for given user                              |
+| 5 |                                                | Displays accuracies over time as a line graph            |
+
+### UC PlotThrows
+
+### Summary
+This UC describes the behaviour of the application when the user wants to display a plot for a users total number of throws in matches over time.
+
+### Priority
+Medium
+
+### Extends
+-
+
+### Includes
+-
+
+### Participants
+User
+
+### Normal flow of events
+This is done from the statistics view.
+
+| # | Actor                                          | System                                                               |
+|---|------------------------------------------------|----------------------------------------------------------------------|
+| 1 | Enters nickname of user to show statistics for |                                                                      |
+| 2 | Chooses accuracy and time, respectively        |                                                                      |
+| 3 | Presses Plot button                            |                                                                      |
+| 4 |                                                | Gathers data for given user                                          |
+| 5 |                                                | Displays total number of throws over time as a line graph            |
+
+### UC RecordHit
+
+### Summary
+This UC describes the behaviour of the application while recording a match, and the user registers a hit.
+
+### Priority
+High
+
+### Extends
+RecordThrow
+
+### Includes
+-
+
+### Participants
+Spectator
+
+### Normal flow of events
+Very straight-forward.
+
+| # | Actor                                                  | System                                                                                 |
+|---|--------------------------------------------------------|----------------------------------------------------------------------------------------|
+| 1 | Presses either Space (keybind) or on-screen Hit button |                                                                                        |
+| 2 |                                                        | Switches turn to other player, registers hit (either continuing duel or starting duel) |
+
+### UC RecordMatch
+
+### Summary
+This UC describes the very abstract, high-level description of what happens when a User wants to record the results of a game.
+
+### Priority
+High
+
+### Extends
+-
+
+### Includes
+* StartMatch
+* RecordThrow
+* SaveResults
+
+### Participants
+A logged in User that wants to record a match
+
+### Normal flow of events
+| # | Actor                                    | System                                                       |
+|---|------------------------------------------|--------------------------------------------------------------|
+| 1 | Starts the recording of a match          |                                                              |
+| 2 |                                          | Displays the recording view                                  |
+| 3 | Records outcomes of throws               |                                                              |
+| 4 |                                          | Displays state of game based on results until match finishes |
+| 5 | Confirms results and presses Save button |                                                              |
+| 6 |                                          | Stores results in database                                   |
+
+### UC RecordMiss
+
+### Summary
+This UC describes the behaviour of the application while recording a match, and the user registers a miss.
+
+### Priority
+High
+
+### Extends
+RecordThrow
+
+### Includes
+-
+
+### Participants
+Spectator
+
+### Normal flow of events
+Very straight-forward.
+
+| # | Actor                                               | System                                                |
+|---|-----------------------------------------------------|-------------------------------------------------------|
+| 1 | Presses either G (keybind) or on-screen Miss button |                                                       |
+| 2 |                                                     | Switches turn to other player (if no duel is ongoing) |
+
+### Alternative flow of events
+#### Flow 2.1: duel is ongoing
+If a duel is ongoing, the miss ends the duel, and the player who lost the duel has the next turn.
+
+| #   | Actor                                               | System                                                                                            |
+|-----|-----------------------------------------------------|---------------------------------------------------------------------------------------------------|
+| 2.1 |                                                     | Ends duel, removing a glass from the losing player (or other action, depending on state of match) |
+| 2.2 |                                                     | Leaves the turn to the losing player (i.e. not switching)                                         |
+
+### UC RecordThrow
+
+### Summary
+A throw is an attempt by one player to hit the glass of the opposing player. The outcome is either a hit or a miss.
+
+A match is made up of a series of rounds, which is made up of plays, which are in turn made up of throws. This makes throws the most atomic part of a game of caps.
+
+### Priority
+High
+
+### Extends
+-
+
+### Includes
+-
+
+### Participants
+Spectator
+
+
+### Normal flow of events
+
+| # | Actor                 | System                             |
+|---|-----------------------|------------------------------------|
+| 1 | Registers hit or miss |                                    |
+| 2 |                       | Records hit or miss                |
+| 3 |                       | Updates GUI to indicate game state |
+| 4 |                       | Passes turn over to next player    |
+
+### UC Register
+
+### Summary
+This UC describes the process of registering a new User in the system, allowing them to act as both Spectators and Players.
+
+### Priority
+High
+
+### Extends
+-
+
+### Includes
+-
+
+### Participants
+A person that is not currently registered in the system
+
+### Normal flow of events
+Registration proceeds without complications
+
+| # | Actor                                                                      | System                                                  |
+|---|----------------------------------------------------------------------------|---------------------------------------------------------|
+| 1 | Clicks Register button from main view                                      |                                                         |
+| 2 |                                                                            | Displays the Register view and focuses the name textbox |
+| 3 | Enters information (nickname, password, date of birth, year of admittance) |                                                         |
+| 6 | Clicks Register button in Register view                                    |                                                         |
+| 7 |                                                                            | Shows main view confirmation that registering wen well  |
+
+### Alternative flow of events
+#### Flow 3.1
+User enters information that is not valid for registering (illegal characters in nickname and/or nickname already taken)
+
+| #     | Actor                      | System                                                         |
+|-------|----------------------------|----------------------------------------------------------------|
+| 3.1.1 | Enters illegal information |                                                                |
+| 3.1.2 |                            | Displays a red text next to nickname input field stating error |
+
+### UC SaveResults
+
+### Summary
+This UC describes the behaviour of the application when a match is finished and the results are to be submitted to persistant storage.
+
+### Priority
+High
+
+### Extends
+-
+
+### Includes
+-
+
+### Participants
+Specatator
+
+### Normal flow of events
+Very straight-forward. This happens when the match is over, and the match winner is displayed on-screen.
+
+| # | Actor                      | System                                                                  |
+|---|----------------------------|-------------------------------------------------------------------------|
+| 1 | Presses Save Result-button |                                                                         |
+| 2 |                            | Switches to main logged-in view, with message that the result was saved |
+
+### UC ShowStatistics
+
+### Summary
+This UC describes the overarching behaviour of the application when the user wants to display statistics.
+
+### Priority
+Medium
+
+### Extends
+-
+
+### Includes
+-
+
+### Participants
+User (does not have to be logged in)
+
+### Normal flow of events
+Very general: this particular UC only describes how the statistics view is shown; the getting of actual statistics are located in their own UCs.
+
+| # | Actor                                              | System                                                                           |
+|---|----------------------------------------------------|----------------------------------------------------------------------------------|
+| 1 | Presses Statistics button on main (logged-in) view |                                                                                  |
+| 2 |                                                    | Displays a view with a text field for nickname, drop-down boxes and a line chart |
+
+### UC StartMatch
+
+### Summary
+This UC describes the behaviour of the application when a User wants to record results for a new Match. This UC is probably not preceded by any other UC, as this UC more or less is the entry point in the application.
+
+The application focuses on letting the user quickly start recording results, and therefore uses default settings unless the user changes them.
+
+### Priority
+High
+
+### Extends
+-
+
+### Includes
+-
+
+### Participants
+A User that is logged in to the system
+
+### Normal flow of events
+| # | Actor                        | System                                          |
+|---|------------------------------|-------------------------------------------------|
+| 1 | Clicks the Play Match button |                                                 |
+| 2 |                              | Switches view to the results recording view     |
+| 3 |                              | Loads the default settings for a game of caps   |
+| 4 |                              | Focuses the input area, enabling keyboard input |
