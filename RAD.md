@@ -13,7 +13,7 @@ This version overrides all previous versions.
 CapStat is a statistics, tracking and ranking tool for the drinking game “caps”. It is intended to be used over a larger period of time in order to build up a good statistic significance, and to possibly uncover previously unknown patterns and correlations in a caps players performance. For definitions, terms, and rules of the application, see references.
 
 ### 1.2 General characteristics of application
-CapStat is a standalone desktop application. It tracks player achievements, statistics and results. It does this through user input of either the final game result, or result of every play made – hit or miss. The end result is a database of player rankings and performance, which can be viewed within the application.
+CapStat is a standalone desktop application. It tracks player achievements, statistics and results. It does this through user input of each throw made in a match – hit or miss. The end result is a database of player rankings and performance, which can be viewed within the application.
 
 ### 1.3 Scope of application
 CapStat saves data to a local database on the machine on which CapStat is run, meaning that only a single match can be recorded simultaneously, and the recorded results will not be automatically shared between machines. The application requires manual input of data. The application does not provide support for automatically recognizing and recording hits or misses.
