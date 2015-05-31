@@ -1,4 +1,4 @@
-# UC Throw
+# UC RecordThrow
 
 ### Summary
 A throw is an attempt by one player to hit the glass of the opposing player. The outcome is either a hit or a miss.
