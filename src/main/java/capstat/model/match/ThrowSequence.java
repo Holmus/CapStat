@@ -53,7 +53,7 @@ public class ThrowSequence {
     public ThrowSequence(ThrowSequence ts) {
         //Get a deep getCopy of the sequences list
         this.sequences = new LinkedList<>(ts.getSequences());
-        this.currentSequence = ts.currentSequence.getCopy();
+        this.currentSequence = this.sequences.pop();
         this.undoStack = (Stack<Match.Throw>)ts.undoStack.clone();
     }
 
@@ -139,6 +139,10 @@ public class ThrowSequence {
         return clone;
     }
 
+    public void changeStartingPlayerForCurrentSequence(final Match.Player player) {
+        this.currentSequence.startingPlayer = player;
+    }
+
     /**
      * Objects of this class are immutable, except for by instances of
      * ThrowSequence.
@@ -151,17 +155,26 @@ public class ThrowSequence {
 
         private PartialSequence(Match.Glass[] glasses, Match.Player
                 startingPlayer, boolean throwBeforeWasHit) {
-            this.glasses = glasses;
+            this.glasses = cloneGlasses(glasses);
             this.startingPlayer = startingPlayer;
             this.throwBeforeWasHit = throwBeforeWasHit;
             this.sequence = new LinkedList<>();
         }
 
         private PartialSequence(final PartialSequence partialSequence) {
-            this.glasses = partialSequence.glasses.clone();
+            this.glasses = cloneGlasses(partialSequence.glasses);
             this.startingPlayer = partialSequence.startingPlayer;
             this.throwBeforeWasHit = partialSequence.throwBeforeWasHit;
             this.sequence = new LinkedList<>(partialSequence.sequence);
+        }
+
+        private Match.Glass[] cloneGlasses(Match.Glass[] array) {
+            Match.Glass[] ret = new Match.Glass[array.length];
+            for (int i = 0; i < array.length; i++) {
+                ret[i] = new Match.Glass();
+                ret[i].setActive(array[i].isActive());
+            }
+            return ret;
         }
 
         private void add(Match.Throw newThrow) {
