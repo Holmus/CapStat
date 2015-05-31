@@ -126,7 +126,19 @@ For CapStat to compile and run, a local MySQL database must first be created. Th
 #####The model layer and its submodules
 ![Model package](./images/model_classes.png)
 
-* TODO: ADD DESCRIPTIONS OF ALL CLASSES. EXPLAIN DESIGN PATTERNS.
+* **User package**
+  * *User* is the root of an aggregate representing a user in the system. The user has a number of value objects, such as name and password, which are represented as strings. The User aggregate also has three value objects created specially for this project:
+    * *ELORanking* holds a double value, and methods for calculating new rankings depending on the outcomes of a match.
+    * *ChalmersAge* is an age measurement specific to caps. A players age is determined primarily by how long they have been studying at Chalmers, and secondarily by how old they actually are.
+    * *Admittance* is the object holding a user's time of admittance to Chalmers.  
+  * *UserFactory* can create new user, the Guest user, and a few dummy users used for testing.
+  * *Security* is a service for hashing passwords.
+  * *UserLedger* is a repository for users, helping with persistent storage and retrievals of user. It holds references to all users that have been used during a session for quick access, and can also fetch users from the database.
+  * *LoggedInUser* holds a reference to the currently logged in user, and means for changing what user is logged in.
+
+* *Match package*
+
+
 
 #####The infrastructure layer and its submodules
 ![Infrastructure layer](./images/infrastructure_classes.png)
