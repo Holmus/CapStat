@@ -420,7 +420,16 @@ public class Match {
      * Increments the score of whichever player is the round winner
      */
     private void updateRoundWinner() {
-        roundWinner = this.getPlayer1Score() > this.getPlayer2Score() ? Player.ONE: Player.TWO;
+        int p1score = this.getPlayer1Score();
+        int p2score = this.getPlayer2Score();
+        if (p1score == p2score) {
+            this.roundWinner = playerWhoseTurnItIs == Player.ONE ? Player.TWO
+                    : Player.ONE;
+        } else if (p1score > p2score) {
+            this.roundWinner = Player.ONE;
+        } else {
+            this.roundWinner = Player.TWO;
+        }
         if (roundWinner == Player.ONE) p1RoundsWon++;
         if (roundWinner == Player.TWO) p2RoundsWon++;
     }
