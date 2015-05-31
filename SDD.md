@@ -66,6 +66,8 @@ The references section contains definitions and rules for the caps game, which t
 ###2 System design
 
 ####2.1 Overview
+The project uses the workflow known as Git Flow. In Git Flow, the latest working copy is always the last commit to the master branch. Continuous development is made on the develop branch. Developers check out feature branches from develop on which they work until a feature is done, and then merge back in to develop, using the --no-ff merge option to preserve information about where there have been feature branches. When a new release is about to be made, a release branch is checked out from develop. From this point on, any new work on develop will not be merged in to that release branch, but will have to wait until next release. The release branch is for additional documentation, tests and bugfixes. When a release is done, the branch is merged into master. Fast bugfixes may be made on hotfix branches, which can be made from anywhere.
+
 The application will use layered architecture, which is a modified version of MVC.
 
 The presentation layer will hold the GUI components, which are implemented with the JavaFX framework. The application layer will mainly modify and control the domain layer, the domain layer will model the core domain, and the more technical aspects which the domain layer needs will be handled by the infrastructure layer, which will also take care of event handling through an event bus.
@@ -134,7 +136,7 @@ The program is run by a single thread, with one exception: before sending post r
 This means that if a client asks the database subsystem to save a user or as result, and immediately tries to retrieve it, it might not yet have been saved to the database and might not be retrieved. During normal use this is not an issue, since there is no reason to fetch immediately after storing, but it means that some unit tests, which do just that, may have to wait for the process to finish.
 
 ####2.4 Persistent data management
-All persistent data will be stored in a MySQL database hosted locally. (However, the use of a facade and a separate class for database connection the database package means this may be migrated fairly easily. For an example of migration to a server to slow for production purposes, checkout the "remote-database" branch and run the application from there). The database consists of four tables. For a diagram over the database, see figure 4. The four tables are:
+All persistent data will be stored in a MySQL database hosted locally. (However, the use of a facade and a separate class for database connection the database package means this may be migrated fairly easily). The database consists of four tables. For a diagram over the database, see figure 4. The four tables are:
 * **Users** which holds a user's nickname, full name, a hashed version of the user's password, their birthday, their admittance year, the reading period of their admittance, and their current ELO ranking.
 * **Matches** which holds match results, stored with a unique id, the nickname of both players, the nickname of the user who registered the game, the final scores of both players, the start time of the match and the end time (as seconds elapsed since 00:00 AM, January 1, 1970).
 * **ThrowSequences** which holds all registered throw sequences, divided into partial sequences. Every sequence has a match id and an index of it's order in all the sequences of the match, since one match may have several. A sequence also stores the state of the glasses when it begun, which player's turn it was, whether the last throw was a hit or miss (which is needed to see if the game was in a duel or not) and the sequence of hits and misses that the partial sequence represents.
@@ -151,6 +153,7 @@ The database for persistent storage is hosted locally, and requires that the use
 For CapStat to compile and run, a local MySQL database must first be created. This is done using the steps described in the README file. Most of the setup process is handled by a .sql-file, but the initial setup requires the user to execute a set of commands as root user for the database.
 
 ###3 References
+1. [Git Flow](  http://nvie.com/posts/a-successful-git-branching-model/)
 1. Layered Architecture: Evans, E. (2004). Domain-Driven Design: Tackling Complexity in the Heart of Software. Prentice Hall.
 2. Design patterns: Gamma, E., Helm, R., Johnson, R. och Vlissides, J. (1995). Design Patterns: Elements of Reusable Object-Oriented Software. Addison-Wesley.
 3. [UML diagrams over packages](./UML).
