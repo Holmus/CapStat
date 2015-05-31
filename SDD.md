@@ -9,6 +9,8 @@ System design document for CapStat (SDD)
 
 >Author: Johan Andersson, Rikard Hjort, Jakob Holmgren, Christian Persson
 
+
+
 This version overrides all previous versions.
 
 ###1 Introduction
@@ -141,17 +143,43 @@ For CapStat to compile and run, a local MySQL database must first be created. Th
   * *Glass* represents a glass in the game, and is an inner class of Match.
   * *ThrowSequence* represents all the recorded throws in a match. It is made up of one or more PartialSequences.
     * *PartialSequence* is an inner class of  ThrowSequence and holds the state of a game at a certain moment, and every recorded throw that followed. It is the basis of calculating statistics for a game. Since it used often by the statistics package, it is the root of its own aggregate.
-  * *MatchFactory* can be used to create a new matches. It also sets the correct starting player, whn possible.
+  * *MatchFactory* can be used to create a new matches. It also sets the correct starting player, when possible.
 
 * **Statistics package**
-  * 
+  * *ResultsLedger* is a repository for storing finished matches, which can the be retrieved as MatchResults.
+  * *MatchResult* is a value object representing the outcome of a match.
+  * *PartialSequence* is a value object representing a partial sequence.
+  * *SingleMatchCalculator* is a service that takes a match result and can be queried on some different facts about the match such as the accuracy, longest duel length, etc.
+  * *Plottable* is an interface for getting objects that have a double value, which could be used for plotting, and a string value, which could be used as a label for the plot point.
+  * *Statistic* is an interface for using the Strategy pattern. The implementing classes calculate different statistics by taking an ordered list of matches and returning a list of plottables representing an aspect of the match, in the same order.
 
 #####The infrastructure layer and its submodules
 ![Infrastructure layer](./images/infrastructure_classes.png)
 
-* TODO: ADD DESCRIPTIONS OF ALL CLASSES
+* **Taskqueue package**
+  * ITaskQueue is an interface for storing tasks (represented by strings) persistently.
+  * *TextFileTaskQueue* implements ITaskQueue by saving the strings to a text file.
+
+* **Database package**
+  * **UserDatabaseHelper** and **ResultDatabaseHelper** are the public interface toward the database.
+  * **DatabaseHelperFactory** creates objects that implement the interfaces above.
+  * **DatabaseFacade** implements the interfaces, and handles saving and retrieving. This facade can be rewritten to use another database, a web API, or text files, to name a few modes of persistent storage. The rest of the application thue becomes very loosely coupled to the actual mode of persistent storage.
+  * **DatabaseConnection** uses the JDBC and JOOQ frameworks to talk to the MySQL database.
+  * *CapStat Database* is a local MySQL database.
+* **Eventbus package**
+  * *EventBus* handles events by letting clients register to events with strings as keys.
+  * *DataEventListener* is an interface which listeners implement to get events that send data.
+  * *NotifyEventListener* is an interface that listeners implement to get dataless events.
+
 
 #####The view and application layers
 ![View and application layers](./images/application_view_classes.png)
 
-* TODO: ADD DESCRIPTIONS OF ALL CLASSES
+* **Application layer**
+  * *StatisticsController* helps creating plottables from sets of matches.
+  * *LoginController* helps verify login in credentials and log users in.
+  * *RegisterController* helps with registering new users.
+  * *MathController* helps playing matches and performing appropriate tasks afterwards, like saving matches and updating rankings.
+* **View layer**
+  * *MainView* is the main window, and the JavaFX Apllication. It listens to the event bus to set its scenes.
+  * 
