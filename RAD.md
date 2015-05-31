@@ -102,7 +102,6 @@ See Appendix for UML and description of Use Cases.
     b.  StartMatch
 2.  SaveResults
 3.  RegisterUser
-4.  Park
 
 #### 2.3.3 Analysis model
 See Appendix.
