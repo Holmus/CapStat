@@ -72,6 +72,7 @@ The software should never crash or freeze during the recording of a game. Some i
 
 #### 2.2.3 Performance
 Since caps can be a very fast game, the recording of throws in a match should be very efficient, meaning that recording throws should result in little to no delays at all.
+
 Calculating statistics, however, can take a little more time, since the calculations sometimes can be fairly complex, especially if large data sets are used. All calculations should nevertheless take less than one minute to finish.
 
 #### 2.2.4 Supportability
@@ -82,7 +83,7 @@ It should later on be possible to divide the application into a client/server ar
 The application should include automated tests, for testing different scenarios that might appear in a match of caps, and for testing all use cases. A GUI test should also be manually performed and recorded.
 
 #### 2.2.5 Implementation
-The application will be developed in Java, meaning that all devices that run the application need to have JRE installed and configured. The application does not need to be installed on the device, but instead will be run independently. For networking support, an Internet connection is required.
+The application will be developed in Java, meaning that all devices that run the application need to have JRE installed and configured. The application does not need to be installed on the device, but instead will be run independently. Since networking is not supported, an Internet connection is not required.
 
 #### 2.2.6 Packaging and installation
 The application will be delivered as zip archive, containing a runnable Java file with the code for the application, as well as scripts for running the application on different platforms.
