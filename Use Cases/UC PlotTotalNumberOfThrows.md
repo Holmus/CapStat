@@ -23,5 +23,5 @@ This is done from the statistics view.
 | 1 | Enters nickname of user to show statistics for |                                                                      |
 | 2 | Chooses accuracy and time, respectively        |                                                                      |
 | 3 | Presses Plot button                            |                                                                      |
-| 4 |                                                | Gathers                                                              |
+| 4 |                                                | Gathers data for given user                                          |
 | 5 |                                                | Displays total number of throws over time as a line graph            |
