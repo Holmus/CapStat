@@ -53,7 +53,7 @@ public class ThrowSequence {
     public ThrowSequence(ThrowSequence ts) {
         //Get a deep getCopy of the sequences list
         this.sequences = new LinkedList<>(ts.getSequences());
-        this.currentSequence = this.sequences.pop();
+        this.currentSequence = this.sequences.pollLast().getCopy();
         this.undoStack = (Stack<Match.Throw>)ts.undoStack.clone();
     }
 
