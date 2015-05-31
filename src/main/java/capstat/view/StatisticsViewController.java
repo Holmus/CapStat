@@ -1,11 +1,11 @@
 package capstat.view;
 
 import capstat.application.LoginController;
-import capstat.model.user.LoggedInUser;
-import capstat.model.statistics.Statistic;
 import capstat.application.StatisticsController;
 import capstat.infrastructure.eventbus.EventBus;
 import capstat.model.statistics.Plottable;
+import capstat.model.statistics.Statistic;
+import capstat.model.user.LoggedInUser;
 import capstat.model.user.User;
 import capstat.model.user.UserLedger;
 import javafx.application.Platform;

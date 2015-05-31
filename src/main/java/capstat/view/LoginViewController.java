@@ -64,7 +64,7 @@ public class LoginViewController implements NotifyEventListener, Initializable{
         }
         if(!ul.doesUserExist(usernameField.getText())){
             usernameLabel.setVisible(true);
-            return;      
+            return;
         }
         if(lc.loginAsUser(usernameField.getText(), passField.getText())){
             eb.notify(MainView.SETSCENE_MAIN);

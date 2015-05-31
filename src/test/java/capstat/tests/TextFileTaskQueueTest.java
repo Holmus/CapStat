@@ -1,9 +1,7 @@
 package capstat.tests;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
+import capstat.infrastructure.taskqueue.ITaskQueue;
+import capstat.infrastructure.taskqueue.TextFileTaskQueue;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -13,8 +11,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.NoSuchElementException;
 
-import capstat.infrastructure.taskqueue.ITaskQueue;
-import capstat.infrastructure.taskqueue.TextFileTaskQueue;
+import static org.junit.Assert.*;
 
 public class TextFileTaskQueueTest {
 

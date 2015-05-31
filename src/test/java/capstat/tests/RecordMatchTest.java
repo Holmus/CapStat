@@ -2,10 +2,9 @@ package capstat.tests;
 
 import capstat.infrastructure.eventbus.NotifyEventListener;
 import capstat.model.match.Match;
-import capstat.model.user.User;
 import capstat.model.match.MatchFactory;
+import capstat.model.user.User;
 import capstat.model.user.UserFactory;
-
 import org.junit.Before;
 import org.junit.Test;
 

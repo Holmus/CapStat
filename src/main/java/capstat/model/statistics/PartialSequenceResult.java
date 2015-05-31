@@ -1,10 +1,10 @@
 package capstat.model.statistics;
 
-import java.util.Arrays;
-
 import capstat.infrastructure.database.PartialSequenceBlueprint;
 import capstat.model.match.Match;
 import capstat.model.match.ThrowSequence;
+
+import java.util.Arrays;
 
 /**
  * An immutable value class representing a partial sequence. To preserve the

@@ -1,10 +1,11 @@
 package capstat.view;
+
 import capstat.application.MatchController;
 import capstat.infrastructure.eventbus.EventBus;
 import capstat.infrastructure.eventbus.NotifyEventListener;
+import capstat.model.match.Match;
 import capstat.model.match.MatchFactory;
 import capstat.model.user.UserFactory;
-import capstat.model.match.Match;
 import capstat.model.user.UserLedger;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -21,6 +22,7 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+
 import java.net.URL;
 import java.util.ResourceBundle;
 

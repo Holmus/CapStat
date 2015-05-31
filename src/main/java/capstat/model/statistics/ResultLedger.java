@@ -1,9 +1,9 @@
 package capstat.model.statistics;
 
 import capstat.infrastructure.database.DatabaseHelperFactory;
-import capstat.infrastructure.database.ResultDatabaseHelper;
 import capstat.infrastructure.database.MatchResultBlueprint;
 import capstat.infrastructure.database.PartialSequenceBlueprint;
+import capstat.infrastructure.database.ResultDatabaseHelper;
 import capstat.model.match.Match;
 import capstat.model.match.ThrowSequence;
 import capstat.model.user.User;

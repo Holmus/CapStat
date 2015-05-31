@@ -1,9 +1,9 @@
 package capstat.tests;
 
-import static org.junit.Assert.assertEquals;
+import capstat.model.user.LoggedInUser;
 import org.junit.Test;
 
-import capstat.model.user.LoggedInUser;
+import static org.junit.Assert.assertEquals;
 
 public class UserLedgerTest {
 

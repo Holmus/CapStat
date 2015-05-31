@@ -1,19 +1,15 @@
 package capstat.tests;
 
-import capstat.model.user.Admittance;
-import capstat.model.user.ChalmersAge;
-import capstat.model.user.ELORanking;
 import capstat.model.match.Match;
-import capstat.model.user.User;
-import capstat.model.user.Security;
 import capstat.model.match.MatchFactory;
-
-import static org.junit.Assert.assertEquals;
+import capstat.model.user.*;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.time.LocalDate;
 import java.time.Year;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * @author Christian Persson

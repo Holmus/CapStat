@@ -1,18 +1,18 @@
 package capstat.tests;
 
-import static org.junit.Assert.assertEquals;
-import org.junit.Test;
-
-import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
-
 import capstat.infrastructure.database.MatchResultBlueprint;
 import capstat.infrastructure.database.PartialSequenceBlueprint;
 import capstat.model.match.Match;
 import capstat.model.statistics.MatchResult;
 import capstat.model.statistics.PartialSequenceResult;
 import capstat.model.statistics.SingleMatchCalculator;
+import org.junit.Test;
+
+import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * @author Christian Persson

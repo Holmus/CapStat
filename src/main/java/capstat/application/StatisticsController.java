@@ -3,10 +3,8 @@ package capstat.application;
 import capstat.model.statistics.*;
 import capstat.model.user.User;
 
-
 import java.util.*;
 import java.util.function.Predicate;
-import java.util.logging.Filter;
 import java.util.stream.Stream;
 
 /**

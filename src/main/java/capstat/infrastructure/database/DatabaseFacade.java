@@ -11,7 +11,10 @@ import org.jooq.generated.db.capstat.tables.Users;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * A facade to be used for interaction to the database.

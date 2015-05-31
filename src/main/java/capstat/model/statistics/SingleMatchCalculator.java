@@ -1,17 +1,17 @@
 package capstat.model.statistics;
 
+import capstat.infrastructure.database.PartialSequenceBlueprint;
+import capstat.infrastructure.eventbus.EventBus;
+import capstat.infrastructure.eventbus.NotifyEventListener;
+import capstat.model.match.Match;
+import capstat.model.match.MatchFactory;
+import capstat.model.user.User;
+
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import capstat.infrastructure.eventbus.EventBus;
-import capstat.infrastructure.eventbus.NotifyEventListener;
-import capstat.infrastructure.database.PartialSequenceBlueprint;
-import capstat.model.match.Match;
-import capstat.model.match.MatchFactory;
-import capstat.model.user.User;
 
 /**
  * @author Christian Persson
