@@ -1,9 +1,9 @@
 Requirements and Analysis Document for CapStat
 ==============================================
 
-Version: 0.2
-Date: 2015-05-31
-Author: Rikard Hjort, Christian Persson
+Version: 0.2  
+Date: 2015-05-31  
+Author: Rikard Hjort, Christian Persson  
 
 This version overrides all previous versions.
 
