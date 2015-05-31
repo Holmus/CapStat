@@ -59,6 +59,8 @@ public class RegisterViewController implements Initializable{
         nameLabel.setVisible(false);
         birthDateInput.setValue(null);
         attendYear.setValue(null);
+        attendYear.setEditable(false);
+        attendLP.setEditable(false);
 
         Platform.runLater(() -> {
             registerButton.getScene().getAccelerators().put(new KeyCodeCombination(KeyCode.ENTER), () -> {
@@ -74,10 +76,9 @@ public class RegisterViewController implements Initializable{
     }
 
     /**
-     * Method to register a user when the register-butto is pressed, given valid input
-     * @throws NumberFormatException if invalid format of values are entered
+     * Method to register a user when the register-button is pressed, given valid input
      */
-    @FXML private void registerPressed() throws NumberFormatException{
+    @FXML private void registerPressed(){
         if(checkInput()){
             return;
         }
@@ -106,6 +107,7 @@ public class RegisterViewController implements Initializable{
      * @return true if input on all fields is of correct format and allowed, otherwise false
      */
     private boolean checkInput(){
+        wrongAttendLabel.setVisible(false);
         testFailed = false;
         today = new Date();
         dateYear = new SimpleDateFormat("yyyy");
@@ -149,7 +151,7 @@ public class RegisterViewController implements Initializable{
         }
         if(attendYear.getValue() == null){
             updateLP();
-        } else {;
+        } else {
             try {
                 admittanceYear = Integer.parseInt(attendYear.getSelectionModel().getSelectedItem().toString());
             } catch (NumberFormatException e){
@@ -157,10 +159,9 @@ public class RegisterViewController implements Initializable{
             }
             wrongAttendLabel.setVisible(false);
         }
-        if(attendLP.getSelectionModel().getSelectedItem() == null){
+        if(attendLP.getValue() == null){
             updateLP();
         } else {
-            wrongAttendLabel.setVisible(false);
             try {
                 lp = Integer.parseInt(attendLP.getSelectionModel().getSelectedItem().toString());
             } catch (NumberFormatException e){
@@ -170,11 +171,6 @@ public class RegisterViewController implements Initializable{
                 admitTime = new Admittance(Year.of(admittanceYear), Admittance.Period.values()[lp-1]);
             } catch (NullPointerException e){
                 updateLP();
-            }
-            if (lp > 4 || lp < 1) {
-                updateLP();
-            } else {
-                wrongAttendLabel.setVisible(false);
             }
         }
         return testFailed;

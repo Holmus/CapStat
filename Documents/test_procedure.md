@@ -79,9 +79,13 @@
 			* Attend.Year:      2006
 			* LP:               3
 		3. Click the register button.
+		
+7. Register with empty fields.
+	* OUTCOME: **FAIL**
 
-// TODO try register with empty fields. <br>
-// TODO try register with faulty data (ex day 32 in birth date).
+8. Register with faulty values different fields one at a time (ex day 32 in birth date).
+	* OUTCOME: **FAIL**
+// TODO specify what faulty values to test with
 
 ### Login
 1. Login with the first user created.
@@ -92,13 +96,12 @@
 		2. Click on the login button
 		3. Click logout
 		
-2. Login with the first user again, using the same password in lower case only.
+2. Login with the first user again, using the same username in lower case only.
 	* OUTCOME: **SUCCESS**
 		1. Enter credentials
-			* Username:         AndAnd
-			* Password:         andand1234
+			* Username:         andand
+			* Password:         AndAnd1234
 		2. Click on the login button
-		3. Click logout
 		
 3. Login with the first user and a faulty password.
     * OUTCOME: **FAIL**
@@ -110,9 +113,10 @@
 4. Login with the first user again, using the same password in lower case only.
 	* OUTCOME: **FAIL**
 		1. Enter credentials
-			* Username:         andand
-			* Password:         AndAnd1234
+			* Username:         AndAnd
+			* Password:         andand1234
 		2. Click on the login button
+		3. Click logout
 		
 5. Login with a non existing user.
 	* OUTCOME: **FAIL**
@@ -145,7 +149,7 @@
 
 ### Play match
 * Play match as guest.
-	* Using player one as the guest user.
+	* Using player one as a non-registered user.
 		* Using player two as a registered user.
 		* Using player two as a non-registered user.
 	* Using player two as guest user.
@@ -191,75 +195,57 @@
 Click plot at least three times on each setting to 
 ensure that it can re-plot the same value.
 
-* Guest User
-	* X-Axis: **Accuracy**
-		* Y-Axis: **Accuracy**
-		* Y-Axis: **Number of games**
-		* Y-Axis: **Time**
-	* X-Axis: **Number of games**.
-		* Y-Axis: **Accuracy**
-        * Y-Axis: **Number of games**
-        * Y-Axis: **Time**
-	* X-Axis: **Time**.
-		* Y-Axis: **Accuracy**
-        * Y-Axis: **Number of games**
-        * Y-Axis: **Time**
+* Guest User (OUTCOME: FAIL, "No such user")
+<br>
+<br>
 
 * User with no records.
-	* X-Axis: **Accuracy**
+	* X-Axis: **Time**
 		* Y-Axis: **Accuracy**
+		* Y-Axis: **Longest dual**
 		* Y-Axis: **Number of games**
-		* Y-Axis: **Time**
-	* X-Axis: **Number of games**.
+		* Y-Axis: **Total number of throws**
+	* X-Axis: **Match duration**.
 		* Y-Axis: **Accuracy**
-        * Y-Axis: **Number of games**
-        * Y-Axis: **Time**
-	* X-Axis: **Time**.
-		* Y-Axis: **Accuracy**
-        * Y-Axis: **Number of games**
-        * Y-Axis: **Time**
+		* Y-Axis: **Longest dual**
+		* Y-Axis: **Number of games**
+		* Y-Axis: **Total number of throws**
 
 * User with one record only.
-	* X-Axis: **Accuracy**
+	* X-Axis: **Time**
 		* Y-Axis: **Accuracy**
+		* Y-Axis: **Longest dual**
 		* Y-Axis: **Number of games**
-		* Y-Axis: **Time**
-	* X-Axis: **Number of games**.
+		* Y-Axis: **Total number of throws**
+	* X-Axis: **Match duration**.
 		* Y-Axis: **Accuracy**
-        * Y-Axis: **Number of games**
-        * Y-Axis: **Time**
-	* X-Axis: **Time**.
-		* Y-Axis: **Accuracy**
-        * Y-Axis: **Number of games**
-        * Y-Axis: **Time**
+		* Y-Axis: **Longest dual**
+		* Y-Axis: **Number of games**
+		* Y-Axis: **Total number of throws**
 
 * User with two records only.
-	* X-Axis: **Accuracy**
+	* X-Axis: **Time**
 		* Y-Axis: **Accuracy**
+		* Y-Axis: **Longest dual**
 		* Y-Axis: **Number of games**
-		* Y-Axis: **Time**
-	* X-Axis: **Number of games**.
+		* Y-Axis: **Total number of throws**
+	* X-Axis: **Match duration**.
 		* Y-Axis: **Accuracy**
-        * Y-Axis: **Number of games**
-        * Y-Axis: **Time**
-	* X-Axis: **Time**.
-		* Y-Axis: **Accuracy**
-        * Y-Axis: **Number of games**
-        * Y-Axis: **Time**
+		* Y-Axis: **Longest dual**
+		* Y-Axis: **Number of games**
+		* Y-Axis: **Total number of throws**
 
 * User with more than two records.
-	* X-Axis: **Accuracy**
+	* X-Axis: **Time**
 		* Y-Axis: **Accuracy**
+		* Y-Axis: **Longest dual**
 		* Y-Axis: **Number of games**
-		* Y-Axis: **Time**
-	* X-Axis: **Number of games**.
+		* Y-Axis: **Total number of throws**
+	* X-Axis: **Match duration**.
 		* Y-Axis: **Accuracy**
-        * Y-Axis: **Number of games**
-        * Y-Axis: **Time**
-	* X-Axis: **Time**.
-		* Y-Axis: **Accuracy**
-        * Y-Axis: **Number of games**
-        * Y-Axis: **Time**
+		* Y-Axis: **Longest dual**
+		* Y-Axis: **Number of games**
+		* Y-Axis: **Total number of throws**
 
 // TODO what SHOULD happen in these respective cases?
 // TODO specify what user to use for the different cases to minimize human thinking while testing.

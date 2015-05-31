@@ -25,15 +25,15 @@ CapStat is a Java application designed for tracking statistics and players of th
 
     For other systems, please see MySQLs installation and usage instructions.
 
-3.  After the server has started, some scripts need to be run in order to set up the database and table structure. First run `database/init.sql`, and then run `database/capstat.sql`, **as the root user**. On a Mac OS X system, this can be done using the following commands:
+3.  After the server has started, some scripts need to be run in order to set up the database and table structure. First run `database/init.sql`, and then run `database/capstat.sql`, **as the root database user**. On a Mac OS X system, this can be done using the following commands:
 
     For `init.sql`:
 
-        mysql -uroot < init.sql
+        mysql -uroot < database/init.sql
 
     For `capstat.sql`:
 
-        mysql -uroot capstat < capstat.sql
+        mysql -uroot capstat < database/capstat.sql
 
     For other systems, please refer to the MySQL documentation.
 
