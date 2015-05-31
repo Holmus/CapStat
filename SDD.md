@@ -136,7 +136,15 @@ For CapStat to compile and run, a local MySQL database must first be created. Th
   * *UserLedger* is a repository for users, helping with persistent storage and retrievals of user. It holds references to all users that have been used during a session for quick access, and can also fetch users from the database.
   * *LoggedInUser* holds a reference to the currently logged in user, and means for changing what user is logged in.
 
-* *Match package*
+* **Match package**
+  * *Match* represents a match of caps, and actions that can be taken on it.
+  * *Glass* represents a glass in the game, and is an inner class of Match.
+  * *ThrowSequence* represents all the recorded throws in a match. It is made up of one or more PartialSequences.
+    * *PartialSequence* is an inner class of  ThrowSequence and holds the state of a game at a certain moment, and every recorded throw that followed. It is the basis of calculating statistics for a game. Since it used often by the statistics package, it is the root of its own aggregate.
+  * *MatchFactory* can be used to create a new matches. It also sets the correct starting player, whn possible.
+
+* **Statistics package**
+  * 
 
 #####The infrastructure layer and its submodules
 ![Infrastructure layer](./images/infrastructure_classes.png)
