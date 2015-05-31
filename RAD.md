@@ -126,7 +126,7 @@ Appendix
 ## Use cases
 Overview:
 
-![Overview of use cases](usecaseoverview.jpg "Overview of use cases")
+![Overview of use cases](usecaseoverview2.jpg "Overview of use cases")
 
 ## Use case texts
 
