@@ -1,6 +1,13 @@
 CapStat
 =======
 
+>CapStat is a project by the following Users:
+>
+* **Christian Persson**, committing as Christian Persson
+> * **Rikard Hjort**, committing as hjorthjort
+> * **Jakob Holmgren**, committing as Jakob Holmgren
+> * **Johan Andersson**, committing as lol2kpe
+
 CapStat is a Java application designed for tracking statistics and players of the drinking game caps. It focuses on providing a stable backend to build frontends upon, with the provided GUI acting as an eample for how a frontend might look like. The provided GUI focuses on keyboard-driven input during recording of matches, and providing some examples of statistics available to extract from matches.
 
 ## Getting Started
