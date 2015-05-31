@@ -15,6 +15,7 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 /**
+ * @author Jakob
  * Created by Jakob on 31/05/15.
  */
 public class MatchDurationTest {
