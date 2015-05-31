@@ -100,8 +100,6 @@ See Appendix for UML and description of Use Cases.
 1.  RecordMatch
     a.  RecordThrow
     b.  StartMatch
-    c.  Undo
-    d.  Revert
 2.  SaveResults
 3.  RegisterUser
 4.  Park
