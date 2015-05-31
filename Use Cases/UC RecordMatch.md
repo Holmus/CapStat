@@ -20,7 +20,9 @@ A logged in User that wants to record a match
 ### Normal flow of events
 | # | Actor                                    | System                                                       |
 |---|------------------------------------------|--------------------------------------------------------------|
-| 1 | Starts the recording of a match          | Displays the recording view                                  |
-| 2 | Records outcomes of throws               | Displays state of game based on results until match finishes |
-| 3 |                                          | Match finishes, displays match results and statistics        |
-| 4 | Confirms results and presses Save button | Stores results in database                                   |
+| 1 | Starts the recording of a match          |                                                              |
+| 2 |                                          | Displays the recording view                                  |
+| 3 | Records outcomes of throws               |                                                              |
+| 4 |                                          | Displays state of game based on results until match finishes |
+| 5 | Confirms results and presses Save button |                                                              |
+| 6 |                                          | Stores results in database                                   |
