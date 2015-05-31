@@ -1,4 +1,4 @@
-# RecordMatch
+# UC RecordMatch
 
 ### Summary
 This UC describes the very abstract, high-level description of what happens when a User wants to record the results of a game.
