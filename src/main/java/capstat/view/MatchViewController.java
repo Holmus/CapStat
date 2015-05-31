@@ -2,6 +2,7 @@ package capstat.view;
 import capstat.application.MatchController;
 import capstat.infrastructure.eventbus.EventBus;
 import capstat.infrastructure.eventbus.NotifyEventListener;
+import capstat.model.match.MatchFactory;
 import capstat.model.user.UserFactory;
 import capstat.model.match.Match;
 import capstat.model.user.UserLedger;
@@ -30,7 +31,7 @@ import java.util.ResourceBundle;
  */
 public class MatchViewController implements NotifyEventListener, Initializable {
     EventBus eb = EventBus.getInstance();
-    Match match = MatchController.createNewMatch();
+    Match match = MatchFactory.createDefaultMatch();
     MatchController mc = new MatchController(match);
     String winner = "";
     @FXML Button hitButton, missButton,startRankedMatchButton, startUnrankedMatchButton, menuButton;
@@ -69,8 +70,6 @@ public class MatchViewController implements NotifyEventListener, Initializable {
         preMatchPane.setVisible(true);
         startRankedMatchButton.setDisable(false);
         startUnrankedMatchButton.setDisable(false);
-        resetGlasses();
-        updatePlayer();
         Platform.runLater(() -> {
             missButton.getScene().getAccelerators().put(new KeyCodeCombination(KeyCode.G), () -> {
                 missPressed();
@@ -163,6 +162,9 @@ public class MatchViewController implements NotifyEventListener, Initializable {
             mc.setPlayer1(p1Nickname);
             String p2Nickname = setPlayer2Field.getText().toLowerCase();
             mc.setPlayer2(p2Nickname);
+            mc.setStartingPlayerBasedOnChalmersAge();
+            resetGlasses();
+            updatePlayer();
 
             //Only show ranking if user is registered.
             boolean p1Exists = UserLedger.getInstance().doesUserExist
