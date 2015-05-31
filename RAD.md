@@ -107,12 +107,10 @@ See Appendix for UML and description of Use Cases.
 See Appendix.
 
 There will be unique id’s for
-
 *   Players, the nickname
 *   Matches, the match ID
 
 The persistent objects are
-
 *   ResultsLedger
 *   UserLedger
 
