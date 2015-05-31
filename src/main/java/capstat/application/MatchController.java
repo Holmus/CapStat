@@ -99,6 +99,10 @@ public class MatchController implements NotifyEventListener {
             match.setPlayer2(p2);
     }
 
+    public void setStartingPlayerBasedOnChalmersAge() {
+        this.match.setCurrentPlayer(match.calculateStartingPlayer());
+    }
+
     public void setEndGameStrategy(EndGameStrategy strategy) {
         this.endGameStrategy = strategy;
     }
