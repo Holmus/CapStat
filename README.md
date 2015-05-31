@@ -18,16 +18,28 @@ CapStat is a Java application designed for tracking statistics and players of th
 
     For other systems, please see MySQLs installation and usage instructions.
 
-3.  CapStat uses [gradle](http://gradle.org/) as build system, but `gradle` does not need be installed in order to build and run the application. Instead, use the provided [gradle wrapper](https://docs.gradle.org/current/userguide/gradle_wrapper.html). From the root directory of the project, issue the following commands (use `gradlew.bat` instead of `./gradlew` on Windows systems):
+3.  After the server has started, some scripts need to be run in order to set up the database and table structure. First run `database/init.sql`, and then run `database/capstat.sql`, **as the root user**. On a Mac OS X system, this can be done using the following commands:
 
-    *   Building:
-        
-            ./gradlew build
-        
-    *   Testing:
+    For `init.sql`:
 
-            ./gradlew test
-        
-    *   Running:
+        mysql -uroot < init.sql
 
-            ./gradlew run
+    For `capstat.sql`:
+
+        mysql -uroot capstat < capstat.sql
+
+    For other systems, please refer to the MySQL documentation.
+
+4.  CapStat uses [gradle](http://gradle.org/) as build system, but `gradle` does not need be installed in order to build and run the application. Instead, use the provided [gradle wrapper](https://docs.gradle.org/current/userguide/gradle_wrapper.html). From the root directory of the project, issue the following commands (use `gradlew.bat` instead of `./gradlew` on Windows systems):
+
+    Building:
+
+        ./gradlew build
+
+    Testing:
+
+        ./gradlew test
+
+    Running:
+
+        ./gradlew run
