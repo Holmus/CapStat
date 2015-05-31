@@ -77,7 +77,7 @@ public class RegisterViewController implements Initializable{
      * Method to register a user when the register-butto is pressed, given valid input
      * @throws NumberFormatException if invalid format of values are entered
      */
-    @FXML private void registerPressed() throws NumberFormatException{
+    @FXML private void registerPressed(){
         if(checkInput()){
             return;
         }
@@ -163,6 +163,10 @@ public class RegisterViewController implements Initializable{
             wrongAttendLabel.setVisible(false);
             try {
                 lp = Integer.parseInt(attendLP.getSelectionModel().getSelectedItem().toString());
+                if(lp>4 || lp<1){
+                    testFailed = true;
+                    updateLP();
+                }
             } catch (NumberFormatException e){
                 updateLP();
             }
