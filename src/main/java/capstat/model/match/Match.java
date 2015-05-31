@@ -162,6 +162,14 @@ public class Match {
      */
     public void setCurrentPlayer(Player player) {
         this.playerWhoseTurnItIs = player;
+        //If we are at the beginning of a sequence, just change the player
+        // whos turn it is. But if we are not, start a new partial sequence
+        if (this.throwSequence.canRewind()) {
+            this.throwSequence.updateRecordState(glasses, playerWhoseTurnItIs,
+                    throwSequence.lastThrowWasHit());
+        } else {
+            this.throwSequence.changeStartingPlayerForCurrentSequence(player);
+        }
     }
 
     //Getters
