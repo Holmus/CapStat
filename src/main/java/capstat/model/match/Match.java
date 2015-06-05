@@ -309,6 +309,12 @@ public class Match {
         }
         return winner;
     }
+    public void setP1RoundsWon(int rounds){
+        p1RoundsWon = rounds;
+    }
+    public void setP2RoundsWon(int rounds){
+        p2RoundsWon = rounds;
+    }
 
     //Gameplay Operations
 
@@ -531,6 +537,8 @@ public class Match {
         //Notify listeners that listen to this specific match.
         EventBus.getInstance().notify(event + this.eventId);
     }
+
+
 
     //Inner classes
 

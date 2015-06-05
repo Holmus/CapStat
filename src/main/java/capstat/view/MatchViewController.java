@@ -9,9 +9,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.layout.Background;
@@ -20,6 +18,8 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+
+import javax.swing.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -33,11 +33,13 @@ public class MatchViewController implements NotifyEventListener, Initializable{
     Match match = MatchController.createNewMatch();
     MatchController mc = new MatchController(match);
     String winner = "";
-    @FXML Button hitButton, missButton,startRankedMatchButton, startUnrankedMatchButton, menuButton;
+    @FXML Button hitButton, missButton,startRankedMatchButton, startUnrankedMatchButton, menuButton, setStateButton, stateSubmitButton;
     @FXML Circle glass1, glass2, glass3, glass4, glass5, glass6, glass7;
-    @FXML Pane p1Pane, p2Pane, mainPane, matchOverPane, preMatchPane;
+    @FXML Pane p1Pane, p2Pane, mainPane, matchOverPane, preMatchPane, statePane;
     @FXML Label hitLabel, missLabel, duelLabel, p1Name, p2Name, p1Rank, p2Rank, p1Rounds, p2Rounds, winnerLabel, nickname1Label, nickname2Label;
     @FXML TextField setPlayer1Field, setPlayer2Field;
+    @FXML CheckBox checkBoxDuel, checkBox1, checkBox2, checkBox3, checkBox4, checkBox5, checkBox6, checkBox7, checkBoxp1, checkBoxp2;
+    @FXML ComboBox p1RoundsComboBox, p2RoundsComboBox;
     Background activeBackground = new Background(new BackgroundFill(Color.CORNFLOWERBLUE, CornerRadii.EMPTY, Insets.EMPTY));
     Background inactiveBackground = new Background(new BackgroundFill(Color.LIGHTGRAY, CornerRadii.EMPTY, Insets.EMPTY));
 
@@ -69,11 +71,13 @@ public class MatchViewController implements NotifyEventListener, Initializable{
         p1Pane.setVisible(false);
         p2Pane.setVisible(false);
         mainPane.setVisible(false);
+        setStateButton.setFocusTraversable(false);
         hitButton.setFocusTraversable(false);
         missButton.setFocusTraversable(false);
         preMatchPane.setVisible(true);
         startRankedMatchButton.setDisable(false);
         startUnrankedMatchButton.setDisable(false);
+        statePane.setVisible(false);
         resetGlasses();
         updatePlayer();
         Platform.runLater(() -> {
@@ -113,7 +117,69 @@ public class MatchViewController implements NotifyEventListener, Initializable{
             mc.recordMiss();
         }
     }
+    @FXML private void setValidState(){
+        Match.Glass[] glasses = match.getGlasses();
+        glasses[0].setActive(checkBox1.isSelected());
+        glasses[1].setActive(checkBox2.isSelected());
+        glasses[2].setActive(checkBox3.isSelected());
+        glasses[3].setActive(checkBox4.isSelected());
+        glasses[4].setActive(checkBox5.isSelected());
+        glasses[5].setActive(checkBox6.isSelected());
+        glasses[6].setActive(checkBox7.isSelected());
+        Match.Player active;
+        if(!glasses[3].isActive()){
+            return;
+        } if(checkBoxp1.isSelected() && checkBoxp2.isSelected()) {
+            return;
+        }
+        if(checkBoxp1.isSelected()){
+            active = Match.Player.ONE;
+        } else if(checkBoxp2.isSelected()){
+            active = Match.Player.TWO;
+        }
+        else{
+           return;
+        }
+            mc.setValidState(glasses, active, checkBoxDuel.isPressed());
+        mc.setP1RoundsWon(p1RoundsComboBox.getSelectionModel().getSelectedIndex());
+        mc.setP2RoundsWon(p2RoundsComboBox.getSelectionModel().getSelectedIndex());
+        p1Rounds.setText("" + match.getPlayerRoundsWon(Match.Player.ONE));
+        p2Rounds.setText("" + match.getPlayerRoundsWon(Match.Player.TWO));
+        drawAllActive();
+        updateGlasses();
+        updatePlayer();
+        if(checkBoxDuel.isPressed()){
+            hitLabel.setVisible(true);
+            missLabel.setVisible(true);
+            duelLabel.setVisible(true);
+        } else{
+            hitLabel.setVisible(false);
+            missLabel.setVisible(true);
+            duelLabel.setVisible(false);
+        }
+        mainPane.setVisible(true);
+        p1Pane.setVisible(true);
+        p2Pane.setVisible(true);
+        statePane.setVisible(false);
 
+    }
+    @FXML private void setValidStateView(){
+        mainPane.setVisible(false);
+        p1Pane.setVisible(false);
+        p2Pane.setVisible(false);
+        statePane.setVisible(true);
+        if(p1Rounds.getText().equals("1")){
+            p1RoundsComboBox.getSelectionModel().select(1);
+        } else {
+            p1RoundsComboBox.getSelectionModel().select(0);
+        }
+        if(p2Rounds.getText().equals("1")){
+            p2RoundsComboBox.getSelectionModel().select(1);
+        } else {
+            p2RoundsComboBox.getSelectionModel().select(0);
+        }
+
+    }
     /**
      * Tells the match to register a hit when the Hit-button is pressed, using the MatchController.
      * Also sets the correct labels to display
@@ -260,6 +326,16 @@ public class MatchViewController implements NotifyEventListener, Initializable{
             glass7.setFill(Color.LIGHTGRAY);
         }
     }
+    private void drawAllActive(){
+        glass1.setFill(Color.ORANGE);
+        glass2.setFill(Color.ORANGE);
+        glass3.setFill(Color.ORANGE);
+        glass4.setFill(Color.ORANGE);
+        glass5.setFill(Color.ORANGE);
+        glass6.setFill(Color.ORANGE);
+        glass7.setFill(Color.ORANGE);
+
+    }
 
     /**
      * Changes the background color to properly display whose turn it is to Throw.
@@ -290,7 +366,7 @@ public class MatchViewController implements NotifyEventListener, Initializable{
         p1Pane.setBackground(inactiveBackground);
         p2Pane.setBackground(inactiveBackground);
         p1Pane.setVisible(false);
-        p2Pane.setVisible(true);
+        p2Pane.setVisible(false);
         matchOverPane.setVisible(true);
 
     }

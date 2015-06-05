@@ -85,7 +85,11 @@ public class MatchController implements NotifyEventListener {
         if (p2 == null || !p2.equals(p1))
             match.setPlayer1(p1);
     }
+    public void setValidState(Match.Glass[] glasses, Match.Player
+            startingPlayer, boolean lastThrowWasHit){
 
+        match.manuallyChangeGameState(glasses, startingPlayer, lastThrowWasHit);
+    }
     /**
      * Set which user is player 2. If the given nickname does not exist,
      * player 2 will be set to null. If the given user is set as player 1,
@@ -129,6 +133,13 @@ public class MatchController implements NotifyEventListener {
             this.endGameStrategy.endGame();
     }
 
+    public void setP1RoundsWon(int rounds){
+        match.setP1RoundsWon(rounds);
+    }
+
+    public void setP2RoundsWon(int rounds){
+        match.setP2RoundsWon(rounds);
+    }
     //Saving
 
     /**

@@ -10,6 +10,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.collections.FXCollections?>
 
 <GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="capstat.view.MatchViewController">
    <columnConstraints>
@@ -26,6 +27,11 @@
          <children>
             <Pane fx:id="mainPane" maxHeight="450.0" maxWidth="600.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="600.0">
                <children>
+                  <Button fx:id="setStateButton" layoutX="164.0" layoutY="315.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#setValidStateView" prefHeight="36.0" prefWidth="260.0" text="Major fuckup?">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Button>
                   <Button fx:id="hitButton" layoutX="305.0" layoutY="359.0" mnemonicParsing="false" onMouseClicked="#hitPressed" prefHeight="60.0" prefWidth="120.0" text="Hit" textFill="#02bc02">
                      <font>
                         <Font size="18.0" />
@@ -121,6 +127,45 @@
                   <Button fx:id="startUnrankedMatchButton" layoutX="105.0" layoutY="281.0" mnemonicParsing="false" onAction="#startUnrankedMatchPressed" prefHeight="36.0" prefWidth="120.0" text="Start unranked" />
                   <Button fx:id="startRankedMatchButton" layoutX="365.0" layoutY="279.0" mnemonicParsing="false" onAction="#startRankedMatchPressed" prefHeight="36.0" prefWidth="120.0" text="Start ranked" />
                   <Button fx:id="menuButton" layoutX="6.0" layoutY="1.0" mnemonicParsing="false" onAction="#returnToMenu" text="Main" />
+               </children>
+            </Pane>
+            <Pane fx:id="statePane" prefHeight="450.0" prefWidth="606.0">
+               <children>
+                  <Circle fx:id="glassState1" fill="#ffc61f" layoutX="185.0" layoutY="243.0" radius="18.0" stroke="BLACK" strokeType="INSIDE" />
+                  <Circle fx:id="glassState2" fill="#ffc61f" layoutX="221.0" layoutY="243.0" radius="18.0" stroke="BLACK" strokeType="INSIDE" />
+                  <Circle fx:id="glassState3" fill="#ffc61f" layoutX="257.0" layoutY="243.0" radius="18.0" stroke="BLACK" strokeType="INSIDE" />
+                  <Circle fx:id="glassState4" fill="#ffc61f" layoutX="293.0" layoutY="243.0" radius="18.0" stroke="BLACK" strokeType="INSIDE" />
+                  <Circle fx:id="glassState5" fill="#ffc61f" layoutX="329.0" layoutY="243.0" radius="18.0" stroke="BLACK" strokeType="INSIDE" />
+                  <Circle fx:id="glassState6" fill="#ffc61f" layoutX="365.0" layoutY="243.0" radius="18.0" stroke="BLACK" strokeType="INSIDE" />
+                  <Circle fx:id="glassState7" fill="#ffc61f" layoutX="401.0" layoutY="243.0" radius="18.0" stroke="BLACK" strokeType="INSIDE" />
+                  <CheckBox fx:id="checkBoxp2" layoutX="409.0" layoutY="146.0" mnemonicParsing="false" text="P2's turn" />
+                  <CheckBox fx:id="checkBoxp1" layoutX="135.0" layoutY="148.0" mnemonicParsing="false" text="P1's turn" />
+                  <CheckBox fx:id="checkBoxDuel" layoutX="268.0" layoutY="177.0" mnemonicParsing="false" text="In a Duel" />
+                  <CheckBox fx:id="checkBox1" layoutX="175.0" layoutY="268.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="9.0" />
+                  <CheckBox fx:id="checkBox2" layoutX="212.0" layoutY="268.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="9.0" />
+                  <CheckBox fx:id="checkBox3" layoutX="248.0" layoutY="268.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="9.0" />
+                  <CheckBox fx:id="checkBox4" layoutX="284.0" layoutY="268.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="9.0" />
+                  <CheckBox fx:id="checkBox5" layoutX="319.0" layoutY="268.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="9.0" />
+                  <CheckBox fx:id="checkBox6" layoutX="355.0" layoutY="268.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="9.0" />
+                  <CheckBox fx:id="checkBox7" layoutX="393.0" layoutY="268.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="9.0" />
+                  <Button fx:id="stateSubmitButton" layoutX="263.0" layoutY="321.0" mnemonicParsing="false" onMouseClicked="#setValidState" text="Submit" />
+                  <ComboBox fx:id="p1RoundsComboBox" layoutX="174.0" layoutY="84.0" prefHeight="26.0" prefWidth="60.0">
+                     <items>
+                        <FXCollections fx:factory="observableArrayList">
+                           <Integer fx:value="0" />
+                           <Integer fx:value="1" />
+                        </FXCollections>
+                     </items>
+                  </ComboBox>
+                  <ComboBox fx:id="p2RoundsComboBox" layoutX="349.0" layoutY="84.0" prefHeight="26.0" prefWidth="60.0">
+                     <items>
+                        <FXCollections fx:factory="observableArrayList">
+                           <Integer fx:value="0" />
+                           <Integer fx:value="1" />
+                        </FXCollections>
+                     </items>
+                  </ComboBox>
+                  <Label layoutX="258.0" layoutY="89.0" text="ROUNDS" />
                </children>
             </Pane>
          </children>
