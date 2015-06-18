@@ -4,12 +4,16 @@ import capstat.application.LoginController;
 import capstat.infrastructure.eventbus.EventBus;
 import capstat.infrastructure.eventbus.NotifyEventListener;
 import capstat.model.user.UserLedger;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -28,6 +32,7 @@ public class LoginViewController implements NotifyEventListener, Initializable{
     @FXML PasswordField passField;
     @FXML TextField usernameField;
     @FXML Label registeredLabel, passwordLabel, usernameLabel;
+    @FXML Button loginButton;
 
     /**
      * Sets the default behaviour and display of elements initializing the view.
@@ -40,6 +45,12 @@ public class LoginViewController implements NotifyEventListener, Initializable{
         registeredLabel.setVisible(false);
         passwordLabel.setVisible(false);
         usernameLabel.setVisible(false);
+
+        Platform.runLater(() -> {
+            loginButton.getScene().getAccelerators().put(new KeyCodeCombination(KeyCode.ENTER), () -> {
+                loginPressed();
+            });
+        });
     }
 
     /**
